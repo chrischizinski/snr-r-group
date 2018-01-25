@@ -1,4 +1,4 @@
-baseURL = ""
+baseURL = "https://snr-r-group.netlify.com/"
 languageCode = "en-us"
 title = "SNR R User Group"
 theme = "minimal"
