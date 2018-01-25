@@ -5,6 +5,8 @@ theme = "minimal"
 disqusShortname = "snr-r-group" # delete this to disable disqus comments
 googleAnalytics = "A-48496439-2"
 
+ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
+
 [params]
     author = "Christopher Chizinski"
     description = "A repository for lessons and discussions of the SNR R User Group"
@@ -23,12 +25,12 @@ googleAnalytics = "A-48496439-2"
     weight = 1 
 
 [[menu.main]]
-    url = "/post/"
+    url = "#post"
     name = "Posts"
     weight = 2
     
 [[menu.main]]
-    url = "/resources/"
+    url = "#resources"
     name = "Resources"
     weight = 3
 
