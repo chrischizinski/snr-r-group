@@ -25,12 +25,12 @@ ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
     weight = 1 
 
 [[menu.main]]
-    url = "#post"
+    url = "/post/"
     name = "Posts"
     weight = 2
     
 [[menu.main]]
-    url = "#resources"
+    url = "/resources/"
     name = "Resources"
     weight = 3
 
