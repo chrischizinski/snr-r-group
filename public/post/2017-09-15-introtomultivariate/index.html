@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+         
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Intro to multivariate statistics</title>
+        <style>
+
+    html body {
+        font-family: 'Raleway', sans-serif;
+        background-color: white;
+    }
+
+    :root {
+        --accent: #D00000;
+        --border-width:  5px ;
+    }
+
+</style>
+
+
+<link rel="stylesheet" href="/www.snr-r-group.netlify.com/css/main.css">
+
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+
+
+ <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/hybrid.min.css"> 
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+ 
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/swift.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/R.min.js"></script> 
+
+    <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script>
+ <meta name="generator" content="Hugo 0.30.2" />
+        
+        
+        
+        
+        <script async src="https://www.googletagmanager.com/gtag/js?id=A-48496439-2"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments)};
+          gtag('js', new Date());
+
+          gtag('config', 'A-48496439-2');
+        </script>
+        
+    </head>
+
+    
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script>
+
+    <body>
+         
+        <nav class="navbar navbar-default navbar-fixed-top">
+
+            <div class="container">
+
+                <div class="navbar-header">
+
+                    <a class="navbar-brand visible-xs" href="#">Intro to multivariate statistics</a>
+
+                    <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                </div>
+
+                <div class="collapse navbar-collapse">
+
+                    
+                        <ul class="nav navbar-nav">
+                            
+                                <li><a href="/www.snr-r-group.netlify.com/">Home</a></li>
+                            
+                                <li><a href="/www.snr-r-group.netlify.com/post/">Posts</a></li>
+                            
+                                <li><a href="/www.snr-r-group.netlify.com/resources/">Resources</a></li>
+                            
+                        </ul>
+                    
+
+                    
+                        <ul class="nav navbar-nav navbar-right">
+                            
+                                <li class="navbar-icon"><a href="mailto:cchizinski2@unl.edu"><i class="fa fa-envelope-o"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://github.com/chrischizinski/"><i class="fa fa-github"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://twitter.com/chrischizinski/"><i class="fa fa-twitter"></i></a></li>
+                            
+                        </ul>
+                    
+
+                </div>
+
+            </div>
+
+        </nav>
+
+
+<main>
+
+    <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/www.snr-r-group.netlify.com/post/2017-09-15-introtomultivariate/">Intro to multivariate statistics</a></h4>
+    <h5>September 15, 2017</h5>
+    
+    <a href="/www.snr-r-group.netlify.comtags/applied-multivariate"><kbd class="item-tag">Applied Multivariate</kbd></a>
+    
+
+</div>
+
+
+    <br> <div class="text-justify"><p>This class covers an introduction to multivariate statistics and data transformations and standardizations. Detailed notes from previous semesters can be found</p>
+<ul>
+<li><p><a href="https://chrischizinski.github.io/SNR_R_Group/2016-08-10-Data-Transformations">2016-08-10-Data-Transformations</a>.</p></li>
+<li><p><a href="https://chrischizinski.github.io/pres_introtomultivariate">Introduction presentation</a></p></li>
+<li><p><a href="https://raw.githubusercontent.com/chrischizinski/SNR_R_Group/master/notebooks/2017-09-15-IntrotoMultivariate.Rmd">R notebook Rmarkdown file</a></p></li>
+</ul>
+<div id="difference-between-transformations-and-standardizations" class="section level2">
+<h2>Difference between Transformations and Standardizations</h2>
+<ul>
+<li>Transformations are applied to each element in a matrix</li>
+<li>Standardization adjust elements in a matrix by a row or column statistic</li>
+</ul>
+<div id="create-some-data" class="section level3">
+<h3>Create some data</h3>
+<pre class="r"><code>rawdata &lt;- matrix(c(1,1,1,3,3,1,
+                    2,2,4,6,6,0,
+                    10,10,20,30,30,0,
+                    3,3,2,1,1,0,
+                    0,0,0,20,0,0), ncol = 6, byrow = TRUE)
+colnames(rawdata) &lt;- paste(&quot;species&quot;,toupper(letters[1:6]), sep = &quot;_&quot;)
+
+rawdata</code></pre>
+<pre><code>##      species_A species_B species_C species_D species_E species_F
+## [1,]         1         1         1         3         3         1
+## [2,]         2         2         4         6         6         0
+## [3,]        10        10        20        30        30         0
+## [4,]         3         3         2         1         1         0
+## [5,]         0         0         0        20         0         0</code></pre>
+</div>
+<div id="calculating-row-and-column-statistics" class="section level3">
+<h3>Calculating row and column statistics</h3>
+<div id="rows" class="section level4">
+<h4>Rows</h4>
+<pre class="r"><code># Row sums
+rowSums(rawdata)</code></pre>
+<pre><code>## [1]  10  20 100  10  20</code></pre>
+<pre class="r"><code>apply(rawdata, 1, sum)</code></pre>
+<pre><code>## [1]  10  20 100  10  20</code></pre>
+<pre class="r"><code># Max values
+apply(rawdata, 1, max)</code></pre>
+<pre><code>## [1]  3  6 30  3 20</code></pre>
+</div>
+<div id="columns" class="section level4">
+<h4>Columns</h4>
+<pre class="r"><code># Sums
+apply(rawdata, 2, sum)</code></pre>
+<pre><code>## species_A species_B species_C species_D species_E species_F 
+##        16        16        27        60        40         1</code></pre>
+<pre class="r"><code>colSums(rawdata)</code></pre>
+<pre><code>## species_A species_B species_C species_D species_E species_F 
+##        16        16        27        60        40         1</code></pre>
+<pre class="r"><code># Max
+apply(rawdata, 2, max)</code></pre>
+<pre><code>## species_A species_B species_C species_D species_E species_F 
+##        10        10        20        30        30         1</code></pre>
+</div>
+</div>
+<div id="monotonic-transformations" class="section level3">
+<h3>Monotonic transformations</h3>
+<div id="log-transformations" class="section level4">
+<h4>Log transformations</h4>
+<ul>
+<li><p>Useful for when you have a wide spread in data values</p></li>
+<li><p>Ir is important that you add 1 to values to account for zeros <code>log10(x+1)</code></p></li>
+</ul>
+<pre class="r"><code>logdata &lt;- apply(rawdata , c(1,2), function(x) log10(x + 1))</code></pre>
+<pre class="r"><code>library(tidyverse)
+
+hemlock &lt;- read_csv(&quot;https://raw.githubusercontent.com/chrischizinski/SNR_R_Group/master/data/hemlock_cover.csv&quot;)
+
+
+
+hemlock$logTsuga&lt;- log10(hemlock$Tsuga.canadensis +1) # log transform 
+
+glimpse(hemlock)</code></pre>
+<pre><code>## Observations: 98
+## Variables: 3
+## $ Site             &lt;int&gt; 1001, 1002, 1003, 1004, 1005, 1006, 1011, 110...
+## $ Tsuga.canadensis &lt;dbl&gt; 0.1, 34.0, 42.0, 21.0, 37.0, 18.0, 9.0, 0.0, ...
+## $ logTsuga         &lt;dbl&gt; 0.04139269, 1.54406804, 1.63346846, 1.3424226...</code></pre>
+<pre class="r"><code>ggplot(data = hemlock) + 
+  geom_histogram(aes(Tsuga.canadensis), binwidth = 5, colour = &quot;black&quot;, fill = &quot;dodgerblue&quot;) + 
+  coord_cartesian(ylim = c(0, 30), expand = FALSE) +
+  theme_bw()</code></pre>
+<p><img src="/www.snr-r-group.netlify.compost/2017-09-15-Introtomultivariate_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<pre class="r"><code>ggplot(data = hemlock) + 
+  geom_histogram(aes(logTsuga), bins = 30, colour = &quot;black&quot;, fill = &quot;red&quot;) + 
+  coord_cartesian(ylim = c(0, 30), expand = FALSE) +
+  theme_bw()</code></pre>
+<p><img src="/www.snr-r-group.netlify.compost/2017-09-15-Introtomultivariate_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+</div>
+<div id="power-tranformations" class="section level4">
+<h4>Power tranformations</h4>
+<ul>
+<li>Square root transformation is most often used for Poisson type date (count data)</li>
+<li>Greater the power, the greater the compression of the data</li>
+<li>Flexible for a wide range of data</li>
+<li>Applied when the data is &gt; 0</li>
+</ul>
+<div id="write-power-function" class="section level5">
+<h5>Write power function</h5>
+<pre class="r"><code>pwr_trans &lt;- function(x, trans){
+  x &lt;- ifelse(x&gt;0,x^(1/trans),0)
+  return(x)
+}
+
+pwr_trans(25,2)</code></pre>
+<pre><code>## [1] 5</code></pre>
+<pre class="r"><code>pwr_trans(0,2)</code></pre>
+<pre><code>## [1] 0</code></pre>
+</div>
+</div>
+<div id="display-the-effect-of-the-power-function" class="section level4">
+<h4>Display the effect of the power function</h4>
+<pre class="r"><code>newdata &lt;- data.frame(x = 0:100, 
+                      cubic = pwr_trans(x=0:100, trans = 3),
+                      power10 = pwr_trans(x=0:100, trans = 10))
+
+head(newdata)</code></pre>
+<pre><code>##   x    cubic  power10
+## 1 0 0.000000 0.000000
+## 2 1 1.000000 1.000000
+## 3 2 1.259921 1.071773
+## 4 3 1.442250 1.116123
+## 5 4 1.587401 1.148698
+## 6 5 1.709976 1.174619</code></pre>
+<pre class="r"><code>ggplot(data = newdata) +
+  geom_line(aes(x = x, y = cubic), size = 1, colour = &quot;blue&quot;) +
+  geom_line(aes(x = x, y = power10), size = 1, colour = &quot;red&quot;) +
+  labs(y = &quot;Value&quot;) +
+  coord_cartesian(xlim = c(0,100.5), ylim = c(0,5), expand = F)+
+  theme_classic()</code></pre>
+<p><img src="/www.snr-r-group.netlify.compost/2017-09-15-Introtomultivariate_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+</div>
+<div id="presence-absence-transformation" class="section level4">
+<h4>Presence absence transformation</h4>
+<ul>
+<li>Transforms quantitative data to non-quanitative (binary)</li>
+<li>Applicable to species data</li>
+<li>Most useful when there is not a lot of quantitative data available (i.e., LOTS of zeros)</li>
+<li>Severe transformation (i.e., loose lots of information)</li>
+</ul>
+<pre class="r"><code>library(vegan)</code></pre>
+<pre><code>## Loading required package: permute</code></pre>
+<pre><code>## Loading required package: lattice</code></pre>
+<pre><code>## This is vegan 2.4-5</code></pre>
+<pre class="r"><code>decostand(rawdata, method = &quot;pa&quot;)</code></pre>
+<pre><code>##      species_A species_B species_C species_D species_E species_F
+## [1,]         1         1         1         1         1         1
+## [2,]         1         1         1         1         1         0
+## [3,]         1         1         1         1         1         0
+## [4,]         1         1         1         1         1         0
+## [5,]         0         0         0         1         0         0
+## attr(,&quot;decostand&quot;)
+## [1] &quot;pa&quot;</code></pre>
+</div>
+<div id="arcsine-transformation" class="section level4">
+<h4>Arcsine transformation</h4>
+<p>Please NOTE: <a href="http://onlinelibrary.wiley.com/doi/10.1890/10-0340.1/abstract">The arcsine is asinine: the analysis of proportions in ecology</a></p>
+<ul>
+<li>Transformations on proportion data (0-1)</li>
+<li>Useful when you have a positive skew in data
+<ul>
+<li>Spreads the end of the scale while compressing the middle</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="standardizations" class="section level3">
+<h3>Standardizations</h3>
+</div>
+<div id="sums" class="section level3">
+<h3>Sums</h3>
+<ul>
+<li>Can be applied to any range of x</li>
+<li>Output will range 0 - 1</li>
+<li>Converts values to a relative value (equalizes the area under the curve)</li>
+<li>Useful when you have large difference in total abundance</li>
+</ul>
+<div id="rows-1" class="section level4">
+<h4>Rows</h4>
+<pre class="r"><code>ttl_species &lt;- apply(rawdata, 1, sum)
+rowprop_data &lt;- rawdata / ttl_species
+  
+rowprop_data</code></pre>
+<pre><code>##      species_A species_B species_C species_D species_E species_F
+## [1,]       0.1       0.1       0.1       0.3       0.3       0.1
+## [2,]       0.1       0.1       0.2       0.3       0.3       0.0
+## [3,]       0.1       0.1       0.2       0.3       0.3       0.0
+## [4,]       0.3       0.3       0.2       0.1       0.1       0.0
+## [5,]       0.0       0.0       0.0       1.0       0.0       0.0</code></pre>
+<pre class="r"><code>decostand(rawdata, margin = 1, method = &quot;total&quot;)</code></pre>
+<pre><code>##      species_A species_B species_C species_D species_E species_F
+## [1,]       0.1       0.1       0.1       0.3       0.3       0.1
+## [2,]       0.1       0.1       0.2       0.3       0.3       0.0
+## [3,]       0.1       0.1       0.2       0.3       0.3       0.0
+## [4,]       0.3       0.3       0.2       0.1       0.1       0.0
+## [5,]       0.0       0.0       0.0       1.0       0.0       0.0
+## attr(,&quot;decostand&quot;)
+## [1] &quot;total&quot;</code></pre>
+</div>
+<div id="columns-1" class="section level4">
+<h4>Columns</h4>
+<pre class="r"><code>colprop_data &lt;- rawdata %*% diag(1/apply(rawdata,2,sum))</code></pre>
+</div>
+</div>
+</div>
+<div id="take-home-challenge" class="section level2">
+<h2>Take home challenge</h2>
+<ol style="list-style-type: decimal">
+<li>Input the data that Mike W. showed <code>mydata &lt;- read_csv(&quot;https://ndownloader.figshare.com/files/2292169&quot;)</code></li>
+<li>Calculate the number of unique individuals per species per site per year per month for Rodents</li>
+<li>Calculate the maximum number of unique individuals per species per site per year for Rodents</li>
+<li>Calculate the max individuals across years per species per site for Rodents</li>
+<li>Create a site by species matrix composed of those max values</li>
+<li>Calculate by row total standardization</li>
+<li>Plot a bar chart of each site and relative number of a few (3) species</li>
+</ol>
+<p>Send to <a href="mailto:cchizinski2@unl.edu">cchizinski2@unl.edu</a></p>
+</div>
+</div>
+
+    
+    
+
+    
+
+        <h4 class="page-header">Related</h4>
+
+         <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/www.snr-r-group.netlify.com/post/2017-11-17-differencesbetweengroups/">Applied Multivariate: Identifying differences between groups</a></h4>
+    <h5>November 17, 2017</h5>
+    
+    <a href="/www.snr-r-group.netlify.comtags/applied-multivariate"><kbd class="item-tag">Applied Multivariate</kbd></a>
+    
+
+</div>
+  <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/www.snr-r-group.netlify.com/post/2017-11-09-latentvariables_3/">Latent variable analysis. Part 3</a></h4>
+    <h5>November 9, 2017</h5>
+    
+    <a href="/www.snr-r-group.netlify.comtags/applied-multivariate"><kbd class="item-tag">Applied Multivariate</kbd></a>
+    
+
+</div>
+  <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/www.snr-r-group.netlify.com/post/2017-10-20-latentvariables_2/">Latent variable analysis. Part 2</a></h4>
+    <h5>October 20, 2017</h5>
+    
+    <a href="/www.snr-r-group.netlify.comtags/applied-multivariate"><kbd class="item-tag">Applied Multivariate</kbd></a>
+    
+
+</div>
+ 
+
+    
+
+    
+
+        <h4 class="page-header">Comments</h4>
+
+        <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "snr-r-group" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    
+
+</main>
+
+        <footer>
+
+            <p class="copyright text-muted">&copy; All rights reserved. Powered by <a href="https://gohugo.io">Hugo</a> and <a href="https://github.com/calintat/minimal">Minimal</a></p>
+
+        </footer>
+       
+    </body>
+
+</html>
+

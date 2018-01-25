@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+         
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Ecological Detective -- Know your data</title>
+        <style>
+
+    html body {
+        font-family: 'Raleway', sans-serif;
+        background-color: white;
+    }
+
+    :root {
+        --accent: #D00000;
+        --border-width:  5px ;
+    }
+
+</style>
+
+
+<link rel="stylesheet" href="/www.snr-r-group.netlify.com/css/main.css">
+
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+
+
+ <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/hybrid.min.css"> 
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+ 
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/swift.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/R.min.js"></script> 
+
+    <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script>
+ <meta name="generator" content="Hugo 0.30.2" />
+        
+        
+        
+        
+        <script async src="https://www.googletagmanager.com/gtag/js?id=A-48496439-2"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments)};
+          gtag('js', new Date());
+
+          gtag('config', 'A-48496439-2');
+        </script>
+        
+    </head>
+
+    
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script>
+
+    <body>
+         
+        <nav class="navbar navbar-default navbar-fixed-top">
+
+            <div class="container">
+
+                <div class="navbar-header">
+
+                    <a class="navbar-brand visible-xs" href="#">Ecological Detective -- Know your data</a>
+
+                    <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                </div>
+
+                <div class="collapse navbar-collapse">
+
+                    
+                        <ul class="nav navbar-nav">
+                            
+                                <li><a href="/www.snr-r-group.netlify.com/">Home</a></li>
+                            
+                                <li><a href="/www.snr-r-group.netlify.com/post/">Posts</a></li>
+                            
+                                <li><a href="/www.snr-r-group.netlify.com/resources/">Resources</a></li>
+                            
+                        </ul>
+                    
+
+                    
+                        <ul class="nav navbar-nav navbar-right">
+                            
+                                <li class="navbar-icon"><a href="mailto:cchizinski2@unl.edu"><i class="fa fa-envelope-o"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://github.com/chrischizinski/"><i class="fa fa-github"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://twitter.com/chrischizinski/"><i class="fa fa-twitter"></i></a></li>
+                            
+                        </ul>
+                    
+
+                </div>
+
+            </div>
+
+        </nav>
+
+
+<main>
+
+    <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/www.snr-r-group.netlify.com/post/2017-02-10-ecologicaldetective2/">Ecological Detective -- Know your data</a></h4>
+    <h5>February 10, 2017</h5>
+    
+    <a href="/www.snr-r-group.netlify.comtags/ecodetective"><kbd class="item-tag">EcoDetective</kbd></a>
+    
+
+</div>
+
+
+    <br> <div class="text-justify"><div id="recreating-figure-2.1-in-ecological-detective" class="section level2">
+<h2>Recreating Figure 2.1 in Ecological Detective</h2>
+<p>There are many different hypotheses that can explain the basic relationship between two variables. Figure 2.1 in the Ecologial Detective suggest 4 possible models. The models have no parameter values. Try to iteratively find the parameter values to get your figure to look like the one in Figure 2.1.</p>
+<pre class="r"><code>S &lt;- seq(1,15, by = 1)  # 1:15
+Null_hypothesis&lt;- 2.5
+
+our_data &lt;- data.frame(S = S, Null = Null_hypothesis)
+our_data$Model_A &lt;- 0.5 *S
+our_data$Model_B &lt;- (0.9 *S)/(1 + 0.1*S)
+our_data$Model_C &lt;- 1.8 *S * exp(-0.18*S)
+
+plot_labels = data.frame(x = c(14,14,8, 4), y = c(7.5,5.5,2.75,3.5), labels = c(&quot;Model A&quot;, &quot;Model B&quot;, &quot;NULL&quot;, &quot;Model C&quot;))
+
+
+ggplot() +
+  geom_line(data = our_data,aes(x = S, y = Null), colour=&quot;black&quot;) +
+  geom_line(data = our_data,aes(x = S, y = Model_A), colour=&quot;blue&quot;) +
+  geom_line(data = our_data,aes(x = S, y = Model_B), colour=&quot;green&quot;) +
+  geom_line(data = our_data,aes(x = S, y = Model_C), colour=&quot;red&quot;) +
+  geom_text(data = plot_labels, aes(x=x, y= y, label = labels)) +
+  coord_cartesian(ylim = c(0,9), xlim = c(0, 16), expand = FALSE) +
+  scale_x_continuous(breaks = seq(0,16,by=2)) +
+  scale_y_continuous(breaks = seq(1,8,by=1)) +
+  labs(x = &quot;Flock size&quot;, y = &quot;Consumption rate&quot;) +
+  theme_bw()</code></pre>
+<p><img src="/www.snr-r-group.netlify.compost/2017-02-10-EcologicalDetective2_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+</div>
+<div id="probability-and-probability-models" class="section level2">
+<h2>Probability and probability models</h2>
+<ul>
+<li>Ecological data (and most other kinds of data) involve different levels of randomness</li>
+<li>Most models represent the mean of the population</li>
+<li><p>Comparing models requires understanding the probability of individual observations (based on the distribution)</p></li>
+<li><p>Most people understand the <strong>normal</strong> or Gaussian distribution, but htere are many, many different types of distributions</p></li>
+</ul>
+<p><strong>WORD OF ADVICE</strong>: Always plot your data</p>
+<pre class="r"><code>fish_data &lt;- read_csv(&quot;https://raw.githubusercontent.com/chrischizinski/MWFWC_FishR/master/CourseMaterial/data/wrkshp_data.csv&quot;)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   .default = col_character(),
+##   WaterbodyCode = col_integer(),
+##   Area = col_integer(),
+##   MethodCode = col_integer(),
+##   surveydate = col_datetime(format = &quot;&quot;),
+##   Station = col_integer(),
+##   Effort = col_integer(),
+##   SpeciesCode = col_integer(),
+##   LengthGroup = col_integer(),
+##   FishCount = col_integer(),
+##   FishLength = col_integer(),
+##   FishWeight = col_integer(),
+##   Age = col_integer(),
+##   Edge = col_integer(),
+##   Annulus1 = col_integer(),
+##   Annulus2 = col_integer(),
+##   Annulus3 = col_integer(),
+##   Annulus4 = col_integer(),
+##   Annulus5 = col_integer(),
+##   Annulus6 = col_integer(),
+##   Annulus7 = col_integer()
+##   # ... with 2 more columns
+## )</code></pre>
+<pre><code>## See spec(...) for full column specifications.</code></pre>
+<pre class="r"><code>glimpse(fish_data)</code></pre>
+<pre><code>## Observations: 16,527
+## Variables: 43
+## $ WaterbodyCode &lt;int&gt; 4113, 4113, 4113, 4113, 4113, 4113, 4113, 4113, ...
+## $ Area          &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ MethodCode    &lt;int&gt; 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, ...
+## $ surveydate    &lt;dttm&gt; 2014-10-29 05:00:00, 2014-10-29 05:00:00, 2014-...
+## $ Station       &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, ...
+## $ Effort        &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ...
+## $ SpeciesCode   &lt;int&gt; 730, 730, 730, 730, 730, 730, 730, 730, 730, 730...
+## $ LengthGroup   &lt;int&gt; 100, 120, 140, 150, 160, 170, 180, 190, 200, 210...
+## $ FishCount     &lt;int&gt; 1, 1, 1, 2, 2, 3, 6, 6, 3, 3, 2, 3, 2, 1, 2, 1, ...
+## $ FishLength    &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ FishWeight    &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ Age           &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ Edge          &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ Annulus1      &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ Annulus2      &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ Annulus3      &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ Annulus4      &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ Annulus5      &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ Annulus6      &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ Annulus7      &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ Annulus8      &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ Annulus9      &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ Annulus10     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ Annulus11     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ Annulus12     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ Annulus13     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ Annulus14     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ Annulus15     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ Annulus16     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ Annulus17     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ Annulus18     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ Annulus19     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ Annulus20     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ Annulus21     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ Annulus22     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ Annulus23     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ Annulus24     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ Annulus25     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ Annulus26     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ Annulus27     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ Annulus28     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ Annulus29     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ Annulus30     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...</code></pre>
+<pre class="r"><code>fish_data %&gt;% 
+  select(WaterbodyCode:Age) %&gt;% 
+  mutate(Age = as.numeric(Age)) %&gt;% 
+  filter(!is.na(Age),
+         WaterbodyCode == 4999,
+         SpeciesCode %in% c(780)) -&gt; FishAge  
+
+glimpse(FishAge)</code></pre>
+<pre><code>## Observations: 82
+## Variables: 12
+## $ WaterbodyCode &lt;int&gt; 4999, 4999, 4999, 4999, 4999, 4999, 4999, 4999, ...
+## $ Area          &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ MethodCode    &lt;int&gt; 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, ...
+## $ surveydate    &lt;dttm&gt; 2013-09-24 05:00:00, 2013-09-24 05:00:00, 2013-...
+## $ Station       &lt;int&gt; 2, 2, 2, 2, 4, 4, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, ...
+## $ Effort        &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ...
+## $ SpeciesCode   &lt;int&gt; 780, 780, 780, 780, 780, 780, 780, 780, 780, 780...
+## $ LengthGroup   &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ FishCount     &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ FishLength    &lt;int&gt; 248, 232, 195, 264, 262, 258, 96, 256, 233, 243,...
+## $ FishWeight    &lt;int&gt; 198, 154, 104, 242, 230, 210, 8, 218, 172, 168, ...
+## $ Age           &lt;dbl&gt; 7, 3, 2, 4, 6, 5, 1, 4, 5, 6, 5, 3, 3, 3, 3, 3, ...</code></pre>
+<p>Let’s look at distribution plots of <code>FishLength</code> and <code>Age</code></p>
+<pre class="r"><code>ggplot(data = FishAge) + 
+  geom_histogram(aes(x = Age), binwidth = 1, fill = &quot;green&quot;, colour = &quot;black&quot;) +
+  theme_bw()</code></pre>
+<p><img src="/www.snr-r-group.netlify.compost/2017-02-10-EcologicalDetective2_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<pre class="r"><code>ggplot(data = FishAge,aes(x = Age)) + 
+  geom_histogram(aes(y = ..density..),binwidth = 1, fill = &quot;green&quot;, colour = &quot;black&quot;) +
+  geom_density(colour = &quot;red&quot;, fill = &quot;red&quot;, alpha = 0.5) +
+  theme_bw()</code></pre>
+<p><img src="/www.snr-r-group.netlify.compost/2017-02-10-EcologicalDetective2_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
+<pre class="r"><code>ggplot(data = FishAge) +
+  geom_histogram(aes(x = FishLength), binwidth = 10, fill = &quot;red&quot;, colour = &quot;black&quot; ) + 
+  theme_bw()</code></pre>
+<p><img src="/www.snr-r-group.netlify.compost/2017-02-10-EcologicalDetective2_files/figure-html/unnamed-chunk-4-3.png" width="672" /></p>
+<pre class="r"><code>ggplot(data = FishAge) +
+  geom_violin(aes(x = &quot;&quot;, y = FishLength), fill = &quot;red&quot;, colour = &quot;black&quot; ) + 
+  theme_bw()</code></pre>
+<p><img src="/www.snr-r-group.netlify.compost/2017-02-10-EcologicalDetective2_files/figure-html/unnamed-chunk-4-4.png" width="672" /></p>
+<pre class="r"><code>ggplot(data = FishAge) +
+  geom_point(aes(x = &quot;&quot;, y = FishLength), position = &quot;jitter&quot;) +
+  geom_boxplot(aes(x = &quot;&quot;, y = FishLength), fill = &quot;red&quot;, colour = &quot;black&quot;, alpha = 0.25, outlier.colour = NA) + 
+  theme_bw()</code></pre>
+<p><img src="/www.snr-r-group.netlify.compost/2017-02-10-EcologicalDetective2_files/figure-html/unnamed-chunk-4-5.png" width="672" /></p>
+</div>
+</div>
+
+    
+    
+
+    
+
+        <h4 class="page-header">Related</h4>
+
+         <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/www.snr-r-group.netlify.com/post/2017-04-28-likelihood/">Ecological Detective -- Maximum likelihood</a></h4>
+    <h5>April 28, 2017</h5>
+    
+    <a href="/www.snr-r-group.netlify.comtags/ecodetective"><kbd class="item-tag">EcoDetective</kbd></a>
+    
+
+</div>
+  <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/www.snr-r-group.netlify.com/post/2017-04-14-sumofsquares/">Ecological Detective -- The Confrontation:  Sum of squares</a></h4>
+    <h5>April 14, 2017</h5>
+    
+    <a href="/www.snr-r-group.netlify.comtags/ecodetective"><kbd class="item-tag">EcoDetective</kbd></a>
+    
+
+</div>
+  <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/www.snr-r-group.netlify.com/post/2017-03-30-incidentalcatch/">Incidental catch in fisheries:  seabirds in the New Zealand squid trawl fisheries</a></h4>
+    <h5>March 30, 2017</h5>
+    
+    <a href="/www.snr-r-group.netlify.comtags/ecodetective"><kbd class="item-tag">EcoDetective</kbd></a>
+    
+
+</div>
+ 
+
+    
+
+    
+
+        <h4 class="page-header">Comments</h4>
+
+        <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "snr-r-group" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    
+
+</main>
+
+        <footer>
+
+            <p class="copyright text-muted">&copy; All rights reserved. Powered by <a href="https://gohugo.io">Hugo</a> and <a href="https://github.com/calintat/minimal">Minimal</a></p>
+
+        </footer>
+       
+    </body>
+
+</html>
+

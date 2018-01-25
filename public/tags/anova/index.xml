@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Anova on SNR R User Group</title>
+    <link>/www.snr-r-group.netlify.com/tags/anova/</link>
+    <description>Recent content in Anova on SNR R User Group</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 16 Dec 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/www.snr-r-group.netlify.com/tags/anova/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Multiple factor ANOVA</title>
+      <link>/www.snr-r-group.netlify.com/post/2016-12-16-anova_multifactor/</link>
+      <pubDate>Fri, 16 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/www.snr-r-group.netlify.com/post/2016-12-16-anova_multifactor/</guid>
+      <description>The RMarkdown file for this lesson can be found here.
+This lesson will follow Chapter 9, 10, and in Quinn and Keough (2002).
+Load the packages we will be using in this lesson
+library(tidyverse) library(broom) library(multcomp) # install.packages(&amp;#39;afex&amp;#39;) # library(afex) Nested designs Common extension of the single factor design is the nested design - additional factors are included that are nested within the main factor of interest - characteristic feature that distinguishes from other multifactor designs is that the categories of the nested factor(s) within each level of the main factor are different.</description>
+    </item>
+    
+    <item>
+      <title>ANOVA</title>
+      <link>/www.snr-r-group.netlify.com/post/2016-12-09-anova_1factor/</link>
+      <pubDate>Fri, 09 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/www.snr-r-group.netlify.com/post/2016-12-09-anova_1factor/</guid>
+      <description>The RMarkdown file for this lesson can be found here.
+This lesson will follow Chapter 8 in Quinn and Keough (2002).
+Load the packages we will be using in this lesson
+library(tidyverse) library(broom) library(lme4) library(multcomp) Comparing groups or treatments  Analysis of variance (ANOVA) is a statistical technique to partition and analyze the variation of a continuous response variable Previously we used ANOVA to partition the variation in a response variable into that explained by the linear regression with one or more continuous predictor variables and that unexplained by the regression model The statistical distinction between “classical regression” and “classical ANOVA” is artificial, which is why we can use the lm() with anova() or the aov function in R Two prime reasons to use classical ANOVA: examine the relative contribution of sources of variation to the total amount of the variability in the response variable test the null hypothesis (H0) that population group or treatment means are equal   Single factor  A single factor or one way design = single factor or predictor  factor can comprise several levels completely randomized (CR) designs (no restriction on the random allocation of experimental or sampling units to factor levels)   Types of predictors  Two types of factors  Fixed - all the levels of the factor that are of interest are included in the analysis  cannot extrapolate beyond these levels, repeat experiment keep same levels called: fixed effect models or Model 1 ANOVAs conclusions for a fixed factor are restricted to those specific groups we used in the experiment or sampling program  Random - we are only using a random selection of all the possible levels of the factor  usually make inferences about all the possible groups from our sample of groups called: random effect models or Model 2 ANOVAs analogous to Model 2 regression draw conclusions about the population of groups from which we have randomly chosen a subset (like site or time)    Lets begin exploring this in R, using the medley data</description>
+    </item>
+    
+  </channel>
+</rss>

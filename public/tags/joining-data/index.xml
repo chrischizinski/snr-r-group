@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Joining Data on SNR R User Group</title>
+    <link>/www.snr-r-group.netlify.com/tags/joining-data/</link>
+    <description>Recent content in Joining Data on SNR R User Group</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 29 Sep 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/www.snr-r-group.netlify.com/tags/joining-data/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Joining data</title>
+      <link>/www.snr-r-group.netlify.com/post/2016-09-29-joining_data_sets/</link>
+      <pubDate>Thu, 29 Sep 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/www.snr-r-group.netlify.com/post/2016-09-29-joining_data_sets/</guid>
+      <description>Very often when we are working with datasets, particularly databases, we often want to combine multiple datasets. Traditionally, in R, this was done with the function merge(). Since the development of the tidyverse there has been improvements on the types and speed of joins. The joins available in the dplyr() package follow those in SQL type joins.
+We will explore these types of joins using datasets from the our github repository</description>
+    </item>
+    
+  </channel>
+</rss>

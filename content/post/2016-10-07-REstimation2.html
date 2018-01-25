@@ -1,0 +1,122 @@
+---
+title: "Estimation of parameters.  Part 2"
+date: 2016-10-07
+categories: ["R"]
+tags: ["Regression"]
+---
+
+
+
+<p>Like determining population parameters , we often want to calculate the parameters in our regression models. There are two basic procedures that are often used to determine those. These sections are only meant to be illustrative and not comprehensive into the topic.</p>
+<p>I based these illustrations heavily on the material from the <a href="http://press.princeton.edu/titles/5987.html"><strong>Ecological Detective: Confronting Models with Data</strong></a>. I highly encourage you to read this book and follow along with the psuedo code in the book.</p>
+<div id="sum-of-squares-ordinary-least-squares-ols" class="section level2">
+<h2>Sum of squares (Ordinary Least Squares [OLS])</h2>
+<p>Simplest method of estimating parameters.</p>
+<p>Several selling points:</p>
+<ol style="list-style-type: decimal">
+<li>Simple, no assumptions about the uncertainty</li>
+<li>Long history of use in science</li>
+<li>Computational methods allow us to do remarkable calculations</li>
+</ol>
+<pre class="r"><code>library(ggplot2)
+set.seed(456789)
+
+fake_data&lt;-data.frame(x = rpois(30, 5))
+fake_data$y = fake_data$x *2 + rnorm(30, sd = 2)
+
+ggplot(data = fake_data) + 
+  geom_point(aes(x = x, y = y), size = 2) +
+  theme_bw()</code></pre>
+<p><img src="/www.snr-r-group.netlify.compost/2016-10-07-REstimation2_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<pre class="r"><code>start.val &lt;- -2
+max.val &lt;- 6
+
+poss.vals &lt;- seq(start.val,max.val, by= 0.01)
+
+length(poss.vals)</code></pre>
+<pre><code>## [1] 801</code></pre>
+<pre class="r"><code>SS_stor&lt;-data.frame(poss.val = poss.vals, SS = NA)
+
+for( i in 1:length(poss.vals)){
+  pred.vals&lt;- fake_data$x * poss.vals[i]
+  
+  SS_stor$SS[i] &lt;- sum((pred.vals - fake_data$y)^2)
+}
+
+beta_val&lt;-SS_stor$poss.val[which(SS_stor$SS == min(SS_stor$SS))]
+
+ggplot(data=SS_stor) +
+  geom_line(aes(x = poss.vals, y = SS), size = 1) +
+  geom_vline(aes(xintercept = beta_val), colour = &quot;red&quot;, linetype = &quot;dashed&quot;) +
+  labs(x = &quot;Possible values&quot;, y = &quot;Sum of squares&quot;) +
+  scale_x_continuous(breaks = seq(start.val,max.val, by = 0.5)) +
+  theme_bw()</code></pre>
+<p><img src="/www.snr-r-group.netlify.compost/2016-10-07-REstimation2_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<pre class="r"><code>beta_pred &lt;- data.frame(x = min(fake_data$x):max(fake_data$x))
+beta_pred$fit.y &lt;- beta_pred$x * beta_val
+
+ggplot() + 
+  geom_point(data = fake_data, aes(x = x, y = y), size = 2) +
+  geom_line(data = beta_pred, aes(x = x, y = fit.y), colour=&quot;red&quot;) +
+  theme_bw()</code></pre>
+<p><img src="/www.snr-r-group.netlify.compost/2016-10-07-REstimation2_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>What if we have two parameters?</p>
+<pre class="r"><code>set.seed(345678)
+
+fake_data2&lt;-data.frame(x1 = rpois(30, 5), x2 = rpois(30, 2))
+fake_data2$y = fake_data2$x1 *2 + rnorm(30, sd = 2) + fake_data2$x2 *-4 + rnorm(30, sd = 2)</code></pre>
+<p>Use the above approach to estimate the values for the two parameters.</p>
+</div>
+<div id="maximum-likelihood" class="section level2">
+<h2>Maximum likelihood</h2>
+<p>Given a set of observations from the population, we can find estimates of one (or many) parameters that maximize the liklihood of observing those data. The likelihood function provides the likelihood of the observed data for all possible values of the parameter we are trying to estimate.</p>
+<p>This approach allows us to incorporate some of the uncertainty based on probability distributions. For example, if the deviations of the data from the average follow a normal distribution, then it can be assumed that the uncertainty is normally distributed.</p>
+<p>This approach allows us to develop confidence bounds around our parameters that we could not do in the sum of squares approach.</p>
+<div id="likelihood-and-maximum-likelihood" class="section level3">
+<h3>Likelihood and Maximum Likelihood</h3>
+<p>The probability of observing the data <span class="math inline">\(Y_i\)</span> given a particular parameter value <span class="math inline">\(p\)</span> is: <span class="math display">\[ Pr(Y_i | p) \]</span></p>
+<p>The subscript on Y, indicates that there are many possible outcomes but only one parameter <span class="math inline">\(p\)</span>. Thus we can ask, “Given these data, how likely are the possible hypothesis?”</p>
+<p><span class="math inline">\(L \{data | hypothesis \}\)</span> or <span class="math inline">\(L\{Y | p_m\}\)</span>. Notice the difference from the previous equation. In the likelihood function we have one observation but numerous potential hypotheses or parameter values. The key difference between likelihood and probability is that with the probability the hypothesis is known and data are unknown, whereas the likelihood the data are known and the hypotheses are unknown.</p>
+<p>Thus there are parameter values that are more likely than others.</p>
+<p>The parameter that makes the likelihood as large as possible is the <em>maximum likelihood estimate</em> (MLE). Generally likelihoods are very small values and thus the log likelihood is used and to make it analogous to sum of squares we use the negative value of that. So the best fit parameter value will be the negative, log likelihood.</p>
+<p>As an example, consider the heights of ten people in cm. We can assume that height is normally distributed with a standard deviation of 10 cm.</p>
+<pre class="r"><code>height_data &lt;- data.frame(ind = 1:10, height = c(171, 168, 180, 190, 169, 172, 162, 181, 181, 177) )
+
+height_data</code></pre>
+<pre><code>##    ind height
+## 1    1    171
+## 2    2    168
+## 3    3    180
+## 4    4    190
+## 5    5    169
+## 6    6    172
+## 7    7    162
+## 8    8    181
+## 9    9    181
+## 10  10    177</code></pre>
+<p>The likelihood for the true mean of the population can be given as:</p>
+<p><span class="math display">\[ L\{Y | p_m \} = \frac{1}{10 \sqrt{2 \pi}} exp \left( - \frac{(Y - m)^2}{200} \right) \]</span></p>
+<p>and the negative log-likelihood for 10 of the ten heights is:</p>
+<p><span class="math display">\[ L\{Y | p_m \} = n[\log(10) + \frac{1}{2}\log(2 \pi) ] + \sum_{i=1}^n \frac{(Y_i - m)^2}{200}\]</span></p>
+<pre class="r"><code>m&lt;- seq(160, 200, by= 0.25) # mean height
+
+data_stor&lt;-data.frame(m = m, ll = NA)
+
+for(i in 1:length(m)){
+  
+  ll &lt;- 10*(log(10) + 1/2*log(2*pi)) + sum((height_data$height - m[i])^2)/200
+  
+  data_stor$ll[i] &lt;- ll
+  }</code></pre>
+<pre class="r"><code>ggplot() +
+  geom_line(data =data_stor, aes(x = m, y = ll), size = 1, colour = &quot;blue&quot; ) +
+  scale_x_continuous(breaks = seq(160, 200, by = 5)) +
+  theme_bw()</code></pre>
+<p><img src="/www.snr-r-group.netlify.compost/2016-10-07-REstimation2_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>And to find that value:</p>
+<pre class="r"><code>data_stor[which(data_stor$ll == min(data_stor$ll)),]</code></pre>
+<pre><code>##      m       ll
+## 61 175 35.24024</code></pre>
+<p>This is an overly simplified description of using likelihood to estimate parameters. In all reality, it often requires calculus or complex iterative algorithms to determine the value that maximizes the likelihood function.</p>
+</div>
+</div>

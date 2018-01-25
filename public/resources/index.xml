@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Resources on SNR R User Group</title>
+    <link>/www.snr-r-group.netlify.com/resources/</link>
+    <description>Recent content in Resources on SNR R User Group</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 28 Jan 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/www.snr-r-group.netlify.com/resources/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Commonly used resources</title>
+      <link>/www.snr-r-group.netlify.com/resources/resources/</link>
+      <pubDate>Sun, 28 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/www.snr-r-group.netlify.com/resources/resources/</guid>
+      <description> This page has some commonly used resources for the class
+Link to data sources  snr-r-group/data/  Guide to good and reproducible code  BES Guide to reproducible code Google&amp;rsquo;s R Style Guide Hadley Wickham&amp;rsquo;s Style Guide Accessibility, reusability, reliability: Improving the standards for publishing code in Methods in Ecology and Evolution Authors formatR  Cheat sheets  Tidyverse, ggplot2, Rstudio, and more  </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,305 @@
+---
+title: "ANOVA"
+date: 2016-12-09
+categories: ["R"]
+tags: ["Regression", "ANOVA"]
+---
+
+
+
+<p>The RMarkdown file for this lesson can be found <a href="https://raw.githubusercontent.com/chrischizinski/SNR_R_Group/master/Rmd/2016-12-09-ANOVA_1factor.Rmd">here</a>.</p>
+<p>This lesson will follow Chapter 8 in Quinn and Keough (2002).</p>
+<p>Load the packages we will be using in this lesson</p>
+<pre class="r"><code>library(tidyverse)
+library(broom)
+library(lme4)
+library(multcomp)</code></pre>
+<div id="comparing-groups-or-treatments" class="section level2">
+<h2>Comparing groups or treatments</h2>
+<ul>
+<li>Analysis of variance (ANOVA) is a statistical technique to partition and analyze the variation of a continuous response variable</li>
+<li><a href="https://chrischizinski.github.io/SNR_R_Group/2016-10-28-SimpleRegression">Previously</a> we used ANOVA to partition the variation in a response variable into that explained by the linear regression with one or more continuous predictor variables and that unexplained by the regression model</li>
+<li>The statistical distinction between “classical regression” and “classical ANOVA” is artificial, which is why we can use the <code>lm()</code> with <code>anova()</code> or the <code>aov</code> function in R</li>
+<li>Two prime reasons to use classical ANOVA:
+<ol style="list-style-type: decimal">
+<li>examine the relative contribution of sources of variation to the total amount of the variability in the response variable</li>
+<li>test the null hypothesis (H0) that population group or treatment means are equal</li>
+</ol></li>
+</ul>
+<div id="single-factor" class="section level3">
+<h3>Single factor</h3>
+<ul>
+<li>A single factor or one way design = single factor or predictor
+<ul>
+<li>factor can comprise several levels</li>
+<li>completely randomized (CR) designs (no restriction on the random allocation of experimental or sampling units to factor levels)</li>
+</ul></li>
+</ul>
+<div id="types-of-predictors" class="section level4">
+<h4>Types of predictors</h4>
+<ul>
+<li>Two types of factors
+<ul>
+<li>Fixed - all the levels of the factor that are of interest are included in the analysis
+<ul>
+<li>cannot extrapolate beyond these levels, repeat experiment keep same levels</li>
+<li>called: fixed effect models or Model 1 ANOVAs</li>
+<li>conclusions for a fixed factor are restricted to those specific groups we used in the experiment or sampling program</li>
+</ul></li>
+<li>Random - we are only using a random selection of all the possible levels of the factor
+<ul>
+<li>usually make inferences about all the possible groups from our sample of groups</li>
+<li>called: random effect models or Model 2 ANOVAs</li>
+<li>analogous to <a href="https://chrischizinski.github.io/SNR_R_Group/2016-10-28-SimpleRegression">Model 2 regression</a></li>
+<li>draw conclusions about the population of groups from which we have randomly chosen a subset (like site or time)</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>Lets begin exploring this in R, using the <code>medley</code> data</p>
+<p>This data includes: * STREAM - name of streams in the Rocky Mountain region of Colorado, USA * ZINC - categorical zinc concentration level (HIGH=high, MED=medium, LOW=low, BACK=background) * DIVERSTY - Shannon-Wiener species diversity of diatoms * ZNGROUP - alternative categorical zinc concentration level (1=background, 2=low, 3=medium, 4=high)</p>
+<pre class="r"><code>medley &lt;- read_csv(&quot;https://raw.githubusercontent.com/chrischizinski/SNR_R_Group/master/data/ExperimentalDesignData/chpt08/medley.csv&quot;)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   STREAM = col_character(),
+##   ZINC = col_character(),
+##   DIVERSTY = col_double(),
+##   ZNGROUP = col_integer(),
+##   RESID1 = col_double(),
+##   PREDICT1 = col_double(),
+##   RESID2 = col_double(),
+##   PREDICT2 = col_double()
+## )</code></pre>
+<pre class="r"><code>glimpse(medley)</code></pre>
+<pre><code>## Observations: 34
+## Variables: 8
+## $ STREAM   &lt;chr&gt; &quot;Eagle&quot;, &quot;Eagle&quot;, &quot;Eagle&quot;, &quot;Eagle&quot;, &quot;Blue&quot;, &quot;Blue&quot;, &quot;...
+## $ ZINC     &lt;chr&gt; &quot;BACK&quot;, &quot;HIGH&quot;, &quot;HIGH&quot;, &quot;MED&quot;, &quot;BACK&quot;, &quot;HIGH&quot;, &quot;BACK&quot;...
+## $ DIVERSTY &lt;dbl&gt; 2.27, 1.25, 1.15, 1.62, 1.70, 0.63, 2.05, 1.98, 1.04,...
+## $ ZNGROUP  &lt;int&gt; 1, 4, 4, 3, 1, 4, 1, 1, 4, 3, 3, 1, 3, 4, 4, 4, 2, 2,...
+## $ RESID1   &lt;dbl&gt; 0.47250000, -0.02777778, -0.12777778, -0.09777778, -0...
+## $ PREDICT1 &lt;dbl&gt; 1.797500, 1.277778, 1.277778, 1.717778, 1.797500, 1.2...
+## $ RESID2   &lt;dbl&gt; 0.69750000, -0.32250000, -0.42250000, 0.04750000, 0.0...
+## $ PREDICT2 &lt;dbl&gt; 1.572500, 1.572500, 1.572500, 1.572500, 1.670000, 1.6...</code></pre>
+<pre class="r"><code>medley %&gt;% 
+  mutate(ZINC = factor(ZINC, levels = c(&quot;BACK&quot;,&quot;LOW&quot;,&quot;MED&quot;,&quot;HIGH&quot;)),
+         AllDiversity = mean(DIVERSTY)) %&gt;% 
+  group_by(ZINC) %&gt;% 
+  summarise(MeanDiversity = mean(DIVERSTY),
+            SEDiversity = sd(DIVERSTY)/sqrt(length(DIVERSTY)),
+            ALLDiversity = mean(AllDiversity))</code></pre>
+<pre><code>## # A tibble: 4 x 4
+##   ZINC  MeanDiversity SEDiversity ALLDiversity
+##   &lt;fct&gt;         &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;
+## 1 BACK           1.80       0.172         1.69
+## 2 LOW            2.03       0.157         1.69
+## 3 MED            1.72       0.168         1.69
+## 4 HIGH           1.28       0.142         1.69</code></pre>
+</div>
+<div id="anova---fixed-effects" class="section level4">
+<h4>ANOVA - Fixed effects</h4>
+<pre class="r"><code>med_mod &lt;- lm(DIVERSTY ~ ZINC, data = medley)
+summary (med_mod)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = DIVERSTY ~ ZINC, data = medley)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.03750 -0.22896  0.07986  0.33222  0.79750 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  1.79750    0.16478  10.909 5.81e-12 ***
+## ZINCHIGH    -0.51972    0.22647  -2.295   0.0289 *  
+## ZINCLOW      0.23500    0.23303   1.008   0.3213    
+## ZINCMED     -0.07972    0.22647  -0.352   0.7273    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.4661 on 30 degrees of freedom
+## Multiple R-squared:  0.2826, Adjusted R-squared:  0.2108 
+## F-statistic: 3.939 on 3 and 30 DF,  p-value: 0.01756</code></pre>
+<pre class="r"><code>anova(med_mod)</code></pre>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: DIVERSTY
+##           Df Sum Sq Mean Sq F value  Pr(&gt;F)  
+## ZINC       3 2.5666 0.85554  3.9387 0.01756 *
+## Residuals 30 6.5164 0.21721                  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>med_aov&lt;-aov(DIVERSTY ~ ZINC, data = medley)
+summary(med_aov)</code></pre>
+<pre><code>##             Df Sum Sq Mean Sq F value Pr(&gt;F)  
+## ZINC         3  2.567  0.8555   3.939 0.0176 *
+## Residuals   30  6.516  0.2172                 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Remember we can partition the total sum of squares \( SS_{T} \) can be partitioned into two components - <code>ZINC</code> represents variation due to the difference between group means - calculated as \( {y_i} \) - \( {y} \); df is the number of groups minus 1</p>
+<ul>
+<li><code>Residuals</code> difference between the observations within each group
+<ul>
+<li>calculated as \( y_{ij} \) - \( {y_i} \); df is sum of the sample sizes minus the number of groups</li>
+</ul></li>
+<li>The mean squares from the ANOVA are sample variances
+<ul>
+<li>\( MS_{residuals} \) estimates \( _{}^2 \) , the pooled population variance of the error terms within groups. (Assumes homogeneity of error variances)</li>
+<li>\( MS_{groups} \) estimates the pooled variance of the error terms across groups plus: - a component representing the squared effects of the chosen groups if the factor is fixed - the variance between all possible groups if the factor is random</li>
+</ul></li>
+</ul>
+</div>
+<div id="null-hypothesis" class="section level4">
+<h4>Null hypothesis</h4>
+<ul>
+<li>Fixed effects: the null hypothesis tested in a single factor ANOVA is usually one of no difference between group means or no effect of treatments</li>
+<li>Random effects: the null hypothesis is that the variance between all possible groups equals zero</li>
+</ul>
+<p>If the H0 for a fixed factor is true, all \( <em>i \) equal zero (no group effects) and both \( MS</em>{groups} \) and \( MS_{residual} \) estimate \( _{}^2 \) and their ratio should be one. The ratio of two variances (or mean squares) is called an F-ratio.</p>
+<ul>
+<li><p>If the H0 is false, then at least one \( <em>i \) will be different from zero. Therefore, \( MS</em>{groups} \) has a larger expected value than \( MS_{residual} \) and their F-ratio will be greater than one.</p></li>
+<li><p>A central F distribution is a probability distribution of the F-ratio when the two sample variances come from populations with the same expected values. There are different central F distributions depending on the df of the two sample variances</p></li>
+</ul>
+<p>We can explore this using the df and F-value to show the probability calculation. <code>df = 3, 30 and F-value = 3.9387</code></p>
+<pre class="r"><code># Calculate the F-value
+tidy_aov&lt;-tidy(med_aov)
+F_val&lt;- tidy_aov$meansq[1]/tidy_aov$meansq[2]
+F_val</code></pre>
+<pre><code>## [1] 3.93869</code></pre>
+<pre class="r"><code># Create a probability distribution
+f_prob&lt;-data.frame(F =seq(0,8, by = 0.1),pval= pf(seq(0,8, by = 0.1), 3, 30))
+
+# Plot this distribution
+ggplot(data = f_prob) + 
+  geom_line(aes(x = F, y = pval)) +
+  geom_vline(aes(xintercept = 3.9387), colour = &quot;red&quot;) + 
+  annotate(&#39;text&#39;, x = 3.9387, y = 0.5, label = paste(round(1-pf(3.9387, 3, 30), digits = 4)), hjust = 0) +
+  theme_bw()</code></pre>
+<p><img src="/www.snr-r-group.netlify.compost/2016-12-09-ANOVA_1factor_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<ul>
+<li>Construction of the tests of null hypotheses is identical for fixed and random factors in the single factor ANOVA model but these null hypotheses have very different interpretations
+<ul>
+<li>The H0 for the fixed factor refers only to the groups used in the study whereas the H0 for the random factor refers to all the possible groups that could have been used</li>
+<li>The assumption of equal within group variances is so important. For example, if \( <em>{i1} \) does not equal \( </em>{i2} \), then \( MS_{residual} \) does not estimate a single population variance , and we cannot construct a reliable F-ratio for testing the H0 of no group effects</li>
+</ul></li>
+</ul>
+</div>
+<div id="unbalanced-designs" class="section level4">
+<h4>Unbalanced designs</h4>
+<ul>
+<li>Unequal sample sizes among groups can cause some problems:
+<ol style="list-style-type: decimal">
+<li>Different group means will be estimated with different levels of precision, which can make interpretation difficult</li>
+<li>ANOVA F test is more sensitive to violations of assumptions (i.e., homogeneity of variances) if sample sizes differ</li>
+<li>Estimation of group effects is more difficult</li>
+<li>Power calculations for random effects models are difficult</li>
+</ol></li>
+</ul>
+<p>So what do you do if you have an unbalanced design? - Delete observations to make it balanced - Substitute group means to make balanced - If differences in sample size and homogeneity of variances does not seem violated, fit linear ANOVA - Prevent unbalanced designs in the experimental design</p>
+</div>
+</div>
+<div id="factor-effects" class="section level3">
+<h3>Factor effects</h3>
+<ul>
+<li>In regression, with a continuous predictor, the coefficient value in the models is an assessment of the effect size of X on Y</li>
+<li>When your predictor is categorical how do we measure effect size?
+<ul>
+<li>One measure of group effects is the variance associated with the groups over and above the residual variance (similar to \( R^2 \))</li>
+</ul></li>
+</ul>
+<pre class="r"><code>tidy_aov$sumsq[1]/sum(tidy_aov$sumsq)</code></pre>
+<pre><code>## [1] 0.2825725</code></pre>
+<pre class="r"><code>glance(med_aov)$r.squared</code></pre>
+<pre><code>## [1] 0.2825725</code></pre>
+<p>What can be some of the issues with this measure?</p>
+<div id="random-effects-variance-components" class="section level4">
+<h4>Random effects: variance components</h4>
+<ul>
+<li>There are two variance components of interest
+<ul>
+<li>true variance between replicate observations within each group, averaged across groups is estimated by \( MS_{residual} \) or \( _{}^2 \)</li>
+<li>true variance between the means of all the possible groups we could have used in our study is is termed the added variance component due to groups \( _{a}^2 \)</li>
+</ul></li>
+</ul>
+<p>Explore this lets make a balanced dataset</p>
+<pre class="r"><code>set.seed(12345)
+n&lt;-20
+rand_effects_dat1 &lt;- data.frame(GRP = &quot;A&quot;,
+                               Value = rnorm(n, mean= 15, sd = 3))
+rand_effects_dat2 &lt;- data.frame(GRP = &quot;B&quot;,
+                               Value = rnorm(n, mean= 30, sd = 3))
+rand_effects_dat3 &lt;- data.frame(GRP = &quot;C&quot;,
+                               Value = rnorm(n, mean= 20, sd = 3))
+rand_effects_dat4 &lt;- data.frame(GRP = &quot;D&quot;,
+                               Value = rnorm(n, mean= 45, sd = 3))
+
+rand_effects_dat &lt;- rbind(rand_effects_dat1,
+                          rand_effects_dat2,
+                          rand_effects_dat3,
+                          rand_effects_dat4)
+
+## Random effect ANOVA
+aov_re&lt;-aov(Value ~ Error(GRP), data = rand_effects_dat)
+
+err_grp &lt;- data.frame(unclass(summary(aov_re)$`Error: GRP`))
+err_res &lt;- data.frame(unclass(summary(aov_re)$`Error: Within`))
+                      
+sigma_e = err_res$Mean.Sq
+sigma_a = (err_grp$Mean.Sq - sigma_e)/20 # 20 obs per group
+
+lme_re &lt;- lmer(Value ~ 1 + (1|GRP), data = rand_effects_dat)
+summary(lme_re)</code></pre>
+<pre><code>## Linear mixed model fit by REML [&#39;lmerMod&#39;]
+## Formula: Value ~ 1 + (1 | GRP)
+##    Data: rand_effects_dat
+## 
+## REML criterion at convergence: 439.6
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -2.1949 -0.7133  0.1898  0.6401  1.8633 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev.
+##  GRP      (Intercept) 181.27   13.464  
+##  Residual              11.62    3.409  
+## Number of obs: 80, groups:  GRP, 4
+## 
+## Fixed effects:
+##             Estimate Std. Error t value
+## (Intercept)   28.113      6.743   4.169</code></pre>
+<pre class="r"><code>sigma_a/ (sigma_a + sigma_e) #proportion of total variance due to the random factor</code></pre>
+<pre><code>## [1] 0.9397645</code></pre>
+</div>
+<div id="fixed-effects-variance-components" class="section level4">
+<h4>Fixed effects: variance components</h4>
+<ul>
+<li>More problematic than in the random effect models
+<ul>
+<li>Several have criticized measures of variance explained for fixed factors. They argued that the population “variance” of a set of fixed groups makes no sense and this measure cannot be compared to the average population variance between observations within groups, which is a true variance</li>
+</ul></li>
+<li>Two approaches have been developed omega squared ( \( ^2 \); variance of the group means) and Cohen’s effect size (<em>f</em>; difference among means measured in units of the standard deviation between replicates within group)</li>
+<li>Cohen suggests that f values of 0.1, 0.25, and 0.4 represent small, medium, and large effect sizes respectively</li>
+</ul>
+<p>Let’s go back to the <code>medley</code> dataset to explore these</p>
+<pre class="r"><code>## Omega squared
+p&lt;- length(unique(medley$ZINC))
+nm&lt;-length(medley$ZINC)
+
+(tidy_aov$sumsq[1] - (p-1)* tidy_aov$meansq[2])/(sum(tidy_aov$sumsq) + tidy_aov$meansq[2])</code></pre>
+<pre><code>## [1] 0.2059056</code></pre>
+<pre class="r"><code>## Cohens effect size
+
+sqrt((((p - 1)/nm) * (tidy_aov$meansq[1] - tidy_aov$meansq[2]))/tidy_aov$meansq[2])</code></pre>
+<pre><code>## [1] 0.5092113</code></pre>
+<pre class="r"><code>anova(med_mod)</code></pre>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: DIVERSTY
+##           Df Sum Sq Mean Sq F value  Pr(&gt;F)  
+## ZINC       3 2.5666 0.85554  3.9387 0.01756 *
+## Residuals 30 6.5164 0.21721                  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+</div>
+</div>

@@ -1,0 +1,218 @@
+---
+title: "Correlation"
+date: 2016-10-20
+categories: ["R"]
+tags: ["Regression"]
+---
+
+
+
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## ── Attaching packages ───────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
+<pre><code>## ✔ ggplot2 2.2.1     ✔ purrr   0.2.4
+## ✔ tibble  1.4.1     ✔ dplyr   0.7.4
+## ✔ tidyr   0.7.2     ✔ stringr 1.2.0
+## ✔ readr   1.1.1     ✔ forcats 0.2.0</code></pre>
+<pre><code>## ── Conflicts ──────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ readr::col_factor() masks scales::col_factor()
+## ✖ purrr::discard()    masks scales::discard()
+## ✖ dplyr::filter()     masks stats::filter()
+## ✖ dplyr::lag()        masks stats::lag()</code></pre>
+<pre class="r"><code>library(gridExtra)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;gridExtra&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     combine</code></pre>
+<pre class="r"><code>library(RCurl)</code></pre>
+<pre><code>## Loading required package: bitops</code></pre>
+<pre><code>## 
+## Attaching package: &#39;RCurl&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:tidyr&#39;:
+## 
+##     complete</code></pre>
+<pre class="r"><code>library(MASS)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;MASS&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     select</code></pre>
+<p>The RMarkdown file for this lesson can be found <a href="https://raw.githubusercontent.com/chrischizinski/SNR_R_Group/master/Rmd/2016-10-20-Correlation.Rmd">here</a></p>
+<div id="correlation-analysis" class="section level2">
+<h2>Correlation analysis</h2>
+<p>Consider a study, where we are interested in the relationship between two random variables.</p>
+<div id="bivariate-normal-distribution" class="section level3">
+<h3>Bivariate normal distribution</h3>
+<p>We need to think of our data as a population of \( y_{i1} \) and \(y_{i2} \) pairs (a joint distribution of two variables or <strong>a bivariate distribution</strong>).</p>
+<p>The bivariate normal distribution is defined by the mean and standard deviation of each variable and a parameter called the correlation coefficient, which measures the strength of the relationship between the two variables. A bivariate normal distribution implies that the individual variables are also normally distributed and also implies that any relationship between the two variables is a linear one.</p>
+<pre class="r"><code>set.seed(12345)
+
+    mean.x = 70  # mean of variable 1
+    sd.x=3  # sd of variable 1
+    mean.y=162 # mean of variable 2
+    sd.y=14 # sd of variable 1
+    r=0.55 # correlation between the two
+    z1 &lt;- rnorm(100)
+    z2 &lt;- rnorm(100)
+    x1 &lt;- sqrt(1-r^2)*sd.x*z1 + r*sd.x*z2 + mean.x
+    y1 &lt;- sd.y*z2 + mean.y
+
+    r=0.90 # correlation between the two
+    x2 &lt;- sqrt(1-r^2)*sd.x*z1 + r*sd.x*z2 + mean.x
+    y2 &lt;- sd.y*z2 + mean.y
+
+data_for_plot&lt;- rbind(data.frame(x = x1, y = y1, r =0.55),
+                       data.frame(x = x2, y = y2, r = 0.90))</code></pre>
+<pre class="r"><code>data_for_plot %&gt;% 
+  gather(var, val, x:y) %&gt;% 
+  ggplot() +
+  geom_density(aes(x=val, fill = var), alpha = 0.55) +
+  facet_wrap(~r, ncol = 1,labeller = label_both) +
+  theme_bw()</code></pre>
+<p><img src="/www.snr-r-group.netlify.compost/2016-10-20-Correlation_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<pre class="r"><code>ggplot(data=data_for_plot) +
+  geom_point(aes(x = x, y = y), color = &quot;red&quot;, size =1) + 
+  facet_wrap(~r, ncol = 1,labeller = label_both) +
+  theme_bw()</code></pre>
+<p><img src="/www.snr-r-group.netlify.compost/2016-10-20-Correlation_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
+</div>
+<div id="covariance-and-correlation" class="section level3">
+<h3>Covariance and correlation</h3>
+<p>Covariance is the linear relationship between two continuous variables.</p>
+<div id="covariance" class="section level4">
+<h4>Covariance</h4>
+<p><span class="math display">\[ s_{Y1Y2} = \frac{\sum_{i =1}^n (y_{i1} - \bar{y_1})(y_{i2} - \bar{y_2})}{n-1} \]</span></p>
+<p>and goes from \( -\) to \( +\)</p>
+<pre class="r"><code>#Covariance
+dev.x&lt;- x1 - mean(x1)
+dev.y&lt;- y1 - mean(y1)
+
+sum(dev.x * dev.y)/ (length(dev.x) - 1)</code></pre>
+<pre><code>## [1] 27.74278</code></pre>
+<pre class="r"><code>cov(x1,y1)</code></pre>
+<pre><code>## [1] 27.74278</code></pre>
+<p>One problem with covariance is that the absolute magnitude depends on the units of the two variables</p>
+<pre class="r"><code>cov(x1,y1)</code></pre>
+<pre><code>## [1] 27.74278</code></pre>
+<pre class="r"><code>cov(x1*1000,y1*100)</code></pre>
+<pre><code>## [1] 2774278</code></pre>
+</div>
+</div>
+<div id="pearson-correlation" class="section level3">
+<h3>Pearson correlation</h3>
+<p>The covariance can be standardized by dividing by the standard deviations of the two variables so that the value range between -1 and +1. This is called the Pearson (product-moment) correlation.</p>
+<p><span class="math display">\[ s_{Y1Y2} = \frac{\sum_{i =1}^n (y_{i1} - \bar{y_1})(y_{i2} - \bar{y_2})}{\sqrt{\sum_{i =1}^n (y_{i1} - \bar{y_1})^2 \sum_{i =1}^n (y_{i2} - \bar{y_2})^2}} \]</span></p>
+<p>The Pearson correlation measures the “strength” of the linear relationship between the two continuous variables.</p>
+<pre class="r"><code>sum(dev.x * dev.y)/ (sqrt(sum(dev.x^2) * sum(dev.y^2))) </code></pre>
+<pre><code>## [1] 0.5764552</code></pre>
+<pre class="r"><code>cor(x1,y1, method = &quot;pearson&quot;)</code></pre>
+<pre><code>## [1] 0.5764552</code></pre>
+<pre class="r"><code>cor.test(x1,y1, method = &quot;pearson&quot;)</code></pre>
+<pre><code>## 
+##  Pearson&#39;s product-moment correlation
+## 
+## data:  x1 and y1
+## t = 6.9837, df = 98, p-value = 3.472e-10
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0.4285615 0.6942644
+## sample estimates:
+##       cor 
+## 0.5764552</code></pre>
+<p>Remember up above when we generated <code>x1</code> and <code>y1</code> that we used a correlation value, <code>r</code>, of 0.55.</p>
+</div>
+<div id="robust-correlation-spearmans-rank-correlation" class="section level3">
+<h3>Robust correlation (Spearman’s rank correlation)</h3>
+<p>We may have a situation where the joint distribution of our two variables is not bivariate normal.</p>
+<ul>
+<li>non-normality in either variable</li>
+<li>monotonic relationships that are not linear</li>
+</ul>
+<pre class="r"><code>r_x1&lt;-rank(x1)
+r_y1&lt;-rank(y1)
+
+cor(r_x1, r_y1)</code></pre>
+<pre><code>## [1] 0.5744134</code></pre>
+<pre class="r"><code>cor(x1, y1, method =&quot;spearman&quot;)</code></pre>
+<pre><code>## [1] 0.5744134</code></pre>
+<pre class="r"><code># Kendalls tau is based on concordant and disconcordant pairs.  is more conservative than spearman
+cor(x1, y1, method =&quot;kendall&quot;)</code></pre>
+<pre><code>## [1] 0.3967677</code></pre>
+</div>
+<div id="parametric-and-non-parametric-confidence-regions" class="section level3">
+<h3>Parametric and non-parametric confidence regions</h3>
+<p>When representing a bivariate relationship with a scatterplot, it is often useful to include confidence regions. The confidence region is the region within which we would expect the observation represented by the population mean of the two variables to occur a percent of the time under repeated sampling from this population.</p>
+<pre class="r"><code>crabs&lt;-read_csv(&quot;https://raw.githubusercontent.com/chrischizinski/SNR_R_Group/master/data/ExperimentalDesignData/chpt05/green.csv&quot;)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   SITE = col_character(),
+##   QUADNUM = col_integer(),
+##   TOTMASS = col_double(),
+##   BURROWS = col_integer()
+## )</code></pre>
+<pre class="r"><code>crabs$SITE&lt;-factor(crabs$SITE, levels = c(&quot;LS&quot;,&quot;DS&quot;))
+
+ggplot(data = crabs) +
+  geom_point(aes(x = TOTMASS, y = BURROWS), size = 2) +
+  facet_wrap(~SITE, ncol = 2) +
+  coord_cartesian(xlim = c(0,8), ylim = c(0, 120), expand = F) +
+  scale_x_continuous(breaks = seq(0,8, by=2)) +
+  labs(x = &quot;Total crab biomass&quot;, y = &quot;Number of burrows&quot;) +
+  theme_bw()</code></pre>
+<p><img src="/www.snr-r-group.netlify.compost/2016-10-20-Correlation_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<div id="confidence-ellipse" class="section level4">
+<h4>Confidence ellipse</h4>
+<p>Assuming our two variables follow a bivariate normal distribution, the confidence band will always be an ellipse centered on the sample means of \( y_{i1} \) and \(y_{i2} \) and the orientation of the ellipse is determined by the covariance or correlation.</p>
+<pre class="r"><code>p&lt;-ggplot(data = crabs) +
+  geom_point(aes(x = TOTMASS, y = BURROWS), size = 2) +
+  stat_ellipse(geom = &quot;polygon&quot;, aes(x = TOTMASS, y = BURROWS), type = &quot;norm&quot;, level = 0.95, fill = &quot;pink&quot;, alpha = 0.25, color = &quot;black&quot;) +
+  facet_wrap(~SITE, ncol = 2) +
+  coord_cartesian(xlim = c(0,8), ylim = c(0, 120), expand = F) +
+  scale_x_continuous(breaks = seq(0,8, by=2)) +
+  labs(x = &quot;Total crab biomass&quot;, y = &quot;Number of burrows&quot;) +
+  theme_bw()
+
+p</code></pre>
+<p><img src="/www.snr-r-group.netlify.compost/2016-10-20-Correlation_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+</div>
+<div id="kernel-density" class="section level4">
+<h4>Kernel density</h4>
+<p>Sometimes we are not interested in the population mean of \( y_{i1} \) and \(y_{i2} \) but we just want a confidence interval based on the observed data. The kernel density for a value of <em>y </em> is the sum of hte estimates from a series of symmetrical distributuoins fitted to groups of local observations. Note that they are not constrained to an elliptical shape.</p>
+<pre class="r"><code>## For site LS
+dens1 &lt;- kde2d(crabs$TOTMASS[crabs$SITE ==&quot;LS&quot;], crabs$BURROWS[crabs$SITE ==&quot;LS&quot;], n = 100, lims = c(0,8,0,120))
+
+densdf &lt;- data.frame(expand.grid(TOTMASS = dens1$x, BURROWS =dens1$y), z = as.vector(dens1$z), SITE = &quot;LS&quot;)
+
+densdf$SITE&lt;-factor(densdf$SITE, levels = c(&quot;LS&quot;,&quot;DS&quot;))
+
+getLevel &lt;- function(x,y,prob=0.95) {
+    kk &lt;- MASS::kde2d(x,y)
+    dx &lt;- diff(kk$x[1:2])
+    dy &lt;- diff(kk$y[1:2])
+    sz &lt;- sort(kk$z)
+    c1 &lt;- cumsum(sz) * dx * dy
+    approx(c1, sz, xout = 1 - prob)$y
+}
+L95 &lt;- getLevel(crabs$TOTMASS[crabs$SITE==&quot;LS&quot;],crabs$BURROWS[crabs$SITE==&quot;LS&quot;])
+
+## For site DS
+dens2 &lt;- kde2d(crabs$TOTMASS[crabs$SITE ==&quot;DS&quot;], crabs$BURROWS[crabs$SITE ==&quot;DS&quot;], n = 100, lims = c(0,8,0,120))
+
+densdf2 &lt;- data.frame(expand.grid(TOTMASS = dens2$x, BURROWS =dens2$y), z = as.vector(dens2$z), SITE = &quot;DS&quot;)
+densdf2$SITE&lt;-factor(densdf2$SITE, levels = c(&quot;LS&quot;,&quot;DS&quot;))
+L952 &lt;- getLevel(crabs$TOTMASS[crabs$SITE==&quot;DS&quot;],crabs$BURROWS[crabs$SITE==&quot;DS&quot;])
+
+
+ggplot(data = crabs) +
+  geom_point(aes(x = TOTMASS, y = BURROWS), size = 2) +
+  geom_contour(data=densdf,aes(x = TOTMASS, y = BURROWS,z=z), breaks=L95, color=&quot;red&quot;, linetype = &quot;dashed&quot;) +
+    geom_contour(data=densdf2,aes(x = TOTMASS, y = BURROWS,z=z), breaks=L952, color=&quot;blue&quot;, linetype = &quot;dashed&quot;) +
+  facet_wrap(~SITE, ncol = 2) +
+  coord_cartesian(xlim = c(0,8), ylim = c(0, 120), expand = F) +
+  scale_x_continuous(breaks = seq(0,8, by=2)) +
+  labs(x = &quot;Total crab biomass&quot;, y = &quot;Number of burrows&quot;) +
+  theme_bw()</code></pre>
+<p><img src="/www.snr-r-group.netlify.compost/2016-10-20-Correlation_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+</div>
+</div>
+</div>

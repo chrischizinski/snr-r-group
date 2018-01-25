@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+         
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Getting to know R</title>
+        <style>
+
+    html body {
+        font-family: 'Raleway', sans-serif;
+        background-color: white;
+    }
+
+    :root {
+        --accent: #D00000;
+        --border-width:  5px ;
+    }
+
+</style>
+
+
+<link rel="stylesheet" href="/www.snr-r-group.netlify.com/css/main.css">
+
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+
+
+ <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/hybrid.min.css"> 
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+ 
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/swift.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/R.min.js"></script> 
+
+    <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script>
+ <meta name="generator" content="Hugo 0.30.2" />
+        
+        
+        
+        
+        <script async src="https://www.googletagmanager.com/gtag/js?id=A-48496439-2"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments)};
+          gtag('js', new Date());
+
+          gtag('config', 'A-48496439-2');
+        </script>
+        
+    </head>
+
+    
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script>
+
+    <body>
+         
+        <nav class="navbar navbar-default navbar-fixed-top">
+
+            <div class="container">
+
+                <div class="navbar-header">
+
+                    <a class="navbar-brand visible-xs" href="#">Getting to know R</a>
+
+                    <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                </div>
+
+                <div class="collapse navbar-collapse">
+
+                    
+                        <ul class="nav navbar-nav">
+                            
+                                <li><a href="/www.snr-r-group.netlify.com/">Home</a></li>
+                            
+                                <li><a href="/www.snr-r-group.netlify.com/post/">Posts</a></li>
+                            
+                                <li><a href="/www.snr-r-group.netlify.com/resources/">Resources</a></li>
+                            
+                        </ul>
+                    
+
+                    
+                        <ul class="nav navbar-nav navbar-right">
+                            
+                                <li class="navbar-icon"><a href="mailto:cchizinski2@unl.edu"><i class="fa fa-envelope-o"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://github.com/chrischizinski/"><i class="fa fa-github"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://twitter.com/chrischizinski/"><i class="fa fa-twitter"></i></a></li>
+                            
+                        </ul>
+                    
+
+                </div>
+
+            </div>
+
+        </nav>
+
+
+<main>
+
+    <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/www.snr-r-group.netlify.com/post/2016-08-26-rbasics/">Getting to know R</a></h4>
+    <h5>August 26, 2016</h5>
+    
+    <a href="/www.snr-r-group.netlify.comtags/basics"><kbd class="item-tag">Basics</kbd></a>
+    
+
+</div>
+
+
+    <br> <div class="text-justify"><p>This is the second lesson in “Getting to know R.” In our <a href="">first lesson</a>, we went over the very basics of R including installation, RStudio, and some of the basics of learning and getting help in R. The next sections we will begin to layout some of the “vocabulary” of R. For those that have used R before and know that R is a lot more than a letter in the alphabet, most of this will be a review.</p>
+<p>The R code for this lesson can be found <a href="">HERE</a></p>
+<div id="laying-out-your-r-scripts" class="section level2">
+<h2>Laying out your R scripts</h2>
+<p>Whenever I start a new R file I always have several things at the very top of your script. This will help you understand what was done in the file and improves the reproducibility of your analysis.</p>
+<ol style="list-style-type: decimal">
+<li>Title of your R script or a basic comment of what is done
+<ul>
+<li>This will help you later on when you are trying to go back to the analysis.</li>
+</ul></li>
+<li>The date that your script was most recently edited.</li>
+<li>Your name.</li>
+</ol>
+<div id="comments" class="section level3">
+<h3>Comments</h3>
+<p>These all can be created using comments in R. Comments are designated as <code>#</code> and anything to the right of them will not be run through R. These are a great way to annotate your code and help you understand what your are doing in your analysis.</p>
+<pre class="r"><code># This is a comment symbol.  
+ 2 + 2 # Anything to the right of the symbol will not be run in the analysis</code></pre>
+<pre><code>## [1] 4</code></pre>
+<p><strong>TIP</strong> If you are using RStudio you can comment on and off blocks of code using <code>control-shift-c</code>.</p>
+<p>So using comments at the top of my script, I would write:</p>
+<pre class="r"><code>## Getting to know R
+## 8-26-16
+## Chris Chizinski</code></pre>
+</div>
+<div id="options" class="section level3">
+<h3>Options</h3>
+<p>The next thing that I like to lay out on the top are my options. Option allow the user to set global options that affect how R computes and displays the results. While there are many of them, the one that I conistently have is <code>stringsAsFactors</code> set to <code>FALSE</code>. We will go over factors in a bit, but I like to retain control when factors are set (helps in data manipulation and analysis).</p>
+<pre class="r"><code>## Getting to know R
+## 8-26-16
+## Chris Chizinski
+
+options(stringsAsFactors = FALSE)</code></pre>
+</div>
+<div id="working-directory" class="section level3">
+<h3>Working directory</h3>
+<p>The next step is to provide my working directory. Simply, a working directory is a directory that you can readily read and write files to. Now you can use the RStudio to point and click your way to the directory, but this makes the <a href="https://ropensci.org/blog/2014/06/09/reproducibility/">reproducibilty</a> of your code difficult. By “hard coding” it in your script you can be certain what directory and the files that you will be working with in the script.</p>
+<p>I also have a certain main directory that I include all my analysis in. For each different research project, I create a different subdirectory in that main directory. It makes things easier to back up and have a set structure for my analysis. My main directory is called <code>DataDepot</code>.</p>
+<p>Now there are a couple of different ways you can represent directory structures in R. If you have a PC you can represent directory seperators as <code>\\</code> or as <code>/</code>. In Mac you can only use the <code>/</code>. I like to use the <code>/</code> to be consistent. The entire path needs to be enclosed within quotation marks.</p>
+<pre class="r"><code>## Getting to know R
+## 8-26-16
+## Chris Chizinski
+
+options(stringsAsFactors = FALSE)
+#setwd(&quot;/Users/cchizinski2/Documents/DataDepot/RClass&quot;)  # PC
+#setwd(&quot;\\Users\\cchizinski2\\Documents\\DataDepot\\RClass&quot;)  # PC
+setwd(&quot;/Users/cchizinski2/Documents/DataDepot/RClass&quot;)  # Mac</code></pre>
+</div>
+<div id="packages" class="section level3">
+<h3>Packages</h3>
+<p>Setting a standard library path is important when working with R. I find that after updating your R version or working from multiple computers (keeping your pacakges on a flash drive or network drive) saves a lot of time from having to reinstall R packages. R packages are collections of R functions, data, and compiled code in a well-defined format. You can define the directory where these are stored using <code>.libPaths()</code>. I like to use the personal network drive so that whenever I log in to a computer at UNL that drive is available.</p>
+<pre class="r"><code>## Getting to know R
+## 8-26-16
+## Chris Chizinski
+
+options(stringsAsFactors = FALSE)
+setwd(&quot;/Users/cchizinski2/Documents/DataDepot/RClass&quot;)  # Mac
+.libPaths(&quot;P:/RLibrary&quot;)</code></pre>
+<p>Once I have set my library path, I like to list all the R packages that I will be using in the subsequent code. There are a few reasons that I like doing this:</p>
+<ul>
+<li>all the packages are loaded at the top so if I need to jump down the script and run a specific function, I do not need to search around and find where I loaded the appropriate library</li>
+<li>I can make sure that if there are conflicts with packages, that they are run in the appropriate order (i.e., making sure things are reproducible)</li>
+</ul>
+<p>For example, if you were to try to run the <code>dplyr</code> and the <code>plyr</code> packages to do data manipulation, then the order that these are loaded can affect the functionality of the functions.</p>
+<pre class="r"><code>library(dplyr)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>library(plyr)</code></pre>
+<pre><code>## -------------------------------------------------------------------------</code></pre>
+<pre><code>## You have loaded plyr after dplyr - this is likely to cause problems.
+## If you need functions from both plyr and dplyr, please load plyr first, then dplyr:
+## library(plyr); library(dplyr)</code></pre>
+<pre><code>## -------------------------------------------------------------------------</code></pre>
+<pre><code>## 
+## Attaching package: &#39;plyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
+## 
+##     arrange, count, desc, failwith, id, mutate, rename, summarise,
+##     summarize</code></pre>
+</div>
+</div>
+</div>
+
+    
+    
+
+    
+
+        <h4 class="page-header">Related</h4>
+
+         <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/www.snr-r-group.netlify.com/post/2017-09-08-introtoggplot2/">Intro to ggplot2</a></h4>
+    <h5>September 8, 2017</h5>
+    
+    <a href="/www.snr-r-group.netlify.comtags/applied-multivariate"><kbd class="item-tag">Applied Multivariate</kbd></a>
+    
+    <a href="/www.snr-r-group.netlify.comtags/basics"><kbd class="item-tag">Basics</kbd></a>
+    
+
+</div>
+  <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/www.snr-r-group.netlify.com/post/2017-09-01-introtodatawrangling/">Intro to Data Wrangling</a></h4>
+    <h5>September 1, 2017</h5>
+    
+    <a href="/www.snr-r-group.netlify.comtags/applied-multivariate"><kbd class="item-tag">Applied Multivariate</kbd></a>
+    
+    <a href="/www.snr-r-group.netlify.comtags/basics"><kbd class="item-tag">Basics</kbd></a>
+    
+
+</div>
+  <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/www.snr-r-group.netlify.com/post/2017-08-25-introtor/">Getting to know R -- yet again</a></h4>
+    <h5>August 25, 2017</h5>
+    
+    <a href="/www.snr-r-group.netlify.comtags/applied-multivariate"><kbd class="item-tag">Applied Multivariate</kbd></a>
+    
+    <a href="/www.snr-r-group.netlify.comtags/basics"><kbd class="item-tag">Basics</kbd></a>
+    
+
+</div>
+ 
+
+    
+
+    
+
+        <h4 class="page-header">Comments</h4>
+
+        <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "snr-r-group" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    
+
+</main>
+
+        <footer>
+
+            <p class="copyright text-muted">&copy; All rights reserved. Powered by <a href="https://gohugo.io">Hugo</a> and <a href="https://github.com/calintat/minimal">Minimal</a></p>
+
+        </footer>
+       
+    </body>
+
+</html>
+

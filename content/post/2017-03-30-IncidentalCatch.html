@@ -1,0 +1,130 @@
+---
+title: "Incidental catch in fisheries:  seabirds in the New Zealand squid trawl fisheries"
+date: 2017-03-30
+categories: ["R"]
+tags: ["EcoDetective"]
+---
+
+
+
+<pre class="r"><code>library(tidyverse)
+library(broom)</code></pre>
+<p>Sources of the notes for this lecture are from Ecological Detective (Chapter 4).</p>
+<div id="motivation" class="section level2">
+<h2>Motivation</h2>
+<div class="figure">
+<img src="https://static1.squarespace.com/static/5669f27fa128e6a7fba76540/t/568d793e25981d9e06ac19a1/1452112192471/header.jpg?format=1500w" alt="Squid trawl" />
+<p class="caption">Squid trawl</p>
+</div>
+<ul>
+<li>Non-target species are often caught during fishing operations</li>
+<li>Observer programs are used to monitor this incidental catch</li>
+<li>Understanding of the coverage of the program and how to interpret the data is needed</li>
+</ul>
+<pre class="r"><code>hauls = c(807, 37, 27, 8, 4, 4, 1, 3, 1, 0, 0, 2, 1, 1, 0, 0, 0, 1)  # from table 4.3
+albatross = c(0:17)
+incidental&lt;-data.frame(albatross, hauls)</code></pre>
+<p>and let’s look at the distribution by plotting a bar chart</p>
+<pre class="r"><code>ggplot(data = incidental) + 
+  geom_bar(aes(x= albatross, y = hauls), fill = &quot;dodgerblue&quot;, colour = &quot;black&quot;, stat = &quot;identity&quot;) + 
+  coord_cartesian(xlim = c(-1,18), ylim = c(0,850), expand = FALSE) + 
+  theme_bw()</code></pre>
+<p><img src="/www.snr-r-group.netlify.compost/2017-03-30-IncidentalCatch_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>Pseudocode 4.1 1. Specify the level of observer coverage, \(N_{tow}\) per simulation, and the total number of simulations \(N_{sim}\), and the negative binomial parameters <em>m</em> and <em>k</em>. These are estimated from last year’s data. Also specifY the criterion “success,” <em>d</em>, and the value of \(t_q\)</p>
+<pre class="r"><code>albatross_all &lt;- rep(incidental$albatross, times = incidental$hauls)
+length(albatross_all)</code></pre>
+<pre><code>## [1] 897</code></pre>
+<pre class="r"><code>albatross_mean = mean(albatross_all)
+
+k = mean(albatross_all)^2/(var(albatross_all)- mean(albatross_all))
+m &lt;- albatross_mean
+Ntows = 5000 #eventually we will increase this to 5000
+iter = 150 # eventually we will increase this to 150
+tq = 1.645
+
+crit_success = 0.25*m</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>On the \(j^{th}\) iteration of the simulation, for the ith simulated tow, generate a level of incidental take \(C_{ij}\) using Equation 4.7. To do this, first generate the probability of <em>n</em> birds in the by-catch for an individual tow, then calculate the cumulative probability of <em>n</em> or fewer birds being obtained in the by-catch. Next draw a uniform random number between zero and 1, and then see where this random number falls in the cumulative distribution. Repeat this for all \(N_{tow}\) tows</li>
+</ol>
+<p>First generate the pdf and cdf</p>
+<pre class="r"><code>c = 0:100
+probs &lt;- (gamma(k + c)/(gamma(k)*factorial(c))) * ((k/(k+m))^k) * ((m/(m+k))^c)
+p_c&lt;-data.frame(c, probs)
+p_c$cdf&lt;- cumsum(p_c$probs)
+
+ggplot(data = p_c) + 
+  geom_bar(aes(x= c, y = probs), fill = &quot;red&quot;, colour = &quot;black&quot;, stat = &quot;identity&quot;) + 
+  coord_cartesian(xlim = c(-1,101), ylim = c(0,1), expand = FALSE) + 
+  labs(x=&quot;Number of birds captured&quot;, y = &quot;pdf&quot;) +
+  theme_bw()</code></pre>
+<p><img src="/www.snr-r-group.netlify.compost/2017-03-30-IncidentalCatch_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<pre class="r"><code>ggplot(data = p_c) + 
+  geom_bar(aes(x= c, y = cdf), fill = &quot;green&quot;, colour = &quot;black&quot;, stat = &quot;identity&quot;) + 
+  coord_cartesian(xlim = c(-1,101), ylim = c(0,1), expand = FALSE) + 
+  labs(x=&quot;Number of birds captured&quot;, y = &quot;cdf&quot;) +
+  theme_bw()</code></pre>
+<p><img src="/www.snr-r-group.netlify.compost/2017-03-30-IncidentalCatch_files/figure-html/unnamed-chunk-5-2.png" width="672" /></p>
+<ol start="3" style="list-style-type: decimal">
+<li>Compute the mean</li>
+</ol>
+<p><span class="math display">\[ M_j = \frac{1}{N_{tow}} \sum_{i=1}^{N_{tow}}C_{ij}\]</span></p>
+<p>and the variance</p>
+<p><span class="math display">\[ S_j^2 = \frac{1}{N_{tow}-1} \sum_{i=1}^{N_{tow}}(C_{ij} - M_j)^2  \]</span></p>
+<p>on the \(j^{th}\) iteration of the simulation.</p>
+<ol start="4" style="list-style-type: decimal">
+<li><p>Compute the range, in analogy to Equation 4.4: <span class="math display">\[ (Range)_j = 2\frac{S_j}{\sqrt{N_{tow}}}t_q \]</span></p></li>
+<li>If (Range) is less than the specified range criterion for success, increase the number of successes by 1.</li>
+<li><p>Repeat steps 2-5 for j = 1 to \(N_{sim}\). Estimate the probability of success when Nr.ow tows are observed by dividing the total number of successes by N_{tow}.</p></li>
+</ol>
+<p>Start the loop. <strong>NOTE</strong>: I changed the way the loop was run from the psuedo code by nesting iterations within tows. <strong>NOTE</strong>: This simulation will take a few minutes to run. I have run the simulations ahead of time and put them up on <a href="">github</a></p>
+<pre class="r"><code>set.seed(12345)
+
+## Create a function that will allow us to more easily find the corresponding catch for each random number
+
+find_catch &lt;- function(pc,rand_val){
+   id&lt;-which(rand_val&gt;=p_c$cdf)  # find which values are greater than or equal to our cdf
+   id&lt;-ifelse(length(id)&lt;1,1,max(id))  # correct for if none are larger and otherwise take the max id
+   return(p_c$c[id])
+  }
+
+tows &lt;- seq(25,Ntows,by = 25)
+s_stor &lt;- data.frame(tows = tows, s = NA, iter = iter)
+
+  for(i in 1:length(tows)){
+    s = 0
+    print(paste(&quot;Ntows = &quot;,tows[i],sep = &quot;&quot;))
+    for(j in 1:iter){
+      # print(j)
+      rand_uni&lt;-runif(tows[i])  #generate j number of random uniform variables
+      catch&lt;- sapply(rand_uni, function(x) find_catch(pc,x)) # use the find_catch function to find the corresponding numbr of birds from our find_catch function
+      
+      M_j = mean(catch)  # Step 3 in the psuedo code
+      S_j2 = var(catch)
+      Range_j = 2*(sqrt(S_j2)/sqrt(tows[i]))*tq # Step 4 in the psuedo code
+
+      s = ifelse(Range_j &lt; crit_success &amp; Range_j &gt; 0, s+1,s) # Step 5 in the psuedo code
+    }
+  
+    s_stor$s[i] &lt;-s
+  
+  }
+
+incidental&lt;-s_stor</code></pre>
+<p>Plot the results</p>
+<pre class="r"><code>#  if reading from the github, otherwise comment this out if you are using your own simulation. 
+incidental&lt;-read_csv(&quot;https://raw.githubusercontent.com/chrischizinski/SNR_R_Group/master/data/incidental.csv&quot;)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   tows = col_double(),
+##   s = col_double(),
+##   iter = col_double()
+## )</code></pre>
+<pre class="r"><code>incidental$prop &lt;- incidental$s/incidental$iter
+
+ggplot(data = incidental) + 
+  geom_point(aes(x = tows, y = prop), size = 1, alpha = 0.5) +
+  geom_smooth(aes(x = tows, y = prop),method = &quot;lm&quot;, formula = y ~ splines::bs(x, 25), colour = &quot;red&quot;,se = FALSE) +
+  coord_cartesian(ylim=c(0,1.05), xlim = c(0,5000), expand = FALSE) +
+  theme_bw()</code></pre>
+<p><img src="/www.snr-r-group.netlify.compost/2017-03-30-IncidentalCatch_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+</div>

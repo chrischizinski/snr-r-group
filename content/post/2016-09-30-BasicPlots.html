@@ -1,0 +1,190 @@
+---
+title: "Plotting"
+date: 2016-09-30
+categories: ["R"]
+tags: ["Basics", "Graphics"]
+---
+
+
+
+<div id="basic-plotting-in-ggplot" class="section level2">
+<h2>Basic plotting in ggplot</h2>
+<p>ggplot is a package that has truly upped the level of producing quality graphics using R. The “g g” in ggplot refers to the grammar of graphics. There has been a lot of development of the theory in what makes a good plot and I encourage you to read more on the <a href="http://vita.had.co.nz/papers/layered-grammar.pdf">subject</a>.</p>
+<p>From the <a href="http://ggplot2.org/">ggplot2 website</a></p>
+<blockquote>
+<p>ggplot2 is a plotting system for R, based on the grammar of graphics, which tries to take the good parts of base and lattice graphics and none of the bad parts. It takes care of many of the fiddly details that make plotting a hassle (like drawing legends) as well as providing a powerful model of graphics that makes it easy to produce complex multi-layered graphics.</p>
+</blockquote>
+<p>The components of a plot are:</p>
+<ul>
+<li>data and aesthetic mappings,</li>
+<li>geometric objects,</li>
+<li>scales,</li>
+<li>facet specification,</li>
+<li>statistical transformations, and</li>
+<li>the coordinate system.</li>
+</ul>
+<p>Plots using <code>ggplot()</code> are made in a series of layers. Each layer is composed of:</p>
+<ul>
+<li>data and aesthetic mappings,</li>
+<li>a statistical transformation (stat),</li>
+<li>a geometric object (geom), and</li>
+<li>a position adjustment</li>
+</ul>
+<p>There are a <strong>TON</strong> of options for plots in <code>ggplot</code> and I can not cover them all here. Everything from plotting shapefiles to violin plots. I will provide you the basics, but most are going to require you to look at the website and test out the types of plots you interested in. I strongly encourage you to explore and test out the different types of plots.</p>
+<p>To begin and explore ggplot, we will use the <code>diamonds</code> data set.</p>
+<pre class="r"><code>#install.packages(&quot;tidyverse&quot;)
+library(tidyverse)</code></pre>
+<pre><code>## ── Attaching packages ───────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
+<pre><code>## ✔ ggplot2 2.2.1     ✔ purrr   0.2.4
+## ✔ tibble  1.4.1     ✔ dplyr   0.7.4
+## ✔ tidyr   0.7.2     ✔ stringr 1.2.0
+## ✔ readr   1.1.1     ✔ forcats 0.2.0</code></pre>
+<pre><code>## ── Conflicts ──────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ readr::col_factor() masks scales::col_factor()
+## ✖ purrr::discard()    masks scales::discard()
+## ✖ dplyr::filter()     masks stats::filter()
+## ✖ dplyr::lag()        masks stats::lag()</code></pre>
+<pre class="r"><code>data(diamonds)
+head(diamonds)</code></pre>
+<pre><code>## # A tibble: 6 x 10
+##   carat cut       color clarity depth table price     x     y     z
+##   &lt;dbl&gt; &lt;ord&gt;     &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 0.230 Ideal     E     SI2      61.5  55.0   326  3.95  3.98  2.43
+## 2 0.210 Premium   E     SI1      59.8  61.0   326  3.89  3.84  2.31
+## 3 0.230 Good      E     VS1      56.9  65.0   327  4.05  4.07  2.31
+## 4 0.290 Premium   I     VS2      62.4  58.0   334  4.20  4.23  2.63
+## 5 0.310 Good      J     SI2      63.3  58.0   335  4.34  4.35  2.75
+## 6 0.240 Very Good J     VVS2     62.8  57.0   336  3.94  3.96  2.48</code></pre>
+<p>A couple of points to consider and keep in mind:</p>
+<ul>
+<li>Data needs to be in data.frame.<br />
+</li>
+<li>Layers are separated by <code>+</code></li>
+<li>Plots can be saved as objects</li>
+</ul>
+<p>There are several ways we can specify data in ggplot. By specifying it in the top of the hierarchy (i.e., in <code>ggplot()</code>), then all the subsequent layers will use this data set. My personal feeling is to specify it in the layers so that it is clear which data you are using. I feel the same way about the aesthetics as well, but sometimes this it is required to put them in the top (i.e., <code>position_dodge()</code> and error bars)</p>
+<pre class="r"><code>ggplot(data = diamonds,aes(x=carat, y=price)) +
+  geom_point()</code></pre>
+<p><img src="/www.snr-r-group.netlify.compost/2016-09-30-BasicPlots_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<pre class="r"><code>#or
+
+ggplot() +
+  geom_point(data = diamonds,aes(x=carat, y=price))</code></pre>
+<p><img src="/www.snr-r-group.netlify.compost/2016-09-30-BasicPlots_files/figure-html/unnamed-chunk-2-2.png" width="672" /></p>
+<p>We have lots of options of the aesthetics when we are building the plots. The required aesthetics will depend on the geometry chosen. There are numerous geometries <a href="http://docs.ggplot2.org/current/">available</a>.</p>
+<p>Common aesthetics:</p>
+<ul>
+<li><code>x</code>: the x coordinates of the data that you wish to plot. Can be numeric or categorical.</li>
+<li><code>y</code>: the y-coordinates of the data that you wish to plot.</li>
+<li><code>color</code> or <code>colour</code>: the color of points, lines, or edges. Colors can be specified using any of the <a href="http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf">R colors</a></li>
+<li><code>fill</code>: similar to color but this specifies the fill of of polygons, bars, or other shapes.</li>
+<li><code>size</code>: the size of the points or the thickness of the line</li>
+<li><code>shape</code>: used in geom_point to specify the <a href="http://www.cookbook-r.com/Graphs/Shapes_and_line_types/">different points</a></li>
+<li><code>linetype</code>: the type of line to be plotted <a href="http://www.cookbook-r.com/Graphs/Shapes_and_line_types/">(e.g., <code>solid</code>, <code>dashed</code>, <code>dotted</code>)</a></li>
+<li><code>alpha</code>: the transparency level of the layer</li>
+</ul>
+<p>When we put these on the <strong>outside</strong> the aesthetic statement <code>aes()</code>, all points are treated the same.</p>
+<pre class="r"><code>#color
+ggplot() +
+  geom_point(data = diamonds,aes(x=carat, y=price), colour =&quot;dodgerblue&quot;)</code></pre>
+<p><img src="/www.snr-r-group.netlify.compost/2016-09-30-BasicPlots_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<pre class="r"><code>#shape
+ggplot() +
+  geom_point(data = diamonds,aes(x=carat, y=price), colour =&quot;dodgerblue&quot;, shape = 17)</code></pre>
+<p><img src="/www.snr-r-group.netlify.compost/2016-09-30-BasicPlots_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
+<pre class="r"><code>#size
+ggplot() +
+  geom_point(data = diamonds,aes(x=carat, y=price), colour =&quot;dodgerblue&quot;, shape = 17, size =5)</code></pre>
+<p><img src="/www.snr-r-group.netlify.compost/2016-09-30-BasicPlots_files/figure-html/unnamed-chunk-3-3.png" width="672" /></p>
+<pre class="r"><code>#alpha
+ggplot() +
+  geom_point(data = diamonds,aes(x=carat, y=price), colour =&quot;dodgerblue&quot;, shape = 17, size =5, alpha = 0.25)</code></pre>
+<p><img src="/www.snr-r-group.netlify.compost/2016-09-30-BasicPlots_files/figure-html/unnamed-chunk-3-4.png" width="672" /></p>
+<p>When we put these on the <strong>inside</strong> the aesthetic statement <code>aes()</code>, points are treated differently based on the <strong>level</strong> of the variable. These are then given a value in a legend. Numeric values are given a continuous scale and characters or factors are given a discrete scale.</p>
+<pre class="r"><code>#color
+#numeric
+ggplot() +
+  geom_point(data = diamonds,aes(x=carat, y=price, colour=carat))</code></pre>
+<p><img src="/www.snr-r-group.netlify.compost/2016-09-30-BasicPlots_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<pre class="r"><code>#factor
+ggplot() +
+  geom_point(data = diamonds,aes(x=carat, y=price, colour=cut))</code></pre>
+<p><img src="/www.snr-r-group.netlify.compost/2016-09-30-BasicPlots_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
+<pre class="r"><code>#shape
+ggplot() +
+  geom_point(data = diamonds,aes(x=carat, y=price, colour=carat, shape = cut))</code></pre>
+<p><img src="/www.snr-r-group.netlify.compost/2016-09-30-BasicPlots_files/figure-html/unnamed-chunk-4-3.png" width="672" /></p>
+<pre class="r"><code>#size
+ggplot() +
+  geom_point(data = diamonds,aes(x=carat, y=price, colour=carat,size = carat))</code></pre>
+<p><img src="/www.snr-r-group.netlify.compost/2016-09-30-BasicPlots_files/figure-html/unnamed-chunk-4-4.png" width="672" /></p>
+<pre class="r"><code>#alpha
+ggplot() +
+  geom_point(data = diamonds,aes(x=carat, y=price, colour=carat, alpha = carat))</code></pre>
+<p><img src="/www.snr-r-group.netlify.compost/2016-09-30-BasicPlots_files/figure-html/unnamed-chunk-4-5.png" width="672" /></p>
+<div id="bar-plots" class="section level3">
+<h3>Bar plots</h3>
+<p>Start by making some data</p>
+<pre class="r"><code>fake_data = data.frame(Type = rep(c(&quot;A&quot;,&quot;B&quot;,&quot;C&quot;),  each = 30),
+                       Value = c(rnorm(30, mean = 50, sd = 5),
+                                 rnorm(30, mean = 70, sd = 3),
+                                 rnorm(30, mean = 20, sd = 8)))
+
+fake_data_sum &lt;- fake_data %&gt;% 
+                  group_by(Type) %&gt;% 
+                  summarise(M_val = mean(Value),
+                            SE_val = sd(Value)/sqrt(length(Value))) %&gt;% 
+                  mutate(CI_lo = M_val - 1.96 * SE_val,
+                         CI_hi = M_val + 1.96 * SE_val)</code></pre>
+<pre class="r"><code>ggplot() + 
+  geom_bar(data = fake_data_sum, aes(x = Type, y = M_val), stat = &quot;identity&quot;) + 
+  theme_bw()</code></pre>
+<p><img src="/www.snr-r-group.netlify.compost/2016-09-30-BasicPlots_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<pre class="r"><code>ggplot() + 
+  geom_bar(data = fake_data_sum, aes(x = Type, y = M_val, fill = Type), stat = &quot;identity&quot;) + 
+  theme_bw()</code></pre>
+<p><img src="/www.snr-r-group.netlify.compost/2016-09-30-BasicPlots_files/figure-html/unnamed-chunk-6-2.png" width="672" /></p>
+<p>We can control how these values are presented by using the <a href="http://docs.ggplot2.org/current/index.html">scale commands</a></p>
+<pre class="r"><code># manual
+ggplot() + 
+  geom_bar(data = fake_data_sum, aes(x = Type, y = M_val, fill = Type), stat = &quot;identity&quot;, colour = &quot;black&quot;) + 
+  scale_fill_manual(values = c(&quot;A&quot; = &quot;red&quot;, &quot;B&quot; = &quot;blue&quot;, &quot;C&quot; = &quot;green&quot;)) +
+  labs(x = &quot;Type&quot;, y = &quot;Value&quot;) + 
+  theme_bw()</code></pre>
+<p><img src="/www.snr-r-group.netlify.compost/2016-09-30-BasicPlots_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<pre class="r"><code># color brewer [http://colorbrewer2.org/#type=sequential&amp;scheme=BuGn&amp;n=3]
+ggplot() + 
+  geom_bar(data = fake_data_sum, aes(x = Type, y = M_val, fill = Type), stat = &quot;identity&quot;, colour = &quot;black&quot;) + 
+  scale_fill_brewer(palette = &quot;Spectral&quot;) +
+  labs(x = &quot;Type&quot;, y = &quot;Value&quot;) + 
+  theme_bw()</code></pre>
+<p><img src="/www.snr-r-group.netlify.compost/2016-09-30-BasicPlots_files/figure-html/unnamed-chunk-7-2.png" width="672" /></p>
+</div>
+</div>
+<div id="controlling-axes" class="section level2">
+<h2>Controlling axes</h2>
+<pre class="r"><code>ggplot() + 
+  geom_bar(data = fake_data_sum, aes(x = Type, y = M_val, fill = Type), stat = &quot;identity&quot;, colour = &quot;black&quot;) + 
+  scale_fill_brewer(palette = &quot;Spectral&quot;) +
+  scale_y_continuous(limits = c(0, 40)) +
+  labs(x = &quot;Type&quot;, y = &quot;Value&quot;) + 
+  theme_bw()</code></pre>
+<pre><code>## Warning: Removed 2 rows containing missing values (position_stack).</code></pre>
+<p><img src="/www.snr-r-group.netlify.compost/2016-09-30-BasicPlots_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<pre class="r"><code>ggplot() + 
+  geom_bar(data = fake_data_sum, aes(x = Type, y = M_val, fill = Type), stat = &quot;identity&quot;, colour = &quot;black&quot;) + 
+  scale_fill_brewer(palette = &quot;Spectral&quot;) +
+  coord_cartesian(ylim = c(0, 30)) +
+  labs(x = &quot;Type&quot;, y = &quot;Value&quot;) + 
+  theme_bw()</code></pre>
+<p><img src="/www.snr-r-group.netlify.compost/2016-09-30-BasicPlots_files/figure-html/unnamed-chunk-8-2.png" width="672" /></p>
+<p>Notice the difference between these plots. <code>scale_y_continuous</code> drops out the bars greater than thelimit set, whereas <code>coord_cartesian</code> keeps the bars but displays limits. Keep that in mind when using these. I tend to always use <code>coord_cartesian</code> and only use <code>scale_y_continuous</code> to set my breaks.</p>
+<p>One of the things, that I really dislike about the default <code>ggplot</code> is the pretty spaces that are put into the plots. You can get rid of these using <code>expand = FALSE</code> in <code>coord_cartesian</code>.</p>
+<pre class="r"><code>ggplot() + 
+  geom_bar(data = fake_data_sum, aes(x = Type, y = M_val, fill = Type), stat = &quot;identity&quot;, colour = &quot;black&quot;) + 
+  scale_fill_brewer(palette = &quot;Spectral&quot;) +
+  coord_cartesian(ylim = c(0, 75), xlim = c(0.25,3.75), expand = FALSE) +
+  labs(x = &quot;Type&quot;, y = &quot;Value&quot;) + 
+  theme_bw()</code></pre>
+<p><img src="/www.snr-r-group.netlify.compost/2016-09-30-BasicPlots_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+</div>
