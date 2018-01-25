@@ -1,4 +1,4 @@
-baseURL = "www.snr-r-group.netlify.com"
+baseURL = ""
 languageCode = "en-us"
 title = "SNR R User Group"
 theme = "minimal"
@@ -8,7 +8,7 @@ googleAnalytics = "A-48496439-2"
 [params]
     author = "Christopher Chizinski"
     description = "A repository for lessons and discussions of the SNR R User Group"
-    githubUsername = "#"
+    githubUsername = "chrischizinski"
     accent = "#D00000"
     showBorder = true
     backgroundColor = "white"

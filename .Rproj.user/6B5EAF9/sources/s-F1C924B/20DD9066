@@ -5,15 +5,15 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "0",
+    "hash" : "441925914",
     "id" : "20DD9066",
-    "lastKnownWriteTime" : 1516900321,
-    "last_content_update" : 1516900321842,
+    "lastKnownWriteTime" : 1516901994,
+    "last_content_update" : 1516901994230,
     "path" : "~/Documents/github/snr-r-group/config.toml",
     "project_path" : "config.toml",
     "properties" : {
-        "cursorPosition" : "22,15",
-        "scrollLine" : "15"
+        "cursorPosition" : "0,11",
+        "scrollLine" : "0"
     },
     "relative_order" : 2,
     "source_on_save" : false,
