@@ -6,10 +6,19 @@
     <description>Recent content in Tags on SNR R User Group</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 16 Dec 2016 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 23 Feb 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Age Period Cohort</title>
+      <link>/tags/age-period-cohort/</link>
+      <pubDate>Fri, 23 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/age-period-cohort/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Anova</title>
@@ -35,6 +44,15 @@
       <pubDate>Fri, 08 Sep 2017 00:00:00 +0000</pubDate>
       
       <guid>/tags/basics/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Data Seminar</title>
+      <link>/tags/data-seminar/</link>
+      <pubDate>Fri, 23 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/data-seminar/</guid>
       <description></description>
     </item>
     

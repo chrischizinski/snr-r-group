@@ -6,10 +6,19 @@
     <description>Recent content in R on SNR R User Group</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 17 Nov 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 23 Feb 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/r/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Age-cohort analysis</title>
+      <link>/post/2018-02-23-agecohort/</link>
+      <pubDate>Fri, 23 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018-02-23-agecohort/</guid>
+      <description>Working with Matt’s data # Download from google drive id &amp;lt;- &amp;quot;1wq8UNl921-NeCs0VCIhlGfbBK9ZxB3kL&amp;quot; huntData &amp;lt;- read_csv(sprintf(&amp;quot;https://docs.google.com/uc?id=%s&amp;amp;export=download&amp;quot;, id)) ## Parsed with column specification: ## cols( ## permitYear = col_integer(), ## permitType = col_character(), ## gender = col_character(), ## age = col_integer(), ## residency = col_character(), ## birthyear = col_integer() ## ) glimpse(huntData) ## Observations: 723,480 ## Variables: 6 ## $ permitYear &amp;lt;int&amp;gt; 2008, 2008, 2008, 2008, 2008, 2008, 2008, 2008, 200... ## $ permitType &amp;lt;chr&amp;gt; &amp;quot;Hunt Fish Combo&amp;quot;, &amp;quot;Hunt Fish Combo&amp;quot;, &amp;quot;Hunt Fish Co.</description>
+    </item>
     
     <item>
       <title>Applied Multivariate: Identifying differences between groups</title>

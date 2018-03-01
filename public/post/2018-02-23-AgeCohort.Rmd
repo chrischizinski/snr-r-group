@@ -1,0 +1,215 @@
+---
+title: "Age-cohort analysis"
+date: 2018-02-23
+categories: ["R"]
+tags: ["Age Period Cohort", "Data Seminar"]
+---
+
+```{r setup, include=FALSE}
+# .libPaths("P:/RLibrary2")  #  Set your library path if you need it
+knitr::opts_chunk$set(echo = TRUE)
+
+# install required packages, make sure these get commented out after your install
+# install.packages("apc") 
+
+# load libraries
+library(apc)
+library(tidyverse)
+```
+
+
+## Working with Matt's data 
+
+```{r loaddata}
+# Download from google drive
+
+id <- "1wq8UNl921-NeCs0VCIhlGfbBK9ZxB3kL"
+huntData <- read_csv(sprintf("https://docs.google.com/uc?id=%s&export=download", id))
+glimpse(huntData)
+
+
+id <- "1Z8ocKPYkZu9jJ3YcFY-YmSXs3WmAk2q0"
+popData <- read_csv(sprintf("https://docs.google.com/uc?id=%s&export=download", id))
+glimpse(popData)
+```
+
+## Filter the data 
+
+```{r filterdata}
+ huntData %>% 
+  filter(gender == "Male",
+         residency == "resident",
+         permitType %in% c("Hunt Fish Combo","Hunt"),
+         permitYear %in% c(2008:2016)) -> permits_oi
+
+popData %>% 
+  filter(is.na(Notes),
+         Gender == "Male",
+         Year %in% c(2008:2016)) %>% 
+  select(`Age Code`, Year, `Projected Populations`) %>% 
+  rename(Age = `Age Code`,
+         Pop = `Projected Populations`) -> pop_oi
+
+
+```
+
+### Plot the data
+
+```{r plotdata}
+options(scipen = 3)
+
+pop_oi %>% 
+  group_by(Year) %>% 
+  summarise(N = sum(Pop)) -> pop_year
+
+ggplot(data = pop_year) +
+  geom_col(aes(x = Year, y = N), fill = "#D00000", color = "black") +
+  scale_x_continuous(breaks = 2008:2016) + 
+  coord_cartesian(ylim = c(0,7e5), xlim = c(2007,2017), expand = FALSE) + 
+  labs(y = "Nebraska male population", x = "Year") +
+  theme_classic()
+
+permits_oi %>% 
+  group_by(permitYear, permitType) %>% 
+  summarise(N = n()) -> permits_year
+
+
+ggplot(data = permits_year) +
+  geom_col(aes(x = permitYear, y = N, fill = permitType ), color = "black") +
+  scale_x_continuous(breaks = 2008:2016) + 
+  coord_cartesian(ylim = c(0,80000), xlim = c(2007,2017), expand = FALSE) + 
+  labs(y = "Number of male permit holders", x = "Year") +
+  theme_classic() +
+  theme(legend.position= c(0.80,0.90))
+
+ggplot(data = permits_year) +
+  geom_line(aes(x = permitYear, y = N, color = permitType ), linetype =  "dashed") +
+  geom_point(aes(x = permitYear, y = N, color = permitType ), size = 2) +
+  scale_x_continuous(breaks = 2008:2016) + 
+  coord_cartesian(ylim = c(0,50000), xlim = c(2007,2017), expand = FALSE) +
+  labs(y = "Number of male permit holders", x = "Year") +
+  theme_classic() +
+  theme(legend.position= c(0.80,0.25))
+
+ggplot(data = permits_oi) +
+  geom_violin(aes(x = factor(permitYear), y = age, fill = permitType), position = "dodge") +
+  facet_wrap(~permitType, ncol = 1) +
+  theme_classic() + 
+  theme(legend.position = "none")
+
+# Participation rate
+range(permits_oi$age)
+range(pop_oi$Age)
+
+permits_oi %>%  # Filter the data
+  filter(age >= 15 & age <= 60,
+         permitYear>= 2010) -> permits_oi.rev
+
+permits_oi.rev %>% #
+  group_by(permitYear) %>% 
+  summarise(N = n()) -> permits_year.rev
+
+pop_oi %>% 
+  filter(Age >= 15 & Age <= 60,
+         Year>= 2010) -> pop_oi.rev
+
+pop_oi.rev %>% 
+  group_by(Year) %>% 
+  summarise(TTL = sum(Pop)) -> pop_year.rev
+
+full_join(permits_year.rev, pop_year.rev, by = c("permitYear"= "Year")) %>% 
+  mutate(parc_rate = N/TTL) -> join_permit_pop
+
+ggplot(data = join_permit_pop) +
+  geom_line(aes(x = permitYear, y = parc_rate ), linetype =  "dashed") +
+  geom_point(aes(x = permitYear, y = parc_rate ), size = 2) +
+  scale_x_continuous(breaks = 2009:2016) + 
+  coord_cartesian(ylim = c(0.07,0.11), xlim = c(2009,2017), expand = FALSE) +
+  labs(y = "Participation of male\n permit holders", x = "Year") +
+  theme_classic()
+```
+
+### Getting the data ready for APC 
+
+```{r apcdata}
+# apc.data.list 
+?apc.data.list
+
+pop_oi.rev %>% 
+  group_by(Age, Year) %>% 
+  summarise(ttlPop = sum(Pop)) %>% 
+  spread(Year,ttlPop, fill = 0) %>% 
+  as.data.frame() -> pop.wide
+
+pop.wide
+
+## Permits 
+permits_oi.rev %>% 
+  group_by(permitYear, age) %>% 
+  summarise(ttlPop = n()) %>% 
+  spread(permitYear,ttlPop, fill = 0) %>% 
+  as.data.frame() -> permit.wide
+
+# Get rownames and convert to matrix
+rownames(pop.wide) <- pop.wide$Age
+pop.wide <- as.matrix(pop.wide[,-1])
+  
+rownames(permit.wide) <- permit.wide$age
+# which(colnames(permit.wide)=="age")
+# as.matrix(permit.wide[,-which(colnames(permit.wide)=="age")])
+
+permit.wide <- as.matrix(permit.wide[,-1])
+
+# put into APC data format
+
+apc_hunters_data <- apc.data.list(response = permit.wide,
+                                  dose = pop.wide,
+                                  data.format = "AP",
+                                  age1 = 15,
+                                  per1 = 2010,
+                                  unit = 1)
+
+apc_hunters_data
+```
+
+### Data check plots
+
+```{r datacheckplots}
+apc.plot.data.all(apc_hunters_data)
+```
+
+### Fit the models
+
+```{r apcmodfit}
+?apc.fit.model
+fitAPC <- apc.fit.model(apc_hunters_data, "poisson.dose.response", "APC")
+
+names(fitAPC)
+
+fitAPC$coefficients.canonical
+
+apc.plot.fit(fitAPC)
+```
+
+### Forecasts
+
+```{r}
+fitAC <- apc.fit.model(apc_hunters_data, "poisson.response", "AC")
+
+forecast <- apc.forecast.ac(fitAC)
+
+names(forecast)
+forecast$response.forecast.per
+
+forecast$response.forecast.per %>% 
+  as.data.frame() %>% 
+  rownames_to_column("period") %>% 
+  mutate(period = gsub("per_","", period),
+         period = as.numeric(period)) -> smg_forecast
+
+ggplot(data = smg_forecast) +
+  geom_ribbon(aes(x = period, ymax = forecast+1.96*se, ymin = forecast-1.96*se), fill = "red", alpha = 0.5) + 
+  geom_line(aes(x = period, y = forecast)) +
+  theme_classic()
+
+```
