@@ -2,120 +2,120 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on SNR R User Group</title>
-    <link>/www.snr-r-group.netlify.com/tags/</link>
+    <link>/tags/</link>
     <description>Recent content in Tags on SNR R User Group</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 16 Dec 2016 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/www.snr-r-group.netlify.com/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Anova</title>
-      <link>/www.snr-r-group.netlify.com/tags/anova/</link>
+      <link>/tags/anova/</link>
       <pubDate>Fri, 16 Dec 2016 00:00:00 +0000</pubDate>
       
-      <guid>/www.snr-r-group.netlify.com/tags/anova/</guid>
+      <guid>/tags/anova/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Applied Multivariate</title>
-      <link>/www.snr-r-group.netlify.com/tags/applied-multivariate/</link>
+      <link>/tags/applied-multivariate/</link>
       <pubDate>Fri, 17 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>/www.snr-r-group.netlify.com/tags/applied-multivariate/</guid>
+      <guid>/tags/applied-multivariate/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Basics</title>
-      <link>/www.snr-r-group.netlify.com/tags/basics/</link>
+      <link>/tags/basics/</link>
       <pubDate>Fri, 08 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>/www.snr-r-group.netlify.com/tags/basics/</guid>
+      <guid>/tags/basics/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Data Wrangling</title>
-      <link>/www.snr-r-group.netlify.com/tags/data-wrangling/</link>
+      <link>/tags/data-wrangling/</link>
       <pubDate>Thu, 29 Sep 2016 00:00:00 +0000</pubDate>
       
-      <guid>/www.snr-r-group.netlify.com/tags/data-wrangling/</guid>
+      <guid>/tags/data-wrangling/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Dates and Time</title>
-      <link>/www.snr-r-group.netlify.com/tags/dates-and-time/</link>
+      <link>/tags/dates-and-time/</link>
       <pubDate>Tue, 03 Jan 2017 00:00:00 +0000</pubDate>
       
-      <guid>/www.snr-r-group.netlify.com/tags/dates-and-time/</guid>
+      <guid>/tags/dates-and-time/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Ecodetective</title>
-      <link>/www.snr-r-group.netlify.com/tags/ecodetective/</link>
+      <link>/tags/ecodetective/</link>
       <pubDate>Fri, 28 Apr 2017 00:00:00 +0000</pubDate>
       
-      <guid>/www.snr-r-group.netlify.com/tags/ecodetective/</guid>
+      <guid>/tags/ecodetective/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Graphics</title>
-      <link>/www.snr-r-group.netlify.com/tags/graphics/</link>
+      <link>/tags/graphics/</link>
       <pubDate>Wed, 05 Oct 2016 00:00:00 +0000</pubDate>
       
-      <guid>/www.snr-r-group.netlify.com/tags/graphics/</guid>
+      <guid>/tags/graphics/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Joining Data</title>
-      <link>/www.snr-r-group.netlify.com/tags/joining-data/</link>
+      <link>/tags/joining-data/</link>
       <pubDate>Thu, 29 Sep 2016 00:00:00 +0000</pubDate>
       
-      <guid>/www.snr-r-group.netlify.com/tags/joining-data/</guid>
+      <guid>/tags/joining-data/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Multivariate</title>
-      <link>/www.snr-r-group.netlify.com/tags/multivariate/</link>
+      <link>/tags/multivariate/</link>
       <pubDate>Fri, 12 Aug 2016 00:00:00 +0000</pubDate>
       
-      <guid>/www.snr-r-group.netlify.com/tags/multivariate/</guid>
+      <guid>/tags/multivariate/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Plot</title>
-      <link>/www.snr-r-group.netlify.com/tags/plot/</link>
+      <link>/tags/plot/</link>
       <pubDate>Thu, 23 Jul 2015 00:00:00 +0000</pubDate>
       
-      <guid>/www.snr-r-group.netlify.com/tags/plot/</guid>
+      <guid>/tags/plot/</guid>
       <description></description>
     </item>
     
     <item>
       <title>R Markdown</title>
-      <link>/www.snr-r-group.netlify.com/tags/r-markdown/</link>
+      <link>/tags/r-markdown/</link>
       <pubDate>Thu, 23 Jul 2015 00:00:00 +0000</pubDate>
       
-      <guid>/www.snr-r-group.netlify.com/tags/r-markdown/</guid>
+      <guid>/tags/r-markdown/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Regression</title>
-      <link>/www.snr-r-group.netlify.com/tags/regression/</link>
+      <link>/tags/regression/</link>
       <pubDate>Fri, 16 Dec 2016 00:00:00 +0000</pubDate>
       
-      <guid>/www.snr-r-group.netlify.com/tags/regression/</guid>
+      <guid>/tags/regression/</guid>
       <description></description>
     </item>
     

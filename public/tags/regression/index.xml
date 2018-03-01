@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Regression on SNR R User Group</title>
-    <link>/www.snr-r-group.netlify.com/tags/regression/</link>
+    <link>/tags/regression/</link>
     <description>Recent content in Regression on SNR R User Group</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 16 Dec 2016 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/www.snr-r-group.netlify.com/tags/regression/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/regression/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Multiple factor ANOVA</title>
-      <link>/www.snr-r-group.netlify.com/post/2016-12-16-anova_multifactor/</link>
+      <link>/post/2016-12-16-anova_multifactor/</link>
       <pubDate>Fri, 16 Dec 2016 00:00:00 +0000</pubDate>
       
-      <guid>/www.snr-r-group.netlify.com/post/2016-12-16-anova_multifactor/</guid>
+      <guid>/post/2016-12-16-anova_multifactor/</guid>
       <description>The RMarkdown file for this lesson can be found here.
 This lesson will follow Chapter 9, 10, and in Quinn and Keough (2002).
 Load the packages we will be using in this lesson
@@ -25,10 +25,10 @@ library(tidyverse) library(broom) library(multcomp) # install.packages(&amp;#39;
     
     <item>
       <title>ANOVA</title>
-      <link>/www.snr-r-group.netlify.com/post/2016-12-09-anova_1factor/</link>
+      <link>/post/2016-12-09-anova_1factor/</link>
       <pubDate>Fri, 09 Dec 2016 00:00:00 +0000</pubDate>
       
-      <guid>/www.snr-r-group.netlify.com/post/2016-12-09-anova_1factor/</guid>
+      <guid>/post/2016-12-09-anova_1factor/</guid>
       <description>The RMarkdown file for this lesson can be found here.
 This lesson will follow Chapter 8 in Quinn and Keough (2002).
 Load the packages we will be using in this lesson
@@ -37,10 +37,10 @@ library(tidyverse) library(broom) library(lme4) library(multcomp) Comparing grou
     
     <item>
       <title>Multiple Regression</title>
-      <link>/www.snr-r-group.netlify.com/post/2016-11-11-multipleregression/</link>
+      <link>/post/2016-11-11-multipleregression/</link>
       <pubDate>Fri, 11 Nov 2016 00:00:00 +0000</pubDate>
       
-      <guid>/www.snr-r-group.netlify.com/post/2016-11-11-multipleregression/</guid>
+      <guid>/post/2016-11-11-multipleregression/</guid>
       <description>The RMarkdown file for this lesson can be found here.
 This lesson will follow Chapter 6 in Quinn and Keough (2002).
 Load the packages we will be using in this lesson
@@ -49,10 +49,10 @@ library(RCurl) library(tidyverse) library(broom) library(GGally) library(devtool
     
     <item>
       <title>Simple Regression</title>
-      <link>/www.snr-r-group.netlify.com/post/2016-10-28-simpleregression/</link>
+      <link>/post/2016-10-28-simpleregression/</link>
       <pubDate>Fri, 28 Oct 2016 00:00:00 +0000</pubDate>
       
-      <guid>/www.snr-r-group.netlify.com/post/2016-10-28-simpleregression/</guid>
+      <guid>/post/2016-10-28-simpleregression/</guid>
       <description>The RMarkdown file for this lesson can be found here.
 This lesson will follow Chapter 5 in Quinn and Keough (2002).
 Load the packages we will be using in this lesson
@@ -63,28 +63,28 @@ These models have three primary purposes:
     
     <item>
       <title>Correlation</title>
-      <link>/www.snr-r-group.netlify.com/post/2016-10-20-correlation/</link>
+      <link>/post/2016-10-20-correlation/</link>
       <pubDate>Thu, 20 Oct 2016 00:00:00 +0000</pubDate>
       
-      <guid>/www.snr-r-group.netlify.com/post/2016-10-20-correlation/</guid>
+      <guid>/post/2016-10-20-correlation/</guid>
       <description>library(tidyverse) ## ── Attaching packages ───────────────────────────────────────── tidyverse 1.2.1 ── ## ✔ ggplot2 2.2.1 ✔ purrr 0.2.4 ## ✔ tibble 1.4.1 ✔ dplyr 0.7.4 ## ✔ tidyr 0.7.2 ✔ stringr 1.2.0 ## ✔ readr 1.1.1 ✔ forcats 0.2.0 ## ── Conflicts ──────────────────────────────────────────── tidyverse_conflicts() ── ## ✖ readr::col_factor() masks scales::col_factor() ## ✖ purrr::discard() masks scales::discard() ## ✖ dplyr::filter() masks stats::filter() ## ✖ dplyr::lag() masks stats::lag() library(gridExtra) ## ## Attaching package: &amp;#39;gridExtra&amp;#39; ## The following object is masked from &amp;#39;package:dplyr&amp;#39;: ## ## combine library(RCurl) ## Loading required package: bitops ## ## Attaching package: &amp;#39;RCurl&amp;#39; ## The following object is masked from &amp;#39;package:tidyr&amp;#39;: ## ## complete library(MASS) ## ## Attaching package: &amp;#39;MASS&amp;#39; ## The following object is masked from &amp;#39;package:dplyr&amp;#39;: ## ## select The RMarkdown file for this lesson can be found here</description>
     </item>
     
     <item>
       <title>Hypothesis Testing</title>
-      <link>/www.snr-r-group.netlify.com/post/2016-10-13-hypothesistesting/</link>
+      <link>/post/2016-10-13-hypothesistesting/</link>
       <pubDate>Thu, 13 Oct 2016 00:00:00 +0000</pubDate>
       
-      <guid>/www.snr-r-group.netlify.com/post/2016-10-13-hypothesistesting/</guid>
+      <guid>/post/2016-10-13-hypothesistesting/</guid>
       <description>Statistical hypothesis testing In the biological sciences, among other sciences, it is not often enough to just collect information on the central tendency of a population or parameter. We often want to compare estimates among populations or against environmental variables. Perhaps not surprisingly, there is still controversy on how this should be approached and the philosophies behind the approach. Chapter two in the the Ecological Detective: Confronting Models with Data has a great synopsis of these.</description>
     </item>
     
     <item>
       <title>Estimation of parameters</title>
-      <link>/www.snr-r-group.netlify.com/post/2016-10-07-restimation/</link>
+      <link>/post/2016-10-07-restimation/</link>
       <pubDate>Fri, 07 Oct 2016 00:00:00 +0000</pubDate>
       
-      <guid>/www.snr-r-group.netlify.com/post/2016-10-07-restimation/</guid>
+      <guid>/post/2016-10-07-restimation/</guid>
       <description>Samples and populations Biologists want to make inferences about a population based on subsamples of that population.
  collections of the population are the sample number of observations is the sample size  Basic method of sampling is simple random sampling (all observations have the same probability of being sampled)
  rarely does this happen (Why is this a concern?)  Random sampling is important because we want to use sample statistics to estimate the population parameters.</description>
@@ -92,20 +92,20 @@ These models have three primary purposes:
     
     <item>
       <title>Estimation of parameters.  Part 2</title>
-      <link>/www.snr-r-group.netlify.com/post/2016-10-07-restimation2/</link>
+      <link>/post/2016-10-07-restimation2/</link>
       <pubDate>Fri, 07 Oct 2016 00:00:00 +0000</pubDate>
       
-      <guid>/www.snr-r-group.netlify.com/post/2016-10-07-restimation2/</guid>
+      <guid>/post/2016-10-07-restimation2/</guid>
       <description>Like determining population parameters , we often want to calculate the parameters in our regression models. There are two basic procedures that are often used to determine those. These sections are only meant to be illustrative and not comprehensive into the topic.
 I based these illustrations heavily on the material from the Ecological Detective: Confronting Models with Data. I highly encourage you to read this book and follow along with the psuedo code in the book.</description>
     </item>
     
     <item>
       <title>Hello R Markdown</title>
-      <link>/www.snr-r-group.netlify.com/post/2015-07-23-r-rmarkdown/</link>
+      <link>/post/2015-07-23-r-rmarkdown/</link>
       <pubDate>Thu, 23 Jul 2015 00:00:00 +0000</pubDate>
       
-      <guid>/www.snr-r-group.netlify.com/post/2015-07-23-r-rmarkdown/</guid>
+      <guid>/post/2015-07-23-r-rmarkdown/</guid>
       <description>R Markdown This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.
 You can embed an R code chunk like this:
 summary(cars) ## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 26.00 ## Median :15.0 Median : 36.00 ## Mean :15.4 Mean : 42.98 ## 3rd Qu.</description>

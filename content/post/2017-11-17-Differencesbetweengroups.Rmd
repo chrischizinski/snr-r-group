@@ -1,6 +1,6 @@
 ---
-title: "Applied Multivariate: Identifying differences between groups"
-date: 2017-11-17
+title: 'Applied Multivariate: Identifying differences between groups'
+date: '2017-11-17'
 categories: ["R"]
 tags: ["Applied Multivariate"]
 ---

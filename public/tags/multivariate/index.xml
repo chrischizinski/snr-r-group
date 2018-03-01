@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Multivariate on SNR R User Group</title>
-    <link>/www.snr-r-group.netlify.com/tags/multivariate/</link>
+    <link>/tags/multivariate/</link>
     <description>Recent content in Multivariate on SNR R User Group</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 12 Aug 2016 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/www.snr-r-group.netlify.com/tags/multivariate/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/multivariate/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Similarities and Dissimilarities</title>
-      <link>/www.snr-r-group.netlify.com/post/2016-08-12-similaritydistance/</link>
+      <link>/post/2016-08-12-similaritydistance/</link>
       <pubDate>Fri, 12 Aug 2016 00:00:00 +0000</pubDate>
       
-      <guid>/www.snr-r-group.netlify.com/post/2016-08-12-similaritydistance/</guid>
+      <guid>/post/2016-08-12-similaritydistance/</guid>
       <description>Background The backbone to multivariate analysis is the two-way data matrix. In an ecological sense, we can imagine that each column in the dataset is a species or environmental factor and each row is a site. In a human dimensions sense, we can imagine a similar dataset where the columns are are responses to a question and each row is an individual.
 This dataset can be be represented in an n-dimensional space based on its values within this data set.</description>
     </item>

@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Dates and Time on SNR R User Group</title>
-    <link>/www.snr-r-group.netlify.com/tags/dates-and-time/</link>
+    <link>/tags/dates-and-time/</link>
     <description>Recent content in Dates and Time on SNR R User Group</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 03 Jan 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/www.snr-r-group.netlify.com/tags/dates-and-time/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/dates-and-time/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Getting to know R -- Again</title>
-      <link>/www.snr-r-group.netlify.com/post/2017-01-13-gettingtoknowragain/</link>
+      <link>/post/2017-01-13-gettingtoknowragain/</link>
       <pubDate>Tue, 03 Jan 2017 00:00:00 +0000</pubDate>
       
-      <guid>/www.snr-r-group.netlify.com/post/2017-01-13-gettingtoknowragain/</guid>
+      <guid>/post/2017-01-13-gettingtoknowragain/</guid>
       <description>Getting to know R again (with some new stuff thrown in) Using data from Google sheets (kind of) Google Forms is a quick and cheap way to put together an online survey. I asked you all to do the survey through Google Forms so that we can run some of the analysis with your responses. The survey responses were scrubbed of any individual information.
 Getting data straight into used to be a bit more complicated but thanks to the googlesheets package it is a lot easier.</description>
     </item>

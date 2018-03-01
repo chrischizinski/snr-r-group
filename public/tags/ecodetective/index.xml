@@ -2,31 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Ecodetective on SNR R User Group</title>
-    <link>/www.snr-r-group.netlify.com/tags/ecodetective/</link>
+    <link>/tags/ecodetective/</link>
     <description>Recent content in Ecodetective on SNR R User Group</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 28 Apr 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/www.snr-r-group.netlify.com/tags/ecodetective/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/ecodetective/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Ecological Detective -- Maximum likelihood</title>
-      <link>/www.snr-r-group.netlify.com/post/2017-04-28-likelihood/</link>
+      <link>/post/2017-04-28-likelihood/</link>
       <pubDate>Fri, 28 Apr 2017 00:00:00 +0000</pubDate>
       
-      <guid>/www.snr-r-group.netlify.com/post/2017-04-28-likelihood/</guid>
+      <guid>/post/2017-04-28-likelihood/</guid>
       <description>library(tidyverse) library(broom) Sources of the notes for this lecture are from Ecological Detective (Chapter 4).
 Overview  Sum of squares can be used to find the best fit of a model to the data under minimal assumptions about the sources of uncertainty There are many cases in which the form of the probability distributions of the uncertain terms can be justified likelihood methods allow us to calculate confidence bounds on parameters and to test hypotheses in the traditional manner forms the foundation for Bayesian analysis  The probability of observing data \(Y_i\) given a parameter \(p\) is \( Pr\{Y_i|p\}\).</description>
     </item>
     
     <item>
       <title>Ecological Detective -- The Confrontation:  Sum of squares</title>
-      <link>/www.snr-r-group.netlify.com/post/2017-04-14-sumofsquares/</link>
+      <link>/post/2017-04-14-sumofsquares/</link>
       <pubDate>Fri, 14 Apr 2017 00:00:00 +0000</pubDate>
       
-      <guid>/www.snr-r-group.netlify.com/post/2017-04-14-sumofsquares/</guid>
+      <guid>/post/2017-04-14-sumofsquares/</guid>
       <description>library(tidyverse) library(broom) Sources of the notes for this lecture are from Ecological Detective (Chapter 5).
  Simplest technique for the confrontation between models and data is sum of squares
 It is simple and makes few assumptions Long and successful history in science Computers can do remarkable calcualations associated with sum of squares   Basic method Consider a simple model: \[ Y_i = A + BX_i = CX_i^2 + W_i\] where \(W_i\) is process uncertainty, and A, B, and C are parameters.</description>
@@ -34,10 +34,10 @@ It is simple and makes few assumptions Long and successful history in science Co
     
     <item>
       <title>Incidental catch in fisheries:  seabirds in the New Zealand squid trawl fisheries</title>
-      <link>/www.snr-r-group.netlify.com/post/2017-03-30-incidentalcatch/</link>
+      <link>/post/2017-03-30-incidentalcatch/</link>
       <pubDate>Thu, 30 Mar 2017 00:00:00 +0000</pubDate>
       
-      <guid>/www.snr-r-group.netlify.com/post/2017-03-30-incidentalcatch/</guid>
+      <guid>/post/2017-03-30-incidentalcatch/</guid>
       <description>library(tidyverse) library(broom) Sources of the notes for this lecture are from Ecological Detective (Chapter 4).
 Motivation Squid trawl
   Non-target species are often caught during fishing operations Observer programs are used to monitor this incidental catch Understanding of the coverage of the program and how to interpret the data is needed  hauls = c(807, 37, 27, 8, 4, 4, 1, 3, 1, 0, 0, 2, 1, 1, 0, 0, 0, 1) # from table 4.</description>
@@ -45,10 +45,10 @@ Motivation Squid trawl
     
     <item>
       <title>Ecological Detective -- Probability and probability models, Part 1</title>
-      <link>/www.snr-r-group.netlify.com/post/2017-03-10-ecologicaldetective5/</link>
+      <link>/post/2017-03-10-ecologicaldetective5/</link>
       <pubDate>Fri, 10 Mar 2017 00:00:00 +0000</pubDate>
       
-      <guid>/www.snr-r-group.netlify.com/post/2017-03-10-ecologicaldetective5/</guid>
+      <guid>/post/2017-03-10-ecologicaldetective5/</guid>
       <description>library(tidyverse) Classical Probability Sources of the notes for this lecture are a combination of Aho(2013) (Chapters 2 and 3) and Ecological Detective (Chapters 3 and 4).
  As we become familiar with the behavior of random variables, we may become aware of probabilistic patterns  Disjoint If two events can not occur simultaneously, then we call them mutually exclusive or disoint
 If for two outcomes A and B, we wanted to know the probability of the event A or B (expressed as: \(P( A B) = P(A) + P(B) \))</description>
@@ -56,40 +56,40 @@ If for two outcomes A and B, we wanted to know the probability of the event A or
     
     <item>
       <title>Ecological Detective -- Relationships and probability.  Part 2</title>
-      <link>/www.snr-r-group.netlify.com/post/2017-03-03-sixsideddierolls/</link>
+      <link>/post/2017-03-03-sixsideddierolls/</link>
       <pubDate>Fri, 03 Mar 2017 00:00:00 +0000</pubDate>
       
-      <guid>/www.snr-r-group.netlify.com/post/2017-03-03-sixsideddierolls/</guid>
+      <guid>/post/2017-03-03-sixsideddierolls/</guid>
       <description>What about for a six sided die?
 Let’s take the coin-flipping example from last week and run a similar test on a six sided dice. Lets run a simulation from 1 to 5000 dice rolls and calculated the proportion of each number. For example, a 1 will be a single roll and we will count the number of each number (should be all zeros except for one value for one of the numbers).</description>
     </item>
     
     <item>
       <title>Ecological Detective -- Relationships and probability</title>
-      <link>/www.snr-r-group.netlify.com/post/2017-02-23-ecologicaldetective3/</link>
+      <link>/post/2017-02-23-ecologicaldetective3/</link>
       <pubDate>Thu, 23 Feb 2017 00:00:00 +0000</pubDate>
       
-      <guid>/www.snr-r-group.netlify.com/post/2017-02-23-ecologicaldetective3/</guid>
+      <guid>/post/2017-02-23-ecologicaldetective3/</guid>
       <description>Exploring the relationship between two variables First lets bring in the data from the previous lesson
 library(tidyverse) library(broom) fish_data &amp;lt;- read_csv(&amp;quot;https://raw.githubusercontent.com/chrischizinski/MWFWC_FishR/master/CourseMaterial/data/wrkshp_data.csv&amp;quot;) ## Parsed with column specification: ## cols( ## .default = col_character(), ## WaterbodyCode = col_integer(), ## Area = col_integer(), ## MethodCode = col_integer(), ## surveydate = col_datetime(format = &amp;quot;&amp;quot;), ## Station = col_integer(), ## Effort = col_integer(), ## SpeciesCode = col_integer(), ## LengthGroup = col_integer(), ## FishCount = col_integer(), ## FishLength = col_integer(), ## FishWeight = col_integer(), ## Age = col_integer(), ## Edge = col_integer(), ## Annulus1 = col_integer(), ## Annulus2 = col_integer(), ## Annulus3 = col_integer(), ## Annulus4 = col_integer(), ## Annulus5 = col_integer(), ## Annulus6 = col_integer(), ## Annulus7 = col_integer() ## # .</description>
     </item>
     
     <item>
       <title>Ecological Detective -- Know your data</title>
-      <link>/www.snr-r-group.netlify.com/post/2017-02-10-ecologicaldetective2/</link>
+      <link>/post/2017-02-10-ecologicaldetective2/</link>
       <pubDate>Fri, 10 Feb 2017 00:00:00 +0000</pubDate>
       
-      <guid>/www.snr-r-group.netlify.com/post/2017-02-10-ecologicaldetective2/</guid>
+      <guid>/post/2017-02-10-ecologicaldetective2/</guid>
       <description>Recreating Figure 2.1 in Ecological Detective There are many different hypotheses that can explain the basic relationship between two variables. Figure 2.1 in the Ecologial Detective suggest 4 possible models. The models have no parameter values. Try to iteratively find the parameter values to get your figure to look like the one in Figure 2.1.
 S &amp;lt;- seq(1,15, by = 1) # 1:15 Null_hypothesis&amp;lt;- 2.5 our_data &amp;lt;- data.frame(S = S, Null = Null_hypothesis) our_data$Model_A &amp;lt;- 0.</description>
     </item>
     
     <item>
       <title>Ecological Detective #1</title>
-      <link>/www.snr-r-group.netlify.com/post/2017-02-03-ecologicaldetective1/</link>
+      <link>/post/2017-02-03-ecologicaldetective1/</link>
       <pubDate>Fri, 03 Feb 2017 00:00:00 +0000</pubDate>
       
-      <guid>/www.snr-r-group.netlify.com/post/2017-02-03-ecologicaldetective1/</guid>
+      <guid>/post/2017-02-03-ecologicaldetective1/</guid>
       <description>Ecological Detective Preface: Beyond the Null hypothesis  Tools of an Ecological Detective  Classic Hypothesis Testing  M1: Boom and bust (complete extinction between colonizations) hypothesis M2: Constant prevalance of population but only is detected when certain conditions arise
  H0: Model M1 is true HA: Some other model is true
   Outcome:

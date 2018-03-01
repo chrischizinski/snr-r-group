@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Anova on SNR R User Group</title>
-    <link>/www.snr-r-group.netlify.com/tags/anova/</link>
+    <link>/tags/anova/</link>
     <description>Recent content in Anova on SNR R User Group</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 16 Dec 2016 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/www.snr-r-group.netlify.com/tags/anova/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/anova/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Multiple factor ANOVA</title>
-      <link>/www.snr-r-group.netlify.com/post/2016-12-16-anova_multifactor/</link>
+      <link>/post/2016-12-16-anova_multifactor/</link>
       <pubDate>Fri, 16 Dec 2016 00:00:00 +0000</pubDate>
       
-      <guid>/www.snr-r-group.netlify.com/post/2016-12-16-anova_multifactor/</guid>
+      <guid>/post/2016-12-16-anova_multifactor/</guid>
       <description>The RMarkdown file for this lesson can be found here.
 This lesson will follow Chapter 9, 10, and in Quinn and Keough (2002).
 Load the packages we will be using in this lesson
@@ -25,10 +25,10 @@ library(tidyverse) library(broom) library(multcomp) # install.packages(&amp;#39;
     
     <item>
       <title>ANOVA</title>
-      <link>/www.snr-r-group.netlify.com/post/2016-12-09-anova_1factor/</link>
+      <link>/post/2016-12-09-anova_1factor/</link>
       <pubDate>Fri, 09 Dec 2016 00:00:00 +0000</pubDate>
       
-      <guid>/www.snr-r-group.netlify.com/post/2016-12-09-anova_1factor/</guid>
+      <guid>/post/2016-12-09-anova_1factor/</guid>
       <description>The RMarkdown file for this lesson can be found here.
 This lesson will follow Chapter 8 in Quinn and Keough (2002).
 Load the packages we will be using in this lesson
