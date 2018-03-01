@@ -8,8 +8,8 @@
         <style>
 
     html body {
-        font-family: 'Raleway', sans-serif;
-        background-color: white;
+        font-family: 'Roboto', sans-serif;
+        background-color: #FEFDFA;
     }
 
     :root {
@@ -20,16 +20,16 @@
 </style>
 
 
-<link rel="stylesheet" href="//css/main.css">
+<link rel="stylesheet" href="/css/main.css">
 
 
 
 
 
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 
 
- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/hybrid.min.css"> 
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/hybrid.min.css"> 
 
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -39,9 +39,9 @@
  
 
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
 
-     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/swift.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/R.min.js"></script> 
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/swift.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/R.min.js"></script> 
 
     <script>hljs.initHighlightingOnLoad();</script>
 
@@ -63,21 +63,23 @@
         
         
         
-        <script async src="https://www.googletagmanager.com/gtag/js?id=A-48496439-2"></script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-48496439-3"></script>
         <script>
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments)};
           gtag('js', new Date());
 
-          gtag('config', 'A-48496439-2');
+          gtag('config', 'UA-48496439-3');
         </script>
         
     </head>
 
     
+    
     <script type="text/javascript" async
       src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-  </script>
+    </script>
+    
 
     <body>
          
@@ -192,7 +194,7 @@ library(broom)</code></pre>
 <pre class="r"><code>ggplot(data = FishAge) +
   geom_point(aes(x = Age, y = FishLength), size = 3, alpha = 0.35, colour = &quot;red&quot;) +
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-02-23-EcologicalDetective3_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><img src="/post/2017-02-23-EcologicalDetective3_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p>How does fish age relate to fish length?</p>
 <ol style="list-style-type: decimal">
 <li>Linear</li>
@@ -303,7 +305,7 @@ ggplot(data = FishAge) +
   geom_point(aes(x = Age, y = FishLength), size = 1, alpha = 0.35, colour = &quot;red&quot;) +
   geom_line(data=all.pred, aes(x = Age, y = .fitted, colour = model)) +
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-02-23-EcologicalDetective3_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="/post/2017-02-23-EcologicalDetective3_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>Lets look at the distribution of the residuals of each model to the actual data. What would you expect to see?</p>
 <pre class="r"><code>resid_lm&lt;-data.frame(model = &quot;linear&quot;,resid = augment(lm_mod)$.resid)
 resid_log&lt;-data.frame(model = &quot;log&quot;,resid = augment(log_mod)$.resid)
@@ -328,7 +330,7 @@ head(all_resid)</code></pre>
 <pre class="r"><code>ggplot(data = all_resid) +
   geom_violin(aes(x = model, y  =resid, fill = model)) + 
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-02-23-EcologicalDetective3_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="/post/2017-02-23-EcologicalDetective3_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 </div>
 <div id="experiments-events-and-probability" class="section level2">
 <h2>Experiments, Events, and Probability</h2>
@@ -361,14 +363,14 @@ head(N_flips)</code></pre>
   geom_hline(aes(yintercept = 0.5), colour = &quot;red&quot;, linetype = &quot;dotted&quot;) +
   coord_cartesian(xlim = c(0, 100)) +
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-02-23-EcologicalDetective3_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="/post/2017-02-23-EcologicalDetective3_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <p>Lets look at the whole range</p>
 <pre class="r"><code>ggplot(data = N_flips) +
   geom_line(aes(x = N, y = prop)) + 
   geom_hline(aes(yintercept = 0.5), colour = &quot;red&quot;, linetype = &quot;dotted&quot;) +
   coord_cartesian(xlim = c(0, 5000)) +
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-02-23-EcologicalDetective3_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><img src="/post/2017-02-23-EcologicalDetective3_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <ul>
 <li><p>The <em>Bayesian</em> interpretation of probability is the degrees of belief. For a Bayesian, \( Pr{A}\) is a measure of certainty; a quantication of an investigator’s belief that A is true.</p></li>
 <li><p>Differences in Frequentist and Bayesian perspectives are most important pertaining to inferential procedures (e.g., parameter estimation and hypothesis testing). They are irrelevant to the mathematical principles of probability.</p></li>

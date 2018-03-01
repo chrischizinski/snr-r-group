@@ -383,7 +383,7 @@ glimpse(survey_data_rev)</code></pre>
   scale_color_manual(values = c(&quot;Maybe&quot; = &quot;purple&quot;, &quot;Yes&quot; = &quot;blue&quot;, &quot;No&quot; = &quot;red&quot;)) +  # Set the colours of the points
   theme_bw() + # Use the canned black and white theme
   theme(legend.position = c(0.75,0.25))  # Change the location of the legend</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-01-13-GettingtoKnowRAgain_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p><img src="/post/2017-01-13-GettingtoKnowRAgain_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 <p>Adjust the x-axis with dates and times</p>
 <pre class="r"><code>library(scales)
 
@@ -400,7 +400,7 @@ ggplot(data = survey_data_rev) +
   scale_x_datetime(limits = c(email_sent - days(1), time_stop)) + #Set the date limits
   theme_bw() + 
   theme(legend.position = c(0.75,0.25))</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-01-13-GettingtoKnowRAgain_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p><img src="/post/2017-01-13-GettingtoKnowRAgain_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 <p>And add different breaks and date/time formatting</p>
 <pre class="r"><code>ggplot(data = survey_data_rev) +
   geom_line(aes(x = Timestamp, y = prop_Order), linetype = &quot;dashed&quot;) + 
@@ -411,6 +411,6 @@ ggplot(data = survey_data_rev) +
   scale_x_datetime(limits = c(email_sent - days(1), time_stop), breaks = date_breaks(&quot;1 day&quot;), labels = date_format(&quot;%b-%d&quot;)) + 
   theme_bw() + 
   theme(legend.position = c(0.75,0.25))</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-01-13-GettingtoKnowRAgain_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p><img src="/post/2017-01-13-GettingtoKnowRAgain_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 </div>
 </div>

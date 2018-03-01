@@ -1,13 +1,13 @@
 ---
-date: 2018-01-28
 title: "Commonly used resources"
+date: 2018-01-25
 comments: false
 ---
 
 This page has some commonly used resources for the class
 
 ## Link to data sources
-- [`snr-r-group/data/`](https://github.com/chrischizinski/snr-r-group/tree/master/data)
+- [`SNR_R_User\data`](https://github.com/chrischizinski/SNR_R_Group/tree/master/data)
 
 ## Guide to good and reproducible code
 - [BES Guide to reproducible code](https://www.britishecologicalsociety.org/wp-content/uploads/2017/12/guide-to-reproducible-code.pdf)

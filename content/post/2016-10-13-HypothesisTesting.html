@@ -124,7 +124,7 @@ t.test(sub_sample$height)</code></pre>
 ## Warning: Ignoring unknown aesthetics: ymin</code></pre>
 <pre class="r"><code>grid.arrange(plota, plotb, ncol=1, left = textGrob(&quot;Density&quot;, gp = gpar(fontsize = 18), rot = 90),
              bottom =textGrob(&quot;t value&quot;, gp = gpar(fontsize = 18)) )</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2016-10-13-HypothesisTesting_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="/post/2016-10-13-HypothesisTesting_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 </div>
 <div id="hypothesis-tests-of-two-populations" class="section level4">
 <h4>Hypothesis tests of two populations</h4>
@@ -259,7 +259,7 @@ ggplot(data = data2) +
   geom_histogram(aes(x = abs(values)), bins =50) + 
   geom_vline(aes(xintercept = abs(boot_result$t0)), colour = &quot;red&quot;) +
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2016-10-13-HypothesisTesting_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="/post/2016-10-13-HypothesisTesting_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <pre class="r"><code>t.test(org_counts$grp1,org_counts$grp2)</code></pre>
 <pre><code>## 
 ##  Welch Two Sample t-test

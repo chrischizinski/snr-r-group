@@ -69,12 +69,12 @@ library(dplyr)</code></pre>
 ggplot(data = rand_data) +
   geom_histogram(aes(x = concentration), fill = &quot;dodgerblue&quot;, colour=&quot;black&quot;, bins = 50) + 
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2016-10-07-REstimation_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><img src="/post/2016-10-07-REstimation_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <pre class="r"><code># or we can set how wide we want the binds to be
 ggplot(data = rand_data) +
   geom_histogram(aes(x = concentration), fill = &quot;dodgerblue&quot;, colour=&quot;black&quot;, binwidth = 5) + 
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2016-10-07-REstimation_files/figure-html/unnamed-chunk-2-2.png" width="672" /></p>
+<p><img src="/post/2016-10-07-REstimation_files/figure-html/unnamed-chunk-2-2.png" width="672" /></p>
 <pre class="r"><code># use dplyr to create bins and then geom_bar to create plot
 
 summ_data&lt;-rand_data %&gt;% 
@@ -87,7 +87,7 @@ summ_data&lt;-rand_data %&gt;%
 ggplot(data = summ_data) + 
   geom_bar(aes(x = bin, y = N), stat =&quot;identity&quot;,fill = &quot;dodgerblue&quot;, colour = &quot;black&quot;, width = 5) +
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2016-10-07-REstimation_files/figure-html/unnamed-chunk-2-3.png" width="672" /></p>
+<p><img src="/post/2016-10-07-REstimation_files/figure-html/unnamed-chunk-2-3.png" width="672" /></p>
 <div id="l-estimator" class="section level4">
 <h4>L-estimator</h4>
 <p>L-estimator is based on ordering data from smalles to largest then using a linear combination of weighted-order statitistics</p>
@@ -173,7 +173,7 @@ chem_data&lt;-data.frame(ind = 1:length(chem),chem = chem)
 ggplot(data = chem_data) + 
   geom_point(aes(x = ind, y= chem), size = 2, colour = &quot;firebrick&quot;) +
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2016-10-07-REstimation_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><img src="/post/2016-10-07-REstimation_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p>We can see from this data that there is one HUGE outlier. Running <code>huber</code> and <code>mean</code> give us different results.</p>
 <pre class="r"><code>mean(chem)</code></pre>
 <pre><code>## [1] 4.280417</code></pre>
@@ -319,7 +319,7 @@ ggplot(data = x) +
   annotate(&quot;text&quot;, x = c(0.75,2.7), y = c(15,13), label = c(&quot;se&quot;, &quot;sd&quot;)) +
   theme_bw()</code></pre>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2016-10-07-REstimation_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p><img src="/post/2016-10-07-REstimation_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 <p>You can see the difference in the above plot. Standard deviations describe the spread in the data, whereas the standard error describes where the mean (or predicted value) falls.</p>
 <p>What happens to the standard error as we increase the sample size to 200, 500, 1000?</p>
 </div>
@@ -363,7 +363,7 @@ ggplot(data = stor_vals) +
   geom_vline(aes(xintercept = mean(rand_values$val)), colour = &quot;red&quot;) +
   geom_vline(aes(xintercept = mean(stor_vals$j_mean)), colour = &quot;blue&quot;, linetype = &quot;dashed&quot;) +
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2016-10-07-REstimation_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p><img src="/post/2016-10-07-REstimation_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 </div>
 <div id="bootstrapping" class="section level5">
 <h5>Bootstrapping</h5>
@@ -403,7 +403,7 @@ ggplot(data = stor_vals_bs) +
   geom_vline(aes(xintercept = mean(rand_values$val)), colour = &quot;red&quot;) +
   geom_vline(aes(xintercept = mean(stor_vals_bs$bs_mean)), colour = &quot;blue&quot;, linetype = &quot;dashed&quot;) +
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2016-10-07-REstimation_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p><img src="/post/2016-10-07-REstimation_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 </div>
 </div>
 <div id="now-it-is-your-turn" class="section level4">

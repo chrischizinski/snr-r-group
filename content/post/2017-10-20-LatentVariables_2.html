@@ -114,7 +114,7 @@ ggplot(data = loadings.long) +
   scale_shape_manual(values = c(&quot;MAP&quot; = 21, &quot;MAV&quot; = 22, &quot;PAP&quot; = 23, &quot;PAV&quot; = 24)) +
   labs(fill = &quot;Loading&quot;, shape = &quot;Latent\ntrait&quot;) +
   theme_classic()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-10-20-LatentVariables_2_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="/post/2017-10-20-LatentVariables_2_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <ol style="list-style-type: decimal">
 <li>We see some cross loading by indicators: <code>ags4</code>, <code>ags5</code>, <code>ags8</code>,<code>ags10</code>, <code>ags11</code></li>
 <li>We also see that each factor has multiple latent traits associated with it, suggesting this solution does not conform to the <em>a priori </em> 4-factor solution</li>
@@ -148,7 +148,7 @@ Cuml_var</code></pre>
 <div id="so-how-many-factors-is-appropriate" class="section level3">
 <h3>So how many factors is appropriate?</h3>
 <pre class="r"><code>psych::fa.parallel(goal_scale, fa=&quot;fa&quot;, fm=&quot;ml&quot;)</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-10-20-LatentVariables_2_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="/post/2017-10-20-LatentVariables_2_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <pre><code>## Parallel analysis suggests that the number of factors =  3  and the number of components =  NA</code></pre>
 <p>So lets look at a 3 factor solution.</p>
 <pre class="r"><code>agoal.efa3&lt;-factanal(~ags1+ags2+ags3+ags4+ags5+ags6+ags7+ags8+ags9+ags10+ags11+ ags12, factors=3, rotation=&quot;promax&quot;, data = goal_scale)
@@ -207,7 +207,7 @@ loadings3%&gt;%
   scale_shape_manual(values = c(&quot;MAP&quot; = 21, &quot;MAV&quot; = 22, &quot;PAP&quot; = 23, &quot;PAV&quot; = 24)) +
   labs(fill = &quot;Loading&quot;, shape = &quot;Latent\ntrait&quot;) +
   theme_classic()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-10-20-LatentVariables_2_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="/post/2017-10-20-LatentVariables_2_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <div id="scores" class="section level4">
 <h4>Scores</h4>
 <p>Factor scores are linear combinations of the observed variables which consider what is shared between the item and the factor (i.e., shared variance) and what is not measured (i.e., the uniqueness or error term variance)</p>
@@ -245,7 +245,7 @@ c&lt;- ggplot(data = sub_efa_scores) +
   theme_classic()
 
 grid.arrange(a,b,c, ncol = 3)</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-10-20-LatentVariables_2_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><img src="/post/2017-10-20-LatentVariables_2_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p>Factor scores are easy to create but a couple words of caution should be used in using these.</p>
 <ol style="list-style-type: decimal">
 <li>factor scores are sensitive to the factor extraction method and rotation method used</li>
@@ -331,7 +331,7 @@ grid.arrange(a,b,c, ncol = 3)</code></pre>
                    label_color = &quot;black&quot;)
 
 corr_plot1</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-10-20-LatentVariables_2_files/figure-html/unnamed-chunk-11-1.png" width="768" /></p>
+<p><img src="/post/2017-10-20-LatentVariables_2_files/figure-html/unnamed-chunk-11-1.png" width="768" /></p>
 <p>There is a couple ways we can have “categorical” type data. 1st is <em>nominal</em> where there are not levels in the data (e.g., <code>red , green, blue</code>) and this is created using <code>factor()</code>. 2nd is <em>ordinal</em> where we do have levels in the data (e.g., (<code>disagree &lt; neutral &lt; agree</code>) and this is created using <code>ordered()</code></p>
 <pre class="r"><code>goal_scale  %&gt;% 
   na.omit() %&gt;% 
@@ -416,7 +416,7 @@ try(factanal(~ags1+ags2+ags3+ags4+ags5+ags6+ags7+ags8+ags9+ags10+ags11+ ags12, f
 grid.arrange(corr_plot1 + labs(title = &quot;Nominal&quot;) + theme(plot.title = element_text(hjust = 1, size = 22)), 
              corr_plot2 + labs(title = &quot;Ordinal&quot;) + theme(plot.title = element_text(hjust = 1, size = 22)),
              ncol = 2)</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-10-20-LatentVariables_2_files/figure-html/unnamed-chunk-13-1.png" width="960" /></p>
+<p><img src="/post/2017-10-20-LatentVariables_2_files/figure-html/unnamed-chunk-13-1.png" width="960" /></p>
 <p>We can see that there tends to be a higher values in the ordinal.</p>
 <p>Does this change the factor analysis?</p>
 <pre class="r"><code>agoal.efa.ordered&lt;-fa(r=pc_goals$correlations, 

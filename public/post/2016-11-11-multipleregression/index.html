@@ -8,8 +8,8 @@
         <style>
 
     html body {
-        font-family: 'Raleway', sans-serif;
-        background-color: white;
+        font-family: 'Roboto', sans-serif;
+        background-color: #FEFDFA;
     }
 
     :root {
@@ -20,16 +20,16 @@
 </style>
 
 
-<link rel="stylesheet" href="//css/main.css">
+<link rel="stylesheet" href="/css/main.css">
 
 
 
 
 
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 
 
- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/hybrid.min.css"> 
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/hybrid.min.css"> 
 
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -39,9 +39,9 @@
  
 
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
 
-     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/swift.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/R.min.js"></script> 
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/swift.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/R.min.js"></script> 
 
     <script>hljs.initHighlightingOnLoad();</script>
 
@@ -63,21 +63,23 @@
         
         
         
-        <script async src="https://www.googletagmanager.com/gtag/js?id=A-48496439-2"></script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-48496439-3"></script>
         <script>
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments)};
           gtag('js', new Date());
 
-          gtag('config', 'A-48496439-2');
+          gtag('config', 'UA-48496439-3');
         </script>
         
     </head>
 
     
+    
     <script type="text/javascript" async
       src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-  </script>
+    </script>
+    
 
     <body>
          
@@ -218,14 +220,14 @@ glimpse(bird_abund)</code></pre>
 ggcorr(bird_abund[, 1:10])</code></pre>
 <pre><code>## Warning in ggcorr(bird_abund[, 1:10]): data in column(s) &#39;GRAZE&#39; are not
 ## numeric and were ignored</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2016-11-11-MultipleRegression_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><img src="/post/2016-11-11-MultipleRegression_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <pre class="r"><code>ggcorr(bird_abund[, 1:10], geom = &quot;blank&quot;, label = TRUE, hjust = 0.75) +
   geom_point(size = 10, aes(color = coefficient &gt; 0, alpha = abs(coefficient) &gt; 0.5)) +
   scale_alpha_manual(values = c(&quot;TRUE&quot; = 0.25, &quot;FALSE&quot; = 0)) +
   guides(color = FALSE, alpha = FALSE)</code></pre>
 <pre><code>## Warning in ggcorr(bird_abund[, 1:10], geom = &quot;blank&quot;, label = TRUE, hjust =
 ## 0.75): data in column(s) &#39;GRAZE&#39; are not numeric and were ignored</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2016-11-11-MultipleRegression_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
+<p><img src="/post/2016-11-11-MultipleRegression_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
 <p>We run the regression similarly to the simple regression model.</p>
 <pre class="r"><code>bird_mod &lt;- lm(ABUND ~ L10AREA + L10DIST + L10LDIST + GRAZE + ALT + YEAR_SINCE, data = bird_abund)
 
@@ -292,7 +294,7 @@ glimpse(mod_pred)</code></pre>
 ## $ .std.resid &lt;dbl&gt; -0.66657084, 0.18715342, -0.09386602, 0.29592694, 1...</code></pre>
 <pre class="r"><code>scatter_with_box(xvar=&quot;.fitted&quot;,yvar=&quot;.resid&quot;, xlim=c(0,45), ylim=c(-20,20), xlabel =&quot;Predicted value&quot;, ylabel = &quot;Residual&quot;, data=mod_pred)</code></pre>
 <pre><code>## Loading required package: gtable</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2016-11-11-MultipleRegression_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="/post/2016-11-11-MultipleRegression_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <div id="predictions" class="section level3">
 <h3>Predictions</h3>
 <p>There is an increased level of complication when u</p>
@@ -442,14 +444,14 @@ mod_pred2 &lt;- augment(mod4, newdata = newdata)</code></pre>
   geom_line(aes(x = LAT, y= .fitted, colour=as.factor(LONG)), size = 1) +
   labs(x = &quot;Lattitude&quot;, y = &quot;C3 Grass abundance&quot;, title =&quot;No interaction&quot;) +
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2016-11-11-MultipleRegression_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><img src="/post/2016-11-11-MultipleRegression_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <pre class="r"><code>p1&lt;-ggplot(data = mod_pred2) + 
   geom_line(aes(x = LAT, y= .fitted, colour=as.factor(LONG)), size = 1) +
   labs(x = &quot;Lattitude&quot;, y = &quot;C3 Grass abundance&quot;, title =&quot;With interaction&quot;) +
   theme_bw()
 
 p1</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2016-11-11-MultipleRegression_files/figure-html/unnamed-chunk-9-2.png" width="672" /></p>
+<p><img src="/post/2016-11-11-MultipleRegression_files/figure-html/unnamed-chunk-9-2.png" width="672" /></p>
 </div>
 <div id="centering" class="section level5">
 <h5>Centering</h5>
@@ -462,7 +464,7 @@ ggcorr(paruelo[, c(1,7,8,15)], geom = &quot;blank&quot;, label = TRUE, hjust = 0
   geom_point(size = 10, aes(color = coefficient &gt; 0, alpha = abs(coefficient) &gt; 0.5)) +
   scale_alpha_manual(values = c(&quot;TRUE&quot; = 0.25, &quot;FALSE&quot; = 0)) +
   guides(color = FALSE, alpha = FALSE)</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2016-11-11-MultipleRegression_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p><img src="/post/2016-11-11-MultipleRegression_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <p>Remember that with highly correlated variables are all the computational issues as well as inflated variances of the coefficients. One way to get around the high degree of multicollinearity is centering.</p>
 <p>When we have an interaction in the model, the estimated slope for Y on \(X_1\) when \(X_2\) is zero is not very informative because zero is not usually within the range of our observations for any of the predictor variables. Remember the ranges of our <code>LAT</code> and <code>LONG</code> variables.</p>
 <p>However, if the predictors are centered, then the estimate of \( _1 \) is now the regression slope of Y on \( X_1 \) for the mean of \( X_1 \).</p>
@@ -505,7 +507,7 @@ mod_pred3 &lt;- augment(mod5, newdata = newdata)</code></pre>
   theme_bw()
 
 grid.arrange(p1,p2, ncol=2)</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2016-11-11-MultipleRegression_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p><img src="/post/2016-11-11-MultipleRegression_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 <p>What can be some issues with centering?</p>
 </div>
 <div id="selecting-against-competing-models" class="section level4">

@@ -8,8 +8,8 @@
         <style>
 
     html body {
-        font-family: 'Raleway', sans-serif;
-        background-color: white;
+        font-family: 'Roboto', sans-serif;
+        background-color: #FEFDFA;
     }
 
     :root {
@@ -20,16 +20,16 @@
 </style>
 
 
-<link rel="stylesheet" href="//css/main.css">
+<link rel="stylesheet" href="/css/main.css">
 
 
 
 
 
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 
 
- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/hybrid.min.css"> 
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/hybrid.min.css"> 
 
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -39,9 +39,9 @@
  
 
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
 
-     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/swift.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/R.min.js"></script> 
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/swift.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/R.min.js"></script> 
 
     <script>hljs.initHighlightingOnLoad();</script>
 
@@ -63,21 +63,23 @@
         
         
         
-        <script async src="https://www.googletagmanager.com/gtag/js?id=A-48496439-2"></script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-48496439-3"></script>
         <script>
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments)};
           gtag('js', new Date());
 
-          gtag('config', 'A-48496439-2');
+          gtag('config', 'UA-48496439-3');
         </script>
         
     </head>
 
     
+    
     <script type="text/javascript" async
       src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-  </script>
+    </script>
+    
 
     <body>
          
@@ -176,7 +178,7 @@ hyp_data</code></pre>
   geom_text(aes(x = SpeciesA, y=SpeciesB, label= paste(&quot;Site&quot;,1:4))) +
   coord_cartesian(xlim = c(0,10), ylim = c(0,10), expand = F) +
   theme_classic()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-09-29-Dissimilarites_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><img src="/post/2017-09-29-Dissimilarites_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p>How can we quantify that distance? One of the simplest methods is the Euclidean distance</p>
 <pre class="r"><code>euc_distance &lt;- function(x,y){
   x = x[2] - x[1]
@@ -207,7 +209,7 @@ ggplot(data = as.data.frame(hyp_data)) +
   geom_text(aes(x = SpeciesA, y=SpeciesB, label= paste(&quot;Site&quot;,1:4))) +
   coord_cartesian(xlim = c(0,10), ylim = c(0,10), expand = F) +
   theme_classic()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-09-29-Dissimilarites_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="/post/2017-09-29-Dissimilarites_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 </div>
 <div id="common-distance-measures" class="section level3">
 <h3>Common distance measures</h3>
@@ -235,7 +237,7 @@ ggplot(data = euc_long) +
   coord_equal(expand = F) +
   scale_fill_gradient2(low = &quot;red&quot;, high = &quot;blue&quot;, mid = &quot;white&quot;, midpoint = 5) +
   theme_classic()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-09-29-Dissimilarites_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="/post/2017-09-29-Dissimilarites_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 </div>
 <div id="city-block-manhattan-distance" class="section level4">
 <h4>City block (Manhattan) distance</h4>

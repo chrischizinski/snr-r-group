@@ -33,7 +33,7 @@ hyp_data</code></pre>
   geom_text(aes(x = SpeciesA, y=SpeciesB, label= paste(&quot;Site&quot;,1:4))) +
   coord_cartesian(xlim = c(0,10), ylim = c(0,10), expand = F) +
   theme_classic()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-09-29-Dissimilarites_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><img src="/post/2017-09-29-Dissimilarites_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p>How can we quantify that distance? One of the simplest methods is the Euclidean distance</p>
 <pre class="r"><code>euc_distance &lt;- function(x,y){
   x = x[2] - x[1]
@@ -64,7 +64,7 @@ ggplot(data = as.data.frame(hyp_data)) +
   geom_text(aes(x = SpeciesA, y=SpeciesB, label= paste(&quot;Site&quot;,1:4))) +
   coord_cartesian(xlim = c(0,10), ylim = c(0,10), expand = F) +
   theme_classic()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-09-29-Dissimilarites_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="/post/2017-09-29-Dissimilarites_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 </div>
 <div id="common-distance-measures" class="section level3">
 <h3>Common distance measures</h3>
@@ -92,7 +92,7 @@ ggplot(data = euc_long) +
   coord_equal(expand = F) +
   scale_fill_gradient2(low = &quot;red&quot;, high = &quot;blue&quot;, mid = &quot;white&quot;, midpoint = 5) +
   theme_classic()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-09-29-Dissimilarites_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="/post/2017-09-29-Dissimilarites_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 </div>
 <div id="city-block-manhattan-distance" class="section level4">
 <h4>City block (Manhattan) distance</h4>

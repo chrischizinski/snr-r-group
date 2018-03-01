@@ -91,7 +91,7 @@ centers %&gt;%
   facet_wrap(~cluster) +
   theme_classic() +
   theme(legend.position = &quot;none&quot;)</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-10-06-Clustering_2_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="/post/2017-10-06-Clustering_2_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <p>So how would we describe these clusters?</p>
 <ul>
 <li>Cluster 1: Lower than average crime, above average urban population</li>
@@ -111,7 +111,7 @@ centers %&gt;%
              ellipse.type = &quot;convex&quot;,
              palette = &quot;jco&quot;,
              ggtheme = theme_minimal())</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-10-06-Clustering_2_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="/post/2017-10-06-Clustering_2_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <p><code>factoextra::fviz_cluster</code> while quick can be clunky and difficult to get exactly how you would like your plot displayed. Here is how you can break the data apart and plot yourself.</p>
 <pre class="r"><code>trythis&lt;-stats::prcomp(arrest.scale, scale = FALSE, center = FALSE)
 state_scores&lt;-as.data.frame(scores(trythis))
@@ -162,7 +162,7 @@ head(all_hulls)</code></pre>
   geom_text(aes(x = PC1, y = PC2, color = as.factor(cluster), label = state))  +
   geom_polygon(data = all_hulls, aes(x = PC1, y = PC2, fill = as.factor(cluster), colour =  as.factor(cluster)), alpha = 0.25) + 
   theme_minimal() </code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-10-06-Clustering_2_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p><img src="/post/2017-10-06-Clustering_2_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 <p>Above we chose to seperate the data into three clusters. But how do we decide what is the appropriate number of clusters?</p>
 <p>There are four different ways this can be done:</p>
 <ol style="list-style-type: decimal">
@@ -194,14 +194,14 @@ head(scree_data)</code></pre>
   geom_point(aes(x = clusters, y = wss), size = 3) +
   scale_x_continuous(breaks = 1:nclusters) +
   theme_classic()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-10-06-Clustering_2_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p><img src="/post/2017-10-06-Clustering_2_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 <p>The elbow in this plot is at 4, but you can see that this can be a little tricky in finding the “elbow”</p>
 <ol start="3" style="list-style-type: decimal">
 <li>Silouette method, returns a value -1 to 1 based on the similarity of an observatioin within its own cluster and compared across clusters. A high value would indicate a strong match.</li>
 </ol>
 <pre class="r"><code>fviz_nbclust(arrest.scale, kmeans,
              method = &quot;silhouette&quot;)</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-10-06-Clustering_2_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p><img src="/post/2017-10-06-Clustering_2_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 <p>There is also a type of clustering, that clusters around a mediod rather than a centroid. In using, PAM clustering each cluster is represented by one of the objects in the cluster. PAM is less sensitive to outliers compared to k-means</p>
 <pre class="r"><code>pamkout&lt;-fpc::pamk(arrest.scale, krange = 2:15)
 pamkout</code></pre>
@@ -256,7 +256,7 @@ medoid_data %&gt;%
   facet_wrap(~state) +
   theme_classic() +
   theme(legend.position = &quot;none&quot;)</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-10-06-Clustering_2_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p><img src="/post/2017-10-06-Clustering_2_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 <ol start="4" style="list-style-type: decimal">
 <li>X means clustering. Similary to the k means clustering but uses Bayesian Information criteria to identify the best split.</li>
 </ol>
@@ -265,51 +265,9 @@ medoid_data %&gt;%
 WPM(&quot;install-package&quot;, &quot;XMeans&quot;)
 
 xout&lt;-XMeans(arrest.scale)
-xout</code></pre>
-<pre><code>## 
-## XMeans
-## ======
-## Requested iterations            : 1
-## Iterations performed            : 1
-## Splits prepared                 : 2
-## Splits performed                : 0
-## Cutoff factor                   : 0.5
-## Percentage of splits accepted 
-## by cutoff factor                : 0 %
-## ------
-## Cutoff factor                   : 0.5
-## ------
-## 
-## Cluster centers                 : 2 centers
-## 
-## Cluster 0
-##             1.004934034580132 1.0138273518643042 0.19758526759992892 0.8469650134151087
-## Cluster 1
-##             -0.6699560230534215 -0.675884901242869 -0.1317235117332867 -0.564643342276739
-## 
-## Distortion: 16.966612
-## BIC-Value : -20.965379</code></pre>
-<pre class="r"><code>xout$class_ids</code></pre>
-<pre><code>##        Alabama         Alaska        Arizona       Arkansas     California 
-##              0              0              0              1              0 
-##       Colorado    Connecticut       Delaware        Florida        Georgia 
-##              0              1              1              0              0 
-##         Hawaii          Idaho       Illinois        Indiana           Iowa 
-##              1              1              0              1              1 
-##         Kansas       Kentucky      Louisiana          Maine       Maryland 
-##              1              1              0              1              0 
-##  Massachusetts       Michigan      Minnesota    Mississippi       Missouri 
-##              1              0              1              0              0 
-##        Montana       Nebraska         Nevada  New Hampshire     New Jersey 
-##              1              1              0              1              1 
-##     New Mexico       New York North Carolina   North Dakota           Ohio 
-##              0              0              0              1              1 
-##       Oklahoma         Oregon   Pennsylvania   Rhode Island South Carolina 
-##              1              1              1              1              0 
-##   South Dakota      Tennessee          Texas           Utah        Vermont 
-##              1              0              0              1              1 
-##       Virginia     Washington  West Virginia      Wisconsin        Wyoming 
-##              1              1              1              1              1</code></pre>
+xout
+
+xout$class_ids</code></pre>
 <pre class="r"><code>xcenters&lt;-data.frame(cluster = 1:2,matrix(c(1.004934034580132, 1.0138273518643042,0.19758526759992892,0.8469650134151087,-0.6699560230534215, -0.675884901242869,-0.1317235117332867,-0.564643342276739), byrow = TRUE, ncol = 4))
 names(xcenters)[2:5]&lt;- colnames(arrest.scale)
 
@@ -320,7 +278,7 @@ xcenters %&gt;%
   facet_wrap(~cluster) +
   theme_classic() +
   theme(legend.position = &quot;none&quot;)</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-10-06-Clustering_2_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p><img src="/post/2017-10-06-Clustering_2_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 <p>There is another type of partitioning clustering, called clara and is used primarily for large datasets. We will not be discussing in this class, but there is a function <code>cluster::clara()</code> (among some others) to be used when clustering “big data”.</p>
 </div>
 </div>
@@ -346,13 +304,13 @@ arrest_clust</code></pre>
 ## Number of objects: 50</code></pre>
 <p>We have several options to plot our dendrograms.</p>
 <pre class="r"><code>plot(arrest_clust)</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-10-06-Clustering_2_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p><img src="/post/2017-10-06-Clustering_2_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 <pre class="r"><code>fviz_dend(arrest_clust, 
           k = 2, # two groups
           cex = 0.5) # label size</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-10-06-Clustering_2_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p><img src="/post/2017-10-06-Clustering_2_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 <pre class="r"><code>ggdendrogram(arrest_clust,rotate=TRUE, size = 1)</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-10-06-Clustering_2_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p><img src="/post/2017-10-06-Clustering_2_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 <p>Or extract the data and build your own plot</p>
 <pre class="r"><code>arrest_dendro  &lt;- as.dendrogram(arrest_clust)
 
@@ -371,7 +329,7 @@ names(dend_dendro_data)</code></pre>
 <pre class="r"><code>ggplot(data = dend_dendro_data$segments)+
   geom_segment(aes(x = x, y = y, xend = xend, yend=yend), size =1, colour = &quot;red&quot;) + 
   theme_void()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-10-06-Clustering_2_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<p><img src="/post/2017-10-06-Clustering_2_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
 <pre class="r"><code>head( dend_dendro_data$labels)</code></pre>
 <pre><code>##   x y          label
 ## 1 1 0        Alabama
@@ -385,19 +343,19 @@ names(dend_dendro_data)</code></pre>
   geom_text(data = dend_dendro_data$labels, aes(x = x, y = y, label = label), colour = &quot;blue&quot;, hjust = 1, angle = 90, size =3) +
   coord_cartesian(ylim=c(-3,15)) +
   theme_void()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-10-06-Clustering_2_files/figure-html/unnamed-chunk-23-2.png" width="672" /></p>
+<p><img src="/post/2017-10-06-Clustering_2_files/figure-html/unnamed-chunk-23-2.png" width="672" /></p>
 <p>Choosing the appropriate number of clusters</p>
 <pre class="r"><code>NbClust(arrest.scale,
         distance = &quot;euclidean&quot;,
         min.nc = 2, max.nc = 10,
         method = &quot;complete&quot;, index =&quot;all&quot;) -&gt; arrest.nb</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-10-06-Clustering_2_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<p><img src="/post/2017-10-06-Clustering_2_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
 <pre><code>## *** : The Hubert index is a graphical method of determining the number of clusters.
 ##                 In the plot of Hubert index, we seek a significant knee that corresponds to a 
 ##                 significant increase of the value of the measure i.e the significant peak in Hubert
 ##                 index second differences plot. 
 ## </code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-10-06-Clustering_2_files/figure-html/unnamed-chunk-24-2.png" width="672" /></p>
+<p><img src="/post/2017-10-06-Clustering_2_files/figure-html/unnamed-chunk-24-2.png" width="672" /></p>
 <pre><code>## *** : The D index is a graphical method of determining the number of clusters. 
 ##                 In the plot of D index, we seek a significant knee (the significant peak in Dindex
 ##                 second differences plot) that corresponds to a significant increase of the value of
@@ -433,7 +391,7 @@ names(dend_dendro_data)</code></pre>
 ## Conclusion
 ## =========================
 ## * According to the majority rule, the best number of clusters is  2 .</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-10-06-Clustering_2_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<p><img src="/post/2017-10-06-Clustering_2_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
 <ol start="2" style="list-style-type: decimal">
 <li>Divisive clustering. Start with one cluster and then begin breaking apart into more similar clusters.</li>
 </ol>
@@ -522,6 +480,6 @@ res.diana</code></pre>
           k = 4, # Cut in four groups
           palette = &quot;jco&quot; # Color palette
           )</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-10-06-Clustering_2_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<p><img src="/post/2017-10-06-Clustering_2_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
 </div>
 </div>

@@ -22,7 +22,7 @@ hyp_data&lt;- matrix(c(1,9,1,8,6,6,9,1), byrow=TRUE, ncol = 2)
     geom_text(aes(x = SpeciesA, y = SpeciesB, label = paste(&quot;Site&quot;,1:4)), hjust = -0.25) +
     coord_cartesian(xlim = c(0, 10), ylim = c(0,10), expand = F) +
     theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2016-08-12-SimilarityDistance_files/figure-html/hypdata-1.png" width="672" /></p>
+<p><img src="/post/2016-08-12-SimilarityDistance_files/figure-html/hypdata-1.png" width="672" /></p>
 <p>Now if you could imagine adding a third species, we would adjust the location of the sites along a third axis representing the number of species. The same goes for adding more and more species.</p>
 </div>
 <div id="similarity-among-sites" class="section level2">
@@ -50,7 +50,7 @@ hyp_data&lt;- matrix(c(1,9,1,8,6,6,9,1), byrow=TRUE, ncol = 2)
     geom_text(aes(x = SpeciesA, y = SpeciesB, label = paste(&quot;Site&quot;,1:4)), hjust = -0.25) +
     coord_cartesian(xlim = c(0, 10), ylim = c(0,10), expand = F) +
     theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2016-08-12-SimilarityDistance_files/figure-html/hypdatadist-1.png" width="672" /></p>
+<p><img src="/post/2016-08-12-SimilarityDistance_files/figure-html/hypdatadist-1.png" width="672" /></p>
 <p>In the above plot, the dashed lines represent the distances between sites 1, 3, and 4 to site 2. Site 4 and Site 2 are the most different. If you look at the species composition you can see why. Site 2 had 1 of species A and 8 of Species B, whereas Site 4 had 9 of species A and 1 of species B. Sites 1 and 2 are the most similar. Site 2 had 1 of species A and 8 of Species B and Site 1 had 1 of species A and 9 of species B.</p>
 <p>Distances are dissimilarities (dissimilarity = 1-similarity), or there are specific distance measures (e.g., Euclidean) that have no counterpart in similarity index.</p>
 <p>Distances based on dissimilarites are bounded between 0 and 1. Distances based on a specific distance measures are unbounded.</p>
@@ -78,7 +78,7 @@ hyp_data&lt;- matrix(c(1,9,1,8,6,6,9,1), byrow=TRUE, ncol = 2)
 <li>Looses sensitivity with heterogeneous data</li>
 <li>Distances not proportional</li>
 </ul>
-<p><img src="/www.snr-r-group.netlify.compost/2016-08-12-SimilarityDistance_files/figure-html/eucdist-1.png" width="672" /></p>
+<p><img src="/post/2016-08-12-SimilarityDistance_files/figure-html/eucdist-1.png" width="672" /></p>
 </div>
 <div id="city-block-manhattan-distance" class="section level4">
 <h4>City-block (Manhattan) distance</h4>
@@ -89,7 +89,7 @@ hyp_data&lt;- matrix(c(1,9,1,8,6,6,9,1), byrow=TRUE, ncol = 2)
 <li>Retains sensitivity with heterogenous data</li>
 <li>Distances not proportional</li>
 </ul>
-<p><img src="/www.snr-r-group.netlify.compost/2016-08-12-SimilarityDistance_files/figure-html/cbdist-1.png" width="672" /></p>
+<p><img src="/post/2016-08-12-SimilarityDistance_files/figure-html/cbdist-1.png" width="672" /></p>
 </div>
 <div id="proportional-distances" class="section level4">
 <h4>Proportional Distances</h4>
@@ -98,7 +98,7 @@ hyp_data&lt;- matrix(c(1,9,1,8,6,6,9,1), byrow=TRUE, ncol = 2)
 <li>Manhattan distances expressed as a proportion to max distance</li>
 <li>2 communities with nothing in common would have dissimilarity of 1</li>
 </ul>
-<p><img src="/www.snr-r-group.netlify.compost/2016-08-12-SimilarityDistance_files/figure-html/propdist2-1.png" width="672" /></p>
+<p><img src="/post/2016-08-12-SimilarityDistance_files/figure-html/propdist2-1.png" width="672" /></p>
 <div id="sorensen-or-bray-curtis-distance" class="section level5">
 <h5>Sorensen or Bray-Curtis distance</h5>
 <p><span class="math display">\[ 1 - \frac{2w}{A+B} \]</span></p>
@@ -159,7 +159,7 @@ norm_data</code></pre>
 ## 4 1.33384292 1.32360513 1.29274979                      
 ## 5 1.18050527 1.16942057 1.13608606 0.19707524           
 ## 6 1.33384292 1.32360513 1.29274979 0.00000000 0.19707524</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2016-08-12-SimilarityDistance_files/figure-html/chordgraph-1.png" width="672" /></p>
+<p><img src="/post/2016-08-12-SimilarityDistance_files/figure-html/chordgraph-1.png" width="672" /></p>
 </div>
 <div id="chi-square-distance" class="section level5">
 <h5>Chi-square distance</h5>
@@ -262,7 +262,7 @@ hell_data</code></pre>
 <pre class="r"><code>library(vegan)</code></pre>
 <pre><code>## Loading required package: permute</code></pre>
 <pre><code>## Loading required package: lattice</code></pre>
-<pre><code>## This is vegan 2.4-5</code></pre>
+<pre><code>## This is vegan 2.4-6</code></pre>
 <pre class="r"><code>vegdist(decostand(hyp_data3, &quot;chi.sq&quot;), &quot;euclidean&quot;)</code></pre>
 <pre><code>##            1          2          3          4          5
 ## 2 0.02243668                                            

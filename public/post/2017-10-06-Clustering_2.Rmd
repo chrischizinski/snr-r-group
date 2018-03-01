@@ -201,7 +201,7 @@ medoid_data %>%
 
 4. X means clustering.  Similary to the k means clustering but uses Bayesian Information criteria to identify the best split. 
 
-```{r message = FALSE}
+```{r message = FALSE, eval = FALSE}
 WPM("refresh-cache")
 # WPM("list-packages", "available")
 WPM("install-package", "XMeans")

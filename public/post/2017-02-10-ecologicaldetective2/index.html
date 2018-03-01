@@ -8,8 +8,8 @@
         <style>
 
     html body {
-        font-family: 'Raleway', sans-serif;
-        background-color: white;
+        font-family: 'Roboto', sans-serif;
+        background-color: #FEFDFA;
     }
 
     :root {
@@ -20,16 +20,16 @@
 </style>
 
 
-<link rel="stylesheet" href="//css/main.css">
+<link rel="stylesheet" href="/css/main.css">
 
 
 
 
 
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 
 
- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/hybrid.min.css"> 
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/hybrid.min.css"> 
 
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -39,9 +39,9 @@
  
 
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
 
-     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/swift.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/R.min.js"></script> 
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/swift.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/R.min.js"></script> 
 
     <script>hljs.initHighlightingOnLoad();</script>
 
@@ -63,21 +63,23 @@
         
         
         
-        <script async src="https://www.googletagmanager.com/gtag/js?id=A-48496439-2"></script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-48496439-3"></script>
         <script>
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments)};
           gtag('js', new Date());
 
-          gtag('config', 'A-48496439-2');
+          gtag('config', 'UA-48496439-3');
         </script>
         
     </head>
 
     
+    
     <script type="text/javascript" async
       src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-  </script>
+    </script>
+    
 
     <body>
          
@@ -175,7 +177,7 @@ ggplot() +
   scale_y_continuous(breaks = seq(1,8,by=1)) +
   labs(x = &quot;Flock size&quot;, y = &quot;Consumption rate&quot;) +
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-02-10-EcologicalDetective2_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><img src="/post/2017-02-10-EcologicalDetective2_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 </div>
 <div id="probability-and-probability-models" class="section level2">
 <h2>Probability and probability models</h2>
@@ -285,25 +287,25 @@ glimpse(FishAge)</code></pre>
 <pre class="r"><code>ggplot(data = FishAge) + 
   geom_histogram(aes(x = Age), binwidth = 1, fill = &quot;green&quot;, colour = &quot;black&quot;) +
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-02-10-EcologicalDetective2_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="/post/2017-02-10-EcologicalDetective2_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <pre class="r"><code>ggplot(data = FishAge,aes(x = Age)) + 
   geom_histogram(aes(y = ..density..),binwidth = 1, fill = &quot;green&quot;, colour = &quot;black&quot;) +
   geom_density(colour = &quot;red&quot;, fill = &quot;red&quot;, alpha = 0.5) +
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-02-10-EcologicalDetective2_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
+<p><img src="/post/2017-02-10-EcologicalDetective2_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
 <pre class="r"><code>ggplot(data = FishAge) +
   geom_histogram(aes(x = FishLength), binwidth = 10, fill = &quot;red&quot;, colour = &quot;black&quot; ) + 
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-02-10-EcologicalDetective2_files/figure-html/unnamed-chunk-4-3.png" width="672" /></p>
+<p><img src="/post/2017-02-10-EcologicalDetective2_files/figure-html/unnamed-chunk-4-3.png" width="672" /></p>
 <pre class="r"><code>ggplot(data = FishAge) +
   geom_violin(aes(x = &quot;&quot;, y = FishLength), fill = &quot;red&quot;, colour = &quot;black&quot; ) + 
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-02-10-EcologicalDetective2_files/figure-html/unnamed-chunk-4-4.png" width="672" /></p>
+<p><img src="/post/2017-02-10-EcologicalDetective2_files/figure-html/unnamed-chunk-4-4.png" width="672" /></p>
 <pre class="r"><code>ggplot(data = FishAge) +
   geom_point(aes(x = &quot;&quot;, y = FishLength), position = &quot;jitter&quot;) +
   geom_boxplot(aes(x = &quot;&quot;, y = FishLength), fill = &quot;red&quot;, colour = &quot;black&quot;, alpha = 0.25, outlier.colour = NA) + 
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-02-10-EcologicalDetective2_files/figure-html/unnamed-chunk-4-5.png" width="672" /></p>
+<p><img src="/post/2017-02-10-EcologicalDetective2_files/figure-html/unnamed-chunk-4-5.png" width="672" /></p>
 </div>
 </div>
 

@@ -91,12 +91,12 @@ glimpse(hemlock)</code></pre>
   geom_histogram(aes(Tsuga.canadensis), binwidth = 5, colour = &quot;black&quot;, fill = &quot;dodgerblue&quot;) + 
   coord_cartesian(ylim = c(0, 30), expand = FALSE) +
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-09-15-Introtomultivariate_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="/post/2017-09-15-Introtomultivariate_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <pre class="r"><code>ggplot(data = hemlock) + 
   geom_histogram(aes(logTsuga), bins = 30, colour = &quot;black&quot;, fill = &quot;red&quot;) + 
   coord_cartesian(ylim = c(0, 30), expand = FALSE) +
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-09-15-Introtomultivariate_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="/post/2017-09-15-Introtomultivariate_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 </div>
 <div id="power-tranformations" class="section level4">
 <h4>Power tranformations</h4>
@@ -139,7 +139,7 @@ head(newdata)</code></pre>
   labs(y = &quot;Value&quot;) +
   coord_cartesian(xlim = c(0,100.5), ylim = c(0,5), expand = F)+
   theme_classic()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-09-15-Introtomultivariate_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p><img src="/post/2017-09-15-Introtomultivariate_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 </div>
 <div id="presence-absence-transformation" class="section level4">
 <h4>Presence absence transformation</h4>
@@ -152,7 +152,7 @@ head(newdata)</code></pre>
 <pre class="r"><code>library(vegan)</code></pre>
 <pre><code>## Loading required package: permute</code></pre>
 <pre><code>## Loading required package: lattice</code></pre>
-<pre><code>## This is vegan 2.4-5</code></pre>
+<pre><code>## This is vegan 2.4-6</code></pre>
 <pre class="r"><code>decostand(rawdata, method = &quot;pa&quot;)</code></pre>
 <pre><code>##      species_A species_B species_C species_D species_E species_F
 ## [1,]         1         1         1         1         1         1

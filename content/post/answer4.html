@@ -5,12 +5,12 @@ output: html_document
 
 
 <pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## ── Attaching packages ───────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
+<pre><code>## ── Attaching packages ─────────────────── tidyverse 1.2.1 ──</code></pre>
 <pre><code>## ✔ ggplot2 2.2.1     ✔ purrr   0.2.4
-## ✔ tibble  1.4.1     ✔ dplyr   0.7.4
-## ✔ tidyr   0.7.2     ✔ stringr 1.2.0
-## ✔ readr   1.1.1     ✔ forcats 0.2.0</code></pre>
-<pre><code>## ── Conflicts ──────────────────────────────────────────── tidyverse_conflicts() ──
+## ✔ tibble  1.4.2     ✔ dplyr   0.7.4
+## ✔ tidyr   0.8.0     ✔ stringr 1.3.0
+## ✔ readr   1.1.1     ✔ forcats 0.3.0</code></pre>
+<pre><code>## ── Conflicts ────────────────────── tidyverse_conflicts() ──
 ## ✖ readr::col_factor() masks scales::col_factor()
 ## ✖ purrr::discard()    masks scales::discard()
 ## ✖ dplyr::filter()     masks stats::filter()
@@ -47,11 +47,11 @@ head(ward)</code></pre>
 ggplot(data = ward) + 
   geom_boxplot(aes(x = ZONE, y = EGGS)) + 
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/answer4_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p><img src="/post/answer4_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
 <pre class="r"><code>ggplot(data = ward) + 
   geom_violin(aes(x = ZONE, y = EGGS, fill = ZONE)) + 
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/answer4_files/figure-html/unnamed-chunk-1-2.png" width="672" /></p>
+<p><img src="/post/answer4_files/figure-html/unnamed-chunk-1-2.png" width="672" /></p>
 <pre class="r"><code>data.frame(ZONE = ward_summ$ZONE, CV = ward_summ$SDeggs/ward_summ$Meaneggs)</code></pre>
 <pre><code>##     ZONE        CV
 ## 1 Littor 0.2327708
@@ -86,12 +86,12 @@ head(furness)</code></pre>
 <pre><code>## # A tibble: 6 x 2
 ##   SEX    METRATE
 ##   &lt;chr&gt;    &lt;dbl&gt;
-## 1 Male      2950
-## 2 Female    1956
-## 3 Male      2309
-## 4 Male      2136
-## 5 Male      1946
-## 6 Female    1490</code></pre>
+## 1 Male     2950.
+## 2 Female   1956.
+## 3 Male     2309.
+## 4 Male     2136.
+## 5 Male     1946.
+## 6 Female   1490.</code></pre>
 <pre class="r"><code>furn_summ&lt;-furness %&gt;% 
     group_by(SEX) %&gt;% 
     summarize(N = n(),
@@ -105,11 +105,11 @@ head(furness)</code></pre>
 ggplot(data = furness) + 
   geom_boxplot(aes(x = SEX, y = METRATE)) + 
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/answer4_files/figure-html/unnamed-chunk-1-3.png" width="672" /></p>
+<p><img src="/post/answer4_files/figure-html/unnamed-chunk-1-3.png" width="672" /></p>
 <pre class="r"><code>ggplot(data = furness) + 
   geom_violin(aes(x = SEX, y = METRATE, fill = METRATE)) + 
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/answer4_files/figure-html/unnamed-chunk-1-4.png" width="672" /></p>
+<p><img src="/post/answer4_files/figure-html/unnamed-chunk-1-4.png" width="672" /></p>
 <pre class="r"><code>data.frame(SEX = furn_summ$SEX, CV = furn_summ$SDmetrate/furn_summ$Meanmetrate)</code></pre>
 <pre><code>##      SEX        CV
 ## 1 Female 0.3274656
@@ -164,13 +164,13 @@ elgar %&gt;%
            CI_hi = Meanradius + 1.96* SEradius,
            CI_lo = Meanradius - 1.96* SEradius)</code></pre>
 <pre><code>## # A tibble: 4 x 9
-## # Groups: DIMEN [2]
+## # Groups:   DIMEN [2]
 ##   DIMEN L_COND     N Meanradius Medianradius SDradius SEradius CI_hi CI_lo
 ##   &lt;chr&gt; &lt;chr&gt;  &lt;int&gt;      &lt;dbl&gt;        &lt;int&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1 HORIZ DIM       17        207          210     60.2     14.6   236   179
-## 2 HORIZ LIGH      17        161          160     65.5     15.9   192   130
-## 3 VERT  DIM       17        198          190     60.5     14.7   227   169
-## 4 VERT  LIGH      17        178          160     73.9     17.9   213   143</code></pre>
+## 1 HORIZ DIM       17       207.          210     60.2     14.6  236.  179.
+## 2 HORIZ LIGH      17       161.          160     65.5     15.9  192.  130.
+## 3 VERT  DIM       17       198.          190     60.5     14.7  227.  169.
+## 4 VERT  LIGH      17       178.          160     73.9     17.9  213.  143.</code></pre>
 <pre class="r"><code>elgar %&gt;% 
   gather(type, value, -PAIR) %&gt;% 
   separate(type, c(&quot;DIMEN&quot;,&quot;L_COND&quot;), sep = &quot;_&quot;) %&gt;% 
@@ -178,7 +178,7 @@ elgar %&gt;%
   geom_violin(aes(x = L_COND, y = value, fill = L_COND)) +
   facet_wrap(~DIMEN, ncol = 1) +
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/answer4_files/figure-html/unnamed-chunk-1-5.png" width="672" /></p>
+<p><img src="/post/answer4_files/figure-html/unnamed-chunk-1-5.png" width="672" /></p>
 <pre class="r"><code>elgar %&gt;% 
   gather(type, value, -PAIR) %&gt;% 
   separate(type, c(&quot;DIMEN&quot;,&quot;L_COND&quot;), sep = &quot;_&quot;) %&gt;% 
@@ -187,7 +187,7 @@ elgar %&gt;%
   geom_violin(aes(x = L_COND, y = value, fill = L_COND)) +
   facet_wrap(~DIMEN, ncol = 2, labeller = label_bquote(cols = alpha^.(DIMEN))) +
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/answer4_files/figure-html/unnamed-chunk-1-6.png" width="672" /></p>
+<p><img src="/post/answer4_files/figure-html/unnamed-chunk-1-6.png" width="672" /></p>
 <pre class="r"><code>head(elgar)</code></pre>
 <pre><code>## # A tibble: 6 x 5
 ##   PAIR  VERT_DIM HORIZ_DIM VERT_LIGH HORIZ_LIGH

@@ -27,7 +27,7 @@ fake_data$y = fake_data$x *2 + rnorm(30, sd = 2)
 ggplot(data = fake_data) + 
   geom_point(aes(x = x, y = y), size = 2) +
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2016-10-07-REstimation2_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p><img src="/post/2016-10-07-REstimation2_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
 <pre class="r"><code>start.val &lt;- -2
 max.val &lt;- 6
 
@@ -51,7 +51,7 @@ ggplot(data=SS_stor) +
   labs(x = &quot;Possible values&quot;, y = &quot;Sum of squares&quot;) +
   scale_x_continuous(breaks = seq(start.val,max.val, by = 0.5)) +
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2016-10-07-REstimation2_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><img src="/post/2016-10-07-REstimation2_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <pre class="r"><code>beta_pred &lt;- data.frame(x = min(fake_data$x):max(fake_data$x))
 beta_pred$fit.y &lt;- beta_pred$x * beta_val
 
@@ -59,7 +59,7 @@ ggplot() +
   geom_point(data = fake_data, aes(x = x, y = y), size = 2) +
   geom_line(data = beta_pred, aes(x = x, y = fit.y), colour=&quot;red&quot;) +
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2016-10-07-REstimation2_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><img src="/post/2016-10-07-REstimation2_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p>What if we have two parameters?</p>
 <pre class="r"><code>set.seed(345678)
 
@@ -112,7 +112,7 @@ for(i in 1:length(m)){
   geom_line(data =data_stor, aes(x = m, y = ll), size = 1, colour = &quot;blue&quot; ) +
   scale_x_continuous(breaks = seq(160, 200, by = 5)) +
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2016-10-07-REstimation2_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="/post/2016-10-07-REstimation2_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>And to find that value:</p>
 <pre class="r"><code>data_stor[which(data_stor$ll == min(data_stor$ll)),]</code></pre>
 <pre><code>##      m       ll

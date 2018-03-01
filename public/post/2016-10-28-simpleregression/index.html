@@ -8,8 +8,8 @@
         <style>
 
     html body {
-        font-family: 'Raleway', sans-serif;
-        background-color: white;
+        font-family: 'Roboto', sans-serif;
+        background-color: #FEFDFA;
     }
 
     :root {
@@ -20,16 +20,16 @@
 </style>
 
 
-<link rel="stylesheet" href="//css/main.css">
+<link rel="stylesheet" href="/css/main.css">
 
 
 
 
 
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 
 
- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/hybrid.min.css"> 
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/hybrid.min.css"> 
 
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -39,9 +39,9 @@
  
 
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
 
-     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/swift.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/R.min.js"></script> 
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/swift.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/R.min.js"></script> 
 
     <script>hljs.initHighlightingOnLoad();</script>
 
@@ -63,21 +63,23 @@
         
         
         
-        <script async src="https://www.googletagmanager.com/gtag/js?id=A-48496439-2"></script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-48496439-3"></script>
         <script>
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments)};
           gtag('js', new Date());
 
-          gtag('config', 'A-48496439-2');
+          gtag('config', 'UA-48496439-3');
         </script>
         
     </head>
 
     
+    
     <script type="text/javascript" async
       src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-  </script>
+    </script>
+    
 
     <body>
          
@@ -226,7 +228,7 @@ glimpse(cwd_data)</code></pre>
   geom_point(aes(x = RIP.DENS, y = CWD.DENS), size = 2) +
   labs(x = &quot;Riparian tree density&quot;, y =&quot;Coarse woody debris density&quot;) +
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2016-10-28-SimpleRegression_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><img src="/post/2016-10-28-SimpleRegression_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <p>`lm()’ is the function in R to conduct simple linear regression.</p>
 <pre class="r"><code>mod_cwd &lt;- lm(CWD.DENS ~  RIP.DENS, data = cwd_data)
 
@@ -341,14 +343,14 @@ glance(mod_cwd)</code></pre>
   geom_smooth(aes(x = RIP.DENS, y = CWD.DENS), method = &#39;lm&#39;, alpha = 0.35) +
   labs(x = &quot;Riparian tree density&quot;, y =&quot;Coarse woody debris density&quot;, title = &quot;Linear model fit&quot;) +
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2016-10-28-SimpleRegression_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="/post/2016-10-28-SimpleRegression_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>We can also use <code>geom_smooth</code> to explore other non-linear relationships between \( X \) and \( Y \).</p>
 <pre class="r"><code>ggplot(data = cwd_data) + 
   geom_point(aes(x = RIP.DENS, y = CWD.DENS), size = 2) +
   geom_smooth(aes(x = RIP.DENS, y = CWD.DENS), method = &#39;loess&#39;, alpha = 0.35) +
   labs(x = &quot;Riparian tree density&quot;, y =&quot;Coarse woody debris density&quot;, title = &quot;Loess fit&quot;) +
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2016-10-28-SimpleRegression_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="/post/2016-10-28-SimpleRegression_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <pre class="r"><code># or via a GAM
 
 ggplot(data = cwd_data) + 
@@ -356,7 +358,7 @@ ggplot(data = cwd_data) +
   geom_smooth(aes(x = RIP.DENS, y = CWD.DENS), method = &#39;gam&#39;, alpha = 0.35) +
   labs(x = &quot;Riparian tree density&quot;, y =&quot;Coarse woody debris density&quot;, title = &quot;GAM fit&quot;) +
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2016-10-28-SimpleRegression_files/figure-html/unnamed-chunk-8-2.png" width="672" /></p>
+<p><img src="/post/2016-10-28-SimpleRegression_files/figure-html/unnamed-chunk-8-2.png" width="672" /></p>
 <p>While using <code>geom_smooth</code> makes nice visuals, I think you have a lot more flexibility when you build your own predictions. The <code>predict()</code> function is one of my favorite functions in R.</p>
 </div>
 <div id="predicted-values" class="section level5">
@@ -381,7 +383,7 @@ ggplot(data = fitted_vals) +
   scale_y_continuous(breaks = seq(0,1000, by = 250)) +
   labs(x = &quot;Riparian tree density&quot;, y =&quot;Coarse woody debris density&quot;) +
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2016-10-28-SimpleRegression_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p><img src="/post/2016-10-28-SimpleRegression_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <p>While these values are helpful in displaying the basic model fit, there are often times (especially when doing multiple linear regression) when you want to look at predictions based off specific values. We can do this by using the <code>newdata</code> in <code>predict()</code>. <strong>NOTE</strong> that the column header names need to reflect the independent values in your model.</p>
 <pre class="r"><code>nd &lt;- data.frame(RIP.DENS = 800:2100)
 
@@ -402,7 +404,7 @@ head(fitted_vals)</code></pre>
   scale_y_continuous(breaks = seq(0,1000, by = 250)) +
   labs(x = &quot;Riparian tree density&quot;, y =&quot;Coarse woody debris density&quot;) +
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2016-10-28-SimpleRegression_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p><img src="/post/2016-10-28-SimpleRegression_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 </div>
 <div id="residuals" class="section level5">
 <h5>Residuals</h5>
@@ -416,7 +418,7 @@ ggplot(data = fitted_vals) +
   geom_point(aes(x = RIP.DENS, y = fit), size = 1, colour =&quot;red&quot;) + 
   labs(x = &quot;Riparian tree density&quot;, y =&quot;Coarse woody debris density&quot;) +
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2016-10-28-SimpleRegression_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p><img src="/post/2016-10-28-SimpleRegression_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 </div>
 </div>
 <div id="analysis-of-variance" class="section level4">
@@ -444,7 +446,7 @@ ggplot(data = fitted_vals) +
   annotate(&quot;text&quot;, x = 1800, y = mean(fitted_vals$CWD.DENS), label = &#39; hat(y)[1800]~-~bar(y)&#39;, parse =TRUE) +
   annotate(&quot;text&quot;, x = 1400, y = fitted_vals$CWD.DENS[fitted_vals$RIP.DENS==1400], label = &#39; hat(y)[1400]~-~Y[1400]&#39;, parse =TRUE) +
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2016-10-28-SimpleRegression_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p><img src="/post/2016-10-28-SimpleRegression_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 <ul>
 <li><p>The \( SS_{total} \) increases with sample size. The Mean SS is a measure of variability that does not depend on sample size. MS is calculated by dividing SS by their df and thus, are not additive.</p></li>
 <li><p>The \( MS_{Residual} \) estimates the common variance of the error terms \( e_{i} \), and therefore of the Y-values at each \( x_i \). <strong>NOTE</strong> a key assumption is homogeneity of variances.</p></li>
@@ -524,7 +526,7 @@ gt &lt;- gtable_add_grob(gt, gt3, 2, 2)
 # And render the plot
 grid.newpage()
 grid.draw(gt)</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2016-10-28-SimpleRegression_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p><img src="/post/2016-10-28-SimpleRegression_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 <pre class="r"><code># grid.rect(x = 0.5, y = 0.5, height = 0.995, width = 0.995, default.units = &quot;npc&quot;, 
 #     gp = gpar(col = &quot;black&quot;, fill = NA, lwd = 1))</code></pre>
 </div>
@@ -575,7 +577,7 @@ ggplot(data = fitted_vals2)  +
   scale_colour_manual(values = c(&quot;0&quot; = &quot;red&quot;, &quot;1&quot; = &quot;blue&quot;)) +
   theme_bw() + 
   theme(legend.position = c(0.90, 0.25))</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2016-10-28-SimpleRegression_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p><img src="/post/2016-10-28-SimpleRegression_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 </div>
 <div id="residuals-1" class="section level5">
 <h5>Residuals</h5>
@@ -594,7 +596,7 @@ ggplot(data = fitted_vals2)  +
   labs(x = &quot;Riparian tree density&quot;, y =&quot;Coarse woody debris density&quot;) +
   scale_colour_manual(values = c(&quot;0&quot; = &quot;red&quot;, &quot;1&quot; = &quot;blue&quot;)) +
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2016-10-28-SimpleRegression_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p><img src="/post/2016-10-28-SimpleRegression_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 <pre class="r"><code>#outlier.test in car package
 outlierTest(mod_cwd)</code></pre>
 <pre><code>## 
@@ -618,7 +620,7 @@ ggplot(data = fitted_vals3)  +
   labs(x = &quot;Riparian tree density&quot;, y =&quot;Coarse woody debris density&quot;) +
   scale_colour_continuous(low = &quot;black&quot;, high = &quot;red&quot;) +
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2016-10-28-SimpleRegression_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p><img src="/post/2016-10-28-SimpleRegression_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 </div>
 </div>
 <div id="weighted-least-squares" class="section level4">
@@ -663,7 +665,7 @@ ggplot(data = fake_pred) +
   geom_point(aes(x = x, y = y), size = 2, colour = &quot;red&quot;) +
   geom_line(aes(x = x, y = fit), linetype = &#39;dashed&#39;) +
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2016-10-28-SimpleRegression_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p><img src="/post/2016-10-28-SimpleRegression_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 <pre class="r"><code>mod_2 &lt;- lm(y ~ x, weights= 1/(x^2), data = fake_data1)
 summary(mod_2)</code></pre>
 <pre><code>## 
@@ -710,7 +712,7 @@ ggplot(data = fake_pred) +
   geom_line(aes(x = x, y = fit), linetype = &#39;dashed&#39;) +
   geom_line(data =fake_pred2, aes(x = x, y = fit), linetype = &#39;solid&#39;) +
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2016-10-28-SimpleRegression_files/figure-html/unnamed-chunk-22-2.png" width="672" /></p>
+<p><img src="/post/2016-10-28-SimpleRegression_files/figure-html/unnamed-chunk-22-2.png" width="672" /></p>
 </div>
 <div id="random-x-model-ii-regression" class="section level4">
 <h4>Random X (Model II Regression)</h4>
@@ -795,12 +797,12 @@ head(crime_data)</code></pre>
 <pre><code>## # A tibble: 6 x 9
 ##     sid state crime murder pctmetro pctwhite pcths poverty single
 ##   &lt;dbl&gt; &lt;chr&gt; &lt;int&gt;  &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
-## 1  1.00 ak      761   9.00     41.8     75.2  86.6    9.10   14.3
-## 2  2.00 al      780  11.6      67.4     73.5  66.9   17.4    11.5
-## 3  3.00 ar      593  10.2      44.7     82.9  66.3   20.0    10.7
-## 4  4.00 az      715   8.60     84.7     88.6  78.7   15.4    12.1
-## 5  5.00 ca     1078  13.1      96.7     79.3  76.2   18.2    12.5
-## 6  6.00 co      567   5.80     81.8     92.5  84.4    9.90   12.1</code></pre>
+## 1    1. ak      761   9.00     41.8     75.2  86.6    9.10   14.3
+## 2    2. al      780  11.6      67.4     73.5  66.9   17.4    11.5
+## 3    3. ar      593  10.2      44.7     82.9  66.3   20.0    10.7
+## 4    4. az      715   8.60     84.7     88.6  78.7   15.4    12.1
+## 5    5. ca     1078  13.1      96.7     79.3  76.2   18.2    12.5
+## 6    6. co      567   5.80     81.8     92.5  84.4    9.90   12.1</code></pre>
 <pre class="r"><code>crime_mod &lt;- lm(crime ~ single, data = crime_data)
 summary(crime_mod)</code></pre>
 <pre><code>## 
@@ -828,7 +830,7 @@ summary(crime_mod)</code></pre>
   geom_text(aes(x = single,  y = crime, label = state ), hjust = 0, vjust = 1) +
   scale_colour_continuous(low = &quot;red&quot;, high = &quot;blue&quot;) +
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2016-10-28-SimpleRegression_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<p><img src="/post/2016-10-28-SimpleRegression_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
 <pre class="r"><code>mod_huber &lt;- rlm(crime ~ single, data = crime_data)
 summary(mod_huber)</code></pre>
 <pre><code>## 
@@ -850,7 +852,7 @@ summary(mod_huber)</code></pre>
   geom_text(aes(x = single,  y = crime, label = state ), hjust = 0, vjust = 1) +
   scale_colour_continuous(low = &quot;red&quot;, high = &quot;blue&quot;) +
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2016-10-28-SimpleRegression_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<p><img src="/post/2016-10-28-SimpleRegression_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
 </div>
 </div>
 <div id="rank-based-regression" class="section level4">

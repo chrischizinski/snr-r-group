@@ -8,8 +8,8 @@
         <style>
 
     html body {
-        font-family: 'Raleway', sans-serif;
-        background-color: white;
+        font-family: 'Roboto', sans-serif;
+        background-color: #FEFDFA;
     }
 
     :root {
@@ -20,16 +20,16 @@
 </style>
 
 
-<link rel="stylesheet" href="//css/main.css">
+<link rel="stylesheet" href="/css/main.css">
 
 
 
 
 
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 
 
- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/hybrid.min.css"> 
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/hybrid.min.css"> 
 
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -39,9 +39,9 @@
  
 
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
 
-     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/swift.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/R.min.js"></script> 
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/swift.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/R.min.js"></script> 
 
     <script>hljs.initHighlightingOnLoad();</script>
 
@@ -63,21 +63,23 @@
         
         
         
-        <script async src="https://www.googletagmanager.com/gtag/js?id=A-48496439-2"></script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-48496439-3"></script>
         <script>
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments)};
           gtag('js', new Date());
 
-          gtag('config', 'A-48496439-2');
+          gtag('config', 'UA-48496439-3');
         </script>
         
     </head>
 
     
+    
     <script type="text/javascript" async
       src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-  </script>
+    </script>
+    
 
     <body>
          
@@ -172,7 +174,7 @@ incidental&lt;-data.frame(albatross, hauls)</code></pre>
   geom_bar(aes(x= albatross, y = hauls), fill = &quot;dodgerblue&quot;, colour = &quot;black&quot;, stat = &quot;identity&quot;) + 
   coord_cartesian(xlim = c(-1,18), ylim = c(0,850), expand = FALSE) + 
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-03-30-IncidentalCatch_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><img src="/post/2017-03-30-IncidentalCatch_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p>Pseudocode 4.1 1. Specify the level of observer coverage, \(N_{tow}\) per simulation, and the total number of simulations \(N_{sim}\), and the negative binomial parameters <em>m</em> and <em>k</em>. These are estimated from last year’s data. Also specifY the criterion “success,” <em>d</em>, and the value of \(t_q\)</p>
 <pre class="r"><code>albatross_all &lt;- rep(incidental$albatross, times = incidental$hauls)
 length(albatross_all)</code></pre>
@@ -200,13 +202,13 @@ ggplot(data = p_c) +
   coord_cartesian(xlim = c(-1,101), ylim = c(0,1), expand = FALSE) + 
   labs(x=&quot;Number of birds captured&quot;, y = &quot;pdf&quot;) +
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-03-30-IncidentalCatch_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="/post/2017-03-30-IncidentalCatch_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <pre class="r"><code>ggplot(data = p_c) + 
   geom_bar(aes(x= c, y = cdf), fill = &quot;green&quot;, colour = &quot;black&quot;, stat = &quot;identity&quot;) + 
   coord_cartesian(xlim = c(-1,101), ylim = c(0,1), expand = FALSE) + 
   labs(x=&quot;Number of birds captured&quot;, y = &quot;cdf&quot;) +
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-03-30-IncidentalCatch_files/figure-html/unnamed-chunk-5-2.png" width="672" /></p>
+<p><img src="/post/2017-03-30-IncidentalCatch_files/figure-html/unnamed-chunk-5-2.png" width="672" /></p>
 <ol start="3" style="list-style-type: decimal">
 <li>Compute the mean</li>
 </ol>
@@ -269,7 +271,7 @@ ggplot(data = incidental) +
   geom_smooth(aes(x = tows, y = prop),method = &quot;lm&quot;, formula = y ~ splines::bs(x, 25), colour = &quot;red&quot;,se = FALSE) +
   coord_cartesian(ylim=c(0,1.05), xlim = c(0,5000), expand = FALSE) +
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2017-03-30-IncidentalCatch_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="/post/2017-03-30-IncidentalCatch_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 </div>
 </div>
 

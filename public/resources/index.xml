@@ -6,7 +6,7 @@
     <description>Recent content in Resources on SNR R User Group</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Jan 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 25 Jan 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/resources/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,11 +14,11 @@
     <item>
       <title>Commonly used resources</title>
       <link>/resources/resources/</link>
-      <pubDate>Sun, 28 Jan 2018 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 25 Jan 2018 00:00:00 +0000</pubDate>
       
       <guid>/resources/resources/</guid>
       <description> This page has some commonly used resources for the class
-Link to data sources  snr-r-group/data/  Guide to good and reproducible code  BES Guide to reproducible code Google&amp;rsquo;s R Style Guide Hadley Wickham&amp;rsquo;s Style Guide Accessibility, reusability, reliability: Improving the standards for publishing code in Methods in Ecology and Evolution Authors formatR  Cheat sheets  Tidyverse, ggplot2, Rstudio, and more  </description>
+Link to data sources  SNR_R_User\data  Guide to good and reproducible code  BES Guide to reproducible code Google&amp;rsquo;s R Style Guide Hadley Wickham&amp;rsquo;s Style Guide Accessibility, reusability, reliability: Improving the standards for publishing code in Methods in Ecology and Evolution Authors formatR  Cheat sheets  Tidyverse, ggplot2, Rstudio, and more  </description>
     </item>
     
   </channel>

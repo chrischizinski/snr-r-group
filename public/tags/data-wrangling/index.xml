@@ -31,15 +31,5 @@ We will explore these types of joins using datasets from the our github reposito
 Now that you have your data in R, no matter the process you took to get it there, you will undoubtedly need to manipulate the data. Manipulation (i.e. tidying) will involve getting your data in a format and “looking” the way you want so you can analyze the data. This does not sound like a big process but until a few years ago it was.</description>
     </item>
     
-    <item>
-      <title>Data wrangling</title>
-      <link>/post/2016-09-23-wrangling.utf8/</link>
-      <pubDate>Fri, 23 Sep 2016 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2016-09-23-wrangling.utf8/</guid>
-      <description>All the data that we use is in our repository.
-Now that you have your data in R, no matter the process you took to get it there, you will undoubtedly need to manipulate the data. Manipulation (i.e. tidying) will involve getting your data in a format and &amp;ldquo;looking&amp;rdquo; the way you want so you can analyze the data. This does not sound like a big process but until a few years ago it was.</description>
-    </item>
-    
   </channel>
 </rss>

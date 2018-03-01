@@ -8,8 +8,8 @@
         <style>
 
     html body {
-        font-family: 'Raleway', sans-serif;
-        background-color: white;
+        font-family: 'Roboto', sans-serif;
+        background-color: #FEFDFA;
     }
 
     :root {
@@ -20,16 +20,16 @@
 </style>
 
 
-<link rel="stylesheet" href="//css/main.css">
+<link rel="stylesheet" href="/css/main.css">
 
 
 
 
 
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 
 
- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/hybrid.min.css"> 
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/hybrid.min.css"> 
 
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -39,9 +39,9 @@
  
 
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
 
-     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/swift.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/R.min.js"></script> 
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/swift.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/R.min.js"></script> 
 
     <script>hljs.initHighlightingOnLoad();</script>
 
@@ -63,21 +63,23 @@
         
         
         
-        <script async src="https://www.googletagmanager.com/gtag/js?id=A-48496439-2"></script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-48496439-3"></script>
         <script>
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments)};
           gtag('js', new Date());
 
-          gtag('config', 'A-48496439-2');
+          gtag('config', 'UA-48496439-3');
         </script>
         
     </head>
 
     
+    
     <script type="text/javascript" async
       src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-  </script>
+    </script>
+    
 
     <body>
          
@@ -170,7 +172,7 @@ fake_data$y = fake_data$x *2 + rnorm(30, sd = 2)
 ggplot(data = fake_data) + 
   geom_point(aes(x = x, y = y), size = 2) +
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2016-10-07-REstimation2_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p><img src="/post/2016-10-07-REstimation2_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
 <pre class="r"><code>start.val &lt;- -2
 max.val &lt;- 6
 
@@ -194,7 +196,7 @@ ggplot(data=SS_stor) +
   labs(x = &quot;Possible values&quot;, y = &quot;Sum of squares&quot;) +
   scale_x_continuous(breaks = seq(start.val,max.val, by = 0.5)) +
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2016-10-07-REstimation2_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><img src="/post/2016-10-07-REstimation2_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <pre class="r"><code>beta_pred &lt;- data.frame(x = min(fake_data$x):max(fake_data$x))
 beta_pred$fit.y &lt;- beta_pred$x * beta_val
 
@@ -202,7 +204,7 @@ ggplot() +
   geom_point(data = fake_data, aes(x = x, y = y), size = 2) +
   geom_line(data = beta_pred, aes(x = x, y = fit.y), colour=&quot;red&quot;) +
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2016-10-07-REstimation2_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><img src="/post/2016-10-07-REstimation2_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p>What if we have two parameters?</p>
 <pre class="r"><code>set.seed(345678)
 
@@ -255,7 +257,7 @@ for(i in 1:length(m)){
   geom_line(data =data_stor, aes(x = m, y = ll), size = 1, colour = &quot;blue&quot; ) +
   scale_x_continuous(breaks = seq(160, 200, by = 5)) +
   theme_bw()</code></pre>
-<p><img src="/www.snr-r-group.netlify.compost/2016-10-07-REstimation2_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="/post/2016-10-07-REstimation2_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>And to find that value:</p>
 <pre class="r"><code>data_stor[which(data_stor$ll == min(data_stor$ll)),]</code></pre>
 <pre><code>##      m       ll
