@@ -1,0 +1,99 @@
+---
+title: "Heat Tolerance"
+date: '2018-03-02'
+tags:
+- Heat Tolerance
+- glm
+- Data Seminar
+categories: R
+---
+
+```{r setup, include=FALSE}
+# .libPaths("P:/RLibrary2")  #  Set your library path if you need it
+knitr::opts_chunk$set(echo = TRUE)
+
+# load libraries
+library(knitr)
+library(ezknitr)
+library(broom)
+library(emmeans)
+library(readxl)
+library(AICcmodavg)
+library(tidyverse)
+library(stargazer)
+```
+
+## Get the data
+
+```{r loaddata}
+
+heat_data <-read_csv("https://raw.githubusercontent.com/chrischizinski/snr-r-group/master/data/HeatTolerance.csv", na = "NA")
+glimpse(heat_data)
+```
+
+
+## Fix up the data 
+
+The column headers are very messy in this file, particularly all the spaces and the $^\circ$ symbols.   Clean them up so that it is a little easier to use. 
+
+
+```{r cleandata}
+heat_data %>% 
+  select(-`Age (degree-days)`) %>% 
+  rename(name = `Species common name`,
+         trial = `Trial Nr`,
+         stage = `Larval Stage`,
+         age = `Age (days post-hatch)`,
+         ACtemp = `Acclimation temperature (°C)`,
+         ID = `Larval ID`,
+         warmTemp = `Warming rate (°C h-1)`,
+         length = `Body length (mm)`,
+         CTmax = `CTMax (°C)`) %>% 
+  mutate(stage = case_when(stage =="Feeding larva"~ "exogenous",
+                           stage =="Feeding Larvae"~ "exogenous",
+                           TRUE ~ stage),
+         stage = tolower(stage))-> heat_data.rev
+
+glimpse(heat_data.rev)
+
+#  Plot the data 
+
+ggplot(data = heat_data.rev %>% filter(warmTemp != "Control")) +
+  geom_point(aes(x = warmTemp, y = CTmax, shape = factor(ACtemp),
+                 colour = length), alpha = 0.45,size =2) +
+  facet_grid(stage ~ name) +
+  theme_classic() +
+  theme(legend.position = "bottom")
+
+
+```
+
+## Models
+
+```{r glmmods, warning = FALSE}
+herr_exo <- heat_data.rev %>% 
+              filter(name == "Herring", 
+                     stage == "exogenous",
+                     warmTemp != "Control") %>% 
+              mutate(warmTemp = factor(warmTemp),
+                     ACtemp = factor(ACtemp))
+
+unique(herr_exo$warmTemp)
+
+he_mod <- glm(CTmax ~ warmTemp + length + ACtemp, data = herr_exo)
+
+# he_mod %>% 
+#        sjt.lm(no.output = TRUE, show.se = TRUE) %>% 
+#        return() %>% .[["knitr"]] %>% asis_output
+
+# pander(he_mod)
+# 
+# xtable(he_mod)
+  
+```
+
+```{r chunkTest1, echo=FALSE, results='asis'}
+stargazer(he_mod, type='html', single.row = TRUE)
+
+```
+
