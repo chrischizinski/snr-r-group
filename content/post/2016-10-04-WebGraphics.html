@@ -27,12 +27,12 @@ tags: ["Graphics"]
 <pre class="r"><code>#install.packages(&quot;ggvis&quot;)
 
 library(tidyverse)</code></pre>
-<pre><code>## ── Attaching packages ──────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
+<pre><code>## ── Attaching packages ──── tidyverse 1.2.1 ──</code></pre>
 <pre><code>## ✔ ggplot2 2.2.1     ✔ purrr   0.2.4
 ## ✔ tibble  1.4.2     ✔ dplyr   0.7.4
 ## ✔ tidyr   0.8.0     ✔ stringr 1.3.0
 ## ✔ readr   1.1.1     ✔ forcats 0.3.0</code></pre>
-<pre><code>## ── Conflicts ─────────────────────────────────────────────── tidyverse_conflicts() ──
+<pre><code>## ── Conflicts ─────── tidyverse_conflicts() ──
 ## ✖ readr::col_factor() masks scales::col_factor()
 ## ✖ purrr::discard()    masks scales::discard()
 ## ✖ dplyr::filter()     masks stats::filter()
@@ -52,27 +52,27 @@ library(tidyverse)</code></pre>
             layer_points()
 
 view_static(point_plot)</code></pre>
-<div id="plot_964645401-container" class="ggvis-output-container">
-<div id="plot_964645401" class="ggvis-output"></div>
+<div id="plot_982707042-container" class="ggvis-output-container">
+<div id="plot_982707042" class="ggvis-output"></div>
 <div class="plot-gear-icon">
 <nav class="ggvis-control">
 <a class="ggvis-dropdown-toggle" title="Controls" onclick="return false;"></a>
 <ul class="ggvis-dropdown">
 <li>
 Renderer: 
-<a id="plot_964645401_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_964645401" data-renderer="svg">SVG</a>
+<a id="plot_982707042_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_982707042" data-renderer="svg">SVG</a>
  | 
-<a id="plot_964645401_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_964645401" data-renderer="canvas">Canvas</a>
+<a id="plot_982707042_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_982707042" data-renderer="canvas">Canvas</a>
 </li>
 <li>
-<a id="plot_964645401_download" class="ggvis-download" data-plot-id="plot_964645401">Download</a>
+<a id="plot_982707042_download" class="ggvis-download" data-plot-id="plot_982707042">Download</a>
 </li>
 </ul>
 </nav>
 </div>
 </div>
 <script type="text/javascript">
-var plot_964645401_spec = {
+var plot_982707042_spec = {
   "data": [
     {
       "name": ".0",
@@ -193,31 +193,31 @@ var plot_964645401_spec = {
   },
   "handlers": null
 };
-ggvis.getPlot("plot_964645401").parseSpec(plot_964645401_spec);
+ggvis.getPlot("plot_982707042").parseSpec(plot_982707042_spec);
 </script>
 <p>Like ggplot, you can mapping other visual properties like <code>fill</code>, <code>stroke</code>, <code>size</code> and <code>shape</code>.</p>
 <pre class="r"><code>mtcars %&gt;% ggvis(~mpg, ~disp, stroke = ~vs) %&gt;% layer_points()</code></pre>
-<div id="plot_id831329481-container" class="ggvis-output-container">
-<div id="plot_id831329481" class="ggvis-output"></div>
+<div id="plot_id969474023-container" class="ggvis-output-container">
+<div id="plot_id969474023" class="ggvis-output"></div>
 <div class="plot-gear-icon">
 <nav class="ggvis-control">
 <a class="ggvis-dropdown-toggle" title="Controls" onclick="return false;"></a>
 <ul class="ggvis-dropdown">
 <li>
 Renderer: 
-<a id="plot_id831329481_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id831329481" data-renderer="svg">SVG</a>
+<a id="plot_id969474023_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id969474023" data-renderer="svg">SVG</a>
  | 
-<a id="plot_id831329481_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id831329481" data-renderer="canvas">Canvas</a>
+<a id="plot_id969474023_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id969474023" data-renderer="canvas">Canvas</a>
 </li>
 <li>
-<a id="plot_id831329481_download" class="ggvis-download" data-plot-id="plot_id831329481">Download</a>
+<a id="plot_id969474023_download" class="ggvis-download" data-plot-id="plot_id969474023">Download</a>
 </li>
 </ul>
 </nav>
 </div>
 </div>
 <script type="text/javascript">
-var plot_id831329481_spec = {
+var plot_id969474023_spec = {
   "data": [
     {
       "name": ".0",
@@ -370,30 +370,30 @@ var plot_id831329481_spec = {
   },
   "handlers": null
 };
-ggvis.getPlot("plot_id831329481").parseSpec(plot_id831329481_spec);
+ggvis.getPlot("plot_id969474023").parseSpec(plot_id969474023_spec);
 </script>
 <pre class="r"><code>mtcars %&gt;% ggvis(~mpg, ~disp, fill = ~vs) %&gt;% layer_points()</code></pre>
-<div id="plot_id573414986-container" class="ggvis-output-container">
-<div id="plot_id573414986" class="ggvis-output"></div>
+<div id="plot_id142188126-container" class="ggvis-output-container">
+<div id="plot_id142188126" class="ggvis-output"></div>
 <div class="plot-gear-icon">
 <nav class="ggvis-control">
 <a class="ggvis-dropdown-toggle" title="Controls" onclick="return false;"></a>
 <ul class="ggvis-dropdown">
 <li>
 Renderer: 
-<a id="plot_id573414986_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id573414986" data-renderer="svg">SVG</a>
+<a id="plot_id142188126_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id142188126" data-renderer="svg">SVG</a>
  | 
-<a id="plot_id573414986_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id573414986" data-renderer="canvas">Canvas</a>
+<a id="plot_id142188126_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id142188126" data-renderer="canvas">Canvas</a>
 </li>
 <li>
-<a id="plot_id573414986_download" class="ggvis-download" data-plot-id="plot_id573414986">Download</a>
+<a id="plot_id142188126_download" class="ggvis-download" data-plot-id="plot_id142188126">Download</a>
 </li>
 </ul>
 </nav>
 </div>
 </div>
 <script type="text/javascript">
-var plot_id573414986_spec = {
+var plot_id142188126_spec = {
   "data": [
     {
       "name": ".0",
@@ -543,30 +543,30 @@ var plot_id573414986_spec = {
   },
   "handlers": null
 };
-ggvis.getPlot("plot_id573414986").parseSpec(plot_id573414986_spec);
+ggvis.getPlot("plot_id142188126").parseSpec(plot_id142188126_spec);
 </script>
 <pre class="r"><code>mtcars %&gt;% ggvis(~mpg, ~disp, size = ~vs) %&gt;% layer_points()</code></pre>
-<div id="plot_id446855482-container" class="ggvis-output-container">
-<div id="plot_id446855482" class="ggvis-output"></div>
+<div id="plot_id317818965-container" class="ggvis-output-container">
+<div id="plot_id317818965" class="ggvis-output"></div>
 <div class="plot-gear-icon">
 <nav class="ggvis-control">
 <a class="ggvis-dropdown-toggle" title="Controls" onclick="return false;"></a>
 <ul class="ggvis-dropdown">
 <li>
 Renderer: 
-<a id="plot_id446855482_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id446855482" data-renderer="svg">SVG</a>
+<a id="plot_id317818965_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id317818965" data-renderer="svg">SVG</a>
  | 
-<a id="plot_id446855482_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id446855482" data-renderer="canvas">Canvas</a>
+<a id="plot_id317818965_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id317818965" data-renderer="canvas">Canvas</a>
 </li>
 <li>
-<a id="plot_id446855482_download" class="ggvis-download" data-plot-id="plot_id446855482">Download</a>
+<a id="plot_id317818965_download" class="ggvis-download" data-plot-id="plot_id317818965">Download</a>
 </li>
 </ul>
 </nav>
 </div>
 </div>
 <script type="text/javascript">
-var plot_id446855482_spec = {
+var plot_id317818965_spec = {
   "data": [
     {
       "name": ".0",
@@ -716,30 +716,30 @@ var plot_id446855482_spec = {
   },
   "handlers": null
 };
-ggvis.getPlot("plot_id446855482").parseSpec(plot_id446855482_spec);
+ggvis.getPlot("plot_id317818965").parseSpec(plot_id317818965_spec);
 </script>
 <pre class="r"><code>mtcars %&gt;% ggvis(~mpg, ~disp, shape = ~factor(cyl)) %&gt;% layer_points()</code></pre>
-<div id="plot_id286044605-container" class="ggvis-output-container">
-<div id="plot_id286044605" class="ggvis-output"></div>
+<div id="plot_id234437163-container" class="ggvis-output-container">
+<div id="plot_id234437163" class="ggvis-output"></div>
 <div class="plot-gear-icon">
 <nav class="ggvis-control">
 <a class="ggvis-dropdown-toggle" title="Controls" onclick="return false;"></a>
 <ul class="ggvis-dropdown">
 <li>
 Renderer: 
-<a id="plot_id286044605_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id286044605" data-renderer="svg">SVG</a>
+<a id="plot_id234437163_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id234437163" data-renderer="svg">SVG</a>
  | 
-<a id="plot_id286044605_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id286044605" data-renderer="canvas">Canvas</a>
+<a id="plot_id234437163_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id234437163" data-renderer="canvas">Canvas</a>
 </li>
 <li>
-<a id="plot_id286044605_download" class="ggvis-download" data-plot-id="plot_id286044605">Download</a>
+<a id="plot_id234437163_download" class="ggvis-download" data-plot-id="plot_id234437163">Download</a>
 </li>
 </ul>
 </nav>
 </div>
 </div>
 <script type="text/javascript">
-var plot_id286044605_spec = {
+var plot_id234437163_spec = {
   "data": [
     {
       "name": ".0",
@@ -889,31 +889,31 @@ var plot_id286044605_spec = {
   },
   "handlers": null
 };
-ggvis.getPlot("plot_id286044605").parseSpec(plot_id286044605_spec);
+ggvis.getPlot("plot_id234437163").parseSpec(plot_id234437163_spec);
 </script>
 <p>Unlike ggplot, you specify points a fixed colour or size, you need to use <code>:=</code> instead of <code>=</code>. The <code>:=</code> operator means to use a raw, unscaled value.</p>
 <pre class="r"><code>mtcars %&gt;% ggvis(~wt, ~mpg, fill := &quot;black&quot;, stroke := &quot;firebrick&quot;) %&gt;% layer_points()</code></pre>
-<div id="plot_id958806332-container" class="ggvis-output-container">
-<div id="plot_id958806332" class="ggvis-output"></div>
+<div id="plot_id688980997-container" class="ggvis-output-container">
+<div id="plot_id688980997" class="ggvis-output"></div>
 <div class="plot-gear-icon">
 <nav class="ggvis-control">
 <a class="ggvis-dropdown-toggle" title="Controls" onclick="return false;"></a>
 <ul class="ggvis-dropdown">
 <li>
 Renderer: 
-<a id="plot_id958806332_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id958806332" data-renderer="svg">SVG</a>
+<a id="plot_id688980997_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id688980997" data-renderer="svg">SVG</a>
  | 
-<a id="plot_id958806332_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id958806332" data-renderer="canvas">Canvas</a>
+<a id="plot_id688980997_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id688980997" data-renderer="canvas">Canvas</a>
 </li>
 <li>
-<a id="plot_id958806332_download" class="ggvis-download" data-plot-id="plot_id958806332">Download</a>
+<a id="plot_id688980997_download" class="ggvis-download" data-plot-id="plot_id688980997">Download</a>
 </li>
 </ul>
 </nav>
 </div>
 </div>
 <script type="text/javascript">
-var plot_id958806332_spec = {
+var plot_id688980997_spec = {
   "data": [
     {
       "name": ".0",
@@ -1037,30 +1037,30 @@ var plot_id958806332_spec = {
   },
   "handlers": null
 };
-ggvis.getPlot("plot_id958806332").parseSpec(plot_id958806332_spec);
+ggvis.getPlot("plot_id688980997").parseSpec(plot_id688980997_spec);
 </script>
 <pre class="r"><code>mtcars %&gt;% ggvis(~wt, ~mpg, size := 400, opacity := 0.25) %&gt;% layer_points()</code></pre>
-<div id="plot_id286088295-container" class="ggvis-output-container">
-<div id="plot_id286088295" class="ggvis-output"></div>
+<div id="plot_id794704995-container" class="ggvis-output-container">
+<div id="plot_id794704995" class="ggvis-output"></div>
 <div class="plot-gear-icon">
 <nav class="ggvis-control">
 <a class="ggvis-dropdown-toggle" title="Controls" onclick="return false;"></a>
 <ul class="ggvis-dropdown">
 <li>
 Renderer: 
-<a id="plot_id286088295_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id286088295" data-renderer="svg">SVG</a>
+<a id="plot_id794704995_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id794704995" data-renderer="svg">SVG</a>
  | 
-<a id="plot_id286088295_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id286088295" data-renderer="canvas">Canvas</a>
+<a id="plot_id794704995_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id794704995" data-renderer="canvas">Canvas</a>
 </li>
 <li>
-<a id="plot_id286088295_download" class="ggvis-download" data-plot-id="plot_id286088295">Download</a>
+<a id="plot_id794704995_download" class="ggvis-download" data-plot-id="plot_id794704995">Download</a>
 </li>
 </ul>
 </nav>
 </div>
 </div>
 <script type="text/javascript">
-var plot_id286088295_spec = {
+var plot_id794704995_spec = {
   "data": [
     {
       "name": ".0",
@@ -1184,30 +1184,30 @@ var plot_id286088295_spec = {
   },
   "handlers": null
 };
-ggvis.getPlot("plot_id286088295").parseSpec(plot_id286088295_spec);
+ggvis.getPlot("plot_id794704995").parseSpec(plot_id794704995_spec);
 </script>
 <pre class="r"><code>mtcars %&gt;% ggvis(~wt, ~mpg, size := 100, shape := &quot;square&quot;) %&gt;% layer_points()</code></pre>
-<div id="plot_id652789387-container" class="ggvis-output-container">
-<div id="plot_id652789387" class="ggvis-output"></div>
+<div id="plot_id498279115-container" class="ggvis-output-container">
+<div id="plot_id498279115" class="ggvis-output"></div>
 <div class="plot-gear-icon">
 <nav class="ggvis-control">
 <a class="ggvis-dropdown-toggle" title="Controls" onclick="return false;"></a>
 <ul class="ggvis-dropdown">
 <li>
 Renderer: 
-<a id="plot_id652789387_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id652789387" data-renderer="svg">SVG</a>
+<a id="plot_id498279115_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id498279115" data-renderer="svg">SVG</a>
  | 
-<a id="plot_id652789387_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id652789387" data-renderer="canvas">Canvas</a>
+<a id="plot_id498279115_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id498279115" data-renderer="canvas">Canvas</a>
 </li>
 <li>
-<a id="plot_id652789387_download" class="ggvis-download" data-plot-id="plot_id652789387">Download</a>
+<a id="plot_id498279115_download" class="ggvis-download" data-plot-id="plot_id498279115">Download</a>
 </li>
 </ul>
 </nav>
 </div>
 </div>
 <script type="text/javascript">
-var plot_id652789387_spec = {
+var plot_id498279115_spec = {
   "data": [
     {
       "name": ".0",
@@ -1331,7 +1331,7 @@ var plot_id652789387_spec = {
   },
   "handlers": null
 };
-ggvis.getPlot("plot_id652789387").parseSpec(plot_id652789387_spec);
+ggvis.getPlot("plot_id498279115").parseSpec(plot_id498279115_spec);
 </script>
 </div>
 <div id="layers" class="section level3">
@@ -1340,27 +1340,27 @@ ggvis.getPlot("plot_id652789387").parseSpec(plot_id652789387_spec);
 <li>Points, <code>layer_points()</code>, with properties <code>x</code>, <code>y</code>, <code>shape</code>, <code>stroke</code>, <code>fill</code>, <code>strokeOpacity</code>, <code>fillOpacity</code>, and <code>opacity</code>.</li>
 </ul>
 <pre class="r"><code>mtcars %&gt;% ggvis(~wt, ~mpg) %&gt;% layer_points()</code></pre>
-<div id="plot_id842947600-container" class="ggvis-output-container">
-<div id="plot_id842947600" class="ggvis-output"></div>
+<div id="plot_id180148865-container" class="ggvis-output-container">
+<div id="plot_id180148865" class="ggvis-output"></div>
 <div class="plot-gear-icon">
 <nav class="ggvis-control">
 <a class="ggvis-dropdown-toggle" title="Controls" onclick="return false;"></a>
 <ul class="ggvis-dropdown">
 <li>
 Renderer: 
-<a id="plot_id842947600_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id842947600" data-renderer="svg">SVG</a>
+<a id="plot_id180148865_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id180148865" data-renderer="svg">SVG</a>
  | 
-<a id="plot_id842947600_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id842947600" data-renderer="canvas">Canvas</a>
+<a id="plot_id180148865_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="plot_id180148865" data-renderer="canvas">Canvas</a>
 </li>
 <li>
-<a id="plot_id842947600_download" class="ggvis-download" data-plot-id="plot_id842947600">Download</a>
+<a id="plot_id180148865_download" class="ggvis-download" data-plot-id="plot_id180148865">Download</a>
 </li>
 </ul>
 </nav>
 </div>
 </div>
 <script type="text/javascript">
-var plot_id842947600_spec = {
+var plot_id180148865_spec = {
   "data": [
     {
       "name": ".0",
@@ -1481,7 +1481,7 @@ var plot_id842947600_spec = {
   },
   "handlers": null
 };
-ggvis.getPlot("plot_id842947600").parseSpec(plot_id842947600_spec);
+ggvis.getPlot("plot_id180148865").parseSpec(plot_id180148865_spec);
 </script>
 <ul>
 <li>Paths and polygons, <code>layer_paths()</code></li>
@@ -4907,12 +4907,12 @@ library(googleVis)</code></pre>
 <pre class="r"><code>Line_plot &lt;- gvisLineChart(df, xvar = &quot;time&quot;, yvar = c(&quot;val1&quot;, &quot;val2&quot;))
 plot(Line_plot)</code></pre>
 <!-- LineChart generated in R 3.4.3 by googleVis 0.6.2 package -->
-<!-- Thu Mar  1 12:44:04 2018 -->
+<!-- Thu Mar  1 12:51:31 2018 -->
 <!-- jsHeader -->
 <script type="text/javascript">
  
 // jsData 
-function gvisDataLineChartID18d943ea2e9e () {
+function gvisDataLineChartID1b896a98b671 () {
 var data = new google.visualization.DataTable();
 var datajson =
 [
@@ -5275,13 +5275,13 @@ return(data);
 }
  
 // jsDrawChart
-function drawChartLineChartID18d943ea2e9e() {
-var data = gvisDataLineChartID18d943ea2e9e();
+function drawChartLineChartID1b896a98b671() {
+var data = gvisDataLineChartID1b896a98b671();
 var options = {};
 options["allowHtml"] = true;
 
     var chart = new google.visualization.LineChart(
-    document.getElementById('LineChartID18d943ea2e9e')
+    document.getElementById('LineChartID1b896a98b671')
     );
     chart.draw(data,options);
     
@@ -5305,9 +5305,9 @@ if (newPackage)
   pkgs.push(chartid);
   
 // Add the drawChart function to the global list of callbacks
-callbacks.push(drawChartLineChartID18d943ea2e9e);
+callbacks.push(drawChartLineChartID1b896a98b671);
 })();
-function displayChartLineChartID18d943ea2e9e() {
+function displayChartLineChartID1b896a98b671() {
   var pkgs = window.__gvisPackages = window.__gvisPackages || [];
   var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
   window.clearTimeout(window.__gvisLoad);
@@ -5330,21 +5330,21 @@ callbacks.shift()();
 // jsFooter
 </script>
 <!-- jsChart -->
-<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartLineChartID18d943ea2e9e"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartLineChartID1b896a98b671"></script>
 <!-- divChart -->
-<div id="LineChartID18d943ea2e9e" style="width: 500; height: automatic;">
+<div id="LineChartID1b896a98b671" style="width: 500; height: automatic;">
 
 </div>
 <pre class="r"><code>Line_plot2 &lt;- gvisLineChart(df, xvar = &quot;time&quot;, yvar = c(&quot;val1&quot;, &quot;val2&quot;), options = list(series = &quot;[{targetAxisIndex: 0}, {targetAxisIndex:1}]&quot;, 
     vAxes = &quot;[{title:&#39;val1&#39;}, {title:&#39;val2&#39;}]&quot;))
 plot(Line_plot2)</code></pre>
 <!-- LineChart generated in R 3.4.3 by googleVis 0.6.2 package -->
-<!-- Thu Mar  1 12:44:04 2018 -->
+<!-- Thu Mar  1 12:51:31 2018 -->
 <!-- jsHeader -->
 <script type="text/javascript">
  
 // jsData 
-function gvisDataLineChartID18d95f089f5d () {
+function gvisDataLineChartID1b891394d996 () {
 var data = new google.visualization.DataTable();
 var datajson =
 [
@@ -5707,15 +5707,15 @@ return(data);
 }
  
 // jsDrawChart
-function drawChartLineChartID18d95f089f5d() {
-var data = gvisDataLineChartID18d95f089f5d();
+function drawChartLineChartID1b891394d996() {
+var data = gvisDataLineChartID1b891394d996();
 var options = {};
 options["allowHtml"] = true;
 options["series"] = [{targetAxisIndex: 0}, {targetAxisIndex:1}];
 options["vAxes"] = [{title:'val1'}, {title:'val2'}];
 
     var chart = new google.visualization.LineChart(
-    document.getElementById('LineChartID18d95f089f5d')
+    document.getElementById('LineChartID1b891394d996')
     );
     chart.draw(data,options);
     
@@ -5739,9 +5739,9 @@ if (newPackage)
   pkgs.push(chartid);
   
 // Add the drawChart function to the global list of callbacks
-callbacks.push(drawChartLineChartID18d95f089f5d);
+callbacks.push(drawChartLineChartID1b891394d996);
 })();
-function displayChartLineChartID18d95f089f5d() {
+function displayChartLineChartID1b891394d996() {
   var pkgs = window.__gvisPackages = window.__gvisPackages || [];
   var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
   window.clearTimeout(window.__gvisLoad);
@@ -5764,9 +5764,9 @@ callbacks.shift()();
 // jsFooter
 </script>
 <!-- jsChart -->
-<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartLineChartID18d95f089f5d"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartLineChartID1b891394d996"></script>
 <!-- divChart -->
-<div id="LineChartID18d95f089f5d" style="width: 500; height: automatic;">
+<div id="LineChartID1b891394d996" style="width: 500; height: automatic;">
 
 </div>
 </div>
@@ -5785,12 +5785,12 @@ mpg$gear_4[is.na(mpg$gear_4)] &lt;-0</code></pre>
 
 plot(mpg_side)</code></pre>
 <!-- BarChart generated in R 3.4.3 by googleVis 0.6.2 package -->
-<!-- Thu Mar  1 12:44:04 2018 -->
+<!-- Thu Mar  1 12:51:31 2018 -->
 <!-- jsHeader -->
 <script type="text/javascript">
  
 // jsData 
-function gvisDataBarChartID18d96cab6803 () {
+function gvisDataBarChartID1b897462f496 () {
 var data = new google.visualization.DataTable();
 var datajson =
 [
@@ -5822,13 +5822,13 @@ return(data);
 }
  
 // jsDrawChart
-function drawChartBarChartID18d96cab6803() {
-var data = gvisDataBarChartID18d96cab6803();
+function drawChartBarChartID1b897462f496() {
+var data = gvisDataBarChartID1b897462f496();
 var options = {};
 options["allowHtml"] = true;
 
     var chart = new google.visualization.BarChart(
-    document.getElementById('BarChartID18d96cab6803')
+    document.getElementById('BarChartID1b897462f496')
     );
     chart.draw(data,options);
     
@@ -5852,9 +5852,9 @@ if (newPackage)
   pkgs.push(chartid);
   
 // Add the drawChart function to the global list of callbacks
-callbacks.push(drawChartBarChartID18d96cab6803);
+callbacks.push(drawChartBarChartID1b897462f496);
 })();
-function displayChartBarChartID18d96cab6803() {
+function displayChartBarChartID1b897462f496() {
   var pkgs = window.__gvisPackages = window.__gvisPackages || [];
   var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
   window.clearTimeout(window.__gvisLoad);
@@ -5877,9 +5877,9 @@ callbacks.shift()();
 // jsFooter
 </script>
 <!-- jsChart -->
-<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartBarChartID18d96cab6803"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartBarChartID1b897462f496"></script>
 <!-- divChart -->
-<div id="BarChartID18d96cab6803" style="width: 500; height: automatic;">
+<div id="BarChartID1b897462f496" style="width: 500; height: automatic;">
 
 </div>
 <pre class="r"><code>mpg_vert &lt;- gvisColumnChart(data = mpg, xvar = c(&quot;cyl&quot;), yvar = c(&quot;gear_3&quot;, 
@@ -5888,12 +5888,12 @@ callbacks.shift()();
     hAxes = &quot;[{title:&#39;Number of cylinders&#39;}]&quot;))
 plot(mpg_vert)</code></pre>
 <!-- ColumnChart generated in R 3.4.3 by googleVis 0.6.2 package -->
-<!-- Thu Mar  1 12:44:04 2018 -->
+<!-- Thu Mar  1 12:51:31 2018 -->
 <!-- jsHeader -->
 <script type="text/javascript">
  
 // jsData 
-function gvisDataColumnChartID18d953bae66f () {
+function gvisDataColumnChartID1b89614566d1 () {
 var data = new google.visualization.DataTable();
 var datajson =
 [
@@ -5925,8 +5925,8 @@ return(data);
 }
  
 // jsDrawChart
-function drawChartColumnChartID18d953bae66f() {
-var data = gvisDataColumnChartID18d953bae66f();
+function drawChartColumnChartID1b89614566d1() {
+var data = gvisDataColumnChartID1b89614566d1();
 var options = {};
 options["allowHtml"] = true;
 options["title"] = "The mean mpg per cylinder";
@@ -5935,7 +5935,7 @@ options["vAxes"] = [{title:'miles per gallon'}];
 options["hAxes"] = [{title:'Number of cylinders'}];
 
     var chart = new google.visualization.ColumnChart(
-    document.getElementById('ColumnChartID18d953bae66f')
+    document.getElementById('ColumnChartID1b89614566d1')
     );
     chart.draw(data,options);
     
@@ -5959,9 +5959,9 @@ if (newPackage)
   pkgs.push(chartid);
   
 // Add the drawChart function to the global list of callbacks
-callbacks.push(drawChartColumnChartID18d953bae66f);
+callbacks.push(drawChartColumnChartID1b89614566d1);
 })();
-function displayChartColumnChartID18d953bae66f() {
+function displayChartColumnChartID1b89614566d1() {
   var pkgs = window.__gvisPackages = window.__gvisPackages || [];
   var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
   window.clearTimeout(window.__gvisLoad);
@@ -5984,9 +5984,9 @@ callbacks.shift()();
 // jsFooter
 </script>
 <!-- jsChart -->
-<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartColumnChartID18d953bae66f"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartColumnChartID1b89614566d1"></script>
 <!-- divChart -->
-<div id="ColumnChartID18d953bae66f" style="width: 500; height: automatic;">
+<div id="ColumnChartID1b89614566d1" style="width: 500; height: automatic;">
 
 </div>
 <pre class="r"><code>mpg_cars&lt;-mtcars %&gt;% 
@@ -6003,12 +6003,12 @@ mpg$gear_4[is.na(mpg$gear_4)] &lt;-0</code></pre>
     hAxes = &quot;[{title:&#39;Number of cylinders&#39;}]&quot;))
 plot(mpg_stack)</code></pre>
 <!-- ColumnChart generated in R 3.4.3 by googleVis 0.6.2 package -->
-<!-- Thu Mar  1 12:44:04 2018 -->
+<!-- Thu Mar  1 12:51:31 2018 -->
 <!-- jsHeader -->
 <script type="text/javascript">
  
 // jsData 
-function gvisDataColumnChartID18d924dd3b31 () {
+function gvisDataColumnChartID1b893dcf34d9 () {
 var data = new google.visualization.DataTable();
 var datajson =
 [
@@ -6040,8 +6040,8 @@ return(data);
 }
  
 // jsDrawChart
-function drawChartColumnChartID18d924dd3b31() {
-var data = gvisDataColumnChartID18d924dd3b31();
+function drawChartColumnChartID1b893dcf34d9() {
+var data = gvisDataColumnChartID1b893dcf34d9();
 var options = {};
 options["allowHtml"] = true;
 options["isStacked"] = true;
@@ -6051,7 +6051,7 @@ options["vAxes"] = [{title:'Number of cars'}];
 options["hAxes"] = [{title:'Number of cylinders'}];
 
     var chart = new google.visualization.ColumnChart(
-    document.getElementById('ColumnChartID18d924dd3b31')
+    document.getElementById('ColumnChartID1b893dcf34d9')
     );
     chart.draw(data,options);
     
@@ -6075,9 +6075,9 @@ if (newPackage)
   pkgs.push(chartid);
   
 // Add the drawChart function to the global list of callbacks
-callbacks.push(drawChartColumnChartID18d924dd3b31);
+callbacks.push(drawChartColumnChartID1b893dcf34d9);
 })();
-function displayChartColumnChartID18d924dd3b31() {
+function displayChartColumnChartID1b893dcf34d9() {
   var pkgs = window.__gvisPackages = window.__gvisPackages || [];
   var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
   window.clearTimeout(window.__gvisLoad);
@@ -6100,9 +6100,9 @@ callbacks.shift()();
 // jsFooter
 </script>
 <!-- jsChart -->
-<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartColumnChartID18d924dd3b31"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartColumnChartID1b893dcf34d9"></script>
 <!-- divChart -->
-<div id="ColumnChartID18d924dd3b31" style="width: 500; height: automatic;">
+<div id="ColumnChartID1b893dcf34d9" style="width: 500; height: automatic;">
 
 </div>
 </div>
@@ -6120,12 +6120,12 @@ df4</code></pre>
 
 plot(Area)</code></pre>
 <!-- AreaChart generated in R 3.4.3 by googleVis 0.6.2 package -->
-<!-- Thu Mar  1 12:44:04 2018 -->
+<!-- Thu Mar  1 12:51:31 2018 -->
 <!-- jsHeader -->
 <script type="text/javascript">
  
 // jsData 
-function gvisDataAreaChartID18d92f2deb00 () {
+function gvisDataAreaChartID1b8971f8b148 () {
 var data = new google.visualization.DataTable();
 var datajson =
 [
@@ -6158,13 +6158,13 @@ return(data);
 }
  
 // jsDrawChart
-function drawChartAreaChartID18d92f2deb00() {
-var data = gvisDataAreaChartID18d92f2deb00();
+function drawChartAreaChartID1b8971f8b148() {
+var data = gvisDataAreaChartID1b8971f8b148();
 var options = {};
 options["allowHtml"] = true;
 
     var chart = new google.visualization.AreaChart(
-    document.getElementById('AreaChartID18d92f2deb00')
+    document.getElementById('AreaChartID1b8971f8b148')
     );
     chart.draw(data,options);
     
@@ -6188,9 +6188,9 @@ if (newPackage)
   pkgs.push(chartid);
   
 // Add the drawChart function to the global list of callbacks
-callbacks.push(drawChartAreaChartID18d92f2deb00);
+callbacks.push(drawChartAreaChartID1b8971f8b148);
 })();
-function displayChartAreaChartID18d92f2deb00() {
+function displayChartAreaChartID1b8971f8b148() {
   var pkgs = window.__gvisPackages = window.__gvisPackages || [];
   var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
   window.clearTimeout(window.__gvisLoad);
@@ -6213,9 +6213,9 @@ callbacks.shift()();
 // jsFooter
 </script>
 <!-- jsChart -->
-<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartAreaChartID18d92f2deb00"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartAreaChartID1b8971f8b148"></script>
 <!-- divChart -->
-<div id="AreaChartID18d92f2deb00" style="width: 500; height: automatic;">
+<div id="AreaChartID1b8971f8b148" style="width: 500; height: automatic;">
 
 </div>
 <pre class="r"><code>Area_stack &lt;- gvisAreaChart(df4, xvar = &quot;Year&quot;, yvar = c(&quot;Sales&quot;, &quot;Expenses&quot;), 
@@ -6223,12 +6223,12 @@ callbacks.shift()();
 
 plot(Area_stack)</code></pre>
 <!-- AreaChart generated in R 3.4.3 by googleVis 0.6.2 package -->
-<!-- Thu Mar  1 12:44:04 2018 -->
+<!-- Thu Mar  1 12:51:31 2018 -->
 <!-- jsHeader -->
 <script type="text/javascript">
  
 // jsData 
-function gvisDataAreaChartID18d949aceede () {
+function gvisDataAreaChartID1b8964770b34 () {
 var data = new google.visualization.DataTable();
 var datajson =
 [
@@ -6261,14 +6261,14 @@ return(data);
 }
  
 // jsDrawChart
-function drawChartAreaChartID18d949aceede() {
-var data = gvisDataAreaChartID18d949aceede();
+function drawChartAreaChartID1b8964770b34() {
+var data = gvisDataAreaChartID1b8964770b34();
 var options = {};
 options["allowHtml"] = true;
 options["isStacked"] = true;
 
     var chart = new google.visualization.AreaChart(
-    document.getElementById('AreaChartID18d949aceede')
+    document.getElementById('AreaChartID1b8964770b34')
     );
     chart.draw(data,options);
     
@@ -6292,9 +6292,9 @@ if (newPackage)
   pkgs.push(chartid);
   
 // Add the drawChart function to the global list of callbacks
-callbacks.push(drawChartAreaChartID18d949aceede);
+callbacks.push(drawChartAreaChartID1b8964770b34);
 })();
-function displayChartAreaChartID18d949aceede() {
+function displayChartAreaChartID1b8964770b34() {
   var pkgs = window.__gvisPackages = window.__gvisPackages || [];
   var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
   window.clearTimeout(window.__gvisLoad);
@@ -6317,9 +6317,9 @@ callbacks.shift()();
 // jsFooter
 </script>
 <!-- jsChart -->
-<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartAreaChartID18d949aceede"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartAreaChartID1b8964770b34"></script>
 <!-- divChart -->
-<div id="AreaChartID18d949aceede" style="width: 500; height: automatic;">
+<div id="AreaChartID1b8964770b34" style="width: 500; height: automatic;">
 
 </div>
 </div>
@@ -6334,12 +6334,12 @@ CC &lt;- gvisComboChart(CityPopularity, xvar = &quot;City&quot;, yvar = c(&quot;
         series = &quot;{0: {type:\&quot;line\&quot;}}&quot;))
 plot(CC)</code></pre>
 <!-- ComboChart generated in R 3.4.3 by googleVis 0.6.2 package -->
-<!-- Thu Mar  1 12:44:04 2018 -->
+<!-- Thu Mar  1 12:51:31 2018 -->
 <!-- jsHeader -->
 <script type="text/javascript">
  
 // jsData 
-function gvisDataComboChartID18d9213017e6 () {
+function gvisDataComboChartID1b89374a5aa4 () {
 var data = new google.visualization.DataTable();
 var datajson =
 [
@@ -6382,8 +6382,8 @@ return(data);
 }
  
 // jsDrawChart
-function drawChartComboChartID18d9213017e6() {
-var data = gvisDataComboChartID18d9213017e6();
+function drawChartComboChartID1b89374a5aa4() {
+var data = gvisDataComboChartID1b89374a5aa4();
 var options = {};
 options["allowHtml"] = true;
 options["seriesType"] = "bars";
@@ -6393,7 +6393,7 @@ options["title"] = "City Popularity";
 options["series"] = {0: {type:"line"}};
 
     var chart = new google.visualization.ComboChart(
-    document.getElementById('ComboChartID18d9213017e6')
+    document.getElementById('ComboChartID1b89374a5aa4')
     );
     chart.draw(data,options);
     
@@ -6417,9 +6417,9 @@ if (newPackage)
   pkgs.push(chartid);
   
 // Add the drawChart function to the global list of callbacks
-callbacks.push(drawChartComboChartID18d9213017e6);
+callbacks.push(drawChartComboChartID1b89374a5aa4);
 })();
-function displayChartComboChartID18d9213017e6() {
+function displayChartComboChartID1b89374a5aa4() {
   var pkgs = window.__gvisPackages = window.__gvisPackages || [];
   var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
   window.clearTimeout(window.__gvisLoad);
@@ -6442,9 +6442,9 @@ callbacks.shift()();
 // jsFooter
 </script>
 <!-- jsChart -->
-<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartComboChartID18d9213017e6"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartComboChartID1b89374a5aa4"></script>
 <!-- divChart -->
-<div id="ComboChartID18d9213017e6" style="width: 450; height: 300;">
+<div id="ComboChartID1b89374a5aa4" style="width: 450; height: 300;">
 
 </div>
 </div>
@@ -6473,12 +6473,12 @@ head(states)</code></pre>
     colors = &quot;[&#39;skyblue&#39;,&#39;red&#39;]&quot;))
 plot(GeoStates)</code></pre>
 <!-- GeoChart generated in R 3.4.3 by googleVis 0.6.2 package -->
-<!-- Thu Mar  1 12:44:04 2018 -->
+<!-- Thu Mar  1 12:51:31 2018 -->
 <!-- jsHeader -->
 <script type="text/javascript">
  
 // jsData 
-function gvisDataGeoChartID18d960507b75 () {
+function gvisDataGeoChartID1b8947f01ff6 () {
 var data = new google.visualization.DataTable();
 var datajson =
 [
@@ -6690,8 +6690,8 @@ return(data);
 }
  
 // jsDrawChart
-function drawChartGeoChartID18d960507b75() {
-var data = gvisDataGeoChartID18d960507b75();
+function drawChartGeoChartID1b8947f01ff6() {
+var data = gvisDataGeoChartID1b8947f01ff6();
 var options = {};
 options["width"] = 600;
 options["height"] = 400;
@@ -6701,7 +6701,7 @@ options["resolution"] = "provinces";
 options["colors"] = ['skyblue','red'];
 
     var chart = new google.visualization.GeoChart(
-    document.getElementById('GeoChartID18d960507b75')
+    document.getElementById('GeoChartID1b8947f01ff6')
     );
     chart.draw(data,options);
     
@@ -6725,9 +6725,9 @@ if (newPackage)
   pkgs.push(chartid);
   
 // Add the drawChart function to the global list of callbacks
-callbacks.push(drawChartGeoChartID18d960507b75);
+callbacks.push(drawChartGeoChartID1b8947f01ff6);
 })();
-function displayChartGeoChartID18d960507b75() {
+function displayChartGeoChartID1b8947f01ff6() {
   var pkgs = window.__gvisPackages = window.__gvisPackages || [];
   var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
   window.clearTimeout(window.__gvisLoad);
@@ -6750,9 +6750,9 @@ callbacks.shift()();
 // jsFooter
 </script>
 <!-- jsChart -->
-<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartGeoChartID18d960507b75"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartGeoChartID1b8947f01ff6"></script>
 <!-- divChart -->
-<div id="GeoChartID18d960507b75" style="width: 600; height: 400;">
+<div id="GeoChartID1b8947f01ff6" style="width: 600; height: 400;">
 
 </div>
 </div>
@@ -6762,12 +6762,12 @@ callbacks.shift()();
 <pre class="r"><code>M &lt;- gvisMotionChart(Fruits, &quot;Fruit&quot;, &quot;Year&quot;)</code></pre>
 <pre class="r"><code>plot(M, &#39;chart&#39;)</code></pre>
 <!-- MotionChart generated in R 3.4.3 by googleVis 0.6.2 package -->
-<!-- Thu Mar  1 12:44:04 2018 -->
+<!-- Thu Mar  1 12:51:31 2018 -->
 <!-- jsHeader -->
 <script type="text/javascript">
  
 // jsData 
-function gvisDataMotionChartID18d97835fd7b () {
+function gvisDataMotionChartID1b8941663d2a () {
 var data = new google.visualization.DataTable();
 var datajson =
 [
@@ -6865,15 +6865,15 @@ return(data);
 }
  
 // jsDrawChart
-function drawChartMotionChartID18d97835fd7b() {
-var data = gvisDataMotionChartID18d97835fd7b();
+function drawChartMotionChartID1b8941663d2a() {
+var data = gvisDataMotionChartID1b8941663d2a();
 var options = {};
 options["width"] = 600;
 options["height"] = 500;
 options["state"] = "";
 
     var chart = new google.visualization.MotionChart(
-    document.getElementById('MotionChartID18d97835fd7b')
+    document.getElementById('MotionChartID1b8941663d2a')
     );
     chart.draw(data,options);
     
@@ -6897,9 +6897,9 @@ if (newPackage)
   pkgs.push(chartid);
   
 // Add the drawChart function to the global list of callbacks
-callbacks.push(drawChartMotionChartID18d97835fd7b);
+callbacks.push(drawChartMotionChartID1b8941663d2a);
 })();
-function displayChartMotionChartID18d97835fd7b() {
+function displayChartMotionChartID1b8941663d2a() {
   var pkgs = window.__gvisPackages = window.__gvisPackages || [];
   var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
   window.clearTimeout(window.__gvisLoad);
@@ -6922,9 +6922,9 @@ callbacks.shift()();
 // jsFooter
 </script>
 <!-- jsChart -->
-<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartMotionChartID18d97835fd7b"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartMotionChartID1b8941663d2a"></script>
 <!-- divChart -->
-<div id="MotionChartID18d97835fd7b" style="width: 600; height: 500;">
+<div id="MotionChartID1b8941663d2a" style="width: 600; height: 500;">
 
 </div>
 </div>

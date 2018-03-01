@@ -2,7 +2,7 @@ baseURL = "/"
 languageCode = "en-us"
 title = "SNR R User Group"
 theme = "minimal"
-disqusShortname = "snr-r-group" # delete this to disable disqus comments
+disqusShortname = "snrrgroup" # delete this to disable disqus comments
 googleAnalytics = "UA-48496439-3"
 
 [params]
