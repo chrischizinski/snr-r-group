@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+         
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Age-cohort analysis</title>
+        <style>
+
+    html body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #FEFDFA;
+    }
+
+    :root {
+        --accent: #D00000;
+        --border-width:  5px ;
+    }
+
+</style>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+
+
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/hybrid.min.css"> 
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+ 
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/swift.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/R.min.js"></script> 
+
+    <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script>
+ <meta name="generator" content="Hugo 0.30.2" />
+        
+        
+        
+        
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-48496439-3"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments)};
+          gtag('js', new Date());
+
+          gtag('config', 'UA-48496439-3');
+        </script>
+        
+    </head>
+
+    
+    
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    
+
+    <body>
+         
+        <nav class="navbar navbar-default navbar-fixed-top">
+
+            <div class="container">
+
+                <div class="navbar-header">
+
+                    <a class="navbar-brand visible-xs" href="#">Age-cohort analysis</a>
+
+                    <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                </div>
+
+                <div class="collapse navbar-collapse">
+
+                    
+                        <ul class="nav navbar-nav">
+                            
+                                <li><a href="/">Home</a></li>
+                            
+                                <li><a href="/post/">Posts</a></li>
+                            
+                                <li><a href="/resources/">Resources</a></li>
+                            
+                        </ul>
+                    
+
+                    
+                        <ul class="nav navbar-nav navbar-right">
+                            
+                                <li class="navbar-icon"><a href="mailto:cchizinski2@unl.edu"><i class="fa fa-envelope-o"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://github.com/chrischizinski/"><i class="fa fa-github"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://twitter.com/chrischizinski/"><i class="fa fa-twitter"></i></a></li>
+                            
+                        </ul>
+                    
+
+                </div>
+
+            </div>
+
+        </nav>
+
+
+<main>
+
+    <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/post/2018-02-23-agecohort/">Age-cohort analysis</a></h4>
+    <h5>February 23, 2018</h5>
+    
+    <a href="/tags/age-period-cohort"><kbd class="item-tag">Age Period Cohort</kbd></a>
+    
+    <a href="/tags/data-seminar"><kbd class="item-tag">Data Seminar</kbd></a>
+    
+
+</div>
+
+
+    <br> <div class="text-justify"><div id="working-with-matts-data" class="section level2">
+<h2>Working with Matt’s data</h2>
+<pre class="r"><code># Download from google drive
+
+id &lt;- &quot;1wq8UNl921-NeCs0VCIhlGfbBK9ZxB3kL&quot;
+huntData &lt;- read_csv(sprintf(&quot;https://docs.google.com/uc?id=%s&amp;export=download&quot;, id))</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   permitYear = col_integer(),
+##   permitType = col_character(),
+##   gender = col_character(),
+##   age = col_integer(),
+##   residency = col_character(),
+##   birthyear = col_integer()
+## )</code></pre>
+<pre class="r"><code>glimpse(huntData)</code></pre>
+<pre><code>## Observations: 723,480
+## Variables: 6
+## $ permitYear &lt;int&gt; 2008, 2008, 2008, 2008, 2008, 2008, 2008, 2008, 200...
+## $ permitType &lt;chr&gt; &quot;Hunt Fish Combo&quot;, &quot;Hunt Fish Combo&quot;, &quot;Hunt Fish Co...
+## $ gender     &lt;chr&gt; &quot;Male&quot;, &quot;Male&quot;, &quot;Male&quot;, &quot;Male&quot;, &quot;Male&quot;, &quot;Male&quot;, &quot;Ma...
+## $ age        &lt;int&gt; 36, 43, 32, 61, 22, 18, 26, 52, 58, 43, 32, 19, 46,...
+## $ residency  &lt;chr&gt; &quot;resident&quot;, &quot;resident&quot;, &quot;resident&quot;, &quot;resident&quot;, &quot;re...
+## $ birthyear  &lt;int&gt; 1972, 1965, 1976, 1947, 1986, 1990, 1982, 1956, 195...</code></pre>
+<pre class="r"><code>id &lt;- &quot;1Z8ocKPYkZu9jJ3YcFY-YmSXs3WmAk2q0&quot;
+popData &lt;- read_csv(sprintf(&quot;https://docs.google.com/uc?id=%s&amp;export=download&quot;, id))</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   Notes = col_character(),
+##   Age = col_character(),
+##   `Age Code` = col_integer(),
+##   Gender = col_character(),
+##   `Gender Code` = col_character(),
+##   Year = col_integer(),
+##   `Year Code` = col_integer(),
+##   `Projected Populations` = col_integer()
+## )</code></pre>
+<pre class="r"><code>glimpse(popData)</code></pre>
+<pre><code>## Observations: 1,415
+## Variables: 8
+## $ Notes                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, &quot;T...
+## $ Age                     &lt;chr&gt; &quot;15 years&quot;, &quot;15 years&quot;, &quot;15 years&quot;, &quot;1...
+## $ `Age Code`              &lt;int&gt; 15, 15, 15, 15, 15, 15, 15, 15, 15, 15...
+## $ Gender                  &lt;chr&gt; &quot;Female&quot;, &quot;Female&quot;, &quot;Female&quot;, &quot;Female&quot;...
+## $ `Gender Code`           &lt;chr&gt; &quot;F&quot;, &quot;F&quot;, &quot;F&quot;, &quot;F&quot;, &quot;F&quot;, &quot;F&quot;, &quot;F&quot;, &quot;F&quot;...
+## $ Year                    &lt;int&gt; 2008, 2009, 2010, 2011, 2012, 2013, 20...
+## $ `Year Code`             &lt;int&gt; 2008, 2009, 2010, 2011, 2012, 2013, 20...
+## $ `Projected Populations` &lt;int&gt; 11808, 11672, 11571, 11482, 11347, 113...</code></pre>
+</div>
+<div id="filter-the-data" class="section level2">
+<h2>Filter the data</h2>
+<pre class="r"><code> huntData %&gt;% 
+  filter(gender == &quot;Male&quot;,
+         residency == &quot;resident&quot;,
+         permitType %in% c(&quot;Hunt Fish Combo&quot;,&quot;Hunt&quot;),
+         permitYear %in% c(2008:2016)) -&gt; permits_oi
+
+popData %&gt;% 
+  filter(is.na(Notes),
+         Gender == &quot;Male&quot;,
+         Year %in% c(2008:2016)) %&gt;% 
+  select(`Age Code`, Year, `Projected Populations`) %&gt;% 
+  rename(Age = `Age Code`,
+         Pop = `Projected Populations`) -&gt; pop_oi</code></pre>
+<div id="plot-the-data" class="section level3">
+<h3>Plot the data</h3>
+<pre class="r"><code>options(scipen = 3)
+
+pop_oi %&gt;% 
+  group_by(Year) %&gt;% 
+  summarise(N = sum(Pop)) -&gt; pop_year
+
+ggplot(data = pop_year) +
+  geom_col(aes(x = Year, y = N), fill = &quot;#D00000&quot;, color = &quot;black&quot;) +
+  scale_x_continuous(breaks = 2008:2016) + 
+  coord_cartesian(ylim = c(0,7e5), xlim = c(2007,2017), expand = FALSE) + 
+  labs(y = &quot;Nebraska male population&quot;, x = &quot;Year&quot;) +
+  theme_classic()</code></pre>
+<p><img src="/post/2018-02-23-AgeCohort_files/figure-html/plotdata-1.png" width="672" /></p>
+<pre class="r"><code>permits_oi %&gt;% 
+  group_by(permitYear, permitType) %&gt;% 
+  summarise(N = n()) -&gt; permits_year
+
+
+ggplot(data = permits_year) +
+  geom_col(aes(x = permitYear, y = N, fill = permitType ), color = &quot;black&quot;) +
+  scale_x_continuous(breaks = 2008:2016) + 
+  coord_cartesian(ylim = c(0,80000), xlim = c(2007,2017), expand = FALSE) + 
+  labs(y = &quot;Number of male permit holders&quot;, x = &quot;Year&quot;) +
+  theme_classic() +
+  theme(legend.position= c(0.80,0.90))</code></pre>
+<p><img src="/post/2018-02-23-AgeCohort_files/figure-html/plotdata-2.png" width="672" /></p>
+<pre class="r"><code>ggplot(data = permits_year) +
+  geom_line(aes(x = permitYear, y = N, color = permitType ), linetype =  &quot;dashed&quot;) +
+  geom_point(aes(x = permitYear, y = N, color = permitType ), size = 2) +
+  scale_x_continuous(breaks = 2008:2016) + 
+  coord_cartesian(ylim = c(0,50000), xlim = c(2007,2017), expand = FALSE) +
+  labs(y = &quot;Number of male permit holders&quot;, x = &quot;Year&quot;) +
+  theme_classic() +
+  theme(legend.position= c(0.80,0.25))</code></pre>
+<p><img src="/post/2018-02-23-AgeCohort_files/figure-html/plotdata-3.png" width="672" /></p>
+<pre class="r"><code>ggplot(data = permits_oi) +
+  geom_violin(aes(x = factor(permitYear), y = age, fill = permitType), position = &quot;dodge&quot;) +
+  facet_wrap(~permitType, ncol = 1) +
+  theme_classic() + 
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="/post/2018-02-23-AgeCohort_files/figure-html/plotdata-4.png" width="672" /></p>
+<pre class="r"><code># Participation rate
+range(permits_oi$age)</code></pre>
+<pre><code>## [1]   1 100</code></pre>
+<pre class="r"><code>range(pop_oi$Age)</code></pre>
+<pre><code>## [1] 15 80</code></pre>
+<pre class="r"><code>permits_oi %&gt;%  # Filter the data
+  filter(age &gt;= 15 &amp; age &lt;= 60,
+         permitYear&gt;= 2010) -&gt; permits_oi.rev
+
+permits_oi.rev %&gt;% #
+  group_by(permitYear) %&gt;% 
+  summarise(N = n()) -&gt; permits_year.rev
+
+pop_oi %&gt;% 
+  filter(Age &gt;= 15 &amp; Age &lt;= 60,
+         Year&gt;= 2010) -&gt; pop_oi.rev
+
+pop_oi.rev %&gt;% 
+  group_by(Year) %&gt;% 
+  summarise(TTL = sum(Pop)) -&gt; pop_year.rev
+
+full_join(permits_year.rev, pop_year.rev, by = c(&quot;permitYear&quot;= &quot;Year&quot;)) %&gt;% 
+  mutate(parc_rate = N/TTL) -&gt; join_permit_pop
+
+ggplot(data = join_permit_pop) +
+  geom_line(aes(x = permitYear, y = parc_rate ), linetype =  &quot;dashed&quot;) +
+  geom_point(aes(x = permitYear, y = parc_rate ), size = 2) +
+  scale_x_continuous(breaks = 2009:2016) + 
+  coord_cartesian(ylim = c(0.07,0.11), xlim = c(2009,2017), expand = FALSE) +
+  labs(y = &quot;Participation of male\n permit holders&quot;, x = &quot;Year&quot;) +
+  theme_classic()</code></pre>
+<p><img src="/post/2018-02-23-AgeCohort_files/figure-html/plotdata-5.png" width="672" /></p>
+</div>
+<div id="getting-the-data-ready-for-apc" class="section level3">
+<h3>Getting the data ready for APC</h3>
+<pre class="r"><code># apc.data.list 
+?apc.data.list
+
+pop_oi.rev %&gt;% 
+  group_by(Age, Year) %&gt;% 
+  summarise(ttlPop = sum(Pop)) %&gt;% 
+  spread(Year,ttlPop, fill = 0) %&gt;% 
+  as.data.frame() -&gt; pop.wide
+
+pop.wide</code></pre>
+<pre><code>##    Age  2010  2011  2012  2013  2014  2015  2016
+## 1   15 12642 12401 12222 12227 12597 12736 13017
+## 2   16 12519 12626 12390 12211 12212 12586 12721
+## 3   17 12677 12489 12599 12366 12182 12185 12557
+## 4   18 12847 12621 12436 12547 12313 12135 12133
+## 5   19 12905 12726 12503 12321 12435 12205 12024
+## 6   20 13054 12713 12536 12318 12141 12260 12030
+## 7   21 12494 12820 12477 12309 12097 11925 12045
+## 8   22 12102 12247 12575 12236 12079 11872 11707
+## 9   23 11982 11875 12023 12356 12023 11872 11666
+## 10  24 12084 11791 11685 11836 12175 11843 11696
+## 11  25 12272 11942 11647 11542 11700 12043 11711
+## 12  26 12242 12154 11822 11533 11431 11585 11929
+## 13  27 12358 12138 12053 11722 11433 11332 11488
+## 14  28 12205 12261 12042 11953 11627 11337 11238
+## 15  29 12455 12113 12165 11948 11857 11529 11239
+## 16  30 12033 12366 12019 12068 11850 11758 11433
+## 17  31 11731 11944 12271 11922 11965 11742 11656
+## 18  32 11407 11635 11842 12165 11811 11856 11629
+## 19  33 10967 11315 11539 11741 12059 11704 11750
+## 20  34 10924 10884 11228 11447 11647 11965 11609
+## 21  35 11068 10846 10807 11145 11359 11560 11874
+## 22  36 10558 10997 10774 10732 11072 11281 11479
+## 23  37 10547 10495 10934 10709 10665 11003 11209
+## 24  38 10878 10492 10439 10875 10649 10602 10935
+## 25  39 11186 10823 10432 10375 10810 10589 10535
+## 26  40 11270 11136 10767 10375 10315 10748 10532
+## 27  41 10779 11224 11092 10719 10329 10266 10697
+## 28  42 10470 10735 11175 11043 10675 10278 10215
+## 29  43 10568 10418 10681 11121 10992 10620 10224
+## 30  44 10953 10504 10356 10619 11060 10933 10556
+## 31  45 11626 10878 10432 10287 10550 10990 10863
+## 32  46 12093 11543 10807 10363 10220 10478 10916
+## 33  47 12534 12016 11472 10738 10298 10151 10413
+## 34  48 12591 12451 11939 11398 10665 10230 10082
+## 35  49 12762 12506 12368 11858 11324 10591 10158
+## 36  50 13107 12683 12429 12292 11781 11255 10526
+## 37  51 12768 13033 12613 12362 12224 11713 11191
+## 38  52 12671 12696 12955 12540 12291 12150 11646
+## 39  53 12391 12583 12606 12869 12451 12205 12068
+## 40  54 12365 12282 12471 12495 12754 12341 12097
+## 41  55 12110 12234 12151 12335 12360 12613 12206
+## 42  56 11723 11967 12086 12002 12183 12208 12459
+## 43  57 11317 11556 11799 11914 11830 12008 12031
+## 44  58 11013 11142 11378 11617 11727 11644 11817
+## 45  59 10420 10848 10974 11203 11439 11547 11463
+## 46  60 10199 10244 10668 10793 11015 11246 11351</code></pre>
+<pre class="r"><code>## Permits 
+permits_oi.rev %&gt;% 
+  group_by(permitYear, age) %&gt;% 
+  summarise(ttlPop = n()) %&gt;% 
+  spread(permitYear,ttlPop, fill = 0) %&gt;% 
+  as.data.frame() -&gt; permit.wide
+
+# Get rownames and convert to matrix
+rownames(pop.wide) &lt;- pop.wide$Age
+pop.wide &lt;- as.matrix(pop.wide[,-1])
+  
+rownames(permit.wide) &lt;- permit.wide$age
+# which(colnames(permit.wide)==&quot;age&quot;)
+# as.matrix(permit.wide[,-which(colnames(permit.wide)==&quot;age&quot;)])
+
+permit.wide &lt;- as.matrix(permit.wide[,-1])
+
+# put into APC data format
+
+apc_hunters_data &lt;- apc.data.list(response = permit.wide,
+                                  dose = pop.wide,
+                                  data.format = &quot;AP&quot;,
+                                  age1 = 15,
+                                  per1 = 2010,
+                                  unit = 1)
+
+apc_hunters_data</code></pre>
+<pre><code>## $response
+##    2010 2011 2012 2013 2014 2015 2016
+## 15  147  116  122  106  111  130  127
+## 16 1368 1252 1211 1147 1123 1159 1146
+## 17 1028  969  942  913  887  931  877
+## 18 1041  898  876  834  833  827  823
+## 19 1074  925  886  849  803  806  769
+## 20 1070 1015  920  829  810  841  842
+## 21 1071 1004  942  875  812  801  840
+## 22 1103 1024 1030 1002  897  872  852
+## 23 1155 1140 1103 1031 1002  904  871
+## 24 1193 1122 1090 1103 1010 1003  959
+## 25 1196 1194 1118 1075 1046 1033 1027
+## 26 1233 1174 1124 1087 1075 1062 1069
+## 27 1240 1184 1179 1067 1083 1061 1073
+## 28 1221 1163 1169 1072 1040 1047 1041
+## 29 1270 1261 1144 1110 1078 1039 1047
+## 30 1311 1240 1178 1092 1066 1101 1017
+## 31 1260 1238 1183 1121 1041 1096 1039
+## 32 1245 1117 1239 1107 1072 1046 1058
+## 33 1157 1241 1124 1126 1009 1041 1032
+## 34 1150 1128 1170 1009 1074 1050 1015
+## 35 1167 1078 1117 1078 1012 1080 1020
+## 36 1176 1169 1074  987 1044  964 1051
+## 37 1179 1079 1149 1003  980 1024  980
+## 38 1206 1113 1014 1010  930  964 1015
+## 39 1287 1130 1066  991  981  886  925
+## 40 1301 1224 1126  968  911  981  883
+## 41 1242 1256 1191 1031  970  907  952
+## 42 1188 1166 1170 1065  967  901  891
+## 43 1140 1114 1103 1021 1008  922  899
+## 44 1323 1120 1059 1028  968 1002  920
+## 45 1348 1206 1073  984  961  977  940
+## 46 1415 1280 1149  967  916  927  908
+## 47 1473 1280 1177 1034  896  899  893
+## 48 1537 1402 1203 1081  979  836  866
+## 49 1585 1386 1243 1074 1025  971  825
+## 50 1481 1473 1287 1102 1017  956  933
+## 51 1526 1393 1359 1152 1072 1056  937
+## 52 1428 1418 1261 1194 1093 1055 1008
+## 53 1460 1352 1295 1141 1162 1014 1000
+## 54 1453 1360 1235 1140 1101 1106 1032
+## 55 1372 1374 1318 1125 1089 1069 1058
+## 56 1280 1275 1309 1161  998 1081  999
+## 57 1196 1191 1196 1151 1090 1030 1006
+## 58 1256 1150 1122 1037 1056 1025  993
+## 59 1092 1145 1055 1059  984 1079  983
+## 60 1134 1067 1103  944  915  969 1080
+## 
+## $dose
+##     2010  2011  2012  2013  2014  2015  2016
+## 15 12642 12401 12222 12227 12597 12736 13017
+## 16 12519 12626 12390 12211 12212 12586 12721
+## 17 12677 12489 12599 12366 12182 12185 12557
+## 18 12847 12621 12436 12547 12313 12135 12133
+## 19 12905 12726 12503 12321 12435 12205 12024
+## 20 13054 12713 12536 12318 12141 12260 12030
+## 21 12494 12820 12477 12309 12097 11925 12045
+## 22 12102 12247 12575 12236 12079 11872 11707
+## 23 11982 11875 12023 12356 12023 11872 11666
+## 24 12084 11791 11685 11836 12175 11843 11696
+## 25 12272 11942 11647 11542 11700 12043 11711
+## 26 12242 12154 11822 11533 11431 11585 11929
+## 27 12358 12138 12053 11722 11433 11332 11488
+## 28 12205 12261 12042 11953 11627 11337 11238
+## 29 12455 12113 12165 11948 11857 11529 11239
+## 30 12033 12366 12019 12068 11850 11758 11433
+## 31 11731 11944 12271 11922 11965 11742 11656
+## 32 11407 11635 11842 12165 11811 11856 11629
+## 33 10967 11315 11539 11741 12059 11704 11750
+## 34 10924 10884 11228 11447 11647 11965 11609
+## 35 11068 10846 10807 11145 11359 11560 11874
+## 36 10558 10997 10774 10732 11072 11281 11479
+## 37 10547 10495 10934 10709 10665 11003 11209
+## 38 10878 10492 10439 10875 10649 10602 10935
+## 39 11186 10823 10432 10375 10810 10589 10535
+## 40 11270 11136 10767 10375 10315 10748 10532
+## 41 10779 11224 11092 10719 10329 10266 10697
+## 42 10470 10735 11175 11043 10675 10278 10215
+## 43 10568 10418 10681 11121 10992 10620 10224
+## 44 10953 10504 10356 10619 11060 10933 10556
+## 45 11626 10878 10432 10287 10550 10990 10863
+## 46 12093 11543 10807 10363 10220 10478 10916
+## 47 12534 12016 11472 10738 10298 10151 10413
+## 48 12591 12451 11939 11398 10665 10230 10082
+## 49 12762 12506 12368 11858 11324 10591 10158
+## 50 13107 12683 12429 12292 11781 11255 10526
+## 51 12768 13033 12613 12362 12224 11713 11191
+## 52 12671 12696 12955 12540 12291 12150 11646
+## 53 12391 12583 12606 12869 12451 12205 12068
+## 54 12365 12282 12471 12495 12754 12341 12097
+## 55 12110 12234 12151 12335 12360 12613 12206
+## 56 11723 11967 12086 12002 12183 12208 12459
+## 57 11317 11556 11799 11914 11830 12008 12031
+## 58 11013 11142 11378 11617 11727 11644 11817
+## 59 10420 10848 10974 11203 11439 11547 11463
+## 60 10199 10244 10668 10793 11015 11246 11351
+## 
+## $data.format
+## [1] &quot;AP&quot;
+## 
+## $age1
+## [1] 15
+## 
+## $per1
+## [1] 2010
+## 
+## $coh1
+## [1] 1
+## 
+## $unit
+## [1] 1
+## 
+## $per.zero
+## NULL
+## 
+## $per.max
+## NULL
+## 
+## $time.adjust
+## [1] 0
+## 
+## $label
+## NULL
+## 
+## $n.decimal
+## NULL</code></pre>
+</div>
+<div id="data-check-plots" class="section level3">
+<h3>Data check plots</h3>
+<pre class="r"><code>apc.plot.data.all(apc_hunters_data)</code></pre>
+<pre><code>## [1] &quot;apc.plot.data.within warning: maximal index not divisible by thin, so last group smaller than other groups&quot;</code></pre>
+<pre><code>## [1] &quot;apc.plot.data.within warning: maximal index not divisible by thin, so last group smaller than other groups&quot;</code></pre>
+<pre><code>## [1] &quot;apc.plot.data.within warning: maximal index not divisible by thin, so last group smaller than other groups&quot;</code></pre>
+<pre><code>## [1] &quot;apc.plot.data.within warning: maximal index not divisible by thin, so last group smaller than other groups&quot;</code></pre>
+<pre><code>## [1] &quot;apc.plot.data.within warning: maximal index not divisible by thin, so last group smaller than other groups&quot;</code></pre>
+<pre><code>## [1] &quot;apc.plot.data.within warning: maximal index not divisible by thin, so last group smaller than other groups&quot;</code></pre>
+<pre><code>## [1] &quot;apc.plot.data.within warning: maximal index not divisible by thin, so last group smaller than other groups&quot;</code></pre>
+<pre><code>## [1] &quot;apc.plot.data.within warning: maximal index not divisible by thin, so last group smaller than other groups&quot;</code></pre>
+<pre><code>## [1] &quot;apc.plot.data.within warning: maximal index not divisible by thin, so last group smaller than other groups&quot;</code></pre>
+<pre><code>## [1] &quot;apc.plot.data.within warning: maximal index not divisible by thin, so last group smaller than other groups&quot;</code></pre>
+<pre><code>## [1] &quot;apc.plot.data.within warning: maximal index not divisible by thin, so last group smaller than other groups&quot;</code></pre>
+<pre><code>## [1] &quot;apc.plot.data.within warning: maximal index not divisible by thin, so last group smaller than other groups&quot;</code></pre>
+</div>
+<div id="fit-the-models" class="section level3">
+<h3>Fit the models</h3>
+<pre class="r"><code>?apc.fit.model
+fitAPC &lt;- apc.fit.model(apc_hunters_data, &quot;poisson.dose.response&quot;, &quot;APC&quot;)
+
+names(fitAPC)</code></pre>
+<pre><code>##  [1] &quot;coefficients&quot;           &quot;residuals&quot;             
+##  [3] &quot;fitted.values&quot;          &quot;effects&quot;               
+##  [5] &quot;R&quot;                      &quot;rank&quot;                  
+##  [7] &quot;qr&quot;                     &quot;family&quot;                
+##  [9] &quot;linear.predictors&quot;      &quot;deviance&quot;              
+## [11] &quot;aic&quot;                    &quot;null.deviance&quot;         
+## [13] &quot;iter&quot;                   &quot;weights&quot;               
+## [15] &quot;prior.weights&quot;          &quot;df.residual&quot;           
+## [17] &quot;df.null&quot;                &quot;y&quot;                     
+## [19] &quot;converged&quot;              &quot;boundary&quot;              
+## [21] &quot;response&quot;               &quot;dose&quot;                  
+## [23] &quot;data.format&quot;            &quot;unit&quot;                  
+## [25] &quot;data.xmax&quot;              &quot;data.ymax&quot;             
+## [27] &quot;data.xlab&quot;              &quot;data.ylab&quot;             
+## [29] &quot;data.x1&quot;                &quot;data.y1&quot;               
+## [31] &quot;n.data&quot;                 &quot;index.data&quot;            
+## [33] &quot;index.trap&quot;             &quot;age.max&quot;               
+## [35] &quot;per.max&quot;                &quot;coh.max&quot;               
+## [37] &quot;per.zero&quot;               &quot;per.odd&quot;               
+## [39] &quot;U&quot;                      &quot;age1&quot;                  
+## [41] &quot;per1&quot;                   &quot;coh1&quot;                  
+## [43] &quot;n.decimal&quot;              &quot;model.family&quot;          
+## [45] &quot;model.design&quot;           &quot;coefficients.canonical&quot;
+## [47] &quot;covariance.canonical&quot;   &quot;slopes&quot;                
+## [49] &quot;difdif&quot;                 &quot;index.age&quot;             
+## [51] &quot;index.per&quot;              &quot;index.coh&quot;             
+## [53] &quot;dates&quot;                  &quot;RSS&quot;                   
+## [55] &quot;sigma2&quot;                 &quot;s2&quot;                    
+## [57] &quot;n.decimal&quot;              &quot;predictors&quot;</code></pre>
+<pre class="r"><code>fitAPC$coefficients.canonical</code></pre>
+<pre><code>##                     Estimate Std. Error        z value     Pr(&gt;|z|)
+## level          -2.2472599105 0.01691684 -132.841592971 0.000000e+00
+## age slope      -0.0388517083 0.01800136   -2.158265684 3.090718e-02
+## cohort slope   -0.0619802353 0.01821049   -3.403545191 6.651741e-04
+## DD_age_17      -2.5407938291 0.04490245  -56.584746337 0.000000e+00
+## DD_age_18       0.1762965705 0.03044289    5.791059570 6.994376e-09
+## DD_age_19       0.0573127785 0.03151226    1.818745395 6.895028e-02
+## DD_age_20       0.0410459103 0.03154967    1.300993521 1.932607e-01
+## DD_age_21      -0.0277554795 0.03114572   -0.891149106 3.728492e-01
+## DD_age_22       0.0670301366 0.03082958    2.174214736 2.968901e-02
+## DD_age_23      -0.0050850491 0.02998792   -0.169569918 8.653484e-01
+## DD_age_24      -0.0254084985 0.02912975   -0.872252598 3.830706e-01
+## DD_age_25      -0.0098580638 0.02855975   -0.345173303 7.299641e-01
+## DD_age_26      -0.0054147381 0.02817565   -0.192177930 8.476028e-01
+## DD_age_27      -0.0074850512 0.02793288   -0.267965621 7.887258e-01
+## DD_age_28      -0.0284246930 0.02785877   -1.020313833 3.075796e-01
+## DD_age_29       0.0410548549 0.02793978    1.469405021 1.417230e-01
+## DD_age_30      -0.0256008739 0.02773478   -0.923060411 3.559757e-01
+## DD_age_31       0.0009802804 0.02761430    0.035499015 9.716818e-01
+## DD_age_32      -0.0155015515 0.02765686   -0.560495641 5.751414e-01
+## DD_age_33       0.0027285320 0.02781736    0.098087379 9.218629e-01
+## DD_age_34       0.0022325653 0.02806381    0.079553177 9.365926e-01
+## DD_age_35       0.0039193946 0.02829199    0.138533726 8.898186e-01
+## DD_age_36       0.0007927562 0.02841739    0.027896870 9.777444e-01
+## DD_age_37       0.0001578058 0.02856882    0.005523708 9.955927e-01
+## DD_age_38      -0.0280116068 0.02874220   -0.974581087 3.297681e-01
+## DD_age_39       0.0169637416 0.02894910    0.585985097 5.578855e-01
+## DD_age_40       0.0067463905 0.02893826    0.233130474 8.156601e-01
+## DD_age_41       0.0030793141 0.02870898    0.107259598 9.145830e-01
+## DD_age_42      -0.0366232159 0.02852996   -1.283675623 1.992555e-01
+## DD_age_43       0.0019913649 0.02878092    0.069190453 9.448380e-01
+## DD_age_44       0.0318992450 0.02896590    1.101269072 2.707796e-01
+## DD_age_45      -0.0216375699 0.02872225   -0.753338148 4.512467e-01
+## DD_age_46       0.0002622675 0.02854661    0.009187342 9.926697e-01
+## DD_age_47      -0.0073898872 0.02841026   -0.260113345 7.947763e-01
+## DD_age_48       0.0134789363 0.02819907    0.477992284 6.326557e-01
+## DD_age_49      -0.0196528510 0.02780931   -0.706700361 4.797527e-01
+## DD_age_50       0.0013608685 0.02744691    0.049581837 9.604556e-01
+## DD_age_51       0.0204176180 0.02715693    0.751838232 4.521483e-01
+## DD_age_52      -0.0224115518 0.02686371   -0.834268768 4.041295e-01
+## DD_age_53      -0.0006633554 0.02684557   -0.024710051 9.802862e-01
+## DD_age_54       0.0085657114 0.02689198    0.318522904 7.500883e-01
+## DD_age_55       0.0168850483 0.02690465    0.627588445 5.302736e-01
+## DD_age_56      -0.0190604159 0.02702960   -0.705168307 4.807055e-01
+## DD_age_57       0.0103652245 0.02746639    0.377378505 7.058923e-01
+## DD_age_58      -0.0018073385 0.02795138   -0.064660087 9.484446e-01
+## DD_age_59       0.0074893838 0.02845528    0.263198385 7.923977e-01
+## DD_age_60       0.0103824667 0.02915810    0.356074875 7.217845e-01
+## DD_period_2012  0.0107906024 0.01060800    1.017213787 3.090517e-01
+## DD_period_2013 -0.0363334026 0.01089079   -3.336159159 8.494452e-04
+## DD_period_2014  0.0363815518 0.01128257    3.224579208 1.261580e-03
+## DD_period_2015  0.0354167033 0.01154433    3.067887869 2.155775e-03
+## DD_period_2016 -0.0130912805 0.01166393   -1.122372645 2.617040e-01
+## DD_cohort_1952  0.0853945932 0.05600302    1.524821290 1.273037e-01
+## DD_cohort_1953 -0.1185258513 0.04335447   -2.733878630 6.259311e-03
+## DD_cohort_1954  0.0835783721 0.03755945    2.225228665 2.606589e-02
+## DD_cohort_1955 -0.0110692380 0.03333846   -0.332026122 7.398695e-01
+## DD_cohort_1956  0.0527487786 0.02990425    1.763922434 7.774504e-02
+## DD_cohort_1957 -0.0862959684 0.02732548   -3.158076846 1.588137e-03
+## DD_cohort_1958 -0.0414529955 0.02700008   -1.535291559 1.247122e-01
+## DD_cohort_1959  0.0869834143 0.02717136    3.201290353 1.368136e-03
+## DD_cohort_1960 -0.0753689680 0.02684197   -2.807877349 4.986922e-03
+## DD_cohort_1961  0.1218432401 0.02672820    4.558602731 5.149507e-06
+## DD_cohort_1962 -0.1196564712 0.02637789   -4.536241838 5.726551e-06
+## DD_cohort_1963  0.0235695400 0.02673027    0.881754732 3.779095e-01
+## DD_cohort_1964  0.0135195961 0.02708069    0.499233854 6.176146e-01
+## DD_cohort_1965  0.0104227677 0.02751495    0.378803782 7.048336e-01
+## DD_cohort_1966  0.0262517898 0.02794413    0.939438561 3.475056e-01
+## DD_cohort_1967 -0.0969240026 0.02851465   -3.399094951 6.760924e-04
+## DD_cohort_1968  0.0987278224 0.02949195    3.347619439 8.150886e-04
+## DD_cohort_1969 -0.0228113385 0.02940008   -0.775893639 4.378118e-01
+## DD_cohort_1970 -0.0149549488 0.02886038   -0.518182695 6.043308e-01
+## DD_cohort_1971  0.0343805342 0.02837186    1.211782951 2.255955e-01
+## DD_cohort_1972 -0.0459851099 0.02827405   -1.626407070 1.038631e-01
+## DD_cohort_1973  0.0286207774 0.02882655    0.992861633 3.207774e-01
+## DD_cohort_1974 -0.0201156470 0.02926985   -0.687248140 4.919264e-01
+## DD_cohort_1975  0.0374794569 0.02936209    1.276457533 2.017938e-01
+## DD_cohort_1976 -0.0511751073 0.02895400   -1.767462152 7.715086e-02
+## DD_cohort_1977  0.0744655901 0.02925767    2.545165017 1.092261e-02
+## DD_cohort_1978  0.0023411172 0.02887730    0.081071182 9.353853e-01
+## DD_cohort_1979 -0.1086515985 0.02820438   -3.852295580 1.170157e-04
+## DD_cohort_1980  0.1358734173 0.02826363    4.807359047 1.529372e-06
+## DD_cohort_1981 -0.1225300939 0.02766706   -4.428735720 9.478709e-06
+## DD_cohort_1982  0.0944906367 0.02773022    3.407497096 6.556161e-04
+## DD_cohort_1983 -0.0582764161 0.02780625   -2.095802774 3.609969e-02
+## DD_cohort_1984  0.0650171637 0.02792647    2.328155145 1.990387e-02
+## DD_cohort_1985 -0.0366749277 0.02780617   -1.318949500 1.871860e-01
+## DD_cohort_1986  0.0142538135 0.02789878    0.510911684 6.094129e-01
+## DD_cohort_1987  0.0204646271 0.02812360    0.727667453 4.668172e-01
+## DD_cohort_1988 -0.0166832255 0.02821541   -0.591280627 5.543324e-01
+## DD_cohort_1989 -0.0216225742 0.02834498   -0.762836056 4.455612e-01
+## DD_cohort_1990 -0.0321925403 0.02858043   -1.126384236 2.600029e-01
+## DD_cohort_1991  0.0624730897 0.02898715    2.155199488 3.114623e-02
+## DD_cohort_1992 -0.0740962706 0.02951893   -2.510127311 1.206876e-02
+## DD_cohort_1993  0.0193997052 0.03051513    0.635740484 5.249456e-01
+## DD_cohort_1994  0.0516903424 0.03112948    1.660494989 9.681492e-02
+## DD_cohort_1995 -0.0295450266 0.03105612   -0.951343053 3.414303e-01
+## DD_cohort_1996  0.0253403363 0.03288262    0.770630067 4.409262e-01
+## DD_cohort_1997 -0.0147056917 0.03610185   -0.407338960 6.837591e-01
+## DD_cohort_1998  0.0191876063 0.04041450    0.474770303 6.349507e-01
+## DD_cohort_1999 -0.0549199760 0.04591723   -1.196064599 2.316714e-01
+## DD_cohort_2000  0.0410549382 0.05533677    0.741910630 4.581415e-01
+## DD_cohort_2001  0.0555473862 0.11287191    0.492127618 6.226291e-01</code></pre>
+<pre class="r"><code>apc.plot.fit(fitAPC)</code></pre>
+<pre><code>## WARNING apc.plot.fit: sdv large in for plot 5 - possibly not plotted</code></pre>
+<p><img src="/post/2018-02-23-AgeCohort_files/figure-html/apcmodfit-1.png" width="672" /></p>
+</div>
+<div id="forecasts" class="section level3">
+<h3>Forecasts</h3>
+<pre class="r"><code>fitAC &lt;- apc.fit.model(apc_hunters_data, &quot;poisson.response&quot;, &quot;AC&quot;)
+
+forecast &lt;- apc.forecast.ac(fitAC)
+
+names(forecast)</code></pre>
+<pre><code>##  [1] &quot;linear.predictors.forecast&quot;      &quot;index.trap.J&quot;                   
+##  [3] &quot;trap.response.forecast&quot;          &quot;response.forecast.cell&quot;         
+##  [5] &quot;response.forecast.age&quot;           &quot;response.forecast.per&quot;          
+##  [7] &quot;response.forecast.per.ic&quot;        &quot;response.forecast.coh&quot;          
+##  [9] &quot;response.forecast.all&quot;           &quot;response.forecast.per.by.age&quot;   
+## [11] &quot;response.forecast.per.by.age.ic&quot; &quot;response.forecast.per.by.coh&quot;   
+## [13] &quot;response.forecast.per.by.coh.ic&quot; &quot;intercept.correction.per&quot;       
+## [15] &quot;intercept.correction.per.by.age&quot; &quot;intercept.correction.per.by.coh&quot;</code></pre>
+<pre class="r"><code>forecast$response.forecast.per</code></pre>
+<pre><code>##            forecast        se   se.proc    se.est
+## per_2017 40344.3641 273.54278 200.85907 185.69138
+## per_2018 37437.8982 271.10505 193.48875 189.89483
+## per_2019 34983.7706 277.33390 187.03949 204.76895
+## per_2020 32708.6522 284.65263 180.85534 219.81462
+## per_2021 30606.3614 292.01185 174.94674 233.80453
+## per_2022 28585.1526 297.60605 169.07144 244.91674
+## per_2023 26741.6543 303.48855 163.52876 255.66315
+## per_2024 24991.6843 307.87889 158.08758 264.19259
+## per_2025 23335.6784 310.38134 152.76020 270.18679
+## per_2026 21776.6114 311.42491 147.56901 274.24235
+## per_2027 20304.4167 311.03939 142.49357 276.47981
+## per_2028 18944.8035 309.40004 137.64012 277.09850
+## per_2029 17643.9846 305.97881 132.83066 275.64297
+## per_2030 16416.3532 302.08549 128.12632 273.56771
+## per_2031 15228.0622 296.40323 123.40203 269.49362
+## per_2032 14100.5200 289.67296 118.74561 264.21564
+## per_2033 13050.2059 281.98587 114.23750 257.80967
+## per_2034 12074.4853 273.43040 109.88396 250.37911
+## per_2035 11165.7868 264.63731 105.66829 242.62547
+## per_2036 10294.3173 255.07987 101.46091 234.03295
+## per_2037  9484.6618 245.03069  97.38923 224.84523
+## per_2038  8711.1299 234.26575  93.33343 214.87046
+## per_2039  7962.7233 222.50829  89.23409 203.83135
+## per_2040  7280.4724 210.44573  85.32568 192.37186
+## per_2041  6622.2520 198.45900  81.37722 181.00752
+## per_2042  6009.2991 186.52125  77.51967 169.64928
+## per_2043  5427.1925 174.10236  73.66948 157.74803
+## per_2044  4895.5773 162.20277  69.96840 146.33578
+## per_2045  4402.4473 150.88838  66.35094 135.51699
+## per_2046  3937.8145 139.44834  62.75201 124.53122
+## per_2047  3508.8120 128.40337  59.23523 113.92372
+## per_2048  3109.0149 117.60032  55.75854 103.54140
+## per_2049  2739.5564 107.30021  52.34077  93.66845
+## per_2050  2393.9519  97.15549  48.92803  83.93592
+## per_2051  2079.0234  87.59839  45.59631  74.79609
+## per_2052  1790.8487  78.68890  42.31842  66.34074
+## per_2053  1531.0385  70.22947  39.12849  58.31929
+## per_2054  1299.9575  62.44342  36.05492  50.98258
+## per_2055  1088.2275  55.09497  32.98829  44.12741
+## per_2056   894.5189  48.25196  29.90851  37.86466
+## per_2057   714.7504  41.59496  26.73482  31.86519
+## per_2058   553.2716  35.45658  23.52173  26.53107
+## per_2059   402.1889  29.47441  20.05465  21.59982
+## per_2060   263.0890  23.73429  16.22002  17.32708
+## per_2061   131.8937  17.90211  11.48450  13.73287</code></pre>
+<pre class="r"><code>forecast$response.forecast.per %&gt;% 
+  as.data.frame() %&gt;% 
+  rownames_to_column(&quot;period&quot;) %&gt;% 
+  mutate(period = gsub(&quot;per_&quot;,&quot;&quot;, period),
+         period = as.numeric(period)) -&gt; smg_forecast
+
+ggplot(data = smg_forecast) +
+  geom_ribbon(aes(x = period, ymax = forecast+1.96*se, ymin = forecast-1.96*se), fill = &quot;red&quot;, alpha = 0.5) + 
+  geom_line(aes(x = period, y = forecast)) +
+  theme_classic()</code></pre>
+<p><img src="/post/2018-02-23-AgeCohort_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+</div>
+</div>
+</div>
+
+    
+    
+
+    
+
+    
+
+        <h4 class="page-header">Comments</h4>
+
+        <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "snrrgroup" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    
+
+</main>
+
+        <footer>
+
+            <p class="copyright text-muted">&copy; All rights reserved. Powered by <a href="https://gohugo.io">Hugo</a> and <a href="https://github.com/calintat/minimal">Minimal</a></p>
+
+        </footer>
+       
+    </body>
+
+</html>
+
