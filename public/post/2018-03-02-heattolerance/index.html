@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+         
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Heat Tolerance</title>
+        <style>
+
+    html body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #FEFDFA;
+    }
+
+    :root {
+        --accent: #D00000;
+        --border-width:  5px ;
+    }
+
+</style>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+
+
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/hybrid.min.css"> 
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+ 
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/swift.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/R.min.js"></script> 
+
+    <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script>
+ <meta name="generator" content="Hugo 0.30.2" />
+        
+        
+        
+        
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-48496439-3"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments)};
+          gtag('js', new Date());
+
+          gtag('config', 'UA-48496439-3');
+        </script>
+        
+    </head>
+
+    
+    
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    
+
+    <body>
+         
+        <nav class="navbar navbar-default navbar-fixed-top">
+
+            <div class="container">
+
+                <div class="navbar-header">
+
+                    <a class="navbar-brand visible-xs" href="#">Heat Tolerance</a>
+
+                    <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                </div>
+
+                <div class="collapse navbar-collapse">
+
+                    
+                        <ul class="nav navbar-nav">
+                            
+                                <li><a href="/">Home</a></li>
+                            
+                                <li><a href="/post/">Posts</a></li>
+                            
+                                <li><a href="/resources/">Resources</a></li>
+                            
+                        </ul>
+                    
+
+                    
+                        <ul class="nav navbar-nav navbar-right">
+                            
+                                <li class="navbar-icon"><a href="mailto:cchizinski2@unl.edu"><i class="fa fa-envelope-o"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://github.com/chrischizinski/"><i class="fa fa-github"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://twitter.com/chrischizinski/"><i class="fa fa-twitter"></i></a></li>
+                            
+                        </ul>
+                    
+
+                </div>
+
+            </div>
+
+        </nav>
+
+
+<main>
+
+    <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/post/2018-03-02-heattolerance/">Heat Tolerance</a></h4>
+    <h5>March 2, 2018</h5>
+    
+    <a href="/tags/heat-tolerance"><kbd class="item-tag">Heat Tolerance</kbd></a>
+    
+    <a href="/tags/glm"><kbd class="item-tag">glm</kbd></a>
+    
+    <a href="/tags/data-seminar"><kbd class="item-tag">Data Seminar</kbd></a>
+    
+
+</div>
+
+
+    <br> <div class="text-justify"><p>Link to the Rmarkdown files can be found <a href="https://github.com/chrischizinski/snr-r-group/tree/master/content/post">here</a></p>
+<div id="get-the-data" class="section level2">
+<h2>Get the data</h2>
+<pre class="r"><code>heat_data &lt;-read_csv(&quot;https://raw.githubusercontent.com/chrischizinski/snr-r-group/master/data/HeatTolerance.csv&quot;, na = &quot;NA&quot;)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   Species = col_character(),
+##   `Species common name` = col_character(),
+##   `Trial Nr` = col_integer(),
+##   `Larval Stage` = col_character(),
+##   `Age (days post-hatch)` = col_integer(),
+##   `Age (degree-days)` = col_integer(),
+##   `Acclimation temperature (°C)` = col_integer(),
+##   `Larval ID` = col_character(),
+##   `Warming rate (°C h-1)` = col_character(),
+##   `Body length (mm)` = col_double(),
+##   `CTMax (°C)` = col_double()
+## )</code></pre>
+<pre class="r"><code>glimpse(heat_data)</code></pre>
+<pre><code>## Observations: 478
+## Variables: 11
+## $ Species                        &lt;chr&gt; &quot;Clupea harengus&quot;, &quot;Clupea hare...
+## $ `Species common name`          &lt;chr&gt; &quot;Herring&quot;, &quot;Herring&quot;, &quot;Herring&quot;...
+## $ `Trial Nr`                     &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1...
+## $ `Larval Stage`                 &lt;chr&gt; &quot;Yolk-sac&quot;, &quot;Yolk-sac&quot;, &quot;Yolk-s...
+## $ `Age (days post-hatch)`        &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1...
+## $ `Age (degree-days)`            &lt;int&gt; 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9...
+## $ `Acclimation temperature (°C)` &lt;int&gt; 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9...
+## $ `Larval ID`                    &lt;chr&gt; &quot;CT020&quot;, &quot;CT042&quot;, &quot;CT043&quot;, &quot;CT0...
+## $ `Warming rate (°C h-1)`        &lt;chr&gt; &quot;0.5&quot;, &quot;0.5&quot;, &quot;0.5&quot;, &quot;0.5&quot;, &quot;0....
+## $ `Body length (mm)`             &lt;dbl&gt; 7.277000, 10.611333, 7.730000, ...
+## $ `CTMax (°C)`                   &lt;dbl&gt; 18.5, 23.9, 26.0, 26.7, 27.4, 2...</code></pre>
+</div>
+<div id="fix-up-the-data" class="section level2">
+<h2>Fix up the data</h2>
+<p>The column headers are very messy in this file, particularly all the spaces and the <span class="math inline">\(^\circ\)</span> symbols. Clean them up so that it is a little easier to use.</p>
+<pre class="r"><code>heat_data %&gt;% 
+  select(-`Age (degree-days)`) %&gt;% 
+  rename(name = `Species common name`,
+         trial = `Trial Nr`,
+         stage = `Larval Stage`,
+         age = `Age (days post-hatch)`,
+         ACtemp = `Acclimation temperature (°C)`,
+         ID = `Larval ID`,
+         warmTemp = `Warming rate (°C h-1)`,
+         length = `Body length (mm)`,
+         CTmax = `CTMax (°C)`) %&gt;% 
+  mutate(stage = case_when(stage ==&quot;Feeding larva&quot;~ &quot;exogenous&quot;,
+                           stage ==&quot;Feeding Larvae&quot;~ &quot;exogenous&quot;,
+                           TRUE ~ stage),
+         stage = tolower(stage))-&gt; heat_data.rev
+
+glimpse(heat_data.rev)</code></pre>
+<pre><code>## Observations: 478
+## Variables: 10
+## $ Species  &lt;chr&gt; &quot;Clupea harengus&quot;, &quot;Clupea harengus&quot;, &quot;Clupea harengu...
+## $ name     &lt;chr&gt; &quot;Herring&quot;, &quot;Herring&quot;, &quot;Herring&quot;, &quot;Herring&quot;, &quot;Herring&quot;...
+## $ trial    &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,...
+## $ stage    &lt;chr&gt; &quot;yolk-sac&quot;, &quot;yolk-sac&quot;, &quot;yolk-sac&quot;, &quot;yolk-sac&quot;, &quot;yolk...
+## $ age      &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,...
+## $ ACtemp   &lt;int&gt; 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9,...
+## $ ID       &lt;chr&gt; &quot;CT020&quot;, &quot;CT042&quot;, &quot;CT043&quot;, &quot;CT044&quot;, &quot;CT046&quot;, &quot;CT045&quot;,...
+## $ warmTemp &lt;chr&gt; &quot;0.5&quot;, &quot;0.5&quot;, &quot;0.5&quot;, &quot;0.5&quot;, &quot;0.5&quot;, &quot;0.5&quot;, &quot;0.5&quot;, &quot;0.5...
+## $ length   &lt;dbl&gt; 7.277000, 10.611333, 7.730000, 9.835333, 7.245000, 7....
+## $ CTmax    &lt;dbl&gt; 18.5, 23.9, 26.0, 26.7, 27.4, 27.5, 27.5, 27.5, NA, 1...</code></pre>
+<pre class="r"><code>#  Plot the data 
+
+ggplot(data = heat_data.rev %&gt;% filter(warmTemp != &quot;Control&quot;)) +
+  geom_point(aes(x = warmTemp, y = CTmax, shape = factor(ACtemp),
+                 colour = length), alpha = 0.45,size =2) +
+  facet_grid(stage ~ name) +
+  theme_classic() +
+  theme(legend.position = &quot;bottom&quot;)</code></pre>
+<pre><code>## Warning: Removed 14 rows containing missing values (geom_point).</code></pre>
+<p><img src="/post/2018-03-02-HeatTolerance_files/figure-html/cleandata-1.png" width="672" /></p>
+</div>
+<div id="models" class="section level2">
+<h2>Models</h2>
+<pre class="r"><code>herr_exo &lt;- heat_data.rev %&gt;% 
+              filter(name == &quot;Herring&quot;, 
+                     stage == &quot;exogenous&quot;,
+                     warmTemp != &quot;Control&quot;) %&gt;% 
+              mutate(warmTemp = factor(warmTemp),
+                     ACtemp = factor(ACtemp))
+
+unique(herr_exo$warmTemp)</code></pre>
+<pre><code>## [1] 0.5 1   2   4   8  
+## Levels: 0.5 1 2 4 8</code></pre>
+<pre class="r"><code>he_mod &lt;- glm(CTmax ~ warmTemp + length + ACtemp, data = herr_exo)
+
+# he_mod %&gt;% 
+#        sjt.lm(no.output = TRUE, show.se = TRUE) %&gt;% 
+#        return() %&gt;% .[[&quot;knitr&quot;]] %&gt;% asis_output
+
+# pander(he_mod)
+# 
+# xtable(he_mod)</code></pre>
+<table style="text-align:center">
+<tr>
+<td colspan="2" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+<em>Dependent variable:</em>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td colspan="1" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+CTmax
+</td>
+</tr>
+<tr>
+<td colspan="2" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+warmTemp1
+</td>
+<td>
+-0.682 (0.548)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+warmTemp2
+</td>
+<td>
+0.132 (0.545)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+warmTemp4
+</td>
+<td>
+1.723<sup>***</sup> (0.608)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+warmTemp8
+</td>
+<td>
+2.480<sup>***</sup> (0.608)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+length
+</td>
+<td>
+-0.021 (0.040)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+ACtemp13
+</td>
+<td>
+1.806<sup>***</sup> (0.359)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Constant
+</td>
+<td>
+22.484<sup>***</sup> (0.738)
+</td>
+</tr>
+<tr>
+<td colspan="2" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+222
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Log Likelihood
+</td>
+<td>
+-519.555
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Akaike Inf. Crit.
+</td>
+<td>
+1,053.109
+</td>
+</tr>
+<tr>
+<td colspan="2" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<em>Note:</em>
+</td>
+<td style="text-align:right">
+<sup><em></sup>p&lt;0.1; <sup><strong></sup>p&lt;0.05; <sup></strong></em></sup>p&lt;0.01
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+    
+    
+
+    
+
+        <h4 class="page-header">Related</h4>
+
+         <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/post/2018-02-23-agecohort/">Age-cohort analysis</a></h4>
+    <h5>February 23, 2018</h5>
+    
+    <a href="/tags/age-period-cohort"><kbd class="item-tag">Age Period Cohort</kbd></a>
+    
+    <a href="/tags/data-seminar"><kbd class="item-tag">Data Seminar</kbd></a>
+    
+
+</div>
+ 
+
+    
+
+    
+
+        <h4 class="page-header">Comments</h4>
+
+        <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "snrrgroup" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    
+
+</main>
+
+        <footer>
+
+            <p class="copyright text-muted">&copy; All rights reserved. Powered by <a href="https://gohugo.io">Hugo</a> and <a href="https://github.com/calintat/minimal">Minimal</a></p>
+
+        </footer>
+       
+    </body>
+
+</html>
+

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+         
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Ecological Detective -- Maximum likelihood</title>
+        <style>
+
+    html body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #FEFDFA;
+    }
+
+    :root {
+        --accent: #D00000;
+        --border-width:  5px ;
+    }
+
+</style>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+
+
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/hybrid.min.css"> 
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+ 
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/swift.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/R.min.js"></script> 
+
+    <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script>
+ <meta name="generator" content="Hugo 0.30.2" />
+        
+        
+        
+        
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-48496439-3"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments)};
+          gtag('js', new Date());
+
+          gtag('config', 'UA-48496439-3');
+        </script>
+        
+    </head>
+
+    
+    
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    
+
+    <body>
+         
+        <nav class="navbar navbar-default navbar-fixed-top">
+
+            <div class="container">
+
+                <div class="navbar-header">
+
+                    <a class="navbar-brand visible-xs" href="#">Ecological Detective -- Maximum likelihood</a>
+
+                    <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                </div>
+
+                <div class="collapse navbar-collapse">
+
+                    
+                        <ul class="nav navbar-nav">
+                            
+                                <li><a href="/">Home</a></li>
+                            
+                                <li><a href="/post/">Posts</a></li>
+                            
+                                <li><a href="/resources/">Resources</a></li>
+                            
+                        </ul>
+                    
+
+                    
+                        <ul class="nav navbar-nav navbar-right">
+                            
+                                <li class="navbar-icon"><a href="mailto:cchizinski2@unl.edu"><i class="fa fa-envelope-o"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://github.com/chrischizinski/"><i class="fa fa-github"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://twitter.com/chrischizinski/"><i class="fa fa-twitter"></i></a></li>
+                            
+                        </ul>
+                    
+
+                </div>
+
+            </div>
+
+        </nav>
+
+
+<main>
+
+    <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/post/2017-04-28-likelihood/">Ecological Detective -- Maximum likelihood</a></h4>
+    <h5>April 28, 2017</h5>
+    
+    <a href="/tags/ecodetective"><kbd class="item-tag">EcoDetective</kbd></a>
+    
+
+</div>
+
+
+    <br> <div class="text-justify"><pre class="r"><code>library(tidyverse)
+library(broom)</code></pre>
+<p>Sources of the notes for this lecture are from Ecological Detective (Chapter 4).</p>
+<div id="overview" class="section level2">
+<h2>Overview</h2>
+<ul>
+<li>Sum of squares can be used to find the best fit of a model to the data under minimal assumptions about the sources of uncertainty</li>
+<li>There are many cases in which the form of the probability distributions of the uncertain terms can be justified</li>
+<li>likelihood methods allow us to calculate confidence bounds on parameters and to test hypotheses in the traditional manner</li>
+<li>forms the foundation for Bayesian analysis</li>
+</ul>
+<p>The probability of observing data \(Y_i\) given a parameter \(p\) is \( Pr\{Y_i|p\}\). - The subscript on <em>Y</em> indicates that there are multiple Y values given a value of <em>p</em></p>
+<p>For example, if <em>Y</em> follows a Poisson distribution with a rate parameter <em>r</em>, then we would have <span class="math display">\[ Pr \{Y_i = k | r\} \frac{e^{-r}r^k}{k!} \]</span></p>
+<p>This tells us the probability of the “data” given the “hypothesis,” where the “data” are k events in one unit of time and the “hypothesis” is that the rate parameter is r</p>
+<ul>
+<li>When confronting models with data, we usually want to know how well the data support the alternative hypotheses</li>
+<li>“Given these data, how likely are the possible hypotheses?”</li>
+</ul>
+<p><span class="math display">\[ \mathcal{L} \{data | hypothesis\} \]</span></p>
+<p>or</p>
+<p><span class="math display">\[ \mathcal{L} \{Y | p_m\} \]</span></p>
+<p>Notice the shift in the equation. We no longer have subscripts under <em>Y</em> but we do for <em>p</em>. This is because we have known Y from the data collected but there are several <em>p</em> possible that could explain our observed data.</p>
+<p>A key to the distinction between likelihood and proba bility is that with probability the hypothesis is known and the data are unknown, whereas with likelihood the data are known and the hypotheses unknown</p>
+<p>Example: Suppose that the data were k = 4 events in one unit of time. What is the likelihood of possible values of r.</p>
+<p><span class="math display">\[  \mathcal{L}\{4 | r\} \frac{e^{-r}r^4}{4!} \]</span></p>
+<p>How does the possible values of <em>r</em> change if <em>k</em> is 6.</p>
+<pre class="r"><code>test_data&lt;-data.frame(r = 1:16)
+
+test_data$r4&lt;-(exp(-test_data$r)*test_data$r^4)/factorial(4)
+test_data$r6&lt;-(exp(-test_data$r)*test_data$r^6)/factorial(6)
+
+ggplot(data = test_data) +
+  geom_line(aes(x = r, y = r4), colour = &quot;red&quot;, size = 1) + 
+  geom_line(aes(x = r, y = r6), colour = &quot;blue&quot;, size = 1) +
+  labs(y = &quot;likelihood&quot;, x = &quot;r&quot;)+
+  coord_cartesian(ylim = c(0,0.22), xlim = c(0,18), expand = FALSE) +
+  theme_bw()</code></pre>
+<p><img src="/post/2017-04-28-Likelihood_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<ul>
+<li><p>The parameter that makes the likelihood as large as possible is called the maximum likelihood estimate (MLE)</p></li>
+<li><p>likelihoods may be very small numbers, the tradi tion is to use the logarithm of the likelihood, called the log likelihood</p></li>
+<li><p>to make log likelihood similar to Sum of Squares, we will take the negative of the log likelihood</p></li>
+</ul>
+<pre class="r"><code>test_data$logr4&lt;- -log10(test_data$r4)
+test_data$logr6&lt;- -log10(test_data$r6)
+
+ggplot(data = test_data) +
+  geom_line(aes(x = r, y = logr4), colour = &quot;red&quot;, size = 1) + 
+  geom_line(aes(x = r, y = logr6), colour = &quot;blue&quot;, size = 1) +
+  labs(y = &quot;negative log likelihood&quot;, x = &quot;r&quot;)+
+  # coord_cartesian(ylim = c(0,0.22), xlim = c(0,18), expand = FALSE) +
+  theme_bw()</code></pre>
+<p><img src="/post/2017-04-28-Likelihood_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>Given a set of observations from the population, we can find estimates of one (or many) parameters that maximize the liklihood of observing those data. The likelihood function provides the likelihood of the observed data for all possible values of the parameter we are trying to estimate.</p>
+<p>This approach allows us to incorporate some of the uncertainty based on probability distributions. For example, if the deviations of the data from the average follow a normal distribution, then it can be assumed that the uncertainty is normally distributed.</p>
+<p>This approach allows us to develop confidence bounds around our parameters that we could not do in the sum of squares approach.</p>
+<div id="likelihood-and-maximum-likelihood" class="section level3">
+<h3>Likelihood and Maximum Likelihood</h3>
+<p>The probability of observing the data \(Y_i\) given a particular parameter value \(p\) is: <span class="math display">\[ Pr(Y_i | p) \]</span></p>
+<p>The subscript on Y, indicates that there are many possible outcomes but only one parameter \(p\). Thus we can ask, “Given these data, how likely are the possible hypothesis?”</p>
+<p>\(L {data | hypothesis }\) or \(L{Y | p_m}\). Notice the difference from the previous equation. In the likelihood function we have one observation but numerous potential hypotheses or parameter values. The key difference between likelihood and probability is that with the probability the hypothesis is known and data are unknown, whereas the likelihood the data are known and the hypotheses are unknown.</p>
+<p>Thus there are parameter values that are more likely than others.</p>
+<p>The parameter that makes the likelihood as large as possible is the <em>maximum likelihood estimate</em> (MLE). Generally likelihoods are very small values and thus the log likelihood is used and to make it analogous to sum of squares we use the negative value of that. So the best fit parameter value will be the negative, log likelihood.</p>
+<p>As an example, consider the heights of ten people in cm. We can assume that height is normally distributed with a standard deviation of 10 cm.</p>
+<pre class="r"><code>height_data &lt;- data.frame(ind = 1:10, height = c(171, 168, 180, 190, 169, 172, 162, 181, 181, 177) )
+
+height_data</code></pre>
+<pre><code>##    ind height
+## 1    1    171
+## 2    2    168
+## 3    3    180
+## 4    4    190
+## 5    5    169
+## 6    6    172
+## 7    7    162
+## 8    8    181
+## 9    9    181
+## 10  10    177</code></pre>
+<p>The likelihood for the true mean of the population can be given as:</p>
+<p><span class="math display">\[ L\{Y | p_m \} = \frac{1}{10 \sqrt{2 \pi}} exp \left( - \frac{(Y - m)^2}{200} \right) \]</span></p>
+<p>and the negative log-likelihood for 10 of the ten heights is:</p>
+<p><span class="math display">\[ L\{Y | p_m \} = n[\log(10) + \frac{1}{2}\log(2 \pi) ] + \sum_{i=1}^n \frac{(Y_i - m)^2}{200}\]</span></p>
+<pre class="r"><code>m&lt;- seq(160, 200, by= 0.25) # mean height
+
+data_stor&lt;-data.frame(m = m, ll = NA)
+
+for(i in 1:length(m)){
+  
+  ll &lt;- 10*(log(10) + 1/2*log(2*pi)) + sum((height_data$height - m[i])^2)/200
+  
+  data_stor$ll[i] &lt;- ll
+  }</code></pre>
+<pre class="r"><code>ggplot() +
+  geom_line(data =data_stor, aes(x = m, y = ll), size = 1, colour = &quot;blue&quot; ) +
+  scale_x_continuous(breaks = seq(160, 200, by = 5)) +
+  theme_bw()</code></pre>
+<p><img src="/post/2017-04-28-Likelihood_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>And to find that value:</p>
+<pre class="r"><code>data_stor[which(data_stor$ll == min(data_stor$ll)),]</code></pre>
+<pre><code>##      m       ll
+## 61 175 35.24024</code></pre>
+</div>
+</div>
+</div>
+
+    
+    
+
+    
+
+        <h4 class="page-header">Related</h4>
+
+         <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/post/2017-04-14-sumofsquares/">Ecological Detective -- The Confrontation:  Sum of squares</a></h4>
+    <h5>April 14, 2017</h5>
+    
+    <a href="/tags/ecodetective"><kbd class="item-tag">EcoDetective</kbd></a>
+    
+
+</div>
+  <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/post/2017-03-30-incidentalcatch/">Incidental catch in fisheries:  seabirds in the New Zealand squid trawl fisheries</a></h4>
+    <h5>March 30, 2017</h5>
+    
+    <a href="/tags/ecodetective"><kbd class="item-tag">EcoDetective</kbd></a>
+    
+
+</div>
+  <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/post/2017-03-10-ecologicaldetective5/">Ecological Detective -- Probability and probability models, Part 1</a></h4>
+    <h5>March 10, 2017</h5>
+    
+    <a href="/tags/ecodetective"><kbd class="item-tag">EcoDetective</kbd></a>
+    
+
+</div>
+ 
+
+    
+
+    
+
+        <h4 class="page-header">Comments</h4>
+
+        <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "snrrgroup" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    
+
+</main>
+
+        <footer>
+
+            <p class="copyright text-muted">&copy; All rights reserved. Powered by <a href="https://gohugo.io">Hugo</a> and <a href="https://github.com/calintat/minimal">Minimal</a></p>
+
+        </footer>
+       
+    </body>
+
+</html>
+

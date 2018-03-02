@@ -1,0 +1,162 @@
+---
+title: "Joining data"
+date: 2016-09-29
+categories: ["R"]
+tags: ["Data wrangling", "Joining data"]
+---
+
+
+
+<p>Very often when we are working with datasets, particularly databases, we often want to combine multiple datasets. Traditionally, in R, this was done with the function <code>merge()</code>. Since the development of the <code>tidyverse</code> there has been improvements on the types and speed of joins. The joins available in the <code>dplyr()</code> package follow those in SQL type joins.</p>
+<p>We will explore these types of joins using datasets from the our <a href="https://github.com/chrischizinski/OFWIM_2016/tree/master/data">github repository</a></p>
+<pre class="r"><code>library(RCurl)</code></pre>
+<pre><code>## Loading required package: bitops</code></pre>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## ── Attaching packages ──────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
+<pre><code>## ✔ ggplot2 2.2.1     ✔ purrr   0.2.4
+## ✔ tibble  1.4.2     ✔ dplyr   0.7.4
+## ✔ tidyr   0.8.0     ✔ stringr 1.3.0
+## ✔ readr   1.1.1     ✔ forcats 0.3.0</code></pre>
+<pre><code>## ── Conflicts ─────────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ readr::col_factor() masks scales::col_factor()
+## ✖ tidyr::complete()   masks RCurl::complete()
+## ✖ purrr::discard()    masks scales::discard()
+## ✖ dplyr::filter()     masks stats::filter()
+## ✖ dplyr::lag()        masks stats::lag()</code></pre>
+<pre class="r"><code>publishers &lt;- read_csv(getURL(&quot;https://raw.githubusercontent.com/chrischizinski/OFWIM_2016/master/data/publisher.csv&quot;))
+
+publishers</code></pre>
+<pre><code>## # A tibble: 3 x 2
+##   publisher yr_founded
+##   &lt;chr&gt;          &lt;int&gt;
+## 1 DC              1934
+## 2 Marvel          1939
+## 3 Image           1992</code></pre>
+<pre class="r"><code>superheroes &lt;- read_csv(getURL(&quot;https://raw.githubusercontent.com/chrischizinski/OFWIM_2016/master/data/superheroes.csv&quot;))
+
+superheroes</code></pre>
+<pre><code>## # A tibble: 7 x 4
+##   name     alignment gender publisher        
+##   &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;            
+## 1 Magneto  bad       male   Marvel           
+## 2 Storm    good      female Marvel           
+## 3 Mystique bad       female Marvel           
+## 4 Batman   good      male   DC               
+## 5 Joker    bad       male   DC               
+## 6 Catwoman bad       female DC               
+## 7 Hellboy  good      male   Dark Horse Comics</code></pre>
+<div id="inner-join" class="section level2">
+<h2>Inner join</h2>
+<p><strong>Mutating join</strong></p>
+<blockquote>
+<p>inner_join(x, y): Return all rows from x where there are matching values in y, and all columns from x and y. If there are multiple matches between x and y, all combination of the matches are returned.</p>
+</blockquote>
+<p>An inner join of <code>superheroes</code> with <code>publisher</code> would return a dataset of <code>superheros</code> that match those in <code>publisher</code></p>
+<pre class="r"><code>super_ij &lt;- inner_join(superheroes, publishers, by = &quot;publisher&quot;)
+super_ij</code></pre>
+<pre><code>## # A tibble: 6 x 5
+##   name     alignment gender publisher yr_founded
+##   &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;          &lt;int&gt;
+## 1 Magneto  bad       male   Marvel          1939
+## 2 Storm    good      female Marvel          1939
+## 3 Mystique bad       female Marvel          1939
+## 4 Batman   good      male   DC              1934
+## 5 Joker    bad       male   DC              1934
+## 6 Catwoman bad       female DC              1934</code></pre>
+</div>
+<div id="semi-join" class="section level2">
+<h2>Semi join</h2>
+<p><strong>Filtering join</strong></p>
+<blockquote>
+<p>semi_join(x, y): Return all rows from x where there are matching values in y, keeping just columns from x.</p>
+</blockquote>
+<p>A semi join differs from an inner join because an inner join will return one row of x for each matching row of y, where a semi join will never duplicate rows of x.</p>
+<pre class="r"><code>super_sj &lt;- semi_join(superheroes, publishers, by = &quot;publisher&quot;)
+super_sj</code></pre>
+<pre><code>## # A tibble: 6 x 4
+##   name     alignment gender publisher
+##   &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;    
+## 1 Magneto  bad       male   Marvel   
+## 2 Storm    good      female Marvel   
+## 3 Mystique bad       female Marvel   
+## 4 Batman   good      male   DC       
+## 5 Joker    bad       male   DC       
+## 6 Catwoman bad       female DC</code></pre>
+<p>Notice that we loose ‘Hellboy’ because publisher was ‘Dark Horse Comics’ that did not exist in publisher. This differs from the inner join because it only retains the columns in superheroes, which is why it is a filtering join.</p>
+</div>
+<div id="left-join" class="section level2">
+<h2>Left join</h2>
+<p><strong>Mutating join</strong></p>
+<blockquote>
+<p>left_join(x, y): Return all rows from x, and all columns from x and y. If there are multiple matches between x and y, all combination of the matches are returned.</p>
+</blockquote>
+<p>The left join keeps all the data from the first specified dataset (x) and the columns from the second dataset (y). Where there are no matches an <code>NA</code> will be returned.</p>
+<pre class="r"><code>super_lj &lt;- left_join(superheroes, publishers, by = &quot;publisher&quot;)
+super_lj</code></pre>
+<pre><code>## # A tibble: 7 x 5
+##   name     alignment gender publisher         yr_founded
+##   &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;                  &lt;int&gt;
+## 1 Magneto  bad       male   Marvel                  1939
+## 2 Storm    good      female Marvel                  1939
+## 3 Mystique bad       female Marvel                  1939
+## 4 Batman   good      male   DC                      1934
+## 5 Joker    bad       male   DC                      1934
+## 6 Catwoman bad       female DC                      1934
+## 7 Hellboy  good      male   Dark Horse Comics         NA</code></pre>
+<p>Notice that we loose ‘Hellboy’ because publisher was ‘Dark Horse Comics’ that did not exist in publisher. This differs from the inner join because it only retains the columns in superheroes, which is why it is a filtering join.</p>
+</div>
+<div id="right-join" class="section level2">
+<h2>Right join</h2>
+<p><strong>Mutating join</strong></p>
+<blockquote>
+<p>right_join(x, y): Returns all observations in y. It’s equivalent to left_join(y, x), but the columns will be ordered differently.</p>
+</blockquote>
+<p>The right join keeps all the data from the first specified dataset (x) and the columns from the second dataset (y). Where there are no matches an <code>NA</code> will be returned.</p>
+<pre class="r"><code>super_rj &lt;- right_join(superheroes, publishers, by = &quot;publisher&quot;)
+super_rj</code></pre>
+<pre><code>## # A tibble: 7 x 5
+##   name     alignment gender publisher yr_founded
+##   &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;          &lt;int&gt;
+## 1 Batman   good      male   DC              1934
+## 2 Joker    bad       male   DC              1934
+## 3 Catwoman bad       female DC              1934
+## 4 Magneto  bad       male   Marvel          1939
+## 5 Storm    good      female Marvel          1939
+## 6 Mystique bad       female Marvel          1939
+## 7 &lt;NA&gt;     &lt;NA&gt;      &lt;NA&gt;   Image           1992</code></pre>
+</div>
+<div id="anti-join" class="section level2">
+<h2>Anti join</h2>
+<p><strong>Filtering join</strong></p>
+<blockquote>
+<p>anti_join(x, y): Returns all rows in x that do not have a match in y.</p>
+</blockquote>
+<p>Returns only the rows that do not have matches.</p>
+<pre class="r"><code>super_aj &lt;- anti_join(superheroes, publishers, by = &quot;publisher&quot;)
+super_aj</code></pre>
+<pre><code>## # A tibble: 1 x 4
+##   name    alignment gender publisher        
+##   &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;            
+## 1 Hellboy good      male   Dark Horse Comics</code></pre>
+</div>
+<div id="full-join" class="section level2">
+<h2>Full join</h2>
+<p><strong>Mutating join</strong></p>
+<blockquote>
+<p>full_join(x, y): Returns all observations in x and y.</p>
+</blockquote>
+<p>The full join keeps all the data from the first specified dataset (x) and the second dataset (y). Where there are no matches an <code>NA</code> will be returned.</p>
+<pre class="r"><code>super_fj &lt;- full_join(superheroes, publishers, by = &quot;publisher&quot;)
+super_fj</code></pre>
+<pre><code>## # A tibble: 8 x 5
+##   name     alignment gender publisher         yr_founded
+##   &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;                  &lt;int&gt;
+## 1 Magneto  bad       male   Marvel                  1939
+## 2 Storm    good      female Marvel                  1939
+## 3 Mystique bad       female Marvel                  1939
+## 4 Batman   good      male   DC                      1934
+## 5 Joker    bad       male   DC                      1934
+## 6 Catwoman bad       female DC                      1934
+## 7 Hellboy  good      male   Dark Horse Comics         NA
+## 8 &lt;NA&gt;     &lt;NA&gt;      &lt;NA&gt;   Image                   1992</code></pre>
+</div>

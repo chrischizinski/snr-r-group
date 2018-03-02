@@ -1,0 +1,986 @@
+---
+title: 'Applied Multivariate: Identifying differences between groups'
+date: '2017-11-17'
+categories: ["R"]
+tags: ["Applied Multivariate"]
+---
+
+
+
+<pre class="r"><code>library(vegan) 
+library(gridExtra)
+library(tidyverse)</code></pre>
+<div id="linear-discriminant-analysis" class="section level2">
+<h2>Linear discriminant analysis</h2>
+<ul>
+<li><p>Often we have groups that we have defined <em>a priori</em> before doing an analysis and we seek to understand what makes those groups different</p></li>
+<li><p>Linear discrimination analysis (LDA), similar to multinomial logistic regression, attempts to find linear combinations of variables that best separate groups when predicting two or more dependent variables, using continuous independent variables.</p></li>
+</ul>
+<div id="load-the-data" class="section level3">
+<h3>Load the data</h3>
+<p>We will use the data set <code>morph_data.csv</code> on <a href="">github</a>. The data consisted of 8 measurements in all 5 larval stages and the adults of the 6 species of the waterstrider genus Limnoporus (Insecta: Heteroptera: Gerridae). Data was originally sourced from <a href="http://life.bio.sunysb.edu/morph/data/datasets.html">morphometry datasets</a>.</p>
+<p>The variables are: Species, stage (1-5 for larvae, 6 for adults), sex (m male, f female, u undetermined), antseg1 - antseg4 (lengths of 1st to 4th antennal segments), midfem, midtib, hindfem, hindtib (lenghts of middle and hind femora and tibiae). The values are raw measurements in millimeters.</p>
+<pre class="r"><code>morph_data &lt;-read_csv(&quot;https://raw.githubusercontent.com/chrischizinski/SNR_R_Group/master/data/morph_data.csv&quot;)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   Species = col_character(),
+##   stage = col_integer(),
+##   sex = col_character(),
+##   antseg1 = col_double(),
+##   antseg2 = col_double(),
+##   antseg3 = col_double(),
+##   antseg4 = col_double(),
+##   midfem = col_double(),
+##   midtib = col_double(),
+##   hindfem = col_double(),
+##   hindtib = col_double()
+## )</code></pre>
+<pre class="r"><code>glimpse(morph_data)</code></pre>
+<pre><code>## Observations: 541
+## Variables: 11
+## $ Species &lt;chr&gt; &quot;canali&quot;, &quot;canali&quot;, &quot;canali&quot;, &quot;canali&quot;, &quot;canali&quot;, &quot;can...
+## $ stage   &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, ...
+## $ sex     &lt;chr&gt; &quot;u&quot;, &quot;u&quot;, &quot;u&quot;, &quot;u&quot;, &quot;u&quot;, &quot;u&quot;, &quot;u&quot;, &quot;u&quot;, &quot;u&quot;, &quot;u&quot;, &quot;u&quot;,...
+## $ antseg1 &lt;dbl&gt; 0.17, 0.20, 0.18, 0.16, 0.13, 0.18, 0.18, 0.18, 0.20, ...
+## $ antseg2 &lt;dbl&gt; 0.15, 0.14, 0.14, 0.13, 0.13, 0.16, 0.12, 0.15, 0.15, ...
+## $ antseg3 &lt;dbl&gt; 0.19, 0.18, 0.17, 0.14, 0.16, 0.18, 0.16, 0.16, 0.19, ...
+## $ antseg4 &lt;dbl&gt; 0.72, 0.74, 0.62, 0.55, 0.56, 0.52, 0.72, 0.60, 0.67, ...
+## $ midfem  &lt;dbl&gt; 0.70, 0.76, 0.76, 0.70, 0.72, 0.76, 0.74, 0.76, 0.78, ...
+## $ midtib  &lt;dbl&gt; 0.80, 0.92, 0.94, 0.92, 0.92, 0.97, 0.91, 0.92, 0.95, ...
+## $ hindfem &lt;dbl&gt; 0.43, 0.68, 0.79, 0.74, 0.68, 0.68, 0.70, 0.70, 0.78, ...
+## $ hindtib &lt;dbl&gt; 0.72, 0.42, 0.40, 0.42, 0.38, 0.45, 0.42, 0.43, 0.44, ...</code></pre>
+</div>
+<div id="manipulate-the-data" class="section level3">
+<h3>Manipulate the data</h3>
+<p>For the purpose of this excercise lets limit the data to one species and only the measurements of the antennae.</p>
+<pre class="r"><code>morph_data %&gt;% 
+  select(Species:antseg4, -sex) %&gt;% 
+  filter(Species == &quot;canali&quot;) %&gt;% 
+  mutate_at(vars(antseg1:antseg4), scale)-&gt; canal_data
+
+head(canal_data)</code></pre>
+<pre><code>## # A tibble: 6 x 6
+##   Species stage antseg1 antseg2 antseg3 antseg4
+##   &lt;chr&gt;   &lt;int&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+## 1 canali      1   -1.31   -1.33   -1.38   -1.27
+## 2 canali      1   -1.26   -1.36   -1.42   -1.22
+## 3 canali      1   -1.30   -1.36   -1.45   -1.51
+## 4 canali      1   -1.33   -1.39   -1.55   -1.68
+## 5 canali      1   -1.39   -1.39   -1.48   -1.65
+## 6 canali      1   -1.30   -1.31   -1.42   -1.75</code></pre>
+</div>
+<div id="conduct-the-linear-discriminant-analysis-using-masslda" class="section level3">
+<h3>Conduct the linear discriminant analysis using <code>MASS::lda()</code></h3>
+<pre class="r"><code>canal_lda&lt;-MASS::lda(stage~antseg1 + antseg2 + antseg3 + antseg4, data = canal_data)
+
+canal_lda</code></pre>
+<pre><code>## Call:
+## lda(stage ~ antseg1 + antseg2 + antseg3 + antseg4, data = canal_data)
+## 
+## Prior probabilities of groups:
+##         1         2         3         4         5         6 
+## 0.1111111 0.1111111 0.1111111 0.2222222 0.2222222 0.2222222 
+## 
+## Group means:
+##      antseg1    antseg2    antseg3    antseg4
+## 1 -1.3073501 -1.3594034 -1.4443907 -1.4868663
+## 2 -1.1332171 -1.1490818 -1.1510214 -1.2348777
+## 3 -0.8167818 -0.8640406 -0.8315750 -0.9156920
+## 4 -0.3028084 -0.2399942 -0.1731241 -0.0805297
+## 5  0.4283631  0.5487119  0.6043044  0.6886356
+## 6  1.5031198  1.3775452  1.2823132  1.2106121
+## 
+## Coefficients of linear discriminants:
+##                LD1        LD2        LD3       LD4
+## antseg1 14.5047455 -7.2205800  3.8168030  2.764369
+## antseg2 -3.8449898  1.2049129 -8.6374675 -2.428811
+## antseg3 -1.7878986  0.9023135  4.3236873 -3.984543
+## antseg4 -0.2461576  5.5171016  0.5203163  3.569601
+## 
+## Proportion of trace:
+##    LD1    LD2    LD3    LD4 
+## 0.9719 0.0276 0.0003 0.0002</code></pre>
+<pre class="r"><code>names(canal_lda)</code></pre>
+<pre><code>##  [1] &quot;prior&quot;   &quot;counts&quot;  &quot;means&quot;   &quot;scaling&quot; &quot;lev&quot;     &quot;svd&quot;     &quot;N&quot;      
+##  [8] &quot;call&quot;    &quot;terms&quot;   &quot;xlevels&quot;</code></pre>
+</div>
+<div id="explanation-of-the-output" class="section level3">
+<h3>Explanation of the output</h3>
+<div id="prior" class="section level4">
+<h4>Prior</h4>
+<p>From the raw data, the break down in proportions of the number of individuals in each group</p>
+<pre class="r"><code>canal_lda$prior</code></pre>
+<pre><code>##         1         2         3         4         5         6 
+## 0.1111111 0.1111111 0.1111111 0.2222222 0.2222222 0.2222222</code></pre>
+</div>
+<div id="group-means" class="section level4">
+<h4>Group means</h4>
+<p>The mean value for each of the variables for each group</p>
+<pre class="r"><code>canal_lda$means</code></pre>
+<pre><code>##      antseg1    antseg2    antseg3    antseg4
+## 1 -1.3073501 -1.3594034 -1.4443907 -1.4868663
+## 2 -1.1332171 -1.1490818 -1.1510214 -1.2348777
+## 3 -0.8167818 -0.8640406 -0.8315750 -0.9156920
+## 4 -0.3028084 -0.2399942 -0.1731241 -0.0805297
+## 5  0.4283631  0.5487119  0.6043044  0.6886356
+## 6  1.5031198  1.3775452  1.2823132  1.2106121</code></pre>
+</div>
+<div id="coefficients" class="section level4">
+<h4>Coefficients</h4>
+<p>These are the coffeicients to describe the linear discrimination. For example: LD1 = 14.5047455 x Group1 + -3.8449898 x Group2 + -1.7878986 x Group3 + …</p>
+<pre class="r"><code>canal_lda$scaling</code></pre>
+<pre><code>##                LD1        LD2        LD3       LD4
+## antseg1 14.5047455 -7.2205800  3.8168030  2.764369
+## antseg2 -3.8449898  1.2049129 -8.6374675 -2.428811
+## antseg3 -1.7878986  0.9023135  4.3236873 -3.984543
+## antseg4 -0.2461576  5.5171016  0.5203163  3.569601</code></pre>
+<p>You can also standardize the coefficients (loadings), which provides the relative strength of each factor on linear discriminant analysis</p>
+<pre class="r"><code>loadings &lt;-canal_lda$scaling
+col.ss &lt;- colSums(loadings^2)
+sweep(loadings,2,sqrt(col.ss),&quot;/&quot;)</code></pre>
+<pre><code>##                 LD1         LD2         LD3        LD4
+## antseg1  0.95969829 -0.78391461  0.36703621  0.4257438
+## antseg2 -0.25440157  0.13081342 -0.83060701 -0.3740641
+## antseg3 -0.11829530  0.09796121  0.41577985 -0.6136643
+## antseg4 -0.01628688  0.59897356  0.05003531  0.5497585</code></pre>
+</div>
+</div>
+<div id="variation-expained" class="section level3">
+<h3>Variation expained</h3>
+<p>The amount of variation explained by the each of the linear discriminant axis</p>
+<pre class="r"><code>prop = canal_lda$svd^2/sum(canal_lda$svd^2)
+prop</code></pre>
+<pre><code>## [1] 0.9719389713 0.0275790703 0.0003069345 0.0001750239</code></pre>
+</div>
+<div id="graphing-the-results" class="section level3">
+<h3>Graphing the results</h3>
+<pre class="r"><code># extracting the data
+lda_pred &lt;- predict(canal_lda)
+lda_scores&lt;-data.frame(stage = lda_pred$class, lda_pred$x)
+
+#developing hulls for each stage group
+
+hull1&lt;- lda_scores[lda_scores$stage ==1,][chull(lda_scores[lda_scores$stage ==1,c(&quot;LD1&quot;, &quot;LD2&quot;)]),]
+hull2&lt;- lda_scores[lda_scores$stage ==2,][chull(lda_scores[lda_scores$stage ==2,c(&quot;LD1&quot;, &quot;LD2&quot;)]),]
+hull3&lt;- lda_scores[lda_scores$stage ==3,][chull(lda_scores[lda_scores$stage ==3,c(&quot;LD1&quot;, &quot;LD2&quot;)]),]
+hull4&lt;- lda_scores[lda_scores$stage ==4,][chull(lda_scores[lda_scores$stage ==4,c(&quot;LD1&quot;, &quot;LD2&quot;)]),]
+hull5&lt;- lda_scores[lda_scores$stage ==5,][chull(lda_scores[lda_scores$stage ==5,c(&quot;LD1&quot;, &quot;LD2&quot;)]),]
+hull6&lt;- lda_scores[lda_scores$stage ==6,][chull(lda_scores[lda_scores$stage ==6,c(&quot;LD1&quot;, &quot;LD2&quot;)]),]
+
+all_hulls &lt;- rbind(hull1, hull2, hull3, hull4, hull5, hull6)
+
+#plot using gglot2
+
+ggplot(data = lda_scores) + 
+  geom_point(aes(x = LD1, y = LD2, color = stage), size = 2) +
+  geom_polygon(data = all_hulls,aes(x = LD1, y = LD2, color = stage, fill = stage), alpha = 0.25) +
+  coord_equal() + 
+  theme_classic()</code></pre>
+<p><img src="/post/2017-11-17-Differencesbetweengroups_files/figure-html/unnamed-chunk-10-1.png" width="576" /></p>
+</div>
+<div id="assessing-the-accuracy-of-the-predicitions" class="section level3">
+<h3>Assessing the accuracy of the predicitions</h3>
+<pre class="r"><code>ct &lt;- table(canal_data$stage, lda_pred$class)
+ct</code></pre>
+<pre><code>##    
+##      1  2  3  4  5  6
+##   1  9  1  0  0  0  0
+##   2  0 10  0  0  0  0
+##   3  0  0 10  0  0  0
+##   4  0  0  0 20  0  0
+##   5  0  0  0  0 20  0
+##   6  0  0  0  0  0 20</code></pre>
+<pre class="r"><code># percent correct for each stage
+diag(prop.table(ct, 1))</code></pre>
+<pre><code>##   1   2   3   4   5   6 
+## 0.9 1.0 1.0 1.0 1.0 1.0</code></pre>
+<pre class="r"><code># total percent correct
+sum(diag(prop.table(ct)))</code></pre>
+<pre><code>## [1] 0.9888889</code></pre>
+</div>
+</div>
+<div id="manova-and-mancova" class="section level2">
+<h2>MANOVA and MANCOVA</h2>
+<p>Two common multivariate regression models are the multivariate analysis of variance (MANOVA; an extension of the univariate ANOVA) when all predictor variables are categorical, and the multivariate analysis of covariance (MANCOVA; extension of univariate ANCOVA) when predictor variables are categorical and continuous.</p>
+<div id="load-the-data-1" class="section level3">
+<h3>Load the data</h3>
+<pre class="r"><code>bryc_data &lt;- read.table(&quot;http://ecology.msu.montana.edu/labdsv/R/labs/lab1/bryceveg.R&quot;)
+
+
+bryc_data %&gt;% rownames_to_column(&quot;site&quot;) -&gt; bryc_data
+
+bryc_site_data &lt;- read.table(&quot;http://ecology.msu.montana.edu/labdsv/R/labs/lab2/brycesite.R&quot;)
+
+bryc_site_data %&gt;% 
+  rownames_to_column(&quot;site&quot;) %&gt;% 
+  full_join(bryc_data, by = &quot;site&quot;) -&gt; bryc_site_data
+
+glimpse(bryc_site_data)</code></pre>
+<pre><code>## Observations: 160
+## Variables: 182
+## $ site     &lt;chr&gt; &quot;bcnp__1&quot;, &quot;bcnp__2&quot;, &quot;bcnp__3&quot;, &quot;bcnp__4&quot;, &quot;bcnp__5&quot;...
+## $ plotcode &lt;int&gt; 50001, 50002, 50003, 50004, 50005, 50006, 50007, 5000...
+## $ annrad   &lt;int&gt; 241, 222, 231, 254, 232, 216, 288, 279, 187, 279, 271...
+## $ asp      &lt;int&gt; 30, 50, 50, 360, 300, 330, 150, 220, 360, 125, 125, 2...
+## $ av       &lt;dbl&gt; 1.00, 0.96, 0.96, 0.93, 0.48, 0.76, 0.25, 0.00, 0.93,...
+## $ depth    &lt;chr&gt; &quot;deep&quot;, &quot;shallow&quot;, &quot;shallow&quot;, &quot;shallow&quot;, &quot;shallow&quot;, &quot;...
+## $ east     &lt;dbl&gt; 388220.9, 388477.2, 388384.0, 388307.5, 389026.3, 389...
+## $ elev     &lt;int&gt; 8720, 8360, 8560, 8660, 8480, 8560, 8560, 8680, 8240,...
+## $ grorad   &lt;int&gt; 162, 156, 159, 166, 159, 155, 169, 169, 146, 167, 168...
+## $ north    &lt;int&gt; 4144784, 4147573, 4147347, 4146971, 4146846, 4146853,...
+## $ pos      &lt;chr&gt; &quot;ridge&quot;, &quot;mid_slope&quot;, &quot;mid_slope&quot;, &quot;ridge&quot;, &quot;up_slope...
+## $ quad     &lt;chr&gt; &quot;pc&quot;, &quot;pc&quot;, &quot;pc&quot;, &quot;pc&quot;, &quot;pc&quot;, &quot;pc&quot;, &quot;pc&quot;, &quot;pc&quot;, &quot;bp&quot;,...
+## $ slope    &lt;int&gt; 9, 2, 2, 0, 2, 2, 3, 2, 3, 3, 2, 6, 3, 4, 3, 4, 2, 1,...
+## $ junost   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ ameuta   &lt;dbl&gt; 0.0, 0.5, 0.0, 0.5, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0...
+## $ arcpat   &lt;dbl&gt; 1.0, 0.5, 1.0, 1.0, 4.0, 1.0, 4.0, 2.0, 0.0, 5.0, 2.0...
+## $ arttri   &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0...
+## $ atrcan   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ berfre   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ ceamar   &lt;dbl&gt; 0.5, 0.0, 0.5, 0.5, 0.5, 1.0, 1.0, 0.0, 0.0, 0.5, 0.5...
+## $ cerled   &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5...
+## $ cermon   &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0...
+## $ chrdep   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ chrnau   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ chrpar   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ chrvis   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ eurlan   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ juncom   &lt;dbl&gt; 0.0, 2.0, 1.0, 0.0, 1.0, 0.5, 0.0, 0.5, 0.5, 0.0, 0.0...
+## $ pacmyr   &lt;dbl&gt; 0.0, 0.5, 0.5, 0.0, 0.5, 0.5, 0.5, 0.5, 0.5, 0.0, 0.5...
+## $ pruvir   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ purtri   &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.5, 0.5, 0.5, 0.0, 0.0, 1.0, 1.0...
+## $ quegam   &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0...
+## $ rhutri   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ ribcer   &lt;dbl&gt; 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5...
+## $ roswoo   &lt;dbl&gt; 0.0, 0.5, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0...
+## $ samcoe   &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0...
+## $ shearg   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ sherot   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ symore   &lt;dbl&gt; 1.0, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5...
+## $ arcuva   &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ artarb   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ artfri   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ artpyg   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ atrcon   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ berrep   &lt;dbl&gt; 1.0, 0.0, 0.5, 1.0, 0.5, 1.0, 0.5, 0.0, 1.0, 0.5, 1.0...
+## $ ericor   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ gutsar   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ tetcan   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ agrcri   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ agrdas   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ agrscr   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ agrsmi   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ bougra   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ broano   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ brocil   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ broine   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ carrss   &lt;dbl&gt; 0.5, 0.5, 0.5, 0.5, 1.0, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5...
+## $ elysal   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ fesovi   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ hiljam   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ junbal   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ koenit   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ muhmon   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ muhric   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ oryhym   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ orymic   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ phlpra   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ poacom   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ poafen   &lt;dbl&gt; 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0...
+## $ poanev   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ poapra   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ sithys   &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0...
+## $ sticom   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ stilet   &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5...
+## $ stipin   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ achmil   &lt;dbl&gt; 0.0, 0.5, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5...
+## $ agogla   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ anemul   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ antros   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ antros.1 &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5...
+## $ apoand   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ arahol   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ arapen   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ arefen   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ artcar   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ artlud   &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0...
+## $ astagr   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ astchi   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ astcon   &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0...
+## $ asthum   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ astken   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ astmeg   &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0...
+## $ astmis   &lt;dbl&gt; 0.5, 0.0, 0.0, 0.0, 0.5, 0.0, 0.5, 0.5, 0.5, 0.0, 0.0...
+## $ astten   &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0...
+## $ balsag   &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0...
+## $ calnut   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ caschr   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ caslin   &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0...
+## $ chadou   &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5...
+## $ cirneo   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ compal   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ corkin   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ creint   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ crycon   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ cympur   &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0...
+## $ dessop   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ drasub   &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0...
+## $ echtri   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ eriala   &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0...
+## $ erican   &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5...
+## $ erieat   &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5...
+## $ erifla   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ eripan   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ eripum   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ erirac   &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0...
+## $ erisub   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ eriumb   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ eupfen   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ euplur   &lt;dbl&gt; 0.0, 0.5, 0.0, 0.0, 0.5, 0.0, 0.5, 0.5, 0.0, 0.5, 0.0...
+## $ euprob   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ fraves   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ genaff   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ gerfre   &lt;dbl&gt; 0.5, 0.5, 0.5, 0.0, 0.0, 0.5, 0.0, 0.0, 0.5, 0.0, 0.0...
+## $ gerric   &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0...
+## $ gilcon   &lt;dbl&gt; 0.0, 0.5, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0...
+## $ haparm   &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0...
+## $ heddru   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ hymaca   &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0...
+## $ hymfil   &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0...
+## $ hymric   &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5...
+## $ ipoagg   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ irimis   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ ivesab   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ leppun   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ lesint   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ leueri   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ ligpor   &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ linkin   &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0...
+## $ linlew   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ litinc   &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0...
+## $ litmul   &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.5...
+## $ lotuta   &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0...
+## $ lupkin   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ lupser   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ lyggra   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ lygspi   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ macgri   &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0...
+## $ molpar   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ oenbra   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ oencae   &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0...
+## $ oencor   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ oenfla   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ oenlav   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ opueri   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ orofas   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ pedcan   &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.5, 0.0, 0.0, 0.5, 0.0...
+## $ pedsim   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ pencae   &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.5...
+## $ pencom   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ penlei   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ penuta   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ phllon   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ phycha   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ potcon   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ potcri   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ potgra   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ pteand   &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0...
+## $ pyrvir   &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.0...
+## $ salibe   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ sclwhi   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ senmul   &lt;dbl&gt; 0.0, 0.5, 0.5, 0.5, 0.5, 0.0, 0.5, 0.5, 0.0, 0.5, 0.5...
+## $ sphcoc   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ stapin   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ steten   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ strcor   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ swerad   &lt;dbl&gt; 0.0, 0.5, 0.0, 0.0, 0.5, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0...
+## $ taroff   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ thafen   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ towmin   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ tradub   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ valacu   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ vicame   &lt;dbl&gt; 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0...</code></pre>
+</div>
+<div id="using-manova-and-mancova" class="section level3">
+<h3>Using MANOVA and MANCOVA</h3>
+</div>
+<div id="manova" class="section level3">
+<h3>MANOVA</h3>
+<p>-Independent variable is a categorical variable - Interpret like ANOVA - degfault test statistic is “Pillai” but “Wilks”, “Hotelling-Lawley”, “Roy” are also available. See <code>?summary.manova</code>. Wilks’ statistic is most popular in the literature, but the default Pillai–Bartlett statistic is recommended by <a href="https://www.crcpress.com/Multivariate-Analysis-of-Variance-and-Repeated-Measures-A-Practical-Approach/Hand-Taylor/p/book/9780412258008">Hand and Taylor (1987)</a></p>
+<p>As a <strong>reminder</strong>:</p>
+<p>-R provides Type I sequential SS, not the default Type III marginal SS reported by SAS and SPSS. In a nonorthogonal design with more than one term on the right hand side of the equation order will matter (i.e., A+B and B+A will produce different results)! - Type I sequential SS: tests the main effect of factor A, followed by the main effect of factor B after the main effect of A, followed by the interaction effect AB after the main effects. - Type II: tests for each main effect after the other main effect. No significant interaction is assumed (in other words, you should test for interaction first (SS(AB | A, B)) and only if AB is not significant, continue with the analysis for main effects). - Type III: tests for the presence of a main effect after the other main effect and interaction. This approach is therefore valid in the presence of significant interactions. If the interactions are not significant, type II gives a more powerful test.</p>
+<ul>
+<li><p>NOTE: when data is balanced, the factors are orthogonal, and types I, II and III all give the same results.</p></li>
+<li><p>If you wish to find ways to produce Type II or III SS then you will need to find a package to help. For example, <code>regr0</code> has a <code>drop1()</code> function for <code>mlm</code> models. Install via <code>install.packages(&quot;regr0&quot;, repos=&quot;http://R-Forge.R-project.org&quot;)</code></p></li>
+</ul>
+<pre class="r"><code>man_out &lt;- manova(cbind(junost,ameuta,arcpat,arttri,atrcan) ~ pos,data = bryc_site_data)
+summary(man_out)</code></pre>
+<pre><code>##            Df  Pillai approx F num Df den Df  Pr(&gt;F)  
+## pos         4 0.18304    1.477     20    616 0.08253 .
+## Residuals 155                                         
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+<div id="mancova" class="section level3">
+<h3>MANCOVA</h3>
+<ul>
+<li>When you have a categorical and continuous independent variables</li>
+</ul>
+<pre class="r"><code>man_out &lt;- manova(cbind(arcpat, artarb, carrss, purtri,sticom) ~ pos + elev, data = bryc_site_data)
+summary(man_out)</code></pre>
+<pre><code>##            Df Pillai approx F num Df den Df    Pr(&gt;F)    
+## pos         4 0.2700   2.2150     20    612 0.0018133 ** 
+## elev        1 0.1438   5.0387      5    150 0.0002688 ***
+## Residuals 154                                            
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+</div>
+<div id="anosim" class="section level2">
+<h2>ANOSIM</h2>
+<p>Analysis of similarities (ANOSIM) provides a way to test statistically whether there is a significant difference between two or more groups of sampling units.</p>
+<p>The R-statistic in ANOSIM is a ratio between within-group and between-group dissimilarities</p>
+<pre class="r"><code># create the y variable 
+y&lt;-cbind(bryc_site_data$arcpat,bryc_site_data$artarb,bryc_site_data$carrss,bryc_site_data$purtri,bryc_site_data$sticom)
+
+# convert to an x variable
+x &lt;- as.factor(bryc_site_data$pos)
+
+# analysis
+anosim_out &lt;- anosim(y, x, distance = &quot;euclidean&quot;, permutations = 999)
+summary(anosim_out)</code></pre>
+<pre><code>## 
+## Call:
+## anosim(dat = y, grouping = x, permutations = 999, distance = &quot;euclidean&quot;) 
+## Dissimilarity: euclidean 
+## 
+## ANOSIM statistic R: 0.0162 
+##       Significance: 0.208 
+## 
+## Permutation: free
+## Number of permutations: 999
+## 
+## Upper quantiles of permutations (null model):
+##    90%    95%  97.5%    99% 
+## 0.0271 0.0361 0.0454 0.0550 
+## 
+## Dissimilarity ranks between and within classes:
+##            0%     25%     50%       75%    100%    N
+## Between   198 2978.50 6359.50  9536.000 12720.0 9823
+## bottom    198 4155.00 6932.50  9591.125 12485.0  190
+## low_slope 198 4070.00 6876.75 10634.500 12716.5  528
+## mid_slope 198 3220.75 7323.50 10180.000 12704.0 1431
+## ridge     198 2978.50 6196.50  8470.000 11827.5  153
+## up_slope  198 1628.50 3863.50  6932.500 11978.0  595</code></pre>
+<pre class="r"><code>perms&lt;-permustats(anosim_out)
+summary(perms)</code></pre>
+<pre><code>## 
+##   statistic     SES    mean lower  median   upper Pr(perm)
+## R    0.0162  0.7823  0.0000       -0.0023  0.0361    0.208
+## 
+## (Interval (Upper - Lower) = 0.95)</code></pre>
+<pre class="r"><code>densityplot(perms)</code></pre>
+<p><img src="/post/2017-11-17-Differencesbetweengroups_files/figure-html/unnamed-chunk-15-1.png" width="576" /></p>
+<pre class="r"><code>anosim_out$perm</code></pre>
+<pre><code>##             TRUE             TRUE             TRUE             TRUE 
+## -0.0183975383972  0.0160362053497  0.0014791319647  0.0012987560174 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0239338114098 -0.0088533912523 -0.0048588704924 -0.0088176534112 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0081987597458 -0.0122735061609  0.0049265861461 -0.0137157055091 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0190984850213  0.0180924841212  0.0155353133269  0.0269480189411 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0147305969439  0.0173318690072  0.0425480609832  0.0246893662985 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0177885191992 -0.0139399016018  0.0268202482525  0.0237220901781 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0140873158038 -0.0188022861395  0.0230579707492  0.0052498431769 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0375416357270 -0.0073435113908 -0.0075422306548  0.0044148005827 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0210069279052 -0.0215837935884  0.0300492342351 -0.0340884887922 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0264791047309  0.0262451747326  0.0382677429157  0.0278312742375 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0082994371448  0.0092387414643 -0.0021105004911 -0.0079464512904 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0201746262663 -0.0383661361852 -0.0411192501477  0.0104528792699 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0013288362455 -0.0099126299393 -0.0274523898689 -0.0005844560210 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0104186524683 -0.0045562409076 -0.0078348100699 -0.0015324048921 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0080331779294 -0.0195101554329 -0.0048639307176 -0.0068252951245 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0040469151760 -0.0156067538686  0.0468486550923  0.0395977036557 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0042835158487 -0.0112160244966  0.0210583735290  0.0020901893090 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0095812203232  0.0003114849790  0.0161363556419  0.0122111669965 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0049420128051 -0.0023657256042 -0.0074324167379  0.0036342608316 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0137533057942 -0.0272461856883  0.0207851916443  0.0118956057250 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0165946925757 -0.0087320864071 -0.0059433400249 -0.0374276049557 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0628079379895 -0.0074786615746  0.0144779019434 -0.0127950607703 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0325252657224  0.0210532430228 -0.0041401076584 -0.0299295809912 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0061217129664  0.0013240922843  0.0042134457847  0.0140010108503 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0190182593661  0.0057007654750 -0.0184074831455 -0.0191793783450 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0254707142800 -0.0126120141485 -0.0014970535960  0.0007789232902 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0008385566396  0.0093182643104 -0.0317795150203 -0.0138133959696 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0307274449858  0.0108516179947 -0.0079646891857 -0.0010706593344 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0013178021432  0.0156507848568  0.0053251491686  0.0100894567008 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0139530089909  0.0250233411677  0.0041929589003 -0.0070224682085 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0075646502641  0.0136910017703  0.0038124932113  0.0024644702782 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0192091071686  0.0069405206712 -0.0269984454918  0.0054741446910 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0078675961129 -0.0350793090164 -0.0215761329695  0.0011316631615 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0325576652205 -0.0061045292847  0.0294071830109 -0.0018618817832 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0212913195947 -0.0064707982305  0.0044454781985  0.0123799114538 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0176997544139  0.0130957927706  0.0050237494997 -0.0242470534115 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0465654581783  0.0013042730686  0.0107633803162 -0.0032602961265 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0187131699497 -0.0120904595391 -0.0489362088673 -0.0228086492322 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0057669700893 -0.0018111389685  0.0278190805001 -0.0315441794038 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0201492899994 -0.0246166255599 -0.0126911504496 -0.0070907812499 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0198657768214 -0.0323633736536  0.0064678112920 -0.0045055683738 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0260915055298 -0.0126048103556  0.0216576939619  0.0036904504166 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0167881759121 -0.0082949391668 -0.0047533437108 -0.0126226617059 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0271843033498  0.0210880672122 -0.0142342380395  0.0130954765065 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0094623050289  0.0356903663607  0.0093049812190 -0.0192106533485 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0235656448795  0.0213007020957 -0.0201706553951  0.0126625812610 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0269096455660  0.0103851284758 -0.0271798053718 -0.0270481692333 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0228018671247 -0.0203023969549 -0.0070563436056  0.0105606901810 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0060347052037  0.0025600171710  0.0130124044746  0.0001863146840 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0145073496434 -0.0085653098153 -0.0039423020462  0.0339381930730 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0199634321414  0.0479033606608  0.0202749171204 -0.0162727708820 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0252478183840 -0.0040279393311 -0.0482072201614  0.0017269775826 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0061524608631  0.0208130931643 -0.0250477286423 -0.0380712726407 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0016888150502  0.0151951888784  0.0009557149113  0.0061820842653 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0107569144728 -0.0065687698146 -0.0206844791048  0.0740844743468 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0411832760538 -0.0162474346151 -0.0245624741213 -0.0063441520364 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0186164985624 -0.0071292249060 -0.0048164911055 -0.0091803380308 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0283217646861  0.0174505383184 -0.0042299266573  0.0005026139051 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0102527192474 -0.0096642220742  0.0062825156812 -0.0210404167573 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0480651824487  0.0220651475191 -0.0070279852597 -0.0060677723704 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0352879027478 -0.0014134193169 -0.0009655542382  0.0096797190141 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0248689340154  0.0102012384831  0.0195132126523 -0.0210726054127 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0161252161182 -0.0063357183276  0.0077495944704  0.0713244728554 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0119409369098 -0.0329506057705 -0.0024412072981 -0.0143043783845 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0159799806243  0.0167280154559  0.0223799708412 -0.0041149119533 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0159690168028 -0.0121610215695 -0.0153854392931 -0.0131250647682 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0037477996366  0.0045011758171  0.0293199995460  0.0265447822383 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0438170178961 -0.0066884581989  0.0138021158840  0.0032588202274 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0054231558931 -0.0008569702372  0.0122144350587 -0.0024082104123 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0043416381587  0.0093080032980  0.0300042193142 -0.0392350893170 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0227076907096  0.0194448996109  0.0391308627322 -0.0349295755444 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0106985461797  0.0185304044515 -0.0110231736883  0.0286297356197 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0202987072073  0.0096308386434 -0.0190669640346 -0.0178026808019 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0213882018247  0.0183180858320 -0.0039713280607  0.0036903449953 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0171999868856  0.0253645198298  0.0013491474276 -0.0291756777038 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0210683182773 -0.0158495041208  0.0215896971845  0.0207683945075 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0241791971960 -0.0365850071639 -0.0366084458463 -0.0117731061044 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0092833346997 -0.0230561083051 -0.0038198024256 -0.0287287965579 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0110571896472  0.0110521645623  0.0165500290594 -0.0062338812937 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0035756114149 -0.0107375169425  0.0013958490902 -0.0250555298230 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0134708116893  0.0041817490957  0.0232967501300 -0.0192317024801 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0121608810077 -0.0156991381206  0.0238193238126 -0.0062409445248 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0673172663918 -0.0221637164909  0.0346953995629 -0.0198359425764 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0063324151250 -0.0199715495861 -0.0018147584352 -0.0012245393798 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0069922474186 -0.0219424370558  0.0083797330808  0.0118806007514 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0277451098457 -0.0164548335711 -0.0073440384976  0.0280823527770 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0139427128381 -0.0074178334498 -0.0364471511652 -0.0132927550119 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0136765239035  0.0590211675901 -0.0070067604258 -0.0188085411402 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0225835746282 -0.0187399118347  0.0073346559966 -0.0048545833570 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0067443315198  0.0082097938482  0.0483912507159  0.0315580950234 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0113123444793  0.0207119237989  0.0280094714767  0.0012939417753 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0067362140751 -0.0232252041669 -0.0316207855922 -0.0109342332007 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0091870498574 -0.0041823113429  0.0095216221143 -0.0162062500037 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0006491144553 -0.0072961069192  0.0126911153091 -0.0070037032064 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0111051212256  0.0268428787045  0.0152979395641  0.0102128348327 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0123788220997 -0.0060037816048  0.0055097771108 -0.0143655930544 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0316465786850 -0.0163451953565  0.0010627527323 -0.0189987212740 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0118907563424 -0.0028044893054 -0.0366540230144  0.0161241619046 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0185472015882 -0.0172261665234 -0.0027840024210 -0.0099107323548 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0009822810940 -0.0235319100442  0.0032392821354  0.0068026998129 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0405895780935  0.0184820863281  0.0149096726944 -0.0012960853429 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0006310171218  0.0549680676943 -0.0323876205665  0.0091411915657 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0220228384132  0.0090056899774 -0.0022736927567  0.0360512939576 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0103749728847 -0.0246036587326 -0.0026191936946 -0.0243493472713 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0085093662135 -0.0169013633125 -0.0110082038551  0.0307616015065 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0199390798072  0.0186153037869  0.0374503759695 -0.0049942666593 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0226456326689 -0.0038199429874  0.0249566797276  0.0123325772631 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0049086293744  0.0310251197666 -0.0034373337307  0.0480183402243 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0234011875576 -0.0075956441440  0.0165643312239 -0.0276465408739 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0013434546741  0.0270534403013 -0.0201851684024 -0.0199966047294 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0162499998682  0.0136957457316  0.0163801952481  0.0060772954333 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0087193655630 -0.0175742327143 -0.0390085388139 -0.0043807846238 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0328439896348 -0.0329166249520  0.0048174750382 -0.0157978827947 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0075692888040  0.0011188368960 -0.0134477946923 -0.0055414737998 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0257722193702 -0.0175148453481  0.0180665856070 -0.0251925073104 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0139105241828 -0.0078809494852 -0.0028790924880 -0.0193069733313 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0054000686152  0.0071668954720 -0.0224979373432  0.0027948608211 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0160143128472 -0.0170870454683 -0.0350908350851  0.0224522196134 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0032150703630 -0.0177543626785 -0.0056566642060  0.0147039253397 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0076206992873  0.0165899837549  0.0087914737734  0.0018824740889 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0142317782078  0.0226431376967 -0.0106201478282 -0.0191618783992 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0406159334336 -0.0012048255855  0.0625095955401 -0.0271965322276 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0033774192577  0.0147768417806  0.0000001405618 -0.0139661515205 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0052937336032 -0.0289454725936  0.0075347808787 -0.0317637720972 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0463349368039  0.0347706352737 -0.0062593229819 -0.0022820561846 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0057439179518 -0.0260212597635 -0.0010912867805 -0.0145637852116 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0258173397124  0.0060877672884 -0.0243920780627  0.0174394690755 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0189409152282 -0.0111732937052 -0.0253508150529 -0.0057704138537 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0240887808093 -0.0379941744859 -0.0037832212136  0.0021505254675 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0193751458109 -0.0162120481785  0.0356925099283  0.0174303676981 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0243253463417  0.0028411759387  0.0031161851271 -0.0117803801782 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0062714815788 -0.0104678139626  0.0421378664706  0.0425329154477 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0168666445446  0.0162366816364 -0.0031395183881  0.0126820842126 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0130244576501  0.0058456847049 -0.0043273711346  0.0073355345079 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0054786075286  0.0378384671369 -0.0151734720782 -0.0192922846218 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0084869817446  0.0083451548747  0.0249911876528  0.0220098364454 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0165411736651 -0.0142348354272  0.0196506821061  0.0156317387310 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0359577500706  0.0254182144426 -0.0087798422833 -0.0024818296622 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0453748644764 -0.0190118286632  0.0143519585584 -0.0228498689841 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0079194985626  0.0161577561780  0.0260261794269 -0.0135026840805 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0490990848688 -0.0499220742876  0.0237395198430 -0.0322508890623 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0211261243232 -0.0256516876150  0.0364796209441  0.0000049899444 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0311254106206  0.0318068894335  0.0242147241944 -0.0295933571330 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0294236990240 -0.0363816845005 -0.0013241274248 -0.0359331517532 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0004444564547 -0.0380238681690 -0.0040075227277  0.0016807678864 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0198019617580 -0.0221429484829  0.0192704272598 -0.0124605587944 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0161264460341 -0.0204479487129 -0.0245305314491 -0.0043724914768 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0087017250554  0.0257747143424 -0.0099690655075  0.0207570792815 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0340155372109 -0.0152959014178 -0.0120842748193 -0.0350098011996 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0156987164352  0.0048257330448  0.0073896156657  0.0062580930660 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0010771603182 -0.0323955271685  0.0213471577751  0.0004826892680 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0268090735884 -0.0380929191600 -0.0060039924475 -0.0063148097578 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0078429275146 -0.0161146388417 -0.0071972568238  0.0122948012756 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0092836158233 -0.0110981634158 -0.0025303234879 -0.0106969999998 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0152242148929  0.0166772726412  0.0146830870509 -0.0074523062346 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0123237921497  0.0021106761933  0.0351260458194  0.0070065495831 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0263657416282 -0.0039840489048 -0.0310433576619  0.0313861879253 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0069477596046 -0.0042029387891 -0.0359885682483  0.0126212912282 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0117108723614 -0.0168895912607  0.0450625712670  0.0255752922693 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0110896242857  0.0111920235669  0.0020786632403 -0.0226478465175 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0162278613826  0.0039424777484 -0.0064819377542  0.0020450689668 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0224041474731 -0.0208610247427  0.0021187936381 -0.0183527343191 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0120417197302 -0.0189718739676 -0.0128871638987 -0.0190398004641 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0115199542781 -0.0136662277507 -0.0283904291321  0.0000636745016 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0022296266281 -0.0306951157686  0.0006539638379 -0.0048223947017 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0251435215183 -0.0128804169316 -0.0143561402724 -0.0381562422570 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0122181248063 -0.0056888880018  0.0211792566887  0.0029326465389 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0212717112217 -0.0203991737636  0.0031361097642 -0.0113053515291 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0009554689281 -0.0093419841164 -0.0256589616889 -0.0364162275662 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0626472758365  0.0173178831068  0.0091955538471  0.0123624817889 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0207112209898  0.0191755831760 -0.0016738100766  0.0084638944668 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0133836985053 -0.0134129353625  0.0850809412905  0.0096662953609 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0081830519631  0.0375478907277 -0.0233196968461 -0.0140865778543 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0163988196884 -0.0338536451421 -0.0137401984051  0.0006582509732 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0025675372281 -0.0061044590038 -0.0330786575827 -0.0400550215163 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0343968111304 -0.0315515940395 -0.0289092779266  0.0296963889424 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0047068177505  0.0041833304161 -0.0110186405698  0.0102927090833 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0203160314508 -0.0116968161800  0.0000971633537 -0.0024986970798 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0164269320511  0.0211339255039  0.0020174837109  0.0062096343808 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0192334595028  0.0009572259508  0.0337273503525 -0.0184673624781 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0210814959474 -0.0162039307338  0.0412269907778 -0.0206388316558 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0104965588535 -0.0017813047236 -0.0029085753284 -0.0255829528881 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0214762286605  0.0334129135755  0.0000633582375 -0.0136305953309 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0036863389836 -0.0093820090929 -0.0023546563613  0.0059961912668 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0010799715545 -0.0041468194850  0.0073580946790  0.0140743489765 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0007766040203  0.0350961412936 -0.0064861546086 -0.0130476503494 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0056016342560  0.0048952408616  0.0163773137309 -0.0150527646207 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0164097483694  0.0040283961570  0.0198896020488 -0.0125471800120 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0186478789872 -0.0069726390456  0.0295844665983 -0.0150063089413 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0161155173530 -0.0279293512429  0.0272936604408 -0.0156911260973 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0039003443448 -0.0117694514972 -0.0314965289490  0.0466906284733 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0159725308481  0.0211091514842  0.0479478836152 -0.0026503632767 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0504234582767  0.0152774175393  0.0294254560467  0.0097472238251 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0035216708189 -0.0013659094239 -0.0233549427209  0.0247255258251 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0204860409644 -0.0138202834984 -0.0377039846217  0.0122819047292 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0086940644366  0.0303832793851 -0.0044978374741  0.0263725237357 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0043459604344  0.0229287593020 -0.0017647184296 -0.0014436049663 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0032204117119  0.0180218869503 -0.0269563823690 -0.0173845445469 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0078777517040 -0.0239567229855 -0.0303071300226 -0.0200247170921 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0153839633940  0.0017617314910 -0.0199175035688 -0.0015761196161 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0249829296462 -0.0103345613633  0.0315090038100  0.0011535205235 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0139370200846  0.0342750845998 -0.0107788421157 -0.0288268032824 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0094871141890 -0.0016657980532  0.0348338880898 -0.0182048632912 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0156948509853  0.0336415725058  0.0481220748428 -0.0053382214173 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0138203186389  0.0051055564753 -0.0076722151920 -0.0138768596284 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0172976070651 -0.0256839114108  0.0123738321553 -0.0229759880714 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0137607907108  0.0213770623010  0.0038577892557 -0.0411850330765 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0096748696316 -0.0018835634430 -0.0108582595404 -0.0262023736603 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0465499963788  0.0003021024779  0.0036174285545 -0.0067709679835 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0386457136325  0.0063542373466 -0.0240606684466  0.0264098077568 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0136640490426 -0.0270047356329  0.0008334964143  0.0328473982588 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0103049379611 -0.0110798903801 -0.0091543340953  0.0016385993423 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0298338935366  0.0410981658757 -0.0206686307603  0.0016086245355 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0134541199739 -0.0079539362069 -0.0036110681324 -0.0081698391527 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0218920456456  0.0402925709813 -0.0239421396973  0.0076260757767 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0054215394323  0.0270341130520  0.0149626293577 -0.0492652289325 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0029561906427  0.0291061347466  0.0771136165708  0.0059798860964 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0167291750909 -0.0156126223244  0.0079084644602  0.0136393804443 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0057444099182  0.0393200940738 -0.0118781760601 -0.0059703981740 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0251728637969 -0.0134945314954  0.0126459949670 -0.0199682815239 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0225281581332  0.0283570105609 -0.0260678560047  0.0184093807300 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0122835914710  0.0065933681320 -0.0184917148123 -0.0041311468428 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0084870520255 -0.0140661261104 -0.0168679798818 -0.0080393626492 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0104203743505  0.0360770870504  0.0004328601050 -0.0019463594332 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0005321670264 -0.0118811981391 -0.0090720351534  0.0049731472468 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0087072772470 -0.0231507064057  0.0333668444410  0.0024132354972 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0017356221341 -0.0340409437587 -0.0371948697328  0.0080189460457 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0016391615895 -0.0125052223106 -0.0096130224336  0.0077074610667 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0156659303922  0.0154688275890  0.0053241652359  0.0252860511973 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0084998782910  0.0341406723655 -0.0084683221639  0.0380910567160 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0170133910780  0.0013273252060  0.0014982483714 -0.0070753545909 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0155346807987 -0.0132439097817 -0.0238675716552  0.0120655800981 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0350125070145 -0.0074233856414  0.0137403741074  0.0286223209841 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0247664995937  0.0298600731744  0.0061463112838  0.0575628387737 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0083936487004 -0.0218069706079  0.0254315326744  0.0126241727454 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0194215312094 -0.0024861519380  0.0158347451303 -0.0167506459079 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0403531179826 -0.0174245695233 -0.0144154222173 -0.0085180107650 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0513040077582 -0.0052396524455  0.0103729347385  0.0145618173462 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0133203051274  0.0175151616122 -0.0107635911590  0.0007620910130 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0132011087094  0.0204395150041 -0.0281294058442 -0.0171822409566 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0422841913185 -0.0070152292751 -0.0096332281943 -0.0242459640574 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0023039135466 -0.0167249230960 -0.0091512065949  0.0043357697030 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0080028517181 -0.0311974836905 -0.0096628515965  0.0132586687721 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0063486851549  0.0115695725983  0.0088426382736 -0.0285850369630 
+##             TRUE             TRUE             TRUE             TRUE 
+## -0.0410142153325  0.0400330235925 -0.0208935296621 -0.0127804072012 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0103002291404 -0.0072807856815  0.0030473449789  0.0054860573047 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0081801704460 -0.0088280549854 -0.0320089119001  0.0070577843642 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0047258990167 -0.0166825085687 -0.0110564868381 -0.0077597852019 
+##             TRUE             TRUE             TRUE             TRUE 
+##  0.0286120599717  0.0033691612511  0.0244927554617 -0.0237234255153 
+##             TRUE             TRUE             TRUE 
+## -0.0129457430345 -0.0058077681557  0.0103291497335</code></pre>
+<p>R value is supposed to vary between 0 and 1 (not between -1 and +1) but you can obtained negative values but they are always close to 0. R value close to 1 indicates high separation between levels of your factor (e.g. control vs treatment samples), while R value close to 0 indicate no separation between levels of your factor.</p>
+</div>

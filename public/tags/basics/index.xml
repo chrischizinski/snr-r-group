@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Basics on SNR R User Group</title>
+    <link>/tags/basics/</link>
+    <description>Recent content in Basics on SNR R User Group</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 08 Sep 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/basics/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Intro to ggplot2</title>
+      <link>/post/2017-09-08-introtoggplot2/</link>
+      <pubDate>Fri, 08 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2017-09-08-introtoggplot2/</guid>
+      <description>This class covers an introduction to graphing using the functions from ggplot2. Similar to the introduction with tidyverse This is only meant to serve as a brief introduction and we will keep developing these skills throughout the semester. I have similar lessons graphing from a previous semester 2016-10-03-BasicPlots and information on themes, facetting, and saving plots 2016-10-05-Themes_Facets.
+R script from class
+Answers to last week challenges
+Weekly challenge Take home challenges 1.</description>
+    </item>
+    
+    <item>
+      <title>Intro to Data Wrangling</title>
+      <link>/post/2017-09-01-introtodatawrangling/</link>
+      <pubDate>Fri, 01 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2017-09-01-introtodatawrangling/</guid>
+      <description>This class covers an introduction to wrangling and summarizing data using the functions from tidyr and dplyr. This is only meant to serve as a brief introduction, as we will keep developing these skills throughout the semester. I have a similar lesson on data wrangling from a previous semester 2016-09-23-Wrangling and information on joins 2016-09-29-Joining_Data_Sets.
+R script from class
+Answers to last week challenges
+Weekly challenge The data Work with the ecology data set from datacarpentry.</description>
+    </item>
+    
+    <item>
+      <title>Getting to know R -- yet again</title>
+      <link>/post/2017-08-25-introtor/</link>
+      <pubDate>Fri, 25 Aug 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2017-08-25-introtor/</guid>
+      <description>Welcome back to another semester of our UseR.
+R script from class
+Powerpoint from class
+Weekly challenge The data Work with the ecology data set from datacarpentry. An explanation of the dataset can be found here
+library(tidyverse) mydata &amp;lt;- read_csv(&amp;quot;https://ndownloader.figshare.com/files/2292169&amp;quot;) glimpse(mydata) ## Observations: 34,786 ## Variables: 13 ## $ record_id &amp;lt;int&amp;gt; 1, 72, 224, 266, 349, 363, 435, 506, 588, 661,... ## $ month &amp;lt;int&amp;gt; 7, 8, 9, 10, 11, 11, 12, 1, 2, 3, 4, 5, 6, 8, .</description>
+    </item>
+    
+    <item>
+      <title>Basic RMarkdown</title>
+      <link>/post/2017-01-20-rmarkdowntutorial/</link>
+      <pubDate>Fri, 20 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2017-01-20-rmarkdowntutorial/</guid>
+      <description>This is just a gentle introduction to what you can do with Rmarkdown. There are lots of tutorials out there to help you further (Software carpentry, Data carpentry). There is also a lot more you can do with it than I have shown here. For example, you can alter the look of your html using CSS. In addition, given the limitation of the computers in the lab (i.e., no MikeTEX), we are going to limit ourselves to html this lesson.</description>
+    </item>
+    
+    <item>
+      <title>Getting to know R -- Again</title>
+      <link>/post/2017-01-13-gettingtoknowragain/</link>
+      <pubDate>Tue, 03 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2017-01-13-gettingtoknowragain/</guid>
+      <description>Getting to know R again (with some new stuff thrown in) Using data from Google sheets (kind of) Google Forms is a quick and cheap way to put together an online survey. I asked you all to do the survey through Google Forms so that we can run some of the analysis with your responses. The survey responses were scrubbed of any individual information.
+Getting data straight into used to be a bit more complicated but thanks to the googlesheets package it is a lot easier.</description>
+    </item>
+    
+    <item>
+      <title>Plotting</title>
+      <link>/post/2016-09-30-basicplots/</link>
+      <pubDate>Fri, 30 Sep 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2016-09-30-basicplots/</guid>
+      <description>Basic plotting in ggplot ggplot is a package that has truly upped the level of producing quality graphics using R. The “g g” in ggplot refers to the grammar of graphics. There has been a lot of development of the theory in what makes a good plot and I encourage you to read more on the subject.
+From the ggplot2 website
+ ggplot2 is a plotting system for R, based on the grammar of graphics, which tries to take the good parts of base and lattice graphics and none of the bad parts.</description>
+    </item>
+    
+    <item>
+      <title>R Data Structures</title>
+      <link>/post/2016-09-02-datastructures/</link>
+      <pubDate>Mon, 19 Sep 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2016-09-02-datastructures/</guid>
+      <description>Working with data in R There are lots of great references out there to help orient you with R and R data structures. One of the best is the section on data structures in the Advanced R book by Hadley Wickham. Hadley provides numerous details on differences among the structures and a lot of the nitty gritty on those structures. This lesson is suppose to provide a “working knowledge” of data structures in R, but I strongly encourage you to dive into more.</description>
+    </item>
+    
+    <item>
+      <title>Inputing data</title>
+      <link>/post/2016-09-09-datainput/</link>
+      <pubDate>Fri, 09 Sep 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2016-09-09-datainput/</guid>
+      <description>All the data that we use (and will be used in this course) are available from here. I have also placed a copy of this data in our repository.
+Getting data into R There are a lot of ways of getting data into R and this can add to a lot of confusion for R newbies trying to get started in R. We have already shown that there are ways to manually enter data in the previous lesson.</description>
+    </item>
+    
+    <item>
+      <title>Getting to know R</title>
+      <link>/post/2016-08-26-rbasics/</link>
+      <pubDate>Fri, 26 Aug 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2016-08-26-rbasics/</guid>
+      <description>This is the second lesson in “Getting to know R.” In our first lesson, we went over the very basics of R including installation, RStudio, and some of the basics of learning and getting help in R. The next sections we will begin to layout some of the “vocabulary” of R. For those that have used R before and know that R is a lot more than a letter in the alphabet, most of this will be a review.</description>
+    </item>
+    
+  </channel>
+</rss>

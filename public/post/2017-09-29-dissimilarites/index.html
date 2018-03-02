@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+         
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Applied Multivarite:  Dissimilarity and Distance measures</title>
+        <style>
+
+    html body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #FEFDFA;
+    }
+
+    :root {
+        --accent: #D00000;
+        --border-width:  5px ;
+    }
+
+</style>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+
+
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/hybrid.min.css"> 
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+ 
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/swift.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/R.min.js"></script> 
+
+    <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script>
+ <meta name="generator" content="Hugo 0.30.2" />
+        
+        
+        
+        
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-48496439-3"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments)};
+          gtag('js', new Date());
+
+          gtag('config', 'UA-48496439-3');
+        </script>
+        
+    </head>
+
+    
+    
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    
+
+    <body>
+         
+        <nav class="navbar navbar-default navbar-fixed-top">
+
+            <div class="container">
+
+                <div class="navbar-header">
+
+                    <a class="navbar-brand visible-xs" href="#">Applied Multivarite:  Dissimilarity and Distance measures</a>
+
+                    <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                </div>
+
+                <div class="collapse navbar-collapse">
+
+                    
+                        <ul class="nav navbar-nav">
+                            
+                                <li><a href="/">Home</a></li>
+                            
+                                <li><a href="/post/">Posts</a></li>
+                            
+                                <li><a href="/resources/">Resources</a></li>
+                            
+                        </ul>
+                    
+
+                    
+                        <ul class="nav navbar-nav navbar-right">
+                            
+                                <li class="navbar-icon"><a href="mailto:cchizinski2@unl.edu"><i class="fa fa-envelope-o"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://github.com/chrischizinski/"><i class="fa fa-github"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://twitter.com/chrischizinski/"><i class="fa fa-twitter"></i></a></li>
+                            
+                        </ul>
+                    
+
+                </div>
+
+            </div>
+
+        </nav>
+
+
+<main>
+
+    <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/post/2017-09-29-dissimilarites/">Applied Multivarite:  Dissimilarity and Distance measures</a></h4>
+    <h5>September 22, 2017</h5>
+    
+    <a href="/tags/applied-multivariate"><kbd class="item-tag">Applied Multivariate</kbd></a>
+    
+
+</div>
+
+
+    <br> <div class="text-justify"><p>This class covers an introduction to dissimilarity and distance measures. Detailed notes from previous semesters can be found here - <a href="https://chrischizinski.github.io/SNR_R_Group/2016-08-12-SimilarityDistance">2016-08-12-SimilarityDistance</a>.</p>
+<ul>
+<li><a href="https://raw.githubusercontent.com/chrischizinski/SNR_R_Group/master/notebooks/2017-09-29-Distances.Rmd">R notebook Rmarkdown file</a></li>
+</ul>
+<p>Load the libraries we will use today</p>
+<pre class="r"><code>library(tidyverse)
+library(vegan)
+library(cluster)
+library(RColorBrewer)</code></pre>
+<div id="similarity-and-distances" class="section level3">
+<h3>Similarity and distances</h3>
+<p>To illustrate the concept of similarity and distance, lets envison a data matrix with 4 sites and 2 species</p>
+<pre class="r"><code>hyp_data &lt;- matrix(c(1,9,1,8,6,6,9,1), byrow = TRUE, ncol = 2)
+colnames(hyp_data)&lt;-c(&quot;SpeciesA&quot;, &quot;SpeciesB&quot;)
+hyp_data</code></pre>
+<pre><code>##      SpeciesA SpeciesB
+## [1,]        1        9
+## [2,]        1        8
+## [3,]        6        6
+## [4,]        9        1</code></pre>
+<p>Lets plot these in 2 dimensions to show the relationships</p>
+<pre class="r"><code>ggplot(data = as.data.frame(hyp_data)) + 
+  geom_point(aes(x = SpeciesA, y=SpeciesB),size = 3, colour = &quot;red&quot;) +
+  geom_text(aes(x = SpeciesA, y=SpeciesB, label= paste(&quot;Site&quot;,1:4))) +
+  coord_cartesian(xlim = c(0,10), ylim = c(0,10), expand = F) +
+  theme_classic()</code></pre>
+<p><img src="/post/2017-09-29-Dissimilarites_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>How can we quantify that distance? One of the simplest methods is the Euclidean distance</p>
+<pre class="r"><code>euc_distance &lt;- function(x,y){
+  x = x[2] - x[1]
+  y = y[2] - y[1]
+  h = sqrt(x^2 + y^2)
+  return(h)
+}
+
+euc_distance(hyp_data[c(2,3),&quot;SpeciesA&quot;], hyp_data[c(2,3),&quot;SpeciesB&quot;])</code></pre>
+<pre><code>## [1] 5.385165</code></pre>
+<p>The problem with this function that we wrote is that its not easily able to calculate all the distances.</p>
+<pre class="r"><code>dist(hyp_data)</code></pre>
+<pre><code>##           1         2         3
+## 2  1.000000                    
+## 3  5.830952  5.385165          
+## 4 11.313708 10.630146  5.830952</code></pre>
+<pre class="r"><code>dist(hyp_data, diag = TRUE, upper = TRUE)</code></pre>
+<pre><code>##           1         2         3         4
+## 1  0.000000  1.000000  5.830952 11.313708
+## 2  1.000000  0.000000  5.385165 10.630146
+## 3  5.830952  5.385165  0.000000  5.830952
+## 4 11.313708 10.630146  5.830952  0.000000</code></pre>
+<pre class="r"><code>hyp_data2 &lt;- cbind(data.frame(hyp_data), data.frame(x = 9, y = 1))
+
+ggplot(data = as.data.frame(hyp_data)) + 
+  geom_segment(data = hyp_data2, aes(x = x, y = y, xend = SpeciesA, yend = SpeciesB), linetype = &quot;dashed&quot;) +
+  geom_point(aes(x = SpeciesA, y=SpeciesB),size = 3, colour = &quot;red&quot;) +
+  geom_text(aes(x = SpeciesA, y=SpeciesB, label= paste(&quot;Site&quot;,1:4))) +
+  coord_cartesian(xlim = c(0,10), ylim = c(0,10), expand = F) +
+  theme_classic()</code></pre>
+<p><img src="/post/2017-09-29-Dissimilarites_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+</div>
+<div id="common-distance-measures" class="section level3">
+<h3>Common distance measures</h3>
+<p>There are approximately 30 similarity or distances commonly used. <a href="http://www.ievbras.ru/ecostat/Kiril/R/Biblio/Statistic/Legendre%20P.,%20Legendre%20L.%20Numerical%20ecology.pdf">Legendre and Legendre 2012</a></p>
+<p>The choice of which distance you are going to use depends on the data type and the type of analysis you will do.</p>
+<div id="euclidean-distance" class="section level4">
+<h4>Euclidean distance</h4>
+<p><span class="math display">\[ ED_{ij} = \sum_{i = 1}^p \sqrt{(x_{ij} - x_{ik})^2} \]</span> - Most appealing measure because it has true “metric” properties - Column standardization to remove potential issues with scale - Applied to any data of any scale - Used in eigenvector ordinations (e.g., PCA) - Assume that variables are not correlated - Emphasizes outliers - Loose sensitivity with heterogeneous data - Distances are not proportional</p>
+<pre class="r"><code>vegdist(hyp_data, method = &quot;euclidean&quot;)</code></pre>
+<pre><code>##           1         2         3
+## 2  1.000000                    
+## 3  5.830952  5.385165          
+## 4 11.313708 10.630146  5.830952</code></pre>
+<pre class="r"><code>euc_dist&lt;-as.data.frame(as.matrix(vegdist(hyp_data, method = &quot;euclidean&quot;, diag = TRUE, upper = TRUE)))
+
+euc_dist$row &lt;-rownames(euc_dist)
+
+euc_dist %&gt;% 
+  gather(col, value, -row) %&gt;% 
+  mutate(col = as.numeric(col),
+         row = as.numeric(row)) -&gt; euc_long
+
+ggplot(data = euc_long) + 
+  geom_raster(aes(x = col, y = row, fill = value))+
+  coord_equal(expand = F) +
+  scale_fill_gradient2(low = &quot;red&quot;, high = &quot;blue&quot;, mid = &quot;white&quot;, midpoint = 5) +
+  theme_classic()</code></pre>
+<p><img src="/post/2017-09-29-Dissimilarites_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+</div>
+<div id="city-block-manhattan-distance" class="section level4">
+<h4>City block (Manhattan) distance</h4>
+<ul>
+<li>Most ecologically meaningful dissimilarities are Manhattan types</li>
+<li>Less weight to outliers compared to Euclidean</li>
+<li>Retains sensitivity with heterogenous data</li>
+<li>Distances are not proportional</li>
+</ul>
+<pre class="r"><code>vegdist(hyp_data, method = &quot;manhattan&quot;)</code></pre>
+<pre><code>##    1  2  3
+## 2  1      
+## 3  8  7   
+## 4 16 15  8</code></pre>
+</div>
+<div id="proportional-distances" class="section level4">
+<h4>Proportional distances</h4>
+<ul>
+<li>Manhattan distances expressed as a proportion of the max distance</li>
+<li>2 communities with nothing in common would be 1</li>
+</ul>
+<pre class="r"><code>max_dist &lt;- max(vegdist(hyp_data, method = &quot;manhattan&quot;))
+
+vegdist(hyp_data, method = &quot;manhattan&quot;)/max_dist</code></pre>
+<pre><code>##        1      2      3
+## 2 0.0625              
+## 3 0.5000 0.4375       
+## 4 1.0000 0.9375 0.5000</code></pre>
+</div>
+<div id="sorensen-or-bray-curtis-distance" class="section level4">
+<h4>Sorensen or Bray-Curtis distance</h4>
+<ul>
+<li>Percent dissimilarity</li>
+<li>Commonly used with species abundance but it can be used with data of any scale</li>
+<li>Gives less weight to outliers than euclidean</li>
+<li>Retains sensitivity with heteregenous data</li>
+<li>Max when no species are in common</li>
+<li>NOT metric and can not be used with DA, PCA, or CCA</li>
+</ul>
+<pre class="r"><code>vegdist(hyp_data, method = &quot;bray&quot;)</code></pre>
+<pre><code>##            1          2          3
+## 2 0.05263158                      
+## 3 0.36363636 0.33333333           
+## 4 0.80000000 0.78947368 0.36363636</code></pre>
+<p>Some other proportional distances exist and differ how they weigh the dissimilarity. Two examples are</p>
+<ul>
+<li>Jaccards distance</li>
+</ul>
+<pre class="r"><code>vegdist(hyp_data, method = &quot;jaccard&quot;)</code></pre>
+<pre><code>##           1         2         3
+## 2 0.1000000                    
+## 3 0.5333333 0.5000000          
+## 4 0.8888889 0.8823529 0.5333333</code></pre>
+<ul>
+<li>Kulczynski distance</li>
+</ul>
+<pre class="r"><code>vegdist(hyp_data, method = &quot;kulczynski&quot;)</code></pre>
+<pre><code>##           1         2         3
+## 2 0.0500000                    
+## 3 0.3583333 0.3194444          
+## 4 0.8000000 0.7888889 0.3583333</code></pre>
+</div>
+</div>
+<div id="euclidean-distances-based-on-species-profiles" class="section level3">
+<h3>Euclidean distances based on species profiles</h3>
+<div id="chord-distance" class="section level4">
+<h4>Chord distance</h4>
+<ul>
+<li>Similar conceptually to euclidean, but data are row normalized</li>
+<li>Useful in species abundance because it removes differences in total abundance</li>
+<li>Gives low weights to variables with low counts and many zeros</li>
+</ul>
+<pre class="r"><code>vegdist(decostand(hyp_data, method = &quot;normalize&quot;), method = &quot;euclidean&quot;)</code></pre>
+<pre><code>##            1          2          3
+## 2 0.01369767                      
+## 3 0.66201388 0.64907285           
+## 4 1.24939010 1.23866471 0.66201388</code></pre>
+</div>
+<div id="chi-square-distances" class="section level4">
+<h4>Chi-square distances</h4>
+<ul>
+<li>Euclidean distances after completing a chi-square standardization</li>
+<li>Distance used in correspondance analysis (CA) and canonical correspondance analysis (CCA)</li>
+</ul>
+<pre class="r"><code>vegdist(decostand(hyp_data, method = &quot;chi.square&quot;), method = &quot;euclidean&quot;)</code></pre>
+<pre><code>##            1          2          3
+## 2 0.02255336                      
+## 3 0.81192099 0.78936762           
+## 4 1.62384197 1.60128861 0.81192099</code></pre>
+</div>
+<div id="species-profile-distance" class="section level4">
+<h4>Species profile distance</h4>
+<ul>
+<li>Euclidean distances on relative abundance</li>
+<li>Variables with higher values and fewer zeros contribute more to the distance</li>
+</ul>
+<pre class="r"><code>vegdist(decostand(hyp_data, method = &quot;total&quot;, MARGIN = 1), method = &quot;euclidean&quot;)</code></pre>
+<pre><code>##            1          2          3
+## 2 0.01571348                      
+## 3 0.56568542 0.54997194           
+## 4 1.13137085 1.11565737 0.56568542</code></pre>
+</div>
+<div id="hellinger-distance" class="section level4">
+<h4>Hellinger distance</h4>
+<ul>
+<li>Euclidean distance on the hellinger standardization</li>
+<li>Give low weights to variables with low counts and many zeros</li>
+</ul>
+<pre class="r"><code>vegdist(decostand(hyp_data, method = &quot;hellinger&quot;), method = &quot;euclidean&quot;)</code></pre>
+<pre><code>##            1          2          3
+## 2 0.01808611                      
+## 3 0.45950584 0.44188477           
+## 4 0.89442719 0.87821391 0.45950584</code></pre>
+</div>
+</div>
+<div id="distances-on-binary-data" class="section level3">
+<h3>Distances on binary data</h3>
+<pre class="r"><code>set.seed(1234)
+pa_data &lt;- matrix(c(sample(c(0,1), 8, replace = TRUE),
+                    sample(c(0,1), 8, prob = c(0.65, 0.35),replace = TRUE)),
+                  byrow = TRUE, ncol = 4)
+pa_data</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]    0    1    1    1
+## [2,]    1    1    0    0
+## [3,]    1    0    1    0
+## [4,]    0    1    0    1</code></pre>
+<pre class="r"><code>vegdist(pa_data, binary = TRUE, method = &quot;jaccard&quot;)</code></pre>
+<pre><code>##           1         2         3
+## 2 0.7500000                    
+## 3 0.7500000 0.6666667          
+## 4 0.3333333 0.6666667 1.0000000</code></pre>
+<div id="binomial" class="section level4">
+<h4>Binomial</h4>
+<ul>
+<li>Null hypothesis two communites are equal</li>
+</ul>
+<pre class="r"><code>vegdist(pa_data, binary = TRUE, method = &quot;binomial&quot;)</code></pre>
+<pre><code>##           1         2         3
+## 2 2.0794415                    
+## 3 2.0794415 1.3862944          
+## 4 0.6931472 1.3862944 2.7725887</code></pre>
+</div>
+<div id="raup" class="section level4">
+<h4>Raup</h4>
+<ul>
+<li>Probablistic index based on presence/absence data</li>
+<li>Non-metric</li>
+</ul>
+<pre class="r"><code>vegdist(pa_data, binary = TRUE, method = &quot;raup&quot;)</code></pre>
+<pre><code>##           1         2         3
+## 2 1.0000000                    
+## 3 1.0000000 0.8333333          
+## 4 0.5000000 0.8333333 1.0000000</code></pre>
+</div>
+<div id="categorical-and-mixed-data" class="section level4">
+<h4>Categorical and mixed data</h4>
+</div>
+<div id="gowers-distance" class="section level4">
+<h4>Gowers distance</h4>
+<ul>
+<li>For each variable, a particular distance metric that works well for that data type and is used to scale between 0-1</li>
+<li>Then a linear combination of those user specied weights (most simply an average) is calculated to create the final distance matrix
+<ul>
+<li>for quantitative data = range normalzed Manhattan distance</li>
+<li>ordinal = variable is first ranked then Manhattan with adjustment for ties</li>
+<li>nominal = variables of k categories are first converted into k binary columns and then a Dice coefficient is used</li>
+</ul></li>
+</ul>
+<pre class="r"><code>set.seed(123)
+# Create a nomial variable 
+nom &lt;- factor(rep(letters[1:3], each = 3))
+
+# Create some binary data
+bin &lt;- as.matrix(replicate(2, rep(sample(c(0,1), 9, replace = TRUE))))
+
+#Numerical variables
+vars &lt;- as.matrix(replicate(3, rnorm(9)))
+
+df &lt;- data.frame(nom, bin, vars)
+
+
+as.matrix(daisy(df, metric = &quot;gower&quot;, type = list(asym = c(2,3))))</code></pre>
+<pre><code>##           1         2         3         4         5         6         7
+## 1 0.0000000 0.5749818 0.2292435 0.6173067 0.6699906 0.3176680 0.7372010
+## 2 0.5749818 0.0000000 0.5776599 0.3290653 0.3113710 0.7376149 0.3421992
+## 3 0.2292435 0.5776599 0.0000000 0.6155740 0.6217465 0.2546933 0.6187765
+## 4 0.6173067 0.3290653 0.6155740 0.0000000 0.1165022 0.4421957 0.2865609
+## 5 0.6699906 0.3113710 0.6217465 0.1165022 0.0000000 0.4654749 0.3493142
+## 6 0.3176680 0.7376149 0.2546933 0.4421957 0.4654749 0.0000000 0.6120648
+## 7 0.7372010 0.3421992 0.6187765 0.2865609 0.3493142 0.6120648 0.0000000
+## 8 0.5794467 0.5822714 0.4104376 0.4621400 0.4719496 0.4484787 0.2979355
+## 9 0.4471714 0.6888198 0.6018221 0.5264212 0.6171620 0.5137954 0.4431129
+##           8         9
+## 1 0.5794467 0.4471714
+## 2 0.5822714 0.6888198
+## 3 0.4104376 0.6018221
+## 4 0.4621400 0.5264212
+## 5 0.4719496 0.6171620
+## 6 0.4484787 0.5137954
+## 7 0.2979355 0.4431129
+## 8 0.0000000 0.2853586
+## 9 0.2853586 0.0000000</code></pre>
+</div>
+</div>
+<div id="weekly-challenge" class="section level2">
+<h2>Weekly challenge</h2>
+<div id="take-home-challenges" class="section level3">
+<h3>Take home challenges</h3>
+<p>No challenge this week</p>
+</div>
+</div>
+</div>
+
+    
+    
+
+    
+
+        <h4 class="page-header">Related</h4>
+
+         <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/post/2017-11-17-differencesbetweengroups/">Applied Multivariate: Identifying differences between groups</a></h4>
+    <h5>November 17, 2017</h5>
+    
+    <a href="/tags/applied-multivariate"><kbd class="item-tag">Applied Multivariate</kbd></a>
+    
+
+</div>
+  <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/post/2017-11-09-latentvariables_3/">Latent variable analysis. Part 3</a></h4>
+    <h5>November 9, 2017</h5>
+    
+    <a href="/tags/applied-multivariate"><kbd class="item-tag">Applied Multivariate</kbd></a>
+    
+
+</div>
+  <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/post/2017-10-20-latentvariables_2/">Latent variable analysis. Part 2</a></h4>
+    <h5>October 20, 2017</h5>
+    
+    <a href="/tags/applied-multivariate"><kbd class="item-tag">Applied Multivariate</kbd></a>
+    
+
+</div>
+ 
+
+    
+
+    
+
+        <h4 class="page-header">Comments</h4>
+
+        <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "snrrgroup" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    
+
+</main>
+
+        <footer>
+
+            <p class="copyright text-muted">&copy; All rights reserved. Powered by <a href="https://gohugo.io">Hugo</a> and <a href="https://github.com/calintat/minimal">Minimal</a></p>
+
+        </footer>
+       
+    </body>
+
+</html>
+

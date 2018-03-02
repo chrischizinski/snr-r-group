@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Regression on SNR R User Group</title>
+    <link>/tags/regression/</link>
+    <description>Recent content in Regression on SNR R User Group</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 16 Dec 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/regression/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Multiple factor ANOVA</title>
+      <link>/post/2016-12-16-anova_multifactor/</link>
+      <pubDate>Fri, 16 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2016-12-16-anova_multifactor/</guid>
+      <description>The RMarkdown file for this lesson can be found here.
+This lesson will follow Chapter 9, 10, and in Quinn and Keough (2002).
+Load the packages we will be using in this lesson
+library(tidyverse) library(broom) library(multcomp) # install.packages(&amp;#39;afex&amp;#39;) # library(afex) Nested designs Common extension of the single factor design is the nested design - additional factors are included that are nested within the main factor of interest - characteristic feature that distinguishes from other multifactor designs is that the categories of the nested factor(s) within each level of the main factor are different.</description>
+    </item>
+    
+    <item>
+      <title>ANOVA</title>
+      <link>/post/2016-12-09-anova_1factor/</link>
+      <pubDate>Fri, 09 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2016-12-09-anova_1factor/</guid>
+      <description>The RMarkdown file for this lesson can be found here.
+This lesson will follow Chapter 8 in Quinn and Keough (2002).
+Load the packages we will be using in this lesson
+library(tidyverse) library(broom) library(lme4) library(multcomp) Comparing groups or treatments  Analysis of variance (ANOVA) is a statistical technique to partition and analyze the variation of a continuous response variable Previously we used ANOVA to partition the variation in a response variable into that explained by the linear regression with one or more continuous predictor variables and that unexplained by the regression model The statistical distinction between “classical regression” and “classical ANOVA” is artificial, which is why we can use the lm() with anova() or the aov function in R Two prime reasons to use classical ANOVA: examine the relative contribution of sources of variation to the total amount of the variability in the response variable test the null hypothesis (H0) that population group or treatment means are equal   Single factor  A single factor or one way design = single factor or predictor  factor can comprise several levels completely randomized (CR) designs (no restriction on the random allocation of experimental or sampling units to factor levels)   Types of predictors  Two types of factors  Fixed - all the levels of the factor that are of interest are included in the analysis  cannot extrapolate beyond these levels, repeat experiment keep same levels called: fixed effect models or Model 1 ANOVAs conclusions for a fixed factor are restricted to those specific groups we used in the experiment or sampling program  Random - we are only using a random selection of all the possible levels of the factor  usually make inferences about all the possible groups from our sample of groups called: random effect models or Model 2 ANOVAs analogous to Model 2 regression draw conclusions about the population of groups from which we have randomly chosen a subset (like site or time)    Lets begin exploring this in R, using the medley data</description>
+    </item>
+    
+    <item>
+      <title>Multiple Regression</title>
+      <link>/post/2016-11-11-multipleregression/</link>
+      <pubDate>Fri, 11 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2016-11-11-multipleregression/</guid>
+      <description>The RMarkdown file for this lesson can be found here.
+This lesson will follow Chapter 6 in Quinn and Keough (2002).
+Load the packages we will be using in this lesson
+library(RCurl) library(tidyverse) library(broom) library(GGally) library(devtools) library(gridExtra) source_url(&amp;#39;https://raw.githubusercontent.com/chrischizinski/SNR_R_Group/master/R/snr_r_group_functions.R&amp;#39;) Multiple Linear regression analysis Our previous lesson was based on regression models with a single predictor and single response variable. We can expand on these by increasing the number of predictor variables, which are called are multiple linear regression models.</description>
+    </item>
+    
+    <item>
+      <title>Simple Regression</title>
+      <link>/post/2016-10-28-simpleregression/</link>
+      <pubDate>Fri, 28 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2016-10-28-simpleregression/</guid>
+      <description>The RMarkdown file for this lesson can be found here.
+This lesson will follow Chapter 5 in Quinn and Keough (2002).
+Load the packages we will be using in this lesson
+library(MASS) library(car) library(RCurl) library(mgcv) library(tidyverse) library(broom) library(Rfit) library(mgcv) library(gtable) library(lmodel2) Linear regression analysis Statistical models that assume a linear relationship between a single, continuous (usually) predictor value are simple linear regression models.
+These models have three primary purposes:
+ describe a linear relationship between \( Y \) and \( X \) determine the amount of variation (explained) in \( Y \) with \( X \) and the amount of variation unexplained predict values of \( Y \) from \( X \)  Simple bivariate linear regression Linear model for regression Consider you have a set of observations (\( i = 1 :n \) ), where the each observation was chosen based on its \( X \) value and its \( Y \) value for each observation is sampled from a population of possible \( Y \) values.</description>
+    </item>
+    
+    <item>
+      <title>Correlation</title>
+      <link>/post/2016-10-20-correlation/</link>
+      <pubDate>Thu, 20 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2016-10-20-correlation/</guid>
+      <description>library(tidyverse) ## ── Attaching packages ──────────────────────────────────────────── tidyverse 1.2.1 ── ## ✔ ggplot2 2.2.1 ✔ purrr 0.2.4 ## ✔ tibble 1.4.2 ✔ dplyr 0.7.4 ## ✔ tidyr 0.8.0 ✔ stringr 1.3.0 ## ✔ readr 1.1.1 ✔ forcats 0.3.0 ## ── Conflicts ─────────────────────────────────────────────── tidyverse_conflicts() ── ## ✖ readr::col_factor() masks scales::col_factor() ## ✖ purrr::discard() masks scales::discard() ## ✖ dplyr::filter() masks stats::filter() ## ✖ dplyr::lag() masks stats::lag() library(gridExtra) ## ## Attaching package: &amp;#39;gridExtra&amp;#39; ## The following object is masked from &amp;#39;package:dplyr&amp;#39;: ## ## combine library(RCurl) ## Loading required package: bitops ## ## Attaching package: &amp;#39;RCurl&amp;#39; ## The following object is masked from &amp;#39;package:tidyr&amp;#39;: ## ## complete library(MASS) ## ## Attaching package: &amp;#39;MASS&amp;#39; ## The following object is masked from &amp;#39;package:dplyr&amp;#39;: ## ## select The RMarkdown file for this lesson can be found here</description>
+    </item>
+    
+    <item>
+      <title>Hypothesis Testing</title>
+      <link>/post/2016-10-13-hypothesistesting/</link>
+      <pubDate>Thu, 13 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2016-10-13-hypothesistesting/</guid>
+      <description>Statistical hypothesis testing In the biological sciences, among other sciences, it is not often enough to just collect information on the central tendency of a population or parameter. We often want to compare estimates among populations or against environmental variables. Perhaps not surprisingly, there is still controversy on how this should be approached and the philosophies behind the approach. Chapter two in the the Ecological Detective: Confronting Models with Data has a great synopsis of these.</description>
+    </item>
+    
+    <item>
+      <title>Estimation of parameters</title>
+      <link>/post/2016-10-07-restimation/</link>
+      <pubDate>Fri, 07 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2016-10-07-restimation/</guid>
+      <description>Samples and populations Biologists want to make inferences about a population based on subsamples of that population.
+ collections of the population are the sample number of observations is the sample size  Basic method of sampling is simple random sampling (all observations have the same probability of being sampled)
+ rarely does this happen (Why is this a concern?)  Random sampling is important because we want to use sample statistics to estimate the population parameters.</description>
+    </item>
+    
+    <item>
+      <title>Estimation of parameters.  Part 2</title>
+      <link>/post/2016-10-07-restimation2/</link>
+      <pubDate>Fri, 07 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2016-10-07-restimation2/</guid>
+      <description>Like determining population parameters , we often want to calculate the parameters in our regression models. There are two basic procedures that are often used to determine those. These sections are only meant to be illustrative and not comprehensive into the topic.
+I based these illustrations heavily on the material from the Ecological Detective: Confronting Models with Data. I highly encourage you to read this book and follow along with the psuedo code in the book.</description>
+    </item>
+    
+    <item>
+      <title>Hello R Markdown</title>
+      <link>/post/2015-07-23-r-rmarkdown/</link>
+      <pubDate>Thu, 23 Jul 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2015-07-23-r-rmarkdown/</guid>
+      <description>R Markdown This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.
+You can embed an R code chunk like this:
+summary(cars) ## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 26.00 ## Median :15.0 Median : 36.00 ## Mean :15.4 Mean : 42.98 ## 3rd Qu.</description>
+    </item>
+    
+  </channel>
+</rss>

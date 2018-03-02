@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Heat Tolerance on SNR R User Group</title>
+    <link>/tags/heat-tolerance/</link>
+    <description>Recent content in Heat Tolerance on SNR R User Group</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 02 Mar 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/heat-tolerance/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Heat Tolerance</title>
+      <link>/post/2018-03-02-heattolerance/</link>
+      <pubDate>Fri, 02 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018-03-02-heattolerance/</guid>
+      <description>Link to the Rmarkdown files can be found here
+Get the data heat_data &amp;lt;-read_csv(&amp;quot;https://raw.githubusercontent.com/chrischizinski/snr-r-group/master/data/HeatTolerance.csv&amp;quot;, na = &amp;quot;NA&amp;quot;) ## Parsed with column specification: ## cols( ## Species = col_character(), ## `Species common name` = col_character(), ## `Trial Nr` = col_integer(), ## `Larval Stage` = col_character(), ## `Age (days post-hatch)` = col_integer(), ## `Age (degree-days)` = col_integer(), ## `Acclimation temperature (°C)` = col_integer(), ## `Larval ID` = col_character(), ## `Warming rate (°C h-1)` = col_character(), ## `Body length (mm)` = col_double(), ## `CTMax (°C)` = col_double() ## ) glimpse(heat_data) ## Observations: 478 ## Variables: 11 ## $ Species &amp;lt;chr&amp;gt; &amp;quot;Clupea harengus&amp;quot;, &amp;quot;Clupea hare.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,104 @@
+---
+title: "Applied Multivariate:  Breaking multivariate data into groups. Part 1."
+date: 2017-09-22
+categories: ["R"]
+tags: ["Applied Multivariate"]
+---
+
+
+
+<pre class="r"><code>library(tidyverse)
+library(vegan)
+library(cluster)
+library(factoextra)
+library(fpc)</code></pre>
+<div id="cluster-analysis" class="section level2">
+<h2>Cluster analysis</h2>
+<p>This is a broad topic and could probably cover most of a semester, if you want more in depth start by looking at:</p>
+<p><a href="http://www.sthda.com/english/web/5-bookadvisor/17-practical-guide-to-cluster-analysis-in-r/"><img src="http://www.sthda.com/english/upload/practical_guide_to_cluster_analysis.png" alt="Cluster book" /></a></p>
+<div id="the-background" class="section level3">
+<h3>The background</h3>
+<ul>
+<li>Cluster analysis is a broad group of multivariate techniques to identify homogenous groups
+<ul>
+<li>maximizes between group variation and minimizing within group variation</li>
+<li>outcome: reduction of observations into fewer groups</li>
+<li>often used in data mining or exploratory approaches</li>
+<li>works best when there are inherent discontinuities in the data
+<ul>
+<li>if the data is continuous, ordination techniques may be preferred</li>
+<li>ordination may force groups that do not exist</li>
+</ul></li>
+</ul></li>
+<li>Occurs in two basic steps:
+<ol style="list-style-type: decimal">
+<li>measure of similarity betewen observations is specified</li>
+<li>Using this distance (and a clustering rule) observations are grouped based on either a hierarchical or partitioning technique</li>
+<li>Once a new cluster is formed, distances between clusters are based on single linkage (minimum distance), complete linkage (maximum method), or average linkage</li>
+</ol></li>
+<li>Hiercharchical techniques are useful because they can reveal relationships in a nested fashion (i.e., phylogenetic tree)
+<ul>
+<li>not efficient for large data sets (&gt; 500 obs)</li>
+</ul></li>
+<li><p>Unlike hierarchical, partitioning does not require dissimilarity matrices</p></li>
+<li>Partitioning methods follow four iterative steps:
+<ol style="list-style-type: decimal">
+<li>randomly assign cluster centroids</li>
+<li>classify clusters based on the closest centroid</li>
+<li>recaculate the centroid after each observation is added</li>
+<li>repeat steps1-3 until within cluster variation is minimized</li>
+</ol></li>
+<li>Limitations of clustering
+<ul>
+<li>exploratory or hypothesis generating tool</li>
+<li>Be considerate of using mixed data types. Gower’s distance should not be used in hierarchical analysis</li>
+<li>Assumes distance measures follow a normal or multinomial distribution</li>
+<li>clustering variables are appropriate for group separation</li>
+<li>Can be influenced by scale and units</li>
+<li>visual classifications are selective</li>
+</ul></li>
+</ul>
+</div>
+<div id="now-on-to-the-doing" class="section level3">
+<h3>Now on to the doing</h3>
+<p>We are going to use non-ecological data in this excersize to illustrate the different types of data that can be incorporated into this type of analysis</p>
+<pre class="r"><code>data(&quot;USArrests&quot;)
+glimpse(USArrests)</code></pre>
+<pre><code>## Observations: 50
+## Variables: 4
+## $ Murder   &lt;dbl&gt; 13.2, 10.0, 8.1, 8.8, 9.0, 7.9, 3.3, 5.9, 15.4, 17.4,...
+## $ Assault  &lt;int&gt; 236, 263, 294, 190, 276, 204, 110, 238, 335, 211, 46,...
+## $ UrbanPop &lt;int&gt; 58, 48, 80, 50, 91, 78, 77, 72, 80, 60, 83, 54, 83, 6...
+## $ Rape     &lt;dbl&gt; 21.2, 44.5, 31.0, 19.5, 40.6, 38.7, 11.1, 15.8, 31.9,...</code></pre>
+<p>Lets scale the data</p>
+<pre class="r"><code>USArrests %&gt;% 
+  scale() -&gt; arrest.scale
+
+head(arrest.scale)</code></pre>
+<pre><code>##                Murder   Assault   UrbanPop         Rape
+## Alabama    1.24256408 0.7828393 -0.5209066 -0.003416473
+## Alaska     0.50786248 1.1068225 -1.2117642  2.484202941
+## Arizona    0.07163341 1.4788032  0.9989801  1.042878388
+## Arkansas   0.23234938 0.2308680 -1.0735927 -0.184916602
+## California 0.27826823 1.2628144  1.7589234  2.067820292
+## Colorado   0.02571456 0.3988593  0.8608085  1.864967207</code></pre>
+<p>lets convert this to a distance matrix using the <code>factoextra::get_dist()</code> function.</p>
+<pre class="r"><code>arrest.scale %&gt;% 
+  get_dist(upper = TRUE, diag = TRUE) -&gt; arrest.dist</code></pre>
+<p>Visualizing the distance matrix</p>
+<pre class="r"><code>arrest.dist.df &lt;- as.data.frame(as.matrix(arrest.dist))
+arrest.dist.df$row &lt;- rownames(arrest.dist.df)
+
+arrest.dist.df %&gt;% 
+  gather(col, value, -row) -&gt; arrest_long</code></pre>
+<pre class="r"><code>ggplot(data = arrest_long) +
+  geom_raster(aes(x = col,y=row, fill = value)) +
+  coord_equal(expand = F) +
+  scale_fill_gradient2( low = &quot;red&quot;, mid = &quot;white&quot;, high = &quot;blue&quot;, midpoint = 3) +
+theme_classic() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank())</code></pre>
+<p><img src="/post/2017-09-29-Clustering_1_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+</div>
+</div>

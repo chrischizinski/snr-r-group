@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+         
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Multiple factor ANOVA</title>
+        <style>
+
+    html body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #FEFDFA;
+    }
+
+    :root {
+        --accent: #D00000;
+        --border-width:  5px ;
+    }
+
+</style>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+
+
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/hybrid.min.css"> 
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+ 
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/swift.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/R.min.js"></script> 
+
+    <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script>
+ <meta name="generator" content="Hugo 0.30.2" />
+        
+        
+        
+        
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-48496439-3"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments)};
+          gtag('js', new Date());
+
+          gtag('config', 'UA-48496439-3');
+        </script>
+        
+    </head>
+
+    
+    
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    
+
+    <body>
+         
+        <nav class="navbar navbar-default navbar-fixed-top">
+
+            <div class="container">
+
+                <div class="navbar-header">
+
+                    <a class="navbar-brand visible-xs" href="#">Multiple factor ANOVA</a>
+
+                    <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                </div>
+
+                <div class="collapse navbar-collapse">
+
+                    
+                        <ul class="nav navbar-nav">
+                            
+                                <li><a href="/">Home</a></li>
+                            
+                                <li><a href="/post/">Posts</a></li>
+                            
+                                <li><a href="/resources/">Resources</a></li>
+                            
+                        </ul>
+                    
+
+                    
+                        <ul class="nav navbar-nav navbar-right">
+                            
+                                <li class="navbar-icon"><a href="mailto:cchizinski2@unl.edu"><i class="fa fa-envelope-o"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://github.com/chrischizinski/"><i class="fa fa-github"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://twitter.com/chrischizinski/"><i class="fa fa-twitter"></i></a></li>
+                            
+                        </ul>
+                    
+
+                </div>
+
+            </div>
+
+        </nav>
+
+
+<main>
+
+    <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/post/2016-12-16-anova_multifactor/">Multiple factor ANOVA</a></h4>
+    <h5>December 16, 2016</h5>
+    
+    <a href="/tags/regression"><kbd class="item-tag">Regression</kbd></a>
+    
+    <a href="/tags/anova"><kbd class="item-tag">ANOVA</kbd></a>
+    
+
+</div>
+
+
+    <br> <div class="text-justify"><p>The RMarkdown file for this lesson can be found <a href="https://raw.githubusercontent.com/chrischizinski/SNR_R_Group/master/Rmd/2016-12-16-ANOVA_multifactor.Rmd">here</a>.</p>
+<p>This lesson will follow Chapter 9, 10, and in Quinn and Keough (2002).</p>
+<p>Load the packages we will be using in this lesson</p>
+<pre class="r"><code>library(tidyverse)
+library(broom)
+library(multcomp)
+# install.packages(&#39;afex&#39;)
+# library(afex)</code></pre>
+<div id="nested-designs" class="section level2">
+<h2>Nested designs</h2>
+<p>Common extension of the <a href="https://chrischizinski.github.io/SNR_R_Group/2016-12-09-ANOVA_1factor">single factor design</a> is the nested design - additional factors are included that are nested within the main factor of interest - characteristic feature that distinguishes from other multifactor designs is that the categories of the nested factor(s) within each level of the main factor are different. Main factor can be fixed or random whereas the nested factor(s) is(are) usually random in biology (levels of subsampling or replication in a spatial or temporal hierarchy)</p>
+<p>Examples:<br />
+- <a href="https://www.researchgate.net/profile/Mick_Keough/publication/250215193_Potential_effect_of_enclosure_size_on_field_experiments_with_herbivorous_intertidal_gastropods/links/53e0d37c0cf24f90ff60ba97.pdf">Quinn &amp; Keough (1993)</a> examined the effect of different sized enclosures on growth of the rocky intertidal limpet <em>Cellana tramoserica</em>. There were two enclosure sizes, with five replicate enclosures nested within each size and four or five replicate limpets from each enclosure. - <a href="http://onlinelibrary.wiley.com/doi/10.2307/2265748/full">Caselle &amp; Warner (1996)</a> examined recruitment densities of a coral reef fish at five sites on the north shore of the US Virgin Islands, with six random transects within each site and replicate observations of density of recruits along each transect.</p>
+<p>Lets explore nested ANOVA using the <code>andrew</code> dataset in <code>chpt09</code></p>
+<blockquote>
+<p>Andrew &amp; Underwood (1993) manipulated the density of sea urchins in the shallow subtidal region of a site near Sydney to test the effects on the percentage cover of filamentous algae. There were four urchin treatments (no urchins, 33% of original density, 66% of original density and 100% of orginal density). The treatments were replicated in four distinct patches (3–4 m2) per treatment and percentage cover of filamentous algae (response variable) was measured in five random quadrats per patch. This is a nested design with treatment (fixed factor), patch nested within treatment (random factor) and quadrats as the residual.</p>
+</blockquote>
+<pre class="r"><code>andrew &lt;- read_csv(&quot;https://raw.githubusercontent.com/chrischizinski/SNR_R_Group/master/data/ExperimentalDesignData/chpt09/andrew.csv&quot;)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   TREAT = col_character(),
+##   PATCH = col_integer(),
+##   QUAD = col_integer(),
+##   ALGAE = col_integer()
+## )</code></pre>
+<pre class="r"><code>glimpse(andrew)</code></pre>
+<pre><code>## Observations: 80
+## Variables: 4
+## $ TREAT &lt;chr&gt; &quot;con&quot;, &quot;con&quot;, &quot;con&quot;, &quot;con&quot;, &quot;con&quot;, &quot;con&quot;, &quot;con&quot;, &quot;con&quot;, ...
+## $ PATCH &lt;int&gt; 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4,...
+## $ QUAD  &lt;int&gt; 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4,...
+## $ ALGAE &lt;int&gt; 0, 0, 0, 6, 2, 0, 0, 0, 0, 0, 0, 0, 0, 4, 1, 0, 0, 0, 13...</code></pre>
+<pre class="r"><code>andrew$PATCH &lt;- as.factor(andrew$PATCH)
+andrew$QUAD&lt;- as.factor(andrew$QUAD)
+
+xtabs(~ TREAT +  PATCH, andrew, drop = TRUE, sparse = TRUE)</code></pre>
+<pre><code>## 4 x 16 sparse Matrix of class &quot;dgCMatrix&quot;</code></pre>
+<pre><code>##    [[ suppressing 16 column names &#39;1&#39;, &#39;2&#39;, &#39;3&#39; ... ]]</code></pre>
+<pre><code>##                                      
+## con   5 5 5 5 . . . . . . . . . . . .
+## rem   . . . . . . . . . . . . 5 5 5 5
+## t0.33 . . . . . . . . 5 5 5 5 . . . .
+## t0.66 . . . . 5 5 5 5 . . . . . . . .</code></pre>
+<pre class="r"><code>xtabs(~ TREAT +  QUAD, andrew, drop = TRUE, sparse = TRUE)</code></pre>
+<pre><code>## 4 x 5 sparse Matrix of class &quot;dgCMatrix&quot;
+##        QUAD
+## TREAT   1 2 3 4 5
+##   con   4 4 4 4 4
+##   rem   4 4 4 4 4
+##   t0.33 4 4 4 4 4
+##   t0.66 4 4 4 4 4</code></pre>
+<pre class="r"><code>aov_mod&lt;-aov(ALGAE ~ TREAT + Error(PATCH), data = andrew)
+
+summary(aov_mod)</code></pre>
+<pre><code>## 
+## Error: PATCH
+##           Df Sum Sq Mean Sq F value Pr(&gt;F)  
+## TREAT      3  14429    4810   2.717 0.0913 .
+## Residuals 12  21242    1770                 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Error: Within
+##           Df Sum Sq Mean Sq F value Pr(&gt;F)
+## Residuals 64  19110   298.6</code></pre>
+</div>
+</div>
+
+    
+    
+
+    
+
+        <h4 class="page-header">Related</h4>
+
+         <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/post/2016-12-09-anova_1factor/">ANOVA</a></h4>
+    <h5>December 9, 2016</h5>
+    
+    <a href="/tags/regression"><kbd class="item-tag">Regression</kbd></a>
+    
+    <a href="/tags/anova"><kbd class="item-tag">ANOVA</kbd></a>
+    
+
+</div>
+  <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/post/2016-11-11-multipleregression/">Multiple Regression</a></h4>
+    <h5>November 11, 2016</h5>
+    
+    <a href="/tags/regression"><kbd class="item-tag">Regression</kbd></a>
+    
+
+</div>
+  <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/post/2016-10-28-simpleregression/">Simple Regression</a></h4>
+    <h5>October 28, 2016</h5>
+    
+    <a href="/tags/regression"><kbd class="item-tag">Regression</kbd></a>
+    
+
+</div>
+ 
+
+    
+
+    
+
+        <h4 class="page-header">Comments</h4>
+
+        <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "snrrgroup" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    
+
+</main>
+
+        <footer>
+
+            <p class="copyright text-muted">&copy; All rights reserved. Powered by <a href="https://gohugo.io">Hugo</a> and <a href="https://github.com/calintat/minimal">Minimal</a></p>
+
+        </footer>
+       
+    </body>
+
+</html>
+

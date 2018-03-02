@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on SNR R User Group</title>
+    <link>/tags/</link>
+    <description>Recent content in Tags on SNR R User Group</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 23 Feb 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Age Period Cohort</title>
+      <link>/tags/age-period-cohort/</link>
+      <pubDate>Fri, 23 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/age-period-cohort/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Anova</title>
+      <link>/tags/anova/</link>
+      <pubDate>Fri, 16 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/anova/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Applied Multivariate</title>
+      <link>/tags/applied-multivariate/</link>
+      <pubDate>Fri, 17 Nov 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/applied-multivariate/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Basics</title>
+      <link>/tags/basics/</link>
+      <pubDate>Fri, 08 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/basics/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Data Seminar</title>
+      <link>/tags/data-seminar/</link>
+      <pubDate>Fri, 02 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/data-seminar/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Data Wrangling</title>
+      <link>/tags/data-wrangling/</link>
+      <pubDate>Thu, 29 Sep 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/data-wrangling/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Dates and Time</title>
+      <link>/tags/dates-and-time/</link>
+      <pubDate>Tue, 03 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/dates-and-time/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Ecodetective</title>
+      <link>/tags/ecodetective/</link>
+      <pubDate>Fri, 28 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/ecodetective/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Glm</title>
+      <link>/tags/glm/</link>
+      <pubDate>Fri, 02 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/glm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Graphics</title>
+      <link>/tags/graphics/</link>
+      <pubDate>Wed, 05 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/graphics/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Heat Tolerance</title>
+      <link>/tags/heat-tolerance/</link>
+      <pubDate>Fri, 02 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/heat-tolerance/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Joining Data</title>
+      <link>/tags/joining-data/</link>
+      <pubDate>Thu, 29 Sep 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/joining-data/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Multivariate</title>
+      <link>/tags/multivariate/</link>
+      <pubDate>Fri, 12 Aug 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/multivariate/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Plot</title>
+      <link>/tags/plot/</link>
+      <pubDate>Thu, 23 Jul 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/plot/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>R Markdown</title>
+      <link>/tags/r-markdown/</link>
+      <pubDate>Thu, 23 Jul 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/r-markdown/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Regression</title>
+      <link>/tags/regression/</link>
+      <pubDate>Fri, 16 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/regression/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

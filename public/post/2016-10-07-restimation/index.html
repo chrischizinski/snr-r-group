@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+         
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Estimation of parameters</title>
+        <style>
+
+    html body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #FEFDFA;
+    }
+
+    :root {
+        --accent: #D00000;
+        --border-width:  5px ;
+    }
+
+</style>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+
+
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/hybrid.min.css"> 
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+ 
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/swift.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/R.min.js"></script> 
+
+    <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script>
+ <meta name="generator" content="Hugo 0.30.2" />
+        
+        
+        
+        
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-48496439-3"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments)};
+          gtag('js', new Date());
+
+          gtag('config', 'UA-48496439-3');
+        </script>
+        
+    </head>
+
+    
+    
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    
+
+    <body>
+         
+        <nav class="navbar navbar-default navbar-fixed-top">
+
+            <div class="container">
+
+                <div class="navbar-header">
+
+                    <a class="navbar-brand visible-xs" href="#">Estimation of parameters</a>
+
+                    <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                </div>
+
+                <div class="collapse navbar-collapse">
+
+                    
+                        <ul class="nav navbar-nav">
+                            
+                                <li><a href="/">Home</a></li>
+                            
+                                <li><a href="/post/">Posts</a></li>
+                            
+                                <li><a href="/resources/">Resources</a></li>
+                            
+                        </ul>
+                    
+
+                    
+                        <ul class="nav navbar-nav navbar-right">
+                            
+                                <li class="navbar-icon"><a href="mailto:cchizinski2@unl.edu"><i class="fa fa-envelope-o"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://github.com/chrischizinski/"><i class="fa fa-github"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://twitter.com/chrischizinski/"><i class="fa fa-twitter"></i></a></li>
+                            
+                        </ul>
+                    
+
+                </div>
+
+            </div>
+
+        </nav>
+
+
+<main>
+
+    <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/post/2016-10-07-restimation/">Estimation of parameters</a></h4>
+    <h5>October 7, 2016</h5>
+    
+    <a href="/tags/regression"><kbd class="item-tag">Regression</kbd></a>
+    
+
+</div>
+
+
+    <br> <div class="text-justify"><div id="samples-and-populations" class="section level2">
+<h2>Samples and populations</h2>
+<p>Biologists want to make inferences about a population based on subsamples of that population.</p>
+<ul>
+<li>collections of the population are the <strong>sample</strong></li>
+<li>number of observations is the <strong>sample size</strong></li>
+</ul>
+<p>Basic method of sampling is simple random sampling (all observations have the same probability of being sampled)</p>
+<ul>
+<li>rarely does this happen (Why is this a concern?)</li>
+</ul>
+<p>Random sampling is important because we want to use sample statistics to estimate the population parameters. We can not directly measure the population parameters because it is too large.</p>
+<p>A good estimator of a population should:</p>
+<ul>
+<li>be unbiased. Repeated samples should produce estimates that do not under or over estimate the population parameter</li>
+<li>consistent so with increases in sample size should bring the sample parameter closer to the population parameter.</li>
+<li>should be efficient (has the lowest variance among competing estimates)</li>
+</ul>
+<p>There are two broad types of estimators:</p>
+<ol style="list-style-type: decimal">
+<li>point estimates (single value)</li>
+<li>interval estimates (range of values)</li>
+</ol>
+</div>
+<div id="common-parameters-and-statistics" class="section level2">
+<h2>Common parameters and statistics</h2>
+<div id="center-location-of-distribution" class="section level3">
+<h3>Center (location of distribution)</h3>
+<p>To explore these statistics, we will generate a large sample of data.</p>
+<pre class="r"><code>set.seed(9222016)
+
+rand_data &lt;- data.frame(obs = 1:999,concentration = rnorm(999, 113, 16))
+head(rand_data)</code></pre>
+<pre><code>##   obs concentration
+## 1   1      133.8229
+## 2   2      121.6124
+## 3   3      108.5641
+## 4   4      126.4179
+## 5   5      138.6853
+## 6   6      142.1567</code></pre>
+<pre class="r"><code># minumum
+min(rand_data$concentration)</code></pre>
+<pre><code>## [1] 53.44413</code></pre>
+<pre class="r"><code># maximum 
+max(rand_data$concentration)</code></pre>
+<pre><code>## [1] 157.0837</code></pre>
+<p>Lets visualize this using a histogram. There are two approaches we can do this. One is to generate the binned data with <code>dplyr</code> and the other is to use <code>geom_histogram</code> in ggplot.</p>
+<pre class="r"><code>library(ggplot2)
+library(dplyr)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code># We can set the number of bins to add the data
+
+ggplot(data = rand_data) +
+  geom_histogram(aes(x = concentration), fill = &quot;dodgerblue&quot;, colour=&quot;black&quot;, bins = 50) + 
+  theme_bw()</code></pre>
+<p><img src="/post/2016-10-07-REstimation_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<pre class="r"><code># or we can set how wide we want the binds to be
+ggplot(data = rand_data) +
+  geom_histogram(aes(x = concentration), fill = &quot;dodgerblue&quot;, colour=&quot;black&quot;, binwidth = 5) + 
+  theme_bw()</code></pre>
+<p><img src="/post/2016-10-07-REstimation_files/figure-html/unnamed-chunk-2-2.png" width="672" /></p>
+<pre class="r"><code># use dplyr to create bins and then geom_bar to create plot
+
+summ_data&lt;-rand_data %&gt;% 
+            mutate(bin = cut(rand_data$concentration, seq(50,175, by = 5), labels =seq(50,170, by = 5))) %&gt;% 
+            group_by(bin) %&gt;% 
+            summarise(N = n()) %&gt;% 
+            ungroup() %&gt;% 
+            mutate(bin = as.numeric(as.character(bin)))
+
+ggplot(data = summ_data) + 
+  geom_bar(aes(x = bin, y = N), stat =&quot;identity&quot;,fill = &quot;dodgerblue&quot;, colour = &quot;black&quot;, width = 5) +
+  theme_bw()</code></pre>
+<p><img src="/post/2016-10-07-REstimation_files/figure-html/unnamed-chunk-2-3.png" width="672" /></p>
+<div id="l-estimator" class="section level4">
+<h4>L-estimator</h4>
+<p>L-estimator is based on ordering data from smalles to largest then using a linear combination of weighted-order statitistics</p>
+<div id="mean" class="section level5">
+<h5>Mean</h5>
+<p>The mean is an unbiased estimator of population mean where each observation is weighted by 1/n.</p>
+<pre class="r"><code>sum(rand_data$concentration) / length(rand_data$concentration)</code></pre>
+<pre><code>## [1] 112.6013</code></pre>
+<pre class="r"><code>mean(rand_data$concentration)</code></pre>
+<pre><code>## [1] 112.6013</code></pre>
+</div>
+<div id="median" class="section level5">
+<h5>Median</h5>
+<p>Median is an unbiased estimator of population mean for normal distribution, better estimator in skewed distributions</p>
+<pre class="r"><code># First order the data from smallest to largest
+conc_ordered &lt;- rand_data$concentration[order(rand_data$concentration)]
+
+length(conc_ordered)  # find number of values</code></pre>
+<pre><code>## [1] 999</code></pre>
+<pre class="r"><code>conc_ordered[500] # 500 is the midpoint of 999</code></pre>
+<pre><code>## [1] 112.683</code></pre>
+<pre class="r"><code>median(rand_data$concentration)</code></pre>
+<pre><code>## [1] 112.683</code></pre>
+</div>
+<div id="trimmed-mean" class="section level5">
+<h5>Trimmed mean</h5>
+<p>Trimmed mean is the mean after trimming off a proportion of the data from the highest and lowest observations. Can help deal with outliers.</p>
+<pre class="r"><code>concentration = c(2,4,6,7,11,21,81,90,105,121)
+
+# First order the data from smallest to largest
+conc_ordered &lt;- concentration[order(concentration)]
+
+length(conc_ordered) *0.10  # need to remove the smallest and largest 50 values</code></pre>
+<pre><code>## [1] 1</code></pre>
+<pre class="r"><code>conc_ordered[-c(1,10)] # remove those values</code></pre>
+<pre><code>## [1]   4   6   7  11  21  81  90 105</code></pre>
+<pre class="r"><code>mean(conc_ordered[-c(1,10)])</code></pre>
+<pre><code>## [1] 40.625</code></pre>
+<pre class="r"><code>mean(conc_ordered, trim = 0.1) #  you can use the trim function in mean()</code></pre>
+<pre><code>## [1] 40.625</code></pre>
+</div>
+<div id="winsorized-mean" class="section level5">
+<h5>Winsorized mean</h5>
+<p>Winsorized mean is similar to the trimmed mean but the values that are excluded are replaced by the neighboring value (substituted rather than dropped).</p>
+<pre class="r"><code># First order the data from smallest to largest
+conc_ordered &lt;- concentration[order(concentration)]
+
+length(conc_ordered) *0.10  # need to remove the smallest and largest 50 values</code></pre>
+<pre><code>## [1] 1</code></pre>
+<pre class="r"><code>conc_ordered[-c(1,10)] # remove those values</code></pre>
+<pre><code>## [1]   4   6   7  11  21  81  90 105</code></pre>
+<pre class="r"><code>mean(conc_ordered[c(2,2,3,4,5,6,7,8,9,9)])</code></pre>
+<pre><code>## [1] 43.4</code></pre>
+<pre class="r"><code>install.packages(&#39;psych&#39;)</code></pre>
+<pre class="r"><code>library(psych)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;psych&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:ggplot2&#39;:
+## 
+##     %+%, alpha</code></pre>
+<pre><code>## The following objects are masked from &#39;package:scales&#39;:
+## 
+##     alpha, rescale</code></pre>
+<pre class="r"><code>winsor.mean(concentration, trim = 0.1)  </code></pre>
+<pre><code>## [1] 43.54</code></pre>
+<p>Notice that these numbers are slightly different. That is because instead of replacing the trimmed values with the nearest number, <code>winsor.mean</code> replaces them with the 20% and 80% quantile.</p>
+</div>
+</div>
+<div id="m-estimators" class="section level4">
+<h4>M-estimators</h4>
+<p>M-estimators give different weights gradually from the middle of the sample and incorporate a measure of variability in the estimation procedure. Uses an iterative approach and are useful with extreme outliers.</p>
+<p>Not commonly used but do have a role in robust regression and ANOVA techniques for analyzing linear models.</p>
+<pre class="r"><code>library(MASS)  #requires the MASS package</code></pre>
+<pre><code>## 
+## Attaching package: &#39;MASS&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     select</code></pre>
+<pre class="r"><code>data(chem)  #load the chem dataset
+
+chem_data&lt;-data.frame(ind = 1:length(chem),chem = chem)
+
+ggplot(data = chem_data) + 
+  geom_point(aes(x = ind, y= chem), size = 2, colour = &quot;firebrick&quot;) +
+  theme_bw()</code></pre>
+<p><img src="/post/2016-10-07-REstimation_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>We can see from this data that there is one HUGE outlier. Running <code>huber</code> and <code>mean</code> give us different results.</p>
+<pre class="r"><code>mean(chem)</code></pre>
+<pre><code>## [1] 4.280417</code></pre>
+<pre class="r"><code>huber(chem)</code></pre>
+<pre><code>## $mu
+## [1] 3.206724
+## 
+## $s
+## [1] 0.526323</code></pre>
+</div>
+<div id="r-estimators" class="section level4">
+<h4>R-estimators</h4>
+<p>R-estimators based on the ranks of the observations rather than the observations themselves and form the basis for many rank- based “non-parametric” tests.</p>
+<div id="hodgeslehmann-estimator" class="section level5">
+<h5>Hodges–Lehmann estimator</h5>
+<p>Hodges–Lehmann estimator is the median of the averages of all possible pairs of observations</p>
+<pre class="r"><code>fake_data&lt;- rpois(20, 10)
+
+#all possible combinations
+all_combos &lt;- expand.grid(x=(fake_data), y = (fake_data))
+
+all_combos$mean &lt;- apply(all_combos,1,mean)
+
+median(all_combos$mean)</code></pre>
+<pre><code>## [1] 9.5</code></pre>
+<pre class="r"><code># We can get the same answer from the wilcox test
+
+wilcox.test(fake_data,  conf.int = TRUE)$estimate</code></pre>
+<pre><code>## Warning in wilcox.test.default(fake_data, conf.int = TRUE): cannot compute
+## exact p-value with ties</code></pre>
+<pre><code>## Warning in wilcox.test.default(fake_data, conf.int = TRUE): cannot compute
+## exact confidence interval with ties</code></pre>
+<pre><code>## (pseudo)median 
+##       9.499973</code></pre>
+</div>
+</div>
+</div>
+<div id="spread-or-variability-of-your-sample" class="section level3">
+<h3>Spread or variability of your sample</h3>
+<p>Like estimators for the central tendency of your data, there are also numerous ways to assess the spread in your sample.</p>
+<p>Going back to our concentration data that we created earlier, we will look at some of these estimates.</p>
+<div id="range" class="section level4">
+<h4>Range</h4>
+<p>The range is perhaps the simplest estimate of the spread of your data</p>
+<pre class="r"><code># range 
+range(rand_data$concentration) #minimum and maximum</code></pre>
+<pre><code>## [1]  53.44413 157.08372</code></pre>
+</div>
+<div id="variance" class="section level4">
+<h4>Variance</h4>
+<p>Variance is the average squared deviation from the mean.</p>
+<pre class="r"><code>sum_squares&lt;-sum((rand_data$concentration - mean(rand_data$concentration))^2)
+sum_squares / (length(rand_data$concentration) - 1) # variance</code></pre>
+<pre><code>## [1] 250.8505</code></pre>
+<pre class="r"><code>var(rand_data$concentration)</code></pre>
+<pre><code>## [1] 250.8505</code></pre>
+</div>
+<div id="standard-deviation" class="section level4">
+<h4>Standard deviation</h4>
+<p>Square root of the variance.</p>
+<pre class="r"><code>sqrt(var(rand_data$concentration))</code></pre>
+<pre><code>## [1] 15.83826</code></pre>
+<pre class="r"><code>sd(rand_data$concentration)</code></pre>
+<pre><code>## [1] 15.83826</code></pre>
+</div>
+<div id="coefficient-of-variation" class="section level4">
+<h4>Coefficient of variation</h4>
+<p>Used to compare standard deviations across populations with different means because it is independent of the measurement units.</p>
+<pre class="r"><code>sd(rand_data$concentration) / mean(rand_data$concentration)</code></pre>
+<pre><code>## [1] 0.1406579</code></pre>
+</div>
+<div id="median-absolute-deviation" class="section level4">
+<h4>Median absolute deviation</h4>
+<p>Less sensitive to outliers than the above measures and is presented in association with medians.</p>
+<pre class="r"><code>abs_deviation &lt;-abs(rand_data$concentration - median(rand_data$concentration))
+median(abs_deviation) * 1.4826</code></pre>
+<pre><code>## [1] 15.21385</code></pre>
+<pre class="r"><code>mad(rand_data$concentration)</code></pre>
+<pre><code>## [1] 15.21385</code></pre>
+</div>
+<div id="interquartile-range" class="section level4">
+<h4>Interquartile range</h4>
+<p>The difference between the first quartile and the third quartile. Used in ggplots <code>geom_boxplot</code>.</p>
+<pre class="r"><code>quantz &lt;- quantile(rand_data$concentration, c(0.75, 0.25))
+quantz[1] - quantz[2] </code></pre>
+<pre><code>##      75% 
+## 20.36174</code></pre>
+<pre class="r"><code>IQR(rand_data$concentration)</code></pre>
+<pre><code>## [1] 20.36174</code></pre>
+</div>
+<div id="degrees-of-freedom" class="section level4">
+<h4>Degrees of freedom</h4>
+<p>Degrees of freedom is simply the number of observations in our sample that are “free to vary” when we are estimating the variance. We already know one of those values is the mean, thus df = n - 1.</p>
+</div>
+<div id="standard-error" class="section level4">
+<h4>Standard error</h4>
+<p>The standard error of the mean is describing the variation in our sample mean. It is termed an error because it is the error about <span class="math inline">\(\bar{y}\)</span>. If the error is large, then repeated sampling would produce different means.</p>
+<p>Standard error is calculated as the standard deviation divided by the square root of the number of observations. There is no function in <code>stats</code> that calculates the standard error.</p>
+<pre class="r"><code>se &lt;- sd(rand_data$concentration)/sqrt(length(rand_data$concentration))
+
+se</code></pre>
+<pre><code>## [1] 0.5011004</code></pre>
+</div>
+<div id="confidence-intervals" class="section level4">
+<h4>Confidence intervals</h4>
+<p>NOTE: all of this is assuming normality. If you are not working with a normal distribution then other methods maybe necessary to calculate variance (in particular).</p>
+<p>In frequentist terms, the confidence interval is not a probability statement. A confidince interval can be thought of, in this context, as one interval generated by a procedure that will give correct intervals 95% of the time.</p>
+<p>Confidence intervals can be calculated using the t-statistic critical value and the standard error. The width of the confidence interval can be found using the <code>qt()</code> function in R.</p>
+<pre class="r"><code>critical.vals&lt;-data.frame(ConfidenceInterval=c(&#39;99%&#39;,&#39;95%&#39;,&#39;90%&#39;,&#39;80%&#39;),
+                          CriticalValue=c(abs(qt(0.010, 10000)),
+                                         abs(qt(0.025,10000)),
+                                         abs(qt(0.050, 10000)),
+                                         abs(qt(0.10, 10000))))
+
+critical.vals</code></pre>
+<pre><code>##   ConfidenceInterval CriticalValue
+## 1                99%      2.326721
+## 2                95%      1.960201
+## 3                90%      1.645006
+## 4                80%      1.281636</code></pre>
+<p>We can illustrate this using <code>ggplot2</code>.</p>
+<pre class="r"><code>set.seed(12345)
+
+x&lt;-data.frame(obs=1:100,val=rnorm(100))
+head(x)</code></pre>
+<pre><code>##   obs        val
+## 1   1  0.5855288
+## 2   2  0.7094660
+## 3   3 -0.1093033
+## 4   4 -0.4534972
+## 5   5  0.6058875
+## 6   6 -1.8179560</code></pre>
+<pre class="r"><code>se_conc &lt;- sd(x$val)/sqrt(length(x$val))
+sd_conc &lt;- sd(x$val)
+mean_conc&lt;- mean(x$val)
+
+ggplot(data = x) + 
+  geom_histogram(aes(x = val),fill = &quot;dodgerblue&quot;, colour = &quot;black&quot;) +
+  geom_errorbarh(aes(xmin = mean_conc - 1.96*se_conc, xmax = mean_conc + 1.96*se_conc, y = 15, x =mean_conc )) +
+  geom_point(aes(x = mean_conc,  y = 15), size = 1) +
+    geom_errorbarh(aes(xmin = mean_conc - 1.96*sd_conc, xmax = mean_conc + 1.96*sd_conc, y = 13, x =mean_conc ),colour=&quot;red&quot;) +
+  geom_point(aes(x = mean_conc,  y = 13), size = 1,colour=&quot;red&quot;) +
+  annotate(&quot;text&quot;, x = c(0.75,2.7), y = c(15,13), label = c(&quot;se&quot;, &quot;sd&quot;)) +
+  theme_bw()</code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="/post/2016-10-07-REstimation_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p>You can see the difference in the above plot. Standard deviations describe the spread in the data, whereas the standard error describes where the mean (or predicted value) falls.</p>
+<p>What happens to the standard error as we increase the sample size to 200, 500, 1000?</p>
+</div>
+<div id="resampling-methods" class="section level4">
+<h4>Resampling methods</h4>
+<p>There are a couple of different ways to calculate the spread or confidence interval when the sampling distribution is unknown or is definitively not normal. These methods involve resampling your data over many different iterations to build distributions of the expected values (i.e., means, medians, confidence intervals).</p>
+<div id="jackknifing" class="section level5">
+<h5>Jackknifing</h5>
+<p>Jackknifining is a predecessor of bootstrapping and is less computationally expensive. Jackknifing is done by going through the data and leaving one observation out and calulating the sample statistic of interest. The term ‘jackknifing’ was coined by John Tukey referring to its robustness as a tool.</p>
+<p>We can explore this below:</p>
+<pre class="r"><code>rand_values &lt;- data.frame(x = 1:75,val =rnorm(75, mean = 10, sd = 3))  # Generate random values
+
+head(rand_values)</code></pre>
+<pre><code>##   x       val
+## 1 1 10.671776
+## 2 2  6.531330
+## 3 3 11.267256
+## 4 4  6.025734
+## 5 5 10.423253
+## 6 6  8.391856</code></pre>
+<pre class="r"><code>stor_vals&lt;-data.frame(iter = 1:nrow(rand_values), j_mean=NA)  # create a data.frame to store values
+
+head(stor_vals)</code></pre>
+<pre><code>##   iter j_mean
+## 1    1     NA
+## 2    2     NA
+## 3    3     NA
+## 4    4     NA
+## 5    5     NA
+## 6    6     NA</code></pre>
+<pre class="r"><code># to do this we will need to run a loop
+
+for(i in 1:nrow(rand_values)){
+  sub_rand_values&lt;-rand_values[-i,] # remove that data value
+  mean_val &lt;- mean(sub_rand_values$val)
+  
+  stor_vals$j_mean[i] &lt;- mean_val # store that mean for the iteration
+}  
+ggplot(data = stor_vals) + 
+  geom_histogram(aes(x = j_mean), bins = 30) +
+  geom_vline(aes(xintercept = mean(rand_values$val)), colour = &quot;red&quot;) +
+  geom_vline(aes(xintercept = mean(stor_vals$j_mean)), colour = &quot;blue&quot;, linetype = &quot;dashed&quot;) +
+  theme_bw()</code></pre>
+<p><img src="/post/2016-10-07-REstimation_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+</div>
+<div id="bootstrapping" class="section level5">
+<h5>Bootstrapping</h5>
+<p>Bootstrapping is another resampling technique. Instead of “leaving one out”, we resample the data. We have two options. One is to take a random subset of the data (likely with no replacement) or resample the full number of the data set (with replacement). Like the jackknife, we calculate our sample statistic. Unlike the jackknife, it tends to be a general rule that we resample a lot of times. The general rule is ~ 1,000 times.</p>
+<pre class="r"><code>head(rand_values)</code></pre>
+<pre><code>##   x       val
+## 1 1 10.671776
+## 2 2  6.531330
+## 3 3 11.267256
+## 4 4  6.025734
+## 5 5 10.423253
+## 6 6  8.391856</code></pre>
+<pre class="r"><code>iter = 1000 # number of iterations
+
+stor_vals_bs&lt;-data.frame(iter = 1:iter, bs_mean=NA)  # create a data.frame to store values
+
+head(stor_vals_bs)</code></pre>
+<pre><code>##   iter bs_mean
+## 1    1      NA
+## 2    2      NA
+## 3    3      NA
+## 4    4      NA
+## 5    5      NA
+## 6    6      NA</code></pre>
+<pre class="r"><code># to do this we will need to run a loop
+
+for(i in 1:iter){
+  sub_rand_values&lt;-rand_values[sample(1:nrow(rand_values),nrow(rand_values),replace = TRUE),] # remove that data value
+  mean_val &lt;- mean(sub_rand_values$val)
+  
+  stor_vals_bs$bs_mean[i] &lt;- mean_val # store that mean for the iteration
+} 
+
+
+ggplot(data = stor_vals_bs) + 
+  geom_histogram(aes(x = bs_mean), bins = 30) +
+  geom_vline(aes(xintercept = mean(rand_values$val)), colour = &quot;red&quot;) +
+  geom_vline(aes(xintercept = mean(stor_vals_bs$bs_mean)), colour = &quot;blue&quot;, linetype = &quot;dashed&quot;) +
+  theme_bw()</code></pre>
+<p><img src="/post/2016-10-07-REstimation_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+</div>
+</div>
+<div id="now-it-is-your-turn" class="section level4">
+<h4>Now it is your turn</h4>
+<ol style="list-style-type: decimal">
+<li>Load the <code>lovett</code> data from our github website (data/ExperimentalDesignData/chpt2/) using the appropriate means</li>
+<li>Calculate these statistics for SO4, SO4MOD, and CL</li>
+</ol>
+<ul>
+<li>Mean</li>
+<li>Median</li>
+<li>5% trimmed mean</li>
+<li>Huber’s M-estimate</li>
+<li>Standard deviation</li>
+<li>Interquartile range</li>
+<li>Median absolute deviation</li>
+<li>Standard error of mean</li>
+<li>95% confidence interval for mean</li>
+</ul>
+<ol start="3" style="list-style-type: decimal">
+<li>Combine these in a single data.frame</li>
+</ol>
+<p><a href="https://chrischizinski.github.io/SNR_R_Group/answers/answer2.html">Answers here</a></p>
+<p>Use the bootstrapping approach to calculate for SO4:</p>
+<ol style="list-style-type: decimal">
+<li>Mean</li>
+<li>Standard error</li>
+<li>95% confidence interval</li>
+<li>Median</li>
+<li>Standard error</li>
+<li>Combine these in a data.frame with the values from the population</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+
+    
+    
+
+    
+
+        <h4 class="page-header">Related</h4>
+
+         <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/post/2016-12-16-anova_multifactor/">Multiple factor ANOVA</a></h4>
+    <h5>December 16, 2016</h5>
+    
+    <a href="/tags/regression"><kbd class="item-tag">Regression</kbd></a>
+    
+    <a href="/tags/anova"><kbd class="item-tag">ANOVA</kbd></a>
+    
+
+</div>
+  <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/post/2016-12-09-anova_1factor/">ANOVA</a></h4>
+    <h5>December 9, 2016</h5>
+    
+    <a href="/tags/regression"><kbd class="item-tag">Regression</kbd></a>
+    
+    <a href="/tags/anova"><kbd class="item-tag">ANOVA</kbd></a>
+    
+
+</div>
+  <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/post/2016-11-11-multipleregression/">Multiple Regression</a></h4>
+    <h5>November 11, 2016</h5>
+    
+    <a href="/tags/regression"><kbd class="item-tag">Regression</kbd></a>
+    
+
+</div>
+ 
+
+    
+
+    
+
+        <h4 class="page-header">Comments</h4>
+
+        <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "snrrgroup" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    
+
+</main>
+
+        <footer>
+
+            <p class="copyright text-muted">&copy; All rights reserved. Powered by <a href="https://gohugo.io">Hugo</a> and <a href="https://github.com/calintat/minimal">Minimal</a></p>
+
+        </footer>
+       
+    </body>
+
+</html>
+
