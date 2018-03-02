@@ -294,7 +294,7 @@ Cuml_var</code></pre>
 <h3>So how many factors is appropriate?</h3>
 <pre class="r"><code>psych::fa.parallel(goal_scale, fa=&quot;fa&quot;, fm=&quot;ml&quot;)</code></pre>
 <p><img src="/post/2017-10-20-LatentVariables_2_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
-<pre><code>## Parallel analysis suggests that the number of factors =  2  and the number of components =  NA</code></pre>
+<pre><code>## Parallel analysis suggests that the number of factors =  3  and the number of components =  NA</code></pre>
 <p>So lets look at a 3 factor solution.</p>
 <pre class="r"><code>agoal.efa3&lt;-factanal(~ags1+ags2+ags3+ags4+ags5+ags6+ags7+ags8+ags9+ags10+ags11+ ags12, factors=3, rotation=&quot;promax&quot;, data = goal_scale)
 

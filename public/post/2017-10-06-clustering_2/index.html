@@ -187,38 +187,38 @@ head(arrest.scale)</code></pre>
 <h4>K-means</h4>
 <pre class="r"><code>km.arrest &lt;- kmeans(arrest.scale, centers = 3, nstart = 25)
 km.arrest</code></pre>
-<pre><code>## K-means clustering with 3 clusters of sizes 17, 13, 20
+<pre><code>## K-means clustering with 3 clusters of sizes 20, 13, 17
 ## 
 ## Cluster means:
 ##       Murder    Assault   UrbanPop       Rape
-## 1 -0.4469795 -0.3465138  0.4788049 -0.2571398
+## 1  1.0049340  1.0138274  0.1975853  0.8469650
 ## 2 -0.9615407 -1.1066010 -0.9301069 -0.9667633
-## 3  1.0049340  1.0138274  0.1975853  0.8469650
+## 3 -0.4469795 -0.3465138  0.4788049 -0.2571398
 ## 
 ## Clustering vector:
 ##        Alabama         Alaska        Arizona       Arkansas     California 
-##              3              3              3              1              3 
+##              1              1              1              3              1 
 ##       Colorado    Connecticut       Delaware        Florida        Georgia 
-##              3              1              1              3              3 
+##              1              3              3              1              1 
 ##         Hawaii          Idaho       Illinois        Indiana           Iowa 
-##              1              2              3              1              2 
+##              3              2              1              3              2 
 ##         Kansas       Kentucky      Louisiana          Maine       Maryland 
-##              1              2              3              2              3 
+##              3              2              1              2              1 
 ##  Massachusetts       Michigan      Minnesota    Mississippi       Missouri 
-##              1              3              2              3              3 
+##              3              1              2              1              1 
 ##        Montana       Nebraska         Nevada  New Hampshire     New Jersey 
-##              2              2              3              2              1 
+##              2              2              1              2              3 
 ##     New Mexico       New York North Carolina   North Dakota           Ohio 
-##              3              3              3              2              1 
+##              1              1              1              2              3 
 ##       Oklahoma         Oregon   Pennsylvania   Rhode Island South Carolina 
-##              1              1              1              1              3 
+##              3              3              3              3              1 
 ##   South Dakota      Tennessee          Texas           Utah        Vermont 
-##              2              3              3              1              2 
+##              2              1              1              3              2 
 ##       Virginia     Washington  West Virginia      Wisconsin        Wyoming 
-##              1              1              2              2              1 
+##              3              3              2              2              3 
 ## 
 ## Within cluster sum of squares by cluster:
-## [1] 19.62285 11.95246 46.74796
+## [1] 46.74796 11.95246 19.62285
 ##  (between_SS / total_SS =  60.0 %)
 ## 
 ## Available components:
@@ -264,12 +264,12 @@ state_scores$cluster &lt;- km.arrest$cluster
 state_scores$state &lt;- rownames(state_scores)
 head(state_scores)</code></pre>
 <pre><code>##                   PC1        PC2         PC3          PC4 cluster
-## Alabama    -0.9756604  1.1220012 -0.43980366  0.154696581       3
-## Alaska     -1.9305379  1.0624269  2.01950027 -0.434175454       3
-## Arizona    -1.7454429 -0.7384595  0.05423025 -0.826264240       3
-## Arkansas    0.1399989  1.1085423  0.11342217 -0.180973554       1
-## California -2.4986128 -1.5274267  0.59254100 -0.338559240       3
-## Colorado   -1.4993407 -0.9776297  1.08400162  0.001450164       3
+## Alabama    -0.9756604  1.1220012 -0.43980366  0.154696581       1
+## Alaska     -1.9305379  1.0624269  2.01950027 -0.434175454       1
+## Arizona    -1.7454429 -0.7384595  0.05423025 -0.826264240       1
+## Arkansas    0.1399989  1.1085423  0.11342217 -0.180973554       3
+## California -2.4986128 -1.5274267  0.59254100 -0.338559240       1
+## Colorado   -1.4993407 -0.9776297  1.08400162  0.001450164       1
 ##                 state
 ## Alabama       Alabama
 ## Alaska         Alaska
@@ -279,7 +279,7 @@ head(state_scores)</code></pre>
 ## Colorado     Colorado</code></pre>
 <p>Next we need to find which points fall on the outside of each group (i.e., hull). We do this using the <code>chull()</code> command.</p>
 <pre class="r"><code>chull(state_scores %&gt;% filter(cluster ==1) %&gt;% select(PC1, PC2) )</code></pre>
-<pre><code>## [1]  2  4  8  3  1 17</code></pre>
+<pre><code>## [1] 13  5  4 14  6 12</code></pre>
 <pre class="r"><code>grp.1 &lt;- state_scores[state_scores$cluster == 1, ][chull(state_scores %&gt;% filter(cluster ==1) %&gt;% select(PC1, PC2) ), ]  # hull values for cluster 1
 
 grp.2 &lt;- state_scores[state_scores$cluster == 2, ][chull(state_scores %&gt;% filter(cluster ==2) %&gt;% select(PC1, PC2) ), ]  # hull values for cluster 2
@@ -288,20 +288,20 @@ grp.3 &lt;- state_scores[state_scores$cluster == 3, ][chull(state_scores %&gt;% 
 
 all_hulls &lt;- rbind(grp.1,grp.2,grp.3)
 head(all_hulls)</code></pre>
-<pre><code>##                     PC1        PC2         PC3        PC4 cluster
-## Connecticut  1.34499236 -1.0779836 -0.63679250 -0.1172787       1
-## Hawaii       0.90348448 -1.5546761  0.05027151  0.8937332       1
-## New Jersey  -0.17974128 -1.4349374 -0.75677041  0.2409366       1
-## Delaware    -0.04722981 -0.3220889 -0.71141032 -0.8731133       1
-## Arkansas     0.13999894  1.1085423  0.11342217 -0.1809736       1
-## Wyoming      0.62310061  0.3177866 -0.23824049 -0.1649769       1
+<pre><code>##                    PC1         PC2        PC3          PC4 cluster
+## Missouri    -0.6897843 -0.26070794  0.3736503  0.223554811       1
+## Colorado    -1.4993407 -0.97762966  1.0840016  0.001450164       1
+## California  -2.4986128 -1.52742672  0.5925410 -0.338559240       1
+## Nevada      -2.8455054 -0.76780502  1.1516879  0.311354436       1
+## Florida     -2.9827597  0.03883425 -0.5710321 -0.095317042       1
+## Mississippi -0.9864792  2.36973712 -0.7333629  0.213342049       1
 ##                   state
-## Connecticut Connecticut
-## Hawaii           Hawaii
-## New Jersey   New Jersey
-## Delaware       Delaware
-## Arkansas       Arkansas
-## Wyoming         Wyoming</code></pre>
+## Missouri       Missouri
+## Colorado       Colorado
+## California   California
+## Nevada           Nevada
+## Florida         Florida
+## Mississippi Mississippi</code></pre>
 <pre class="r"><code>ggplot(data = state_scores) + 
   geom_point(aes(x = PC1, y = PC2, color = as.factor(cluster))) +
   geom_text(aes(x = PC1, y = PC2, color = as.factor(cluster), label = state))  +

@@ -20,7 +20,7 @@ library(emmeans)
 library(readxl)
 library(AICcmodavg)
 library(tidyverse)
-library(stargazer)
+library(pander)
 ```
 
 Link to the Rmarkdown files can be found [here](https://github.com/chrischizinski/snr-r-group/tree/master/content/post)
@@ -84,18 +84,14 @@ unique(herr_exo$warmTemp)
 
 he_mod <- glm(CTmax ~ warmTemp + length + ACtemp, data = herr_exo)
 
-# he_mod %>% 
-#        sjt.lm(no.output = TRUE, show.se = TRUE) %>% 
-#        return() %>% .[["knitr"]] %>% asis_output
 
-# pander(he_mod)
-# 
-# xtable(he_mod)
+outtab<-tidy(he_mod) %>% 
+          mutate_if(is.numeric, funs(sprintf("%.3f",.))) %>% 
+          mutate(p.value = case_when(p.value < 0.001 ~ "<0.001",
+                                     TRUE ~ p.value))
+
+pander(outtab, round = 3, justify = "lrrrr")
   
 ```
 
-```{r chunkTest1, echo=FALSE, results='asis'}
-stargazer(he_mod, type='html', single.row = TRUE)
-
-```
 

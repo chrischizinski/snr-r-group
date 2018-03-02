@@ -100,137 +100,80 @@ unique(herr_exo$warmTemp)</code></pre>
 ## Levels: 0.5 1 2 4 8</code></pre>
 <pre class="r"><code>he_mod &lt;- glm(CTmax ~ warmTemp + length + ACtemp, data = herr_exo)
 
-# he_mod %&gt;% 
-#        sjt.lm(no.output = TRUE, show.se = TRUE) %&gt;% 
-#        return() %&gt;% .[[&quot;knitr&quot;]] %&gt;% asis_output
 
-# pander(he_mod)
-# 
-# xtable(he_mod)</code></pre>
-<table style="text-align:center">
-<tr>
-<td colspan="2" style="border-bottom: 1px solid black">
-</td>
+outtab&lt;-tidy(he_mod) %&gt;% 
+          mutate_if(is.numeric, funs(sprintf(&quot;%.3f&quot;,.))) %&gt;% 
+          mutate(p.value = case_when(p.value &lt; 0.001 ~ &quot;&lt;0.001&quot;,
+                                     TRUE ~ p.value))
+
+pander(outtab, round = 3, justify = &quot;lrrrr&quot;)</code></pre>
+<table style="width:81%;">
+<colgroup>
+<col width="19%" />
+<col width="15%" />
+<col width="16%" />
+<col width="16%" />
+<col width="12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
 </tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-<em>Dependent variable:</em>
-</td>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">22.484</td>
+<td align="right">0.738</td>
+<td align="right">30.484</td>
+<td align="right">&lt;0.001</td>
 </tr>
-<tr>
-<td>
-</td>
-<td colspan="1" style="border-bottom: 1px solid black">
-</td>
+<tr class="even">
+<td align="left">warmTemp1</td>
+<td align="right">-0.682</td>
+<td align="right">0.548</td>
+<td align="right">-1.246</td>
+<td align="right">0.214</td>
 </tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-CTmax
-</td>
+<tr class="odd">
+<td align="left">warmTemp2</td>
+<td align="right">0.132</td>
+<td align="right">0.545</td>
+<td align="right">0.241</td>
+<td align="right">0.810</td>
 </tr>
-<tr>
-<td colspan="2" style="border-bottom: 1px solid black">
-</td>
+<tr class="even">
+<td align="left">warmTemp4</td>
+<td align="right">1.723</td>
+<td align="right">0.608</td>
+<td align="right">2.836</td>
+<td align="right">0.005</td>
 </tr>
-<tr>
-<td style="text-align:left">
-warmTemp1
-</td>
-<td>
--0.682 (0.548)
-</td>
+<tr class="odd">
+<td align="left">warmTemp8</td>
+<td align="right">2.480</td>
+<td align="right">0.608</td>
+<td align="right">4.082</td>
+<td align="right">&lt;0.001</td>
 </tr>
-<tr>
-<td style="text-align:left">
-warmTemp2
-</td>
-<td>
-0.132 (0.545)
-</td>
+<tr class="even">
+<td align="left">length</td>
+<td align="right">-0.021</td>
+<td align="right">0.040</td>
+<td align="right">-0.512</td>
+<td align="right">0.609</td>
 </tr>
-<tr>
-<td style="text-align:left">
-warmTemp4
-</td>
-<td>
-1.723<sup>***</sup> (0.608)
-</td>
+<tr class="odd">
+<td align="left">ACtemp13</td>
+<td align="right">1.806</td>
+<td align="right">0.359</td>
+<td align="right">5.026</td>
+<td align="right">&lt;0.001</td>
 </tr>
-<tr>
-<td style="text-align:left">
-warmTemp8
-</td>
-<td>
-2.480<sup>***</sup> (0.608)
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-length
-</td>
-<td>
--0.021 (0.040)
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-ACtemp13
-</td>
-<td>
-1.806<sup>***</sup> (0.359)
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-Constant
-</td>
-<td>
-22.484<sup>***</sup> (0.738)
-</td>
-</tr>
-<tr>
-<td colspan="2" style="border-bottom: 1px solid black">
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-Observations
-</td>
-<td>
-222
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-Log Likelihood
-</td>
-<td>
--519.555
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-Akaike Inf. Crit.
-</td>
-<td>
-1,053.109
-</td>
-</tr>
-<tr>
-<td colspan="2" style="border-bottom: 1px solid black">
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-<em>Note:</em>
-</td>
-<td style="text-align:right">
-<sup><em></sup>p&lt;0.1; <sup><strong></sup>p&lt;0.05; <sup></strong></em></sup>p&lt;0.01
-</td>
-</tr>
+</tbody>
 </table>
 </div>
