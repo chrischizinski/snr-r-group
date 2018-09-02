@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+         
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Time Series Analysis</title>
+        <style>
+
+    html body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #FEFDFA;
+    }
+
+    :root {
+        --accent: #D00000;
+        --border-width:  5px ;
+    }
+
+</style>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+
+
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/hybrid.min.css"> 
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+ 
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/swift.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/R.min.js"></script> 
+
+    <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script>
+ <meta name="generator" content="Hugo 0.30.2" />
+        
+        
+        
+        
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-48496439-3"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments)};
+          gtag('js', new Date());
+
+          gtag('config', 'UA-48496439-3');
+        </script>
+        
+    </head>
+
+    
+    
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    
+
+    <body>
+         
+        <nav class="navbar navbar-default navbar-fixed-top">
+
+            <div class="container">
+
+                <div class="navbar-header">
+
+                    <a class="navbar-brand visible-xs" href="#">Time Series Analysis</a>
+
+                    <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                </div>
+
+                <div class="collapse navbar-collapse">
+
+                    
+                        <ul class="nav navbar-nav">
+                            
+                                <li><a href="/">Home</a></li>
+                            
+                                <li><a href="/post/">Posts</a></li>
+                            
+                                <li><a href="/resources/">Resources</a></li>
+                            
+                        </ul>
+                    
+
+                    
+                        <ul class="nav navbar-nav navbar-right">
+                            
+                                <li class="navbar-icon"><a href="mailto:cchizinski2@unl.edu"><i class="fa fa-envelope-o"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://github.com/chrischizinski/"><i class="fa fa-github"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://twitter.com/chrischizinski/"><i class="fa fa-twitter"></i></a></li>
+                            
+                        </ul>
+                    
+
+                </div>
+
+            </div>
+
+        </nav>
+
+
+<main>
+
+    <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/post/2018-04-27-timeseries/">Time Series Analysis</a></h4>
+    <h5>April 27, 2018</h5>
+    
+    <a href="/tags/time-series"><kbd class="item-tag">Time Series</kbd></a>
+    
+    <a href="/tags/data-seminar"><kbd class="item-tag">Data Seminar</kbd></a>
+    
+
+</div>
+
+
+    <br> <div class="text-justify"><div id="load-libraries" class="section level2">
+<h2>Load libraries</h2>
+<pre class="r"><code># .libPaths(&quot;P:/RLibrary2&quot;)
+knitr::opts_chunk$set(echo = TRUE)
+
+# install.packages(c(&quot;forecast&quot;,&quot;lmtest&quot;,&quot;tseries&quot;))
+
+library(lubridate)
+library(tidyverse)
+library(forecast)
+library(lmtest)
+library(tseries)
+library(scales)
+library(gridExtra)</code></pre>
+</div>
+<div id="load-data" class="section level2">
+<h2>Load data</h2>
+<pre class="r"><code>id1 = &quot;1lgjg9EpSgt6pFUGCNiuio3APgKZZ4un1&quot;
+id2 = &quot;1rVzQ-kkFsRMC-IM3jDdqjOLjY1qnIRRW&quot;
+
+spop&lt;- read_csv(sprintf(&quot;https://docs.google.com/uc?id=%s&amp;export=download&quot;, id1))</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   ReleaseDate = col_integer(),
+##   StateAbbreviation = col_character(),
+##   None = col_double(),
+##   D0 = col_double(),
+##   D1 = col_double(),
+##   D2 = col_double(),
+##   D3 = col_double(),
+##   D4 = col_double(),
+##   ValidStart = col_character(),
+##   ValidEnd = col_character(),
+##   StatisticFormatID = col_integer()
+## )</code></pre>
+<pre class="r"><code>glimpse(spop)</code></pre>
+<pre><code>## Observations: 366
+## Variables: 11
+## $ ReleaseDate       &lt;int&gt; 20171226, 20171219, 20171212, 20171205, 2017...
+## $ StateAbbreviation &lt;chr&gt; &quot;CA&quot;, &quot;CA&quot;, &quot;CA&quot;, &quot;CA&quot;, &quot;CA&quot;, &quot;CA&quot;, &quot;CA&quot;, &quot;C...
+## $ None              &lt;dbl&gt; 36.64, 36.64, 36.64, 39.44, 41.24, 44.78, 44...
+## $ D0                &lt;dbl&gt; 63.36, 63.36, 63.36, 60.56, 58.76, 55.22, 55...
+## $ D1                &lt;dbl&gt; 36.92, 36.92, 34.84, 34.84, 27.63, 27.63, 27...
+## $ D2                &lt;dbl&gt; 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0....
+## $ D3                &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ D4                &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ ValidStart        &lt;chr&gt; &quot;12/26/2017&quot;, &quot;12/19/2017&quot;, &quot;12/12/2017&quot;, &quot;1...
+## $ ValidEnd          &lt;chr&gt; &quot;1/1/2018&quot;, &quot;12/25/2017&quot;, &quot;12/18/2017&quot;, &quot;12/...
+## $ StatisticFormatID &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,...</code></pre>
+<pre class="r"><code>news&lt;- read_csv(sprintf(&quot;https://docs.google.com/uc?id=%s&amp;export=download&quot;, id2))</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   Date = col_date(format = &quot;&quot;),
+##   Headline = col_character(),
+##   Source = col_character(),
+##   Country = col_character(),
+##   NAME = col_character(),
+##   year = col_integer(),
+##   month = col_integer(),
+##   yrmo = col_date(format = &quot;&quot;)
+## )</code></pre>
+<pre class="r"><code>glimpse(news)</code></pre>
+<pre><code>## Observations: 157,165
+## Variables: 8
+## $ Date     &lt;date&gt; 2011-01-31, 2011-01-31, 2011-01-31, 2011-01-31, 2011...
+## $ Headline &lt;chr&gt; &quot;Biz Buzz: Citizen of the Year\u0092s passion is enha...
+## $ Source   &lt;chr&gt; &quot;The Tribune&quot;, &quot;FOX40&quot;, &quot;KQED&#39;s News Fix&quot;, &quot;Crooks an...
+## $ Country  &lt;chr&gt; &quot;United States&quot;, &quot;United States&quot;, &quot;United States&quot;, &quot;U...
+## $ NAME     &lt;chr&gt; &quot;California&quot;, &quot;California&quot;, &quot;California&quot;, &quot;California...
+## $ year     &lt;int&gt; 2011, 2011, 2011, 2011, 2011, 2011, 2011, 2011, 2011,...
+## $ month    &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,...
+## $ yrmo     &lt;date&gt; 2011-01-01, 2011-01-01, 2011-01-01, 2011-01-01, 2011...</code></pre>
+</div>
+<div id="summarise-and-look-at-the-data" class="section level2">
+<h2>Summarise and look at the data</h2>
+<pre class="r"><code>news %&gt;% 
+  group_by(yrmo) %&gt;% 
+  summarise(stories = n()) -&gt; newsMo
+
+
+plotb&lt;-ggplot(data = newsMo) +
+  geom_col(aes(x = yrmo, y = stories), fill = &quot;dodgerblue&quot;, color = &quot;black&quot;) + 
+  theme_classic()</code></pre>
+</div>
+<div id="plot-mentions-of-drought-in-the-news" class="section level2">
+<h2>Plot mentions of drought in the news</h2>
+<pre class="r"><code>spop %&gt;% 
+  mutate(valDate = ymd(ReleaseDate),
+         wsum = D0 + D1 + D2 + D3 + D4,
+         year = year(valDate),
+         month = month(valDate),
+         yrmo = paste0(year,&quot;&quot;,month),
+         yrmo = parse_date_time(yrmo, &quot;ym&quot;),
+         yrmo = as.Date(yrmo)) -&gt; spopmo
+
+head(spopmo$yrmo)</code></pre>
+<pre><code>## [1] &quot;2017-12-01&quot; &quot;2017-12-01&quot; &quot;2017-12-01&quot; &quot;2017-12-01&quot; &quot;2017-11-01&quot;
+## [6] &quot;2017-11-01&quot;</code></pre>
+<pre class="r"><code>spopmo %&gt;% 
+  group_by(yrmo) %&gt;% 
+  summarise(drought = max(wsum)) -&gt; spopmo
+
+
+plota&lt;- ggplot(data = spopmo) +
+          geom_col(aes(x = yrmo, y = drought), fill = muted(&quot;red&quot;), color = &quot;black&quot;) + 
+          theme_classic()
+
+
+
+grid.arrange(plota,plotb, ncol = 1)</code></pre>
+<p><img src="/post/2018-04-27-TimeSeries_files/figure-html/plotdrought-1.png" width="672" /></p>
+<pre class="r"><code>full_join(spopmo,newsMo, by = &quot;yrmo&quot;) %&gt;% 
+  filter(!is.na(stories)) -&gt; fullData</code></pre>
+<pre class="r"><code>ts(fullData$stories,
+   start = 2011,
+   frequency = 12) -&gt; stories.ts
+
+plot(stories.ts)</code></pre>
+<p><img src="/post/2018-04-27-TimeSeries_files/figure-html/tsdata-1.png" width="672" /></p>
+<pre class="r"><code>decomNews &lt;- decompose(stories.ts, type = &quot;multi&quot;)
+plot(decomNews)</code></pre>
+<p><img src="/post/2018-04-27-TimeSeries_files/figure-html/tsdata-2.png" width="672" /></p>
+<pre class="r"><code>stlStories&lt;-stl(stories.ts, s.window = &quot;periodic&quot;)
+
+seasonadjStories&lt;-forecast::seasadj(stlStories)
+
+plot(seasonadjStories)</code></pre>
+<p><img src="/post/2018-04-27-TimeSeries_files/figure-html/tsdata-3.png" width="672" /></p>
+<pre class="r"><code>acf(stories.ts)</code></pre>
+<p><img src="/post/2018-04-27-TimeSeries_files/figure-html/tsdata-4.png" width="672" /></p>
+<pre class="r"><code>pacf(stories.ts)</code></pre>
+<p><img src="/post/2018-04-27-TimeSeries_files/figure-html/tsdata-5.png" width="672" /></p>
+<pre class="r"><code>adf.test(stories.ts)</code></pre>
+<pre><code>## 
+##  Augmented Dickey-Fuller Test
+## 
+## data:  stories.ts
+## Dickey-Fuller = -2.1587, Lag order = 4, p-value = 0.5108
+## alternative hypothesis: stationary</code></pre>
+<pre class="r"><code>kpss.test(stories.ts)</code></pre>
+<pre><code>## Warning in kpss.test(stories.ts): p-value smaller than printed p-value</code></pre>
+<pre><code>## 
+##  KPSS Test for Level Stationarity
+## 
+## data:  stories.ts
+## KPSS Level = 0.94297, Truncation lag parameter = 2, p-value = 0.01</code></pre>
+<pre class="r"><code>## Granger causality
+
+lmtest::grangertest( fullData$stories, fullData$drought,order = 4)</code></pre>
+<pre><code>## Granger causality test
+## 
+## Model 1: fullData$drought ~ Lags(fullData$drought, 1:4) + Lags(fullData$stories, 1:4)
+## Model 2: fullData$drought ~ Lags(fullData$drought, 1:4)
+##   Res.Df Df      F Pr(&gt;F)
+## 1     71                 
+## 2     75 -4 0.4306  0.786</code></pre>
+</div>
+</div>
+
+    
+    
+
+    
+
+        <h4 class="page-header">Related</h4>
+
+         <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/post/2018-04-27-doseresponse/">Dose Response</a></h4>
+    <h5>April 27, 2018</h5>
+    
+    <a href="/tags/dose-response"><kbd class="item-tag">Dose Response</kbd></a>
+    
+    <a href="/tags/data-seminar"><kbd class="item-tag">Data Seminar</kbd></a>
+    
+
+</div>
+  <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/post/2018-04-18-spatialautocorrelation/">Spatial Autocorrelation</a></h4>
+    <h5>April 18, 2018</h5>
+    
+    <a href="/tags/spatial-autocorrelation"><kbd class="item-tag">Spatial autocorrelation</kbd></a>
+    
+    <a href="/tags/data-seminar"><kbd class="item-tag">Data Seminar</kbd></a>
+    
+
+</div>
+  <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/post/2018-04-13-occupancy/">Occupancy modelling</a></h4>
+    <h5>April 13, 2018</h5>
+    
+    <a href="/tags/occupancy-models"><kbd class="item-tag">Occupancy models</kbd></a>
+    
+    <a href="/tags/model-selection"><kbd class="item-tag">Model selection</kbd></a>
+    
+    <a href="/tags/data-seminar"><kbd class="item-tag">Data Seminar</kbd></a>
+    
+
+</div>
+ 
+
+    
+
+    
+
+        <h4 class="page-header">Comments</h4>
+
+        <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "snrrgroup" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    
+
+</main>
+
+        <footer>
+
+            <p class="copyright text-muted">&copy; All rights reserved. Powered by <a href="https://gohugo.io">Hugo</a> and <a href="https://github.com/calintat/minimal">Minimal</a></p>
+
+        </footer>
+       
+    </body>
+
+</html>
+

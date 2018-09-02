@@ -1,0 +1,168 @@
+---
+title: "Time Series Analysis"
+date: '2018-04-27'
+tags:
+- Time Series
+- Data Seminar
+categories: R
+---
+
+
+
+<div id="load-libraries" class="section level2">
+<h2>Load libraries</h2>
+<pre class="r"><code># .libPaths(&quot;P:/RLibrary2&quot;)
+knitr::opts_chunk$set(echo = TRUE)
+
+# install.packages(c(&quot;forecast&quot;,&quot;lmtest&quot;,&quot;tseries&quot;))
+
+library(lubridate)
+library(tidyverse)
+library(forecast)
+library(lmtest)
+library(tseries)
+library(scales)
+library(gridExtra)</code></pre>
+</div>
+<div id="load-data" class="section level2">
+<h2>Load data</h2>
+<pre class="r"><code>id1 = &quot;1lgjg9EpSgt6pFUGCNiuio3APgKZZ4un1&quot;
+id2 = &quot;1rVzQ-kkFsRMC-IM3jDdqjOLjY1qnIRRW&quot;
+
+spop&lt;- read_csv(sprintf(&quot;https://docs.google.com/uc?id=%s&amp;export=download&quot;, id1))</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   ReleaseDate = col_integer(),
+##   StateAbbreviation = col_character(),
+##   None = col_double(),
+##   D0 = col_double(),
+##   D1 = col_double(),
+##   D2 = col_double(),
+##   D3 = col_double(),
+##   D4 = col_double(),
+##   ValidStart = col_character(),
+##   ValidEnd = col_character(),
+##   StatisticFormatID = col_integer()
+## )</code></pre>
+<pre class="r"><code>glimpse(spop)</code></pre>
+<pre><code>## Observations: 366
+## Variables: 11
+## $ ReleaseDate       &lt;int&gt; 20171226, 20171219, 20171212, 20171205, 2017...
+## $ StateAbbreviation &lt;chr&gt; &quot;CA&quot;, &quot;CA&quot;, &quot;CA&quot;, &quot;CA&quot;, &quot;CA&quot;, &quot;CA&quot;, &quot;CA&quot;, &quot;C...
+## $ None              &lt;dbl&gt; 36.64, 36.64, 36.64, 39.44, 41.24, 44.78, 44...
+## $ D0                &lt;dbl&gt; 63.36, 63.36, 63.36, 60.56, 58.76, 55.22, 55...
+## $ D1                &lt;dbl&gt; 36.92, 36.92, 34.84, 34.84, 27.63, 27.63, 27...
+## $ D2                &lt;dbl&gt; 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0....
+## $ D3                &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ D4                &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
+## $ ValidStart        &lt;chr&gt; &quot;12/26/2017&quot;, &quot;12/19/2017&quot;, &quot;12/12/2017&quot;, &quot;1...
+## $ ValidEnd          &lt;chr&gt; &quot;1/1/2018&quot;, &quot;12/25/2017&quot;, &quot;12/18/2017&quot;, &quot;12/...
+## $ StatisticFormatID &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,...</code></pre>
+<pre class="r"><code>news&lt;- read_csv(sprintf(&quot;https://docs.google.com/uc?id=%s&amp;export=download&quot;, id2))</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   Date = col_date(format = &quot;&quot;),
+##   Headline = col_character(),
+##   Source = col_character(),
+##   Country = col_character(),
+##   NAME = col_character(),
+##   year = col_integer(),
+##   month = col_integer(),
+##   yrmo = col_date(format = &quot;&quot;)
+## )</code></pre>
+<pre class="r"><code>glimpse(news)</code></pre>
+<pre><code>## Observations: 157,165
+## Variables: 8
+## $ Date     &lt;date&gt; 2011-01-31, 2011-01-31, 2011-01-31, 2011-01-31, 2011...
+## $ Headline &lt;chr&gt; &quot;Biz Buzz: Citizen of the Year\u0092s passion is enha...
+## $ Source   &lt;chr&gt; &quot;The Tribune&quot;, &quot;FOX40&quot;, &quot;KQED&#39;s News Fix&quot;, &quot;Crooks an...
+## $ Country  &lt;chr&gt; &quot;United States&quot;, &quot;United States&quot;, &quot;United States&quot;, &quot;U...
+## $ NAME     &lt;chr&gt; &quot;California&quot;, &quot;California&quot;, &quot;California&quot;, &quot;California...
+## $ year     &lt;int&gt; 2011, 2011, 2011, 2011, 2011, 2011, 2011, 2011, 2011,...
+## $ month    &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,...
+## $ yrmo     &lt;date&gt; 2011-01-01, 2011-01-01, 2011-01-01, 2011-01-01, 2011...</code></pre>
+</div>
+<div id="summarise-and-look-at-the-data" class="section level2">
+<h2>Summarise and look at the data</h2>
+<pre class="r"><code>news %&gt;% 
+  group_by(yrmo) %&gt;% 
+  summarise(stories = n()) -&gt; newsMo
+
+
+plotb&lt;-ggplot(data = newsMo) +
+  geom_col(aes(x = yrmo, y = stories), fill = &quot;dodgerblue&quot;, color = &quot;black&quot;) + 
+  theme_classic()</code></pre>
+</div>
+<div id="plot-mentions-of-drought-in-the-news" class="section level2">
+<h2>Plot mentions of drought in the news</h2>
+<pre class="r"><code>spop %&gt;% 
+  mutate(valDate = ymd(ReleaseDate),
+         wsum = D0 + D1 + D2 + D3 + D4,
+         year = year(valDate),
+         month = month(valDate),
+         yrmo = paste0(year,&quot;&quot;,month),
+         yrmo = parse_date_time(yrmo, &quot;ym&quot;),
+         yrmo = as.Date(yrmo)) -&gt; spopmo
+
+head(spopmo$yrmo)</code></pre>
+<pre><code>## [1] &quot;2017-12-01&quot; &quot;2017-12-01&quot; &quot;2017-12-01&quot; &quot;2017-12-01&quot; &quot;2017-11-01&quot;
+## [6] &quot;2017-11-01&quot;</code></pre>
+<pre class="r"><code>spopmo %&gt;% 
+  group_by(yrmo) %&gt;% 
+  summarise(drought = max(wsum)) -&gt; spopmo
+
+
+plota&lt;- ggplot(data = spopmo) +
+          geom_col(aes(x = yrmo, y = drought), fill = muted(&quot;red&quot;), color = &quot;black&quot;) + 
+          theme_classic()
+
+
+
+grid.arrange(plota,plotb, ncol = 1)</code></pre>
+<p><img src="/post/2018-04-27-TimeSeries_files/figure-html/plotdrought-1.png" width="672" /></p>
+<pre class="r"><code>full_join(spopmo,newsMo, by = &quot;yrmo&quot;) %&gt;% 
+  filter(!is.na(stories)) -&gt; fullData</code></pre>
+<pre class="r"><code>ts(fullData$stories,
+   start = 2011,
+   frequency = 12) -&gt; stories.ts
+
+plot(stories.ts)</code></pre>
+<p><img src="/post/2018-04-27-TimeSeries_files/figure-html/tsdata-1.png" width="672" /></p>
+<pre class="r"><code>decomNews &lt;- decompose(stories.ts, type = &quot;multi&quot;)
+plot(decomNews)</code></pre>
+<p><img src="/post/2018-04-27-TimeSeries_files/figure-html/tsdata-2.png" width="672" /></p>
+<pre class="r"><code>stlStories&lt;-stl(stories.ts, s.window = &quot;periodic&quot;)
+
+seasonadjStories&lt;-forecast::seasadj(stlStories)
+
+plot(seasonadjStories)</code></pre>
+<p><img src="/post/2018-04-27-TimeSeries_files/figure-html/tsdata-3.png" width="672" /></p>
+<pre class="r"><code>acf(stories.ts)</code></pre>
+<p><img src="/post/2018-04-27-TimeSeries_files/figure-html/tsdata-4.png" width="672" /></p>
+<pre class="r"><code>pacf(stories.ts)</code></pre>
+<p><img src="/post/2018-04-27-TimeSeries_files/figure-html/tsdata-5.png" width="672" /></p>
+<pre class="r"><code>adf.test(stories.ts)</code></pre>
+<pre><code>## 
+##  Augmented Dickey-Fuller Test
+## 
+## data:  stories.ts
+## Dickey-Fuller = -2.1587, Lag order = 4, p-value = 0.5108
+## alternative hypothesis: stationary</code></pre>
+<pre class="r"><code>kpss.test(stories.ts)</code></pre>
+<pre><code>## Warning in kpss.test(stories.ts): p-value smaller than printed p-value</code></pre>
+<pre><code>## 
+##  KPSS Test for Level Stationarity
+## 
+## data:  stories.ts
+## KPSS Level = 0.94297, Truncation lag parameter = 2, p-value = 0.01</code></pre>
+<pre class="r"><code>## Granger causality
+
+lmtest::grangertest( fullData$stories, fullData$drought,order = 4)</code></pre>
+<pre><code>## Granger causality test
+## 
+## Model 1: fullData$drought ~ Lags(fullData$drought, 1:4) + Lags(fullData$stories, 1:4)
+## Model 2: fullData$drought ~ Lags(fullData$drought, 1:4)
+##   Res.Df Df      F Pr(&gt;F)
+## 1     71                 
+## 2     75 -4 0.4306  0.786</code></pre>
+</div>

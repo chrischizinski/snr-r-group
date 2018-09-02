@@ -1,0 +1,121 @@
+---
+title: "Time Series Analysis"
+date: '2018-04-27'
+tags:
+- Time Series
+- Data Seminar
+categories: R
+---
+
+## Load libraries
+
+```{r setup, message = FALSE}
+# .libPaths("P:/RLibrary2")
+knitr::opts_chunk$set(echo = TRUE)
+
+# install.packages(c("forecast","lmtest","tseries"))
+
+library(lubridate)
+library(tidyverse)
+library(forecast)
+library(lmtest)
+library(tseries)
+library(scales)
+library(gridExtra)
+
+```
+
+## Load data
+
+```{r loaddate}
+id1 = "1lgjg9EpSgt6pFUGCNiuio3APgKZZ4un1"
+id2 = "1rVzQ-kkFsRMC-IM3jDdqjOLjY1qnIRRW"
+
+spop<- read_csv(sprintf("https://docs.google.com/uc?id=%s&export=download", id1))
+glimpse(spop)
+
+news<- read_csv(sprintf("https://docs.google.com/uc?id=%s&export=download", id2))
+glimpse(news)
+
+```
+
+## Summarise and look at the data
+
+```{r plotnews}
+news %>% 
+  group_by(yrmo) %>% 
+  summarise(stories = n()) -> newsMo
+
+
+plotb<-ggplot(data = newsMo) +
+  geom_col(aes(x = yrmo, y = stories), fill = "dodgerblue", color = "black") + 
+  theme_classic()
+
+```
+
+## Plot mentions of drought in the news
+
+```{r plotdrought}
+spop %>% 
+  mutate(valDate = ymd(ReleaseDate),
+         wsum = D0 + D1 + D2 + D3 + D4,
+         year = year(valDate),
+         month = month(valDate),
+         yrmo = paste0(year,"",month),
+         yrmo = parse_date_time(yrmo, "ym"),
+         yrmo = as.Date(yrmo)) -> spopmo
+
+head(spopmo$yrmo)
+
+
+spopmo %>% 
+  group_by(yrmo) %>% 
+  summarise(drought = max(wsum)) -> spopmo
+
+
+plota<- ggplot(data = spopmo) +
+          geom_col(aes(x = yrmo, y = drought), fill = muted("red"), color = "black") + 
+          theme_classic()
+
+
+
+grid.arrange(plota,plotb, ncol = 1)
+
+```
+
+```{r joindata}
+
+full_join(spopmo,newsMo, by = "yrmo") %>% 
+  filter(!is.na(stories)) -> fullData
+  
+
+```
+
+```{r tsdata}
+
+ts(fullData$stories,
+   start = 2011,
+   frequency = 12) -> stories.ts
+
+plot(stories.ts)
+
+decomNews <- decompose(stories.ts, type = "multi")
+plot(decomNews)
+
+stlStories<-stl(stories.ts, s.window = "periodic")
+
+seasonadjStories<-forecast::seasadj(stlStories)
+
+plot(seasonadjStories)
+
+acf(stories.ts)
+pacf(stories.ts)
+
+adf.test(stories.ts)
+kpss.test(stories.ts)
+
+## Granger causality
+
+lmtest::grangertest( fullData$stories, fullData$drought,order = 4)
+```
+

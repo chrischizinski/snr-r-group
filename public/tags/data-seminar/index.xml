@@ -21,6 +21,15 @@
     </item>
     
     <item>
+      <title>Time Series Analysis</title>
+      <link>/post/2018-04-27-timeseries/</link>
+      <pubDate>Fri, 27 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018-04-27-timeseries/</guid>
+      <description>Load libraries # .libPaths(&amp;quot;P:/RLibrary2&amp;quot;) knitr::opts_chunk$set(echo = TRUE) # install.packages(c(&amp;quot;forecast&amp;quot;,&amp;quot;lmtest&amp;quot;,&amp;quot;tseries&amp;quot;)) library(lubridate) library(tidyverse) library(forecast) library(lmtest) library(tseries) library(scales) library(gridExtra)  Load data id1 = &amp;quot;1lgjg9EpSgt6pFUGCNiuio3APgKZZ4un1&amp;quot; id2 = &amp;quot;1rVzQ-kkFsRMC-IM3jDdqjOLjY1qnIRRW&amp;quot; spop&amp;lt;- read_csv(sprintf(&amp;quot;https://docs.google.com/uc?id=%s&amp;amp;export=download&amp;quot;, id1)) ## Parsed with column specification: ## cols( ## ReleaseDate = col_integer(), ## StateAbbreviation = col_character(), ## None = col_double(), ## D0 = col_double(), ## D1 = col_double(), ## D2 = col_double(), ## D3 = col_double(), ## D4 = col_double(), ## ValidStart = col_character(), ## ValidEnd = col_character(), ## StatisticFormatID = col_integer() ## ) glimpse(spop) ## Observations: 366 ## Variables: 11 ## $ ReleaseDate &amp;lt;int&amp;gt; 20171226, 20171219, 20171212, 20171205, 2017.</description>
+    </item>
+    
+    <item>
       <title>Spatial Autocorrelation</title>
       <link>/post/2018-04-18-spatialautocorrelation/</link>
       <pubDate>Wed, 18 Apr 2018 00:00:00 +0000</pubDate>
