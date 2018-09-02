@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>R Studio on SNR R User Group</title>
+    <link>/tags/r-studio/</link>
+    <description>Recent content in R Studio on SNR R User Group</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 24 Aug 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/r-studio/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Getting to know R: a very brief introduction</title>
+      <link>/post/2018-08-24-introduction/</link>
+      <pubDate>Fri, 24 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018-08-24-introduction/</guid>
+      <description>Getting to know R: a very brief introduction What is R? R is an open-sourced computer language that allows you to conduct data analysis and programming It is extremly versatile with 13002 packages that allow you to do pretty do anything, from spatial statistics to data wrangling to publication graphics. In fact, this document was written with R and Rstudio.
+A reason for its acceptance among researchers is its versatility.</description>
+    </item>
+    
+  </channel>
+</rss>
