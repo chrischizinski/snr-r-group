@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+         
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Dose Response</title>
+        <style>
+
+    html body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #FEFDFA;
+    }
+
+    :root {
+        --accent: #D00000;
+        --border-width:  5px ;
+    }
+
+</style>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+
+
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/hybrid.min.css"> 
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+ 
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/swift.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/R.min.js"></script> 
+
+    <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script>
+ <meta name="generator" content="Hugo 0.30.2" />
+        
+        
+        
+        
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-48496439-3"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments)};
+          gtag('js', new Date());
+
+          gtag('config', 'UA-48496439-3');
+        </script>
+        
+    </head>
+
+    
+    
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    
+
+    <body>
+         
+        <nav class="navbar navbar-default navbar-fixed-top">
+
+            <div class="container">
+
+                <div class="navbar-header">
+
+                    <a class="navbar-brand visible-xs" href="#">Dose Response</a>
+
+                    <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                </div>
+
+                <div class="collapse navbar-collapse">
+
+                    
+                        <ul class="nav navbar-nav">
+                            
+                                <li><a href="/">Home</a></li>
+                            
+                                <li><a href="/post/">Posts</a></li>
+                            
+                                <li><a href="/resources/">Resources</a></li>
+                            
+                        </ul>
+                    
+
+                    
+                        <ul class="nav navbar-nav navbar-right">
+                            
+                                <li class="navbar-icon"><a href="mailto:cchizinski2@unl.edu"><i class="fa fa-envelope-o"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://github.com/chrischizinski/"><i class="fa fa-github"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://twitter.com/chrischizinski/"><i class="fa fa-twitter"></i></a></li>
+                            
+                        </ul>
+                    
+
+                </div>
+
+            </div>
+
+        </nav>
+
+
+<main>
+
+    <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/post/2018-04-27-doseresponse/">Dose Response</a></h4>
+    <h5>April 27, 2018</h5>
+    
+    <a href="/tags/refelectance"><kbd class="item-tag">Refelectance</kbd></a>
+    
+    <a href="/tags/partial-least-squares-regression"><kbd class="item-tag">Partial Least Squares Regression</kbd></a>
+    
+    <a href="/tags/data-seminar"><kbd class="item-tag">Data Seminar</kbd></a>
+    
+
+</div>
+
+
+    <br> <div class="text-justify"><div id="load-packages" class="section level2">
+<h2>Load packages</h2>
+</div>
+<div id="load-data" class="section level2">
+<h2>Load data</h2>
+<pre class="r"><code>id &lt;- &quot;16viAhr6QNj3XKe3WHXBypgaq7uKoTqQt&quot;
+dose&lt;- read_csv(sprintf(&quot;https://docs.google.com/uc?id=%s&amp;export=download&quot;, id))</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   Trt = col_character(),
+##   Dose = col_integer(),
+##   Rep = col_integer(),
+##   control = col_integer(),
+##   RUN = col_integer()
+## )</code></pre>
+<pre class="r"><code>head(dose)</code></pre>
+<pre><code>## # A tibble: 6 x 5
+##   Trt    Dose   Rep control   RUN
+##   &lt;chr&gt; &lt;int&gt; &lt;int&gt;   &lt;int&gt; &lt;int&gt;
+## 1 0         0     1       0     1
+## 2 0         0     2       0     1
+## 3 0         0     3       0     1
+## 4 0         0     4       0     1
+## 5 0.25x   380     1       0     1
+## 6 0.25x   380     2       0     1</code></pre>
+<pre class="r"><code>glimpse(dose)</code></pre>
+<pre><code>## Observations: 72
+## Variables: 5
+## $ Trt     &lt;chr&gt; &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0.25x&quot;, &quot;0.25x&quot;, &quot;0.25x&quot;, &quot;0.25x&quot;...
+## $ Dose    &lt;int&gt; 0, 0, 0, 0, 380, 380, 380, 380, 660, 660, 660, 660, 12...
+## $ Rep     &lt;int&gt; 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, ...
+## $ control &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 20, 35, 20, 25, 30, 0, 20, 25, 5,...
+## $ RUN     &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ...</code></pre>
+<pre class="r"><code>ggplot(data = dose) +
+  geom_point(aes(x = Dose, y = control, shape = as.factor(RUN), color = as.factor(RUN))) + 
+  labs(x = expression(paste(&quot;Herbicide (g ha&quot;^&quot;-1&quot;,&quot;)&quot;)),
+       y = expression(&quot;Visual control (%)&quot;),
+       color = &quot;Run&quot;,
+       shape = &quot;Run&quot;) + 
+  theme_classic() + 
+  theme(legend.position = c(0.9, 0.2),
+        legend.background = element_rect(color = &quot;black&quot;))</code></pre>
+<p><img src="/post/2018-04-27-DoseResponse_files/figure-html/plotdata-1.png" width="672" /></p>
+<pre class="r"><code>log_model &lt;- drm(control ~ Dose, curveid = RUN, data = dose, fct = LL.3(names = c(&quot;Slope&quot;, &quot;Upper Limit&quot;, &quot;ED50&quot;)))
+
+summary(log_model)</code></pre>
+<pre><code>## 
+## Model fitted: Log-logistic (ED50 as parameter) with lower limit at 0 (3 parms)
+## 
+## Parameter estimates:
+## 
+##                 Estimate Std. Error t-value    p-value    
+## Slope:1         -0.85279    0.31428 -2.7135   0.008484 ** 
+## Slope:2         -0.73947    0.33005 -2.2405   0.028431 *  
+## Upper Limit:1   77.91164   18.45579  4.2215 0.00007583 ***
+## Upper Limit:2   78.56784   18.16784  4.3246 0.00005282 ***
+## ED50:1        4662.71009 3329.60813  1.4004   0.166084    
+## ED50:2        1869.95810 1545.70856  1.2098   0.230681    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error:
+## 
+##  14.9388 (66 degrees of freedom)</code></pre>
+<pre class="r"><code>modelFit(log_model)</code></pre>
+<pre><code>## Lack-of-fit test
+## 
+##           ModelDf   RSS Df F value p value
+## ANOVA          54 10538                   
+## DRC model      66 14729 12  1.7900  0.0734</code></pre>
+<pre class="r"><code>## Comparison of model parameters
+compParm(log_model, &quot;Slope&quot;, &quot;-&quot;)</code></pre>
+<pre><code>## 
+## Comparison of parameter &#39;Slope&#39; 
+## 
+##     Estimate Std. Error t-value p-value
+## 1-2 -0.11332    0.45574 -0.2486  0.8044</code></pre>
+<pre class="r"><code>compParm(log_model, &quot;Upper Limit&quot;, &quot;-&quot;)</code></pre>
+<pre><code>## 
+## Comparison of parameter &#39;Upper Limit&#39; 
+## 
+##     Estimate Std. Error t-value p-value
+## 1-2 -0.65619   25.89762 -0.0253  0.9799</code></pre>
+<pre class="r"><code>compParm(log_model, &quot;ED50&quot;, &quot;-&quot;)</code></pre>
+<pre><code>## 
+## Comparison of parameter &#39;ED50&#39; 
+## 
+##     Estimate Std. Error t-value p-value
+## 1-2   2792.8     3670.9  0.7608  0.4495</code></pre>
+<pre class="r"><code>plot(log_model, type = &quot;all&quot;)</code></pre>
+<p><img src="/post/2018-04-27-DoseResponse_files/figure-html/modelFit-1.png" width="672" /></p>
+<pre class="r"><code>vsmall &lt;- .Machine$double.eps
+
+newdata &lt;- expand.grid(dose = seq(vsmall, max(dose$Dose), by =  10),
+                       RUN = unique(dose$RUN))
+
+pred_data &lt;- cbind(newdata, predict(log_model, newdata = newdata, interval = &quot;confidence&quot;))
+
+head(pred_data)</code></pre>
+<pre><code>##           dose RUN   Prediction         Lower        Upper
+## 1 2.220446e-16   1 2.593469e-15 -6.646001e-14 7.164695e-14
+## 2 1.000000e+01   1 4.107018e-01 -9.423271e-01 1.763731e+00
+## 3 2.000000e+01   1 7.385838e-01 -1.371635e+00 2.848803e+00
+## 4 3.000000e+01   1 1.039611e+00 -1.664055e+00 3.743277e+00
+## 5 4.000000e+01   1 1.323758e+00 -1.877710e+00 4.525226e+00
+## 6 5.000000e+01   1 1.595542e+00 -2.037673e+00 5.228758e+00</code></pre>
+<pre class="r"><code>ggplot(data = pred_data) +
+  geom_line(aes(x = dose, y = Prediction, colour = as.factor(RUN))) + 
+  geom_ribbon(aes(x = dose, ymax = Upper, ymin = Lower, fill = as.factor(RUN)), alpha = 0.2) + 
+  geom_point(data = dose, aes(x = Dose, y = control, colour = as.factor(RUN), shape = as.factor(RUN))) +
+  theme_classic() + 
+  scale_x_log10() +
+  theme(legend.position = &quot;bottom&quot;)</code></pre>
+<p><img src="/post/2018-04-27-DoseResponse_files/figure-html/modelPred-1.png" width="672" /></p>
+</div>
+</div>
+
+    
+    
+
+    
+
+        <h4 class="page-header">Related</h4>
+
+         <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/post/2018-04-18-spatialautocorrelation/">Spatial Autocorrelation</a></h4>
+    <h5>April 18, 2018</h5>
+    
+    <a href="/tags/spatial-autocorrelation"><kbd class="item-tag">Spatial autocorrelation</kbd></a>
+    
+    <a href="/tags/data-seminar"><kbd class="item-tag">Data Seminar</kbd></a>
+    
+
+</div>
+  <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/post/2018-04-13-occupancy/">Occupancy modelling</a></h4>
+    <h5>April 13, 2018</h5>
+    
+    <a href="/tags/occupancy-models"><kbd class="item-tag">Occupancy models</kbd></a>
+    
+    <a href="/tags/model-selection"><kbd class="item-tag">Model selection</kbd></a>
+    
+    <a href="/tags/data-seminar"><kbd class="item-tag">Data Seminar</kbd></a>
+    
+
+</div>
+  <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/post/2018-04-13-partialleastsquare/">Partial Least Squares Regression</a></h4>
+    <h5>March 30, 2018</h5>
+    
+    <a href="/tags/refelectance"><kbd class="item-tag">Refelectance</kbd></a>
+    
+    <a href="/tags/partial-least-squares-regression"><kbd class="item-tag">Partial Least Squares Regression</kbd></a>
+    
+    <a href="/tags/data-seminar"><kbd class="item-tag">Data Seminar</kbd></a>
+    
+
+</div>
+ 
+
+    
+
+    
+
+        <h4 class="page-header">Comments</h4>
+
+        <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "snrrgroup" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    
+
+</main>
+
+        <footer>
+
+            <p class="copyright text-muted">&copy; All rights reserved. Powered by <a href="https://gohugo.io">Hugo</a> and <a href="https://github.com/calintat/minimal">Minimal</a></p>
+
+        </footer>
+       
+    </body>
+
+</html>
+

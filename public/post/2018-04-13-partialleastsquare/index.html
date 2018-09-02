@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+         
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Partial Least Squares Regression</title>
+        <style>
+
+    html body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #FEFDFA;
+    }
+
+    :root {
+        --accent: #D00000;
+        --border-width:  5px ;
+    }
+
+</style>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+
+
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/hybrid.min.css"> 
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+ 
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/swift.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/R.min.js"></script> 
+
+    <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script>
+ <meta name="generator" content="Hugo 0.30.2" />
+        
+        
+        
+        
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-48496439-3"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments)};
+          gtag('js', new Date());
+
+          gtag('config', 'UA-48496439-3');
+        </script>
+        
+    </head>
+
+    
+    
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    
+
+    <body>
+         
+        <nav class="navbar navbar-default navbar-fixed-top">
+
+            <div class="container">
+
+                <div class="navbar-header">
+
+                    <a class="navbar-brand visible-xs" href="#">Partial Least Squares Regression</a>
+
+                    <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                </div>
+
+                <div class="collapse navbar-collapse">
+
+                    
+                        <ul class="nav navbar-nav">
+                            
+                                <li><a href="/">Home</a></li>
+                            
+                                <li><a href="/post/">Posts</a></li>
+                            
+                                <li><a href="/resources/">Resources</a></li>
+                            
+                        </ul>
+                    
+
+                    
+                        <ul class="nav navbar-nav navbar-right">
+                            
+                                <li class="navbar-icon"><a href="mailto:cchizinski2@unl.edu"><i class="fa fa-envelope-o"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://github.com/chrischizinski/"><i class="fa fa-github"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://twitter.com/chrischizinski/"><i class="fa fa-twitter"></i></a></li>
+                            
+                        </ul>
+                    
+
+                </div>
+
+            </div>
+
+        </nav>
+
+
+<main>
+
+    <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/post/2018-04-13-partialleastsquare/">Partial Least Squares Regression</a></h4>
+    <h5>March 30, 2018</h5>
+    
+    <a href="/tags/refelectance"><kbd class="item-tag">Refelectance</kbd></a>
+    
+    <a href="/tags/partial-least-squares-regression"><kbd class="item-tag">Partial Least Squares Regression</kbd></a>
+    
+    <a href="/tags/data-seminar"><kbd class="item-tag">Data Seminar</kbd></a>
+    
+
+</div>
+
+
+    <br> <div class="text-justify"><div id="load-the-data" class="section level1">
+<h1>Load the data</h1>
+<p>Bring data in from google drive</p>
+<pre class="r"><code>id &lt;- &quot;1_0rUKAVD7mf4D1ebGAyLNIKXIfekHdFG&quot;
+ryanData&lt;- read_csv(sprintf(&quot;https://docs.google.com/uc?id=%s&amp;export=download&quot;, id),col_names = FALSE)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   .default = col_character()
+## )</code></pre>
+<pre><code>## See spec(...) for full column specifications.</code></pre>
+<pre class="r"><code>head(ryanData)</code></pre>
+<pre><code>## # A tibble: 6 x 80
+##   X1    X2     X3    X4    X5    X6    X7    X8    X9    X10   X11   X12  
+##   &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
+## 1 ID    1      5     9     13    17    21    25    29    33    37    41   
+## 2 Plot  CSP01  CSP01 CSP01 CSP01 CSP01 CSP01 CSP01 CSP01 CSP01 CSP01 CSP01
+## 3 Date  5/18/… 5/23… 5/31… 6/6/… 6/13… 6/17… 6/22… 6/30… 7/6/… 7/12… 7/15…
+## 4 351   5.076… 5.69… 6.28… 6.00… 4.78… 4.88… 2.99… 1.83… 1.25… 1.10… 1.23…
+## 5 352   5.095… 5.74… 6.30… 6.03… 4.81… 4.89… 3.01… 1.85… 1.27… 1.13… 1.25…
+## 6 353   5.112… 5.78… 6.31… 6.05… 4.82… 4.88… 3.02… 1.84… 1.26… 1.12… 1.26…
+## # ... with 68 more variables: X13 &lt;chr&gt;, X14 &lt;chr&gt;, X15 &lt;chr&gt;, X16 &lt;chr&gt;,
+## #   X17 &lt;chr&gt;, X18 &lt;chr&gt;, X19 &lt;chr&gt;, X20 &lt;chr&gt;, X21 &lt;chr&gt;, X22 &lt;chr&gt;,
+## #   X23 &lt;chr&gt;, X24 &lt;chr&gt;, X25 &lt;chr&gt;, X26 &lt;chr&gt;, X27 &lt;chr&gt;, X28 &lt;chr&gt;,
+## #   X29 &lt;chr&gt;, X30 &lt;chr&gt;, X31 &lt;chr&gt;, X32 &lt;chr&gt;, X33 &lt;chr&gt;, X34 &lt;chr&gt;,
+## #   X35 &lt;chr&gt;, X36 &lt;chr&gt;, X37 &lt;chr&gt;, X38 &lt;chr&gt;, X39 &lt;chr&gt;, X40 &lt;chr&gt;,
+## #   X41 &lt;chr&gt;, X42 &lt;chr&gt;, X43 &lt;chr&gt;, X44 &lt;chr&gt;, X45 &lt;chr&gt;, X46 &lt;chr&gt;,
+## #   X47 &lt;chr&gt;, X48 &lt;chr&gt;, X49 &lt;chr&gt;, X50 &lt;chr&gt;, X51 &lt;chr&gt;, X52 &lt;chr&gt;,
+## #   X53 &lt;chr&gt;, X54 &lt;chr&gt;, X55 &lt;chr&gt;, X56 &lt;chr&gt;, X57 &lt;chr&gt;, X58 &lt;chr&gt;,
+## #   X59 &lt;chr&gt;, X60 &lt;chr&gt;, X61 &lt;chr&gt;, X62 &lt;chr&gt;, X63 &lt;chr&gt;, X64 &lt;chr&gt;,
+## #   X65 &lt;chr&gt;, X66 &lt;chr&gt;, X67 &lt;chr&gt;, X68 &lt;chr&gt;, X69 &lt;chr&gt;, X70 &lt;chr&gt;,
+## #   X71 &lt;chr&gt;, X72 &lt;chr&gt;, X73 &lt;chr&gt;, X74 &lt;chr&gt;, X75 &lt;chr&gt;, X76 &lt;chr&gt;,
+## #   X77 &lt;chr&gt;, X78 &lt;chr&gt;, X79 &lt;chr&gt;, X80 &lt;chr&gt;</code></pre>
+<pre class="r"><code>glimpse(ryanData)</code></pre>
+<pre><code>## Observations: 654
+## Variables: 80
+## $ X1  &lt;chr&gt; &quot;ID&quot;, &quot;Plot&quot;, &quot;Date&quot;, &quot;351&quot;, &quot;352&quot;, &quot;353&quot;, &quot;354&quot;, &quot;355&quot;, &quot;...
+## $ X2  &lt;chr&gt; &quot;1&quot;, &quot;CSP01&quot;, &quot;5/18/05&quot;, &quot;5.076237932&quot;, &quot;5.095115238&quot;, &quot;5....
+## $ X3  &lt;chr&gt; &quot;5&quot;, &quot;CSP01&quot;, &quot;5/23/05&quot;, &quot;5.693006982&quot;, &quot;5.744964378&quot;, &quot;5....
+## $ X4  &lt;chr&gt; &quot;9&quot;, &quot;CSP01&quot;, &quot;5/31/05&quot;, &quot;6.285536217&quot;, &quot;6.306018497&quot;, &quot;6....
+## $ X5  &lt;chr&gt; &quot;13&quot;, &quot;CSP01&quot;, &quot;6/6/05&quot;, &quot;6.008964598&quot;, &quot;6.039257699&quot;, &quot;6....
+## $ X6  &lt;chr&gt; &quot;17&quot;, &quot;CSP01&quot;, &quot;6/13/05&quot;, &quot;4.785753913&quot;, &quot;4.814192807&quot;, &quot;4...
+## $ X7  &lt;chr&gt; &quot;21&quot;, &quot;CSP01&quot;, &quot;6/17/05&quot;, &quot;4.88776736&quot;, &quot;4.890039244&quot;, &quot;4....
+## $ X8  &lt;chr&gt; &quot;25&quot;, &quot;CSP01&quot;, &quot;6/22/05&quot;, &quot;2.992264155&quot;, &quot;3.018438941&quot;, &quot;3...
+## $ X9  &lt;chr&gt; &quot;29&quot;, &quot;CSP01&quot;, &quot;6/30/05&quot;, &quot;1.8344914&quot;, &quot;1.855904982&quot;, &quot;1.8...
+## $ X10 &lt;chr&gt; &quot;33&quot;, &quot;CSP01&quot;, &quot;7/6/05&quot;, &quot;1.251125094&quot;, &quot;1.275188738&quot;, &quot;1....
+## $ X11 &lt;chr&gt; &quot;37&quot;, &quot;CSP01&quot;, &quot;7/12/05&quot;, &quot;1.105151402&quot;, &quot;1.130459283&quot;, &quot;1...
+## $ X12 &lt;chr&gt; &quot;41&quot;, &quot;CSP01&quot;, &quot;7/15/05&quot;, &quot;1.231860456&quot;, &quot;1.259460553&quot;, &quot;1...
+## $ X13 &lt;chr&gt; &quot;45&quot;, &quot;CSP01&quot;, &quot;7/20/05&quot;, &quot;1.076604556&quot;, &quot;1.106118957&quot;, &quot;1...
+## $ X14 &lt;chr&gt; &quot;49&quot;, &quot;CSP01&quot;, &quot;7/25/05&quot;, &quot;1.139645118&quot;, &quot;1.164480817&quot;, &quot;1...
+## $ X15 &lt;chr&gt; &quot;53&quot;, &quot;CSP01&quot;, &quot;7/29/05&quot;, &quot;1.319947965&quot;, &quot;1.349505436&quot;, &quot;1...
+## $ X16 &lt;chr&gt; &quot;57&quot;, &quot;CSP01&quot;, &quot;8/2/05&quot;, &quot;1.280466186&quot;, &quot;1.30010689&quot;, &quot;1.2...
+## $ X17 &lt;chr&gt; &quot;61&quot;, &quot;CSP01&quot;, &quot;8/9/05&quot;, &quot;1.290514179&quot;, &quot;1.309311253&quot;, &quot;1....
+## $ X18 &lt;chr&gt; &quot;65&quot;, &quot;CSP01&quot;, &quot;8/17/05&quot;, &quot;1.412445044&quot;, &quot;1.430483989&quot;, &quot;1...
+## $ X19 &lt;chr&gt; &quot;68&quot;, &quot;CSP01&quot;, &quot;8/29/05&quot;, &quot;1.138412319&quot;, &quot;1.149737456&quot;, &quot;1...
+## $ X20 &lt;chr&gt; &quot;72&quot;, &quot;CSP01&quot;, &quot;9/16/05&quot;, &quot;1.248593923&quot;, &quot;1.261883673&quot;, &quot;1...
+## $ X21 &lt;chr&gt; &quot;76&quot;, &quot;CSP01&quot;, &quot;9/29/05&quot;, &quot;1.834955831&quot;, &quot;1.84204855&quot;, &quot;1....
+## $ X22 &lt;chr&gt; &quot;2&quot;, &quot;CSP02&quot;, &quot;5/18/05&quot;, &quot;5.505628639&quot;, &quot;5.524793907&quot;, &quot;5....
+## $ X23 &lt;chr&gt; &quot;6&quot;, &quot;CSP02&quot;, &quot;5/23/05&quot;, &quot;6.338274958&quot;, &quot;6.376537745&quot;, &quot;6....
+## $ X24 &lt;chr&gt; &quot;10&quot;, &quot;CSP02&quot;, &quot;5/31/05&quot;, &quot;6.285866656&quot;, &quot;6.336572453&quot;, &quot;6...
+## $ X25 &lt;chr&gt; &quot;14&quot;, &quot;CSP02&quot;, &quot;6/6/05&quot;, &quot;8.261510811&quot;, &quot;8.297529462&quot;, &quot;8....
+## $ X26 &lt;chr&gt; &quot;18&quot;, &quot;CSP02&quot;, &quot;6/13/05&quot;, &quot;4.686946215&quot;, &quot;4.701377939&quot;, &quot;4...
+## $ X27 &lt;chr&gt; &quot;22&quot;, &quot;CSP02&quot;, &quot;6/17/05&quot;, &quot;3.614834944&quot;, &quot;3.627052214&quot;, &quot;3...
+## $ X28 &lt;chr&gt; &quot;26&quot;, &quot;CSP02&quot;, &quot;6/22/05&quot;, &quot;2.309695676&quot;, &quot;2.331279202&quot;, &quot;2...
+## $ X29 &lt;chr&gt; &quot;30&quot;, &quot;CSP02&quot;, &quot;6/30/05&quot;, &quot;2.021547992&quot;, &quot;2.03270315&quot;, &quot;2....
+## $ X30 &lt;chr&gt; &quot;34&quot;, &quot;CSP02&quot;, &quot;7/6/05&quot;, &quot;1.447363799&quot;, &quot;1.479459499&quot;, &quot;1....
+## $ X31 &lt;chr&gt; &quot;38&quot;, &quot;CSP02&quot;, &quot;7/12/05&quot;, &quot;1.285062457&quot;, &quot;1.31041435&quot;, &quot;1....
+## $ X32 &lt;chr&gt; &quot;42&quot;, &quot;CSP02&quot;, &quot;7/15/05&quot;, &quot;1.371405949&quot;, &quot;1.388536397&quot;, &quot;1...
+## $ X33 &lt;chr&gt; &quot;46&quot;, &quot;CSP02&quot;, &quot;7/20/05&quot;, &quot;1.357681994&quot;, &quot;1.389937945&quot;, &quot;1...
+## $ X34 &lt;chr&gt; &quot;50&quot;, &quot;CSP02&quot;, &quot;7/25/05&quot;, &quot;1.399613334&quot;, &quot;1.423000452&quot;, &quot;1...
+## $ X35 &lt;chr&gt; &quot;54&quot;, &quot;CSP02&quot;, &quot;7/29/05&quot;, &quot;1.881071491&quot;, &quot;1.878113457&quot;, &quot;1...
+## $ X36 &lt;chr&gt; &quot;58&quot;, &quot;CSP02&quot;, &quot;8/2/05&quot;, &quot;1.727991889&quot;, &quot;1.745049023&quot;, &quot;1....
+## $ X37 &lt;chr&gt; &quot;62&quot;, &quot;CSP02&quot;, &quot;8/9/05&quot;, &quot;1.403151514&quot;, &quot;1.422566661&quot;, &quot;1....
+## $ X38 &lt;chr&gt; &quot;66&quot;, &quot;CSP02&quot;, &quot;8/17/05&quot;, &quot;1.602441017&quot;, &quot;1.619361763&quot;, &quot;1...
+## $ X39 &lt;chr&gt; &quot;69&quot;, &quot;CSP02&quot;, &quot;8/29/05&quot;, &quot;1.410171115&quot;, &quot;1.421879331&quot;, &quot;1...
+## $ X40 &lt;chr&gt; &quot;73&quot;, &quot;CSP02&quot;, &quot;9/16/05&quot;, &quot;1.350917015&quot;, &quot;1.362766273&quot;, &quot;1...
+## $ X41 &lt;chr&gt; &quot;77&quot;, &quot;CSP02&quot;, &quot;9/29/05&quot;, &quot;1.743832423&quot;, &quot;1.748899888&quot;, &quot;1...
+## $ X42 &lt;chr&gt; &quot;3&quot;, &quot;CSP03&quot;, &quot;5/18/05&quot;, &quot;4.950300442&quot;, &quot;4.961780951&quot;, &quot;4....
+## $ X43 &lt;chr&gt; &quot;7&quot;, &quot;CSP03&quot;, &quot;5/23/05&quot;, &quot;5.657988514&quot;, &quot;5.685519627&quot;, &quot;5....
+## $ X44 &lt;chr&gt; &quot;11&quot;, &quot;CSP03&quot;, &quot;5/31/05&quot;, &quot;5.090500553&quot;, &quot;5.121723958&quot;, &quot;5...
+## $ X45 &lt;chr&gt; &quot;15&quot;, &quot;CSP03&quot;, &quot;6/6/05&quot;, &quot;4.647445859&quot;, &quot;4.671712903&quot;, &quot;4....
+## $ X46 &lt;chr&gt; &quot;19&quot;, &quot;CSP03&quot;, &quot;6/13/05&quot;, &quot;3.628554755&quot;, &quot;3.642950159&quot;, &quot;3...
+## $ X47 &lt;chr&gt; &quot;23&quot;, &quot;CSP03&quot;, &quot;6/17/05&quot;, &quot;3.713578873&quot;, &quot;3.737212576&quot;, &quot;3...
+## $ X48 &lt;chr&gt; &quot;27&quot;, &quot;CSP03&quot;, &quot;6/22/05&quot;, &quot;2.09035252&quot;, &quot;2.107049166&quot;, &quot;2....
+## $ X49 &lt;chr&gt; &quot;31&quot;, &quot;CSP03&quot;, &quot;6/30/05&quot;, &quot;1.755484278&quot;, &quot;1.769301195&quot;, &quot;1...
+## $ X50 &lt;chr&gt; &quot;35&quot;, &quot;CSP03&quot;, &quot;7/6/05&quot;, &quot;1.383799732&quot;, &quot;1.402025739&quot;, &quot;1....
+## $ X51 &lt;chr&gt; &quot;39&quot;, &quot;CSP03&quot;, &quot;7/12/05&quot;, &quot;1.237109021&quot;, &quot;1.252692747&quot;, &quot;1...
+## $ X52 &lt;chr&gt; &quot;43&quot;, &quot;CSP03&quot;, &quot;7/15/05&quot;, &quot;1.088083111&quot;, &quot;1.106277319&quot;, &quot;1...
+## $ X53 &lt;chr&gt; &quot;47&quot;, &quot;CSP03&quot;, &quot;7/20/05&quot;, &quot;1.095101056&quot;, &quot;1.119872231&quot;, &quot;1...
+## $ X54 &lt;chr&gt; &quot;51&quot;, &quot;CSP03&quot;, &quot;7/25/05&quot;, &quot;1.291256904&quot;, &quot;1.310214363&quot;, &quot;1...
+## $ X55 &lt;chr&gt; &quot;55&quot;, &quot;CSP03&quot;, &quot;7/29/05&quot;, &quot;1.284387302&quot;, &quot;1.312949622&quot;, &quot;1...
+## $ X56 &lt;chr&gt; &quot;59&quot;, &quot;CSP03&quot;, &quot;8/2/05&quot;, &quot;1.534893266&quot;, &quot;1.546009452&quot;, &quot;1....
+## $ X57 &lt;chr&gt; &quot;63&quot;, &quot;CSP03&quot;, &quot;8/9/05&quot;, &quot;1.236058957&quot;, &quot;1.254872905&quot;, &quot;1....
+## $ X58 &lt;chr&gt; &quot;67&quot;, &quot;CSP03&quot;, &quot;8/17/05&quot;, &quot;1.406389238&quot;, &quot;1.417394225&quot;, &quot;1...
+## $ X59 &lt;chr&gt; &quot;70&quot;, &quot;CSP03&quot;, &quot;8/29/05&quot;, &quot;1.1949771&quot;, &quot;1.200751412&quot;, &quot;1.2...
+## $ X60 &lt;chr&gt; &quot;74&quot;, &quot;CSP03&quot;, &quot;9/16/05&quot;, &quot;1.379401569&quot;, &quot;1.389416473&quot;, &quot;1...
+## $ X61 &lt;chr&gt; &quot;78&quot;, &quot;CSP03&quot;, &quot;9/29/05&quot;, &quot;1.904530904&quot;, &quot;1.903526309&quot;, &quot;1...
+## $ X62 &lt;chr&gt; &quot;4&quot;, &quot;CSP3A&quot;, &quot;5/18/05&quot;, &quot;5.150565747&quot;, &quot;5.167765556&quot;, &quot;5....
+## $ X63 &lt;chr&gt; &quot;8&quot;, &quot;CSP3A&quot;, &quot;5/23/05&quot;, &quot;5.390554609&quot;, &quot;5.42544144&quot;, &quot;5.4...
+## $ X64 &lt;chr&gt; &quot;12&quot;, &quot;CSP3A&quot;, &quot;5/31/05&quot;, &quot;5.235721754&quot;, &quot;5.261731097&quot;, &quot;5...
+## $ X65 &lt;chr&gt; &quot;16&quot;, &quot;CSP3A&quot;, &quot;6/6/05&quot;, &quot;4.838270743&quot;, &quot;4.862015918&quot;, &quot;4....
+## $ X66 &lt;chr&gt; &quot;20&quot;, &quot;CSP3A&quot;, &quot;6/13/05&quot;, &quot;3.696830071&quot;, &quot;3.708845094&quot;, &quot;3...
+## $ X67 &lt;chr&gt; &quot;24&quot;, &quot;CSP3A&quot;, &quot;6/17/05&quot;, &quot;3.99620745&quot;, &quot;4.017529548&quot;, &quot;4....
+## $ X68 &lt;chr&gt; &quot;28&quot;, &quot;CSP3A&quot;, &quot;6/22/05&quot;, &quot;2.351177565&quot;, &quot;2.364276884&quot;, &quot;2...
+## $ X69 &lt;chr&gt; &quot;32&quot;, &quot;CSP3A&quot;, &quot;6/30/05&quot;, &quot;1.762917696&quot;, &quot;1.778950769&quot;, &quot;1...
+## $ X70 &lt;chr&gt; &quot;36&quot;, &quot;CSP3A&quot;, &quot;7/6/05&quot;, &quot;1.564250838&quot;, &quot;1.568919795&quot;, &quot;1....
+## $ X71 &lt;chr&gt; &quot;40&quot;, &quot;CSP3A&quot;, &quot;7/12/05&quot;, &quot;1.305406494&quot;, &quot;1.324491521&quot;, &quot;1...
+## $ X72 &lt;chr&gt; &quot;44&quot;, &quot;CSP3A&quot;, &quot;7/15/05&quot;, &quot;1.24870338&quot;, &quot;1.252398026&quot;, &quot;1....
+## $ X73 &lt;chr&gt; &quot;48&quot;, &quot;CSP3A&quot;, &quot;7/20/05&quot;, &quot;1.371522891&quot;, &quot;1.404019187&quot;, &quot;1...
+## $ X74 &lt;chr&gt; &quot;52&quot;, &quot;CSP3A&quot;, &quot;7/25/05&quot;, &quot;1.352358585&quot;, &quot;1.36894411&quot;, &quot;1....
+## $ X75 &lt;chr&gt; &quot;56&quot;, &quot;CSP3A&quot;, &quot;7/29/05&quot;, &quot;1.312843483&quot;, &quot;1.336083161&quot;, &quot;1...
+## $ X76 &lt;chr&gt; &quot;60&quot;, &quot;CSP3A&quot;, &quot;8/2/05&quot;, &quot;1.392584484&quot;, &quot;1.412328348&quot;, &quot;1....
+## $ X77 &lt;chr&gt; &quot;64&quot;, &quot;CSP3A&quot;, &quot;8/9/05&quot;, &quot;1.20325811&quot;, &quot;1.219597248&quot;, &quot;1.2...
+## $ X78 &lt;chr&gt; &quot;71&quot;, &quot;CSP3A&quot;, &quot;8/29/05&quot;, &quot;1.407537541&quot;, &quot;1.404347564&quot;, &quot;1...
+## $ X79 &lt;chr&gt; &quot;75&quot;, &quot;CSP3A&quot;, &quot;9/16/05&quot;, &quot;1.194612642&quot;, &quot;1.208437138&quot;, &quot;1...
+## $ X80 &lt;chr&gt; &quot;79&quot;, &quot;CSP3A&quot;, &quot;9/29/05&quot;, &quot;1.765182107&quot;, &quot;1.762101166&quot;, &quot;1...</code></pre>
+<pre class="r"><code>id &lt;- &quot;1w1qEORMN7wAGA9UsNndUP_2F05_zNRTy&quot;
+ryanDataObs&lt;- read_csv(sprintf(&quot;https://docs.google.com/uc?id=%s&amp;export=download&quot;, id),col_names = FALSE)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   .default = col_character()
+## )
+## See spec(...) for full column specifications.</code></pre>
+<pre class="r"><code>head(ryanDataObs)</code></pre>
+<pre><code>## # A tibble: 6 x 80
+##   X1     X2    X3    X4    X5    X6    X7    X8    X9    X10   X11   X12  
+##   &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
+## 1 Date   38490 38495 38503 38509 38516 38520 38525 38533 38539 38545 38548
+## 2 vegFr… 0.00… 0.00… 0.03… 0.07… 0.22… 0.23… 0.36… 0.58… 0.80… 0.81… 0.81…
+## 3 NDVI   0.12… 0.11… 0.15… 0.15… 0.35… 0.35… 0.57… 0.80… 0.90… 0.93… 0.92…
+## 4 CI     0.04… 0.04… 0.06… 0.08… 0.23… 0.23… 0.42… 0.63… 0.73… 0.78… 0.76…
+## 5 ID     1     5     9     13    17    21    25    29    33    37    41   
+## 6 Plot   CSP01 CSP01 CSP01 CSP01 CSP01 CSP01 CSP01 CSP01 CSP01 CSP01 CSP01
+## # ... with 68 more variables: X13 &lt;chr&gt;, X14 &lt;chr&gt;, X15 &lt;chr&gt;, X16 &lt;chr&gt;,
+## #   X17 &lt;chr&gt;, X18 &lt;chr&gt;, X19 &lt;chr&gt;, X20 &lt;chr&gt;, X21 &lt;chr&gt;, X22 &lt;chr&gt;,
+## #   X23 &lt;chr&gt;, X24 &lt;chr&gt;, X25 &lt;chr&gt;, X26 &lt;chr&gt;, X27 &lt;chr&gt;, X28 &lt;chr&gt;,
+## #   X29 &lt;chr&gt;, X30 &lt;chr&gt;, X31 &lt;chr&gt;, X32 &lt;chr&gt;, X33 &lt;chr&gt;, X34 &lt;chr&gt;,
+## #   X35 &lt;chr&gt;, X36 &lt;chr&gt;, X37 &lt;chr&gt;, X38 &lt;chr&gt;, X39 &lt;chr&gt;, X40 &lt;chr&gt;,
+## #   X41 &lt;chr&gt;, X42 &lt;chr&gt;, X43 &lt;chr&gt;, X44 &lt;chr&gt;, X45 &lt;chr&gt;, X46 &lt;chr&gt;,
+## #   X47 &lt;chr&gt;, X48 &lt;chr&gt;, X49 &lt;chr&gt;, X50 &lt;chr&gt;, X51 &lt;chr&gt;, X52 &lt;chr&gt;,
+## #   X53 &lt;chr&gt;, X54 &lt;chr&gt;, X55 &lt;chr&gt;, X56 &lt;chr&gt;, X57 &lt;chr&gt;, X58 &lt;chr&gt;,
+## #   X59 &lt;chr&gt;, X60 &lt;chr&gt;, X61 &lt;chr&gt;, X62 &lt;chr&gt;, X63 &lt;chr&gt;, X64 &lt;chr&gt;,
+## #   X65 &lt;chr&gt;, X66 &lt;chr&gt;, X67 &lt;chr&gt;, X68 &lt;chr&gt;, X69 &lt;chr&gt;, X70 &lt;chr&gt;,
+## #   X71 &lt;chr&gt;, X72 &lt;chr&gt;, X73 &lt;chr&gt;, X74 &lt;chr&gt;, X75 &lt;chr&gt;, X76 &lt;chr&gt;,
+## #   X77 &lt;chr&gt;, X78 &lt;chr&gt;, X79 &lt;chr&gt;, X80 &lt;chr&gt;</code></pre>
+</div>
+<div id="reformatting-to-plot" class="section level1">
+<h1>Reformatting to plot</h1>
+<pre class="r"><code>ryanData.head &lt;- t(ryanData[1:3,])  # separate out first three rows
+colnames(ryanData.head) &lt;- ryanData.head[1,]   # name columns after first row
+ryanData.head &lt;- ryanData.head[-1,] # remove first row from the data
+rownames(ryanData.head) &lt;- NULL # &#39;reset&#39; rownames
+
+ryanData.rest &lt;- ryanData[-c(1:3),] # remove first three rows
+
+ryanData.head &lt;- ryanData.head[rep(1:nrow(ryanData.head),each = nrow(ryanData.rest)),]
+
+ryanData.rest %&gt;% 
+  gather(key, value, X2:X80) %&gt;% 
+  cbind(ryanData.head) %&gt;% 
+  select(-key) %&gt;% 
+  rename(wl = X1,
+         refl = value) %&gt;% 
+  mutate(wl = as.numeric(wl),
+         refl = as.numeric(refl),
+         ID = as.numeric(as.character(ID)),
+         Date = as.character(format(lubridate::mdy(Date), &quot;%m/%d/%y&quot;))) -&gt; ryanData.long
+
+glimpse(ryanData.long)</code></pre>
+<pre><code>## Observations: 51,429
+## Variables: 5
+## $ wl   &lt;dbl&gt; 351, 352, 353, 354, 355, 356, 357, 358, 359, 360, 361, 36...
+## $ refl &lt;dbl&gt; 5.076, 5.095, 5.112, 5.130, 5.150, 5.172, 5.193, 5.209, 5...
+## $ ID   &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ...
+## $ Plot &lt;chr&gt; &quot;CSP01&quot;, &quot;CSP01&quot;, &quot;CSP01&quot;, &quot;CSP01&quot;, &quot;CSP01&quot;, &quot;CSP01&quot;, &quot;CS...
+## $ Date &lt;chr&gt; &quot;05/18/05&quot;, &quot;05/18/05&quot;, &quot;05/18/05&quot;, &quot;05/18/05&quot;, &quot;05/18/05...</code></pre>
+<pre class="r"><code>ggplot(data = ryanData.long) + 
+  geom_line(aes(x = wl, y = refl, color = Date)) + 
+  facet_wrap(~Plot) + 
+  theme_classic()</code></pre>
+<p><img src="/post/2018-04-13-PartialLeastSquare_files/figure-html/datatrans-1.png" width="672" /></p>
+<pre class="r"><code>ryanDataObs &lt;- t(ryanDataObs) # transpose the data
+
+colnames(ryanDataObs) &lt;- ryanDataObs[1,] # rename columns
+ryanDataObs&lt;- ryanDataObs[-1,] # remove first row
+
+ryanDataObs %&gt;% 
+  as.data.frame() %&gt;% 
+  mutate_all(funs(trimws(., &quot;both&quot;))) %&gt;% # trim white space
+  mutate(Date = as.numeric(Date),
+         Date = as.Date(Date, origin = &quot;1899-12-30&quot;),
+         Date = as.character(format(Date, &quot;%m/%d/%y&quot;)),
+         ID = as.numeric(as.character(ID))) %&gt;% 
+  right_join(ryanData.long, by=c(&quot;Date&quot;,&quot;ID&quot;,&quot;Plot&quot;)) -&gt; ryanJoin.long</code></pre>
+<pre class="r"><code>ryanJoin.long %&gt;% 
+  filter(Plot == &quot;CSP01&quot;) %&gt;% 
+  select(-Date, -Plot, -NDVI, -CI, - ID) %&gt;% 
+  spread(wl, refl) -&gt;vegFracwide.train
+
+
+vegFracwide.train1 &lt;- data.frame(vegFraction = I(as.matrix(vegFracwide.train$vegFraction)),wl = I(as.matrix(vegFracwide.train[,-1])))
+
+# Testing data
+ryanJoin.long %&gt;% 
+  filter(Plot == &quot;CSP03&quot;) %&gt;% 
+  select(-Date, -Plot, -NDVI, -CI, - ID) %&gt;% 
+  spread(wl, refl) -&gt;vegFracwide.test
+
+
+vegFracwide.test1 &lt;- data.frame(vegFraction = I(as.matrix(vegFracwide.test$vegFraction)),wl = I(as.matrix(vegFracwide.test[,-1])))</code></pre>
+<pre class="r"><code>corn_mod &lt;- plsr(vegFraction ~ wl, ncomp = 10, data = vegFracwide.train1, validation = &quot;LOO&quot;)
+
+summary(corn_mod)</code></pre>
+<pre><code>## Data:    X dimension: 20 651 
+##  Y dimension: 20 1
+## Fit method: kernelpls
+## Number of components considered: 10
+## 
+## VALIDATION: RMSEP
+## Cross-validated using 20 leave-one-out segments.
+##        (Intercept)  1 comps  2 comps  3 comps  4 comps  5 comps  6 comps
+## CV          0.3517  0.08014  0.06505  0.06305  0.05723  0.05057  0.05331
+## adjCV       0.3517  0.07976  0.06475  0.06272  0.05628  0.05001  0.05289
+##        7 comps  8 comps  9 comps  10 comps
+## CV     0.05994  0.06419  0.06715   0.06488
+## adjCV  0.05877  0.06269  0.06556   0.06332
+## 
+## TRAINING: % variance explained
+##              1 comps  2 comps  3 comps  4 comps  5 comps  6 comps  7 comps
+## X              76.13    97.30    99.33    99.52    99.68    99.89    99.94
+## vegFraction    95.68    97.53    98.04    99.16    99.27    99.39    99.74
+##              8 comps  9 comps  10 comps
+## X              99.95    99.97     99.97
+## vegFraction    99.89    99.94     99.97</code></pre>
+<pre class="r"><code>out1&lt;- unclass(RMSEP(corn_mod)) 
+  
+
+out1$val %&gt;% 
+  as.data.frame() %&gt;% 
+  rownames_to_column(&quot;ID&quot;) %&gt;% 
+  group_by(ID) %&gt;% 
+  gather(key, value, contains(&quot;vegFraction&quot;)) %&gt;% 
+  spread(ID, value) %&gt;% 
+  mutate(key = gsub(&quot;vegFraction.&quot;, &quot;&quot;, key),
+         key = factor(key, levels = c(&quot;(Intercept)&quot;, paste(1:10,&quot;comps&quot;)))) %&gt;% 
+  arrange(key) -&gt;rmse_corn
+
+ggplot(data = rmse_corn) +
+  geom_line(aes(x = key, y = adjCV, group=2), color = &quot;red&quot;)+
+  geom_point(aes(x = key, y = adjCV), color = &quot;red&quot;) + 
+  theme_classic()</code></pre>
+<p><img src="/post/2018-04-13-PartialLeastSquare_files/figure-html/runPLS-1.png" width="672" /></p>
+<pre class="r"><code>loadings(corn_mod)[,1:2] %&gt;% 
+  as.data.frame() %&gt;% 
+  rownames_to_column(&quot;wl&quot;) %&gt;% 
+  mutate_all(as.numeric) -&gt; corn_load
+
+ggplot(data = corn_load) +
+  geom_hline(aes(yintercept = 0)) +
+  geom_line(aes(x = wl, y = `Comp 1`, group = 1), color = &quot;red&quot;) + 
+  geom_line(aes(x = wl, y = `Comp 2`, group = 1), color = &quot;blue&quot;) + 
+  theme_classic()</code></pre>
+<p><img src="/post/2018-04-13-PartialLeastSquare_files/figure-html/loadings-1.png" width="672" /></p>
+<pre class="r"><code>obs &lt;- as.data.frame(unclass(vegFracwide.test1$vegFraction))
+
+pred &lt;- as.data.frame(predict(corn_mod, ncomp = 2, newdata = vegFracwide.test1))
+
+pred_obs &lt;- data.frame(obs = obs,
+                       pred = pred)
+
+names(pred_obs) &lt;- c(&quot;obs&quot;, &quot;pred&quot;)
+
+pred_obs %&gt;% 
+  mutate_all(as.character) %&gt;% 
+  mutate_all(as.numeric)-&gt; pred_obs
+
+ggplot(data = pred_obs) +
+  geom_point(aes(x = pred, y = obs), size =2) +
+  geom_smooth(aes(x = pred, y = obs), method = &quot;lm&quot;) +
+  coord_equal(xlim = c(0,1), expand = FALSE) + 
+  theme_classic()</code></pre>
+<p><img src="/post/2018-04-13-PartialLeastSquare_files/figure-html/predotherplot-1.png" width="672" /></p>
+<pre class="r"><code>mod&lt;- lm(obs~pred, data = pred_obs)
+summary(mod)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = obs ~ pred, data = pred_obs)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.11679 -0.03433  0.00188  0.04300  0.08917 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -0.00898    0.02749   -0.33     0.75    
+## pred         1.09371    0.05518   19.82  1.1e-13 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.0608 on 18 degrees of freedom
+## Multiple R-squared:  0.956,  Adjusted R-squared:  0.954 
+## F-statistic:  393 on 1 and 18 DF,  p-value: 1.13e-13</code></pre>
+<pre class="r"><code>cor(pred_obs$pred, pred_obs$obs)</code></pre>
+<pre><code>## [1] 0.9778</code></pre>
+</div>
+</div>
+
+    
+    
+
+    
+
+        <h4 class="page-header">Related</h4>
+
+         <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/post/2018-04-27-doseresponse/">Dose Response</a></h4>
+    <h5>April 27, 2018</h5>
+    
+    <a href="/tags/refelectance"><kbd class="item-tag">Refelectance</kbd></a>
+    
+    <a href="/tags/partial-least-squares-regression"><kbd class="item-tag">Partial Least Squares Regression</kbd></a>
+    
+    <a href="/tags/data-seminar"><kbd class="item-tag">Data Seminar</kbd></a>
+    
+
+</div>
+  <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/post/2018-04-18-spatialautocorrelation/">Spatial Autocorrelation</a></h4>
+    <h5>April 18, 2018</h5>
+    
+    <a href="/tags/spatial-autocorrelation"><kbd class="item-tag">Spatial autocorrelation</kbd></a>
+    
+    <a href="/tags/data-seminar"><kbd class="item-tag">Data Seminar</kbd></a>
+    
+
+</div>
+  <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/post/2018-04-13-occupancy/">Occupancy modelling</a></h4>
+    <h5>April 13, 2018</h5>
+    
+    <a href="/tags/occupancy-models"><kbd class="item-tag">Occupancy models</kbd></a>
+    
+    <a href="/tags/model-selection"><kbd class="item-tag">Model selection</kbd></a>
+    
+    <a href="/tags/data-seminar"><kbd class="item-tag">Data Seminar</kbd></a>
+    
+
+</div>
+ 
+
+    
+
+    
+
+        <h4 class="page-header">Comments</h4>
+
+        <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "snrrgroup" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    
+
+</main>
+
+        <footer>
+
+            <p class="copyright text-muted">&copy; All rights reserved. Powered by <a href="https://gohugo.io">Hugo</a> and <a href="https://github.com/calintat/minimal">Minimal</a></p>
+
+        </footer>
+       
+    </body>
+
+</html>
+

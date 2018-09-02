@@ -10,7 +10,6 @@ categories: R
 
 
 
-<p>Link to the Rmarkdown files can be found <a href="https://github.com/chrischizinski/snr-r-group/tree/master/content/post">here</a></p>
 <div id="get-the-data" class="section level2">
 <h2>Get the data</h2>
 <pre class="r"><code>heat_data &lt;-read_csv(&quot;https://raw.githubusercontent.com/chrischizinski/snr-r-group/master/data/HeatTolerance.csv&quot;, na = &quot;NA&quot;)</code></pre>
@@ -107,13 +106,13 @@ outtab&lt;-tidy(he_mod) %&gt;%
                                      TRUE ~ p.value))
 
 pander(outtab, round = 3, justify = &quot;lrrrr&quot;)</code></pre>
-<table style="width:81%;">
+<table style="width:85%;">
 <colgroup>
 <col width="19%" />
 <col width="15%" />
 <col width="16%" />
 <col width="16%" />
-<col width="12%" />
+<col width="16%" />
 </colgroup>
 <thead>
 <tr class="header">

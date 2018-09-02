@@ -48,9 +48,18 @@
     </item>
     
     <item>
+      <title>Community Composition</title>
+      <link>/tags/community-composition/</link>
+      <pubDate>Fri, 30 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/community-composition/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Data Seminar</title>
       <link>/tags/data-seminar/</link>
-      <pubDate>Fri, 02 Mar 2018 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 27 Apr 2018 00:00:00 +0000</pubDate>
       
       <guid>/tags/data-seminar/</guid>
       <description></description>
@@ -120,11 +129,65 @@
     </item>
     
     <item>
+      <title>Mixed Effect Models</title>
+      <link>/tags/mixed-effect-models/</link>
+      <pubDate>Fri, 02 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/mixed-effect-models/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Model Selection</title>
+      <link>/tags/model-selection/</link>
+      <pubDate>Fri, 13 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/model-selection/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Multivariate</title>
       <link>/tags/multivariate/</link>
       <pubDate>Fri, 12 Aug 2016 00:00:00 +0000</pubDate>
       
       <guid>/tags/multivariate/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Nmds</title>
+      <link>/tags/nmds/</link>
+      <pubDate>Fri, 30 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/nmds/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Occupancy Models</title>
+      <link>/tags/occupancy-models/</link>
+      <pubDate>Fri, 13 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/occupancy-models/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Partial Least Squares Regression</title>
+      <link>/tags/partial-least-squares-regression/</link>
+      <pubDate>Fri, 27 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/partial-least-squares-regression/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Pca</title>
+      <link>/tags/pca/</link>
+      <pubDate>Fri, 30 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/pca/</guid>
       <description></description>
     </item>
     
@@ -147,11 +210,29 @@
     </item>
     
     <item>
+      <title>Refelectance</title>
+      <link>/tags/refelectance/</link>
+      <pubDate>Fri, 27 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/refelectance/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Regression</title>
       <link>/tags/regression/</link>
       <pubDate>Fri, 16 Dec 2016 00:00:00 +0000</pubDate>
       
       <guid>/tags/regression/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Spatial Autocorrelation</title>
+      <link>/tags/spatial-autocorrelation/</link>
+      <pubDate>Wed, 18 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/spatial-autocorrelation/</guid>
       <description></description>
     </item>
     

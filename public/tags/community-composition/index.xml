@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Community Composition on SNR R User Group</title>
+    <link>/tags/community-composition/</link>
+    <description>Recent content in Community Composition on SNR R User Group</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 30 Mar 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/community-composition/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Community composition - ordination</title>
+      <link>/post/2018-03-30-communitycomposition/</link>
+      <pubDate>Fri, 30 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018-03-30-communitycomposition/</guid>
+      <description>Ordination Read the data in from google drive
+id1 &amp;lt;- &amp;quot;1f72ooJvTN9xiFbgMMxL1Kh2ISu9tsJt4&amp;quot; veg_diversity&amp;lt;- read_csv(sprintf(&amp;quot;https://docs.google.com/uc?id=%s&amp;amp;export=download&amp;quot;, id1)) ## Warning: Missing column names filled in: &amp;#39;X121&amp;#39; [121], &amp;#39;X122&amp;#39; [122], ## &amp;#39;X123&amp;#39; [123], &amp;#39;X124&amp;#39; [124], &amp;#39;X125&amp;#39; [125], &amp;#39;X126&amp;#39; [126], &amp;#39;X127&amp;#39; [127], ## &amp;#39;X128&amp;#39; [128], &amp;#39;X129&amp;#39; [129], &amp;#39;X130&amp;#39; [130], &amp;#39;X131&amp;#39; [131], &amp;#39;X132&amp;#39; [132], ## &amp;#39;X133&amp;#39; [133], &amp;#39;X134&amp;#39; [134], &amp;#39;X135&amp;#39; [135], &amp;#39;X136&amp;#39; [136], &amp;#39;X137&amp;#39; [137], ## &amp;#39;X138&amp;#39; [138], &amp;#39;X139&amp;#39; [139], &amp;#39;X140&amp;#39; [140], &amp;#39;X141&amp;#39; [141], &amp;#39;X142&amp;#39; [142], ## &amp;#39;X143&amp;#39; [143], &amp;#39;X144&amp;#39; [144], &amp;#39;X145&amp;#39; [145], &amp;#39;X146&amp;#39; [146], &amp;#39;X147&amp;#39; [147], ## &amp;#39;X148&amp;#39; [148] ## Parsed with column specification: ## cols( ## .</description>
+    </item>
+    
+  </channel>
+</rss>

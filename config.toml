@@ -16,6 +16,7 @@ googleAnalytics = "UA-48496439-3"
     highlight = true
     highlightStyle = "hybrid"
     highlightLanguages = ["go", "haskell", "kotlin", "scala", "swift", "R"]
+    ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 
 [[menu.main]]
     url = "/"

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Spatial Autocorrelation on SNR R User Group</title>
+    <link>/tags/spatial-autocorrelation/</link>
+    <description>Recent content in Spatial Autocorrelation on SNR R User Group</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 18 Apr 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/spatial-autocorrelation/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Spatial Autocorrelation</title>
+      <link>/post/2018-04-18-spatialautocorrelation/</link>
+      <pubDate>Wed, 18 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018-04-18-spatialautocorrelation/</guid>
+      <description>Load packages  What is autocorrelation (spatial or temporal)? Autocorrelation is the measure of similarity (correlation) between nearby observations (in both time and space)
+Temporal The most recent event is related to the event before and after it
+set.seed(1234) randDat &amp;lt;- data.frame(x = sample(1:1000, 20)) randDat %&amp;gt;% mutate(x_1 = lead(x)) %&amp;gt;% filter(!is.na(x_1)) -&amp;gt; randDat ggplot(data = randDat) + geom_point(aes(x = x, y = x_1), size = 2) + labs(y = &amp;quot;x + 1&amp;quot;) + theme_classic() cor(randDat$x, randDat$x_1) ## [1] 0.</description>
+    </item>
+    
+  </channel>
+</rss>

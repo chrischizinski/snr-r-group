@@ -1,0 +1,345 @@
+---
+title: "Occupancy modelling"
+date: '2018-04-13'
+tags:
+- Occupancy models
+- Model selection
+- Data Seminar
+categories: R
+---
+
+
+
+<div id="load-packages" class="section level2">
+<h2>Load packages</h2>
+<pre class="r"><code># .libPaths(&quot;P:/RLibrary2&quot;)
+knitr::opts_chunk$set(echo = TRUE)
+# 
+# install.packages(&quot;unmarked&quot;)
+# install.packages(&quot;AICcmodavg&quot;)
+
+library(unmarked)
+library(tidyverse)
+library(readxl)
+library(AICcmodavg)</code></pre>
+</div>
+<div id="load-data" class="section level2">
+<h2>Load data</h2>
+<pre class="r"><code>covar_data &lt;- read_excel(&quot;/Volumes/cchizinski2/SNR_R_Group/2018-DataSeminar/OccupancyModels/data/covariatesrec.xlsx&quot;)
+glimpse(covar_data)</code></pre>
+<pre><code>## Observations: 50
+## Variables: 6
+## $ `Sampling site (OCVP)`   &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12...
+## $ `succesion stage`        &lt;chr&gt; &quot;old growth&quot;, &quot;old growth&quot;, &quot;old grow...
+## $ `vegetation physiognomy` &lt;chr&gt; &quot;Cer&quot;, &quot;Cer&quot;, &quot;Ver&quot;, &quot;Ver&quot;, &quot;Ver&quot;, &quot;V...
+## $ trail                    &lt;chr&gt; &quot;n&quot;, &quot;n&quot;, &quot;n&quot;, &quot;n&quot;, &quot;y&quot;, &quot;n&quot;, &quot;n&quot;, &quot;n...
+## $ `Dist Peruaçu River`     &lt;dbl&gt; -1.35, -1.09, -1.55, -1.51, -1.51, -1...
+## $ `Dist water source`      &lt;dbl&gt; -1.33, -1.20, -1.44, -1.42, -1.42, -1...</code></pre>
+<pre class="r"><code>covar_data %&gt;% 
+  rename(site = `Sampling site (OCVP)`,
+         stage = `succesion stage`,
+         physiog = `vegetation physiognomy`,
+         waterpa = `Dist Peruaçu River`,
+         water = `Dist water source`) %&gt;% 
+  mutate(stage = as.factor(stage),
+         trail = as.factor(trail),
+         physiog = as.factor(physiog)) -&gt; covar_data
+
+samp.occ &lt;- c(&quot;Sites&quot;, paste0(&quot;S0&quot;,1:9))
+
+ocelot &lt;- read_excel(&quot;/Volumes/cchizinski2/SNR_R_Group/2018-DataSeminar/OccupancyModels/data/largemammalrec.xlsx&quot;,
+                     col_names = samp.occ,
+                     sheet = &quot;Lpar&quot;,
+                     na = &quot;NA&quot;) 
+
+glimpse(ocelot)</code></pre>
+<pre><code>## Observations: 50
+## Variables: 10
+## $ Sites &lt;chr&gt; &quot;OCVP1&quot;, &quot;OCVP2&quot;, &quot;OCVP3&quot;, &quot;OCVP4&quot;, &quot;OCVP5&quot;, &quot;OCVP6&quot;, &quot;O...
+## $ S01   &lt;dbl&gt; 0, 1, NA, 0, 0, 0, 0, 1, NA, 0, 1, 0, 0, NA, 0, NA, 0, 0...
+## $ S02   &lt;dbl&gt; 0, 0, NA, 0, 0, 0, NA, 0, NA, 0, 0, 0, 0, NA, 0, NA, 0, ...
+## $ S03   &lt;dbl&gt; 0, 0, NA, NA, 0, 0, NA, 0, NA, 0, 0, 0, 0, NA, 0, NA, NA...
+## $ S04   &lt;dbl&gt; 0, 0, 0, NA, 0, 0, NA, 0, 0, 0, 0, NA, 0, 0, NA, 0, 0, 0...
+## $ S05   &lt;dbl&gt; NA, NA, 0, NA, NA, NA, NA, NA, 0, NA, NA, NA, NA, 0, NA,...
+## $ S06   &lt;dbl&gt; NA, NA, 0, NA, NA, NA, NA, NA, 0, NA, NA, NA, NA, 0, NA,...
+## $ S07   &lt;dbl&gt; NA, NA, 0, NA, NA, NA, NA, NA, 0, NA, NA, NA, NA, 0, NA,...
+## $ S08   &lt;dbl&gt; NA, NA, 0, NA, NA, NA, NA, NA, 0, NA, NA, NA, NA, 0, NA,...
+## $ S09   &lt;dbl&gt; NA, NA, 0, NA, NA, NA, NA, NA, 0, NA, NA, NA, NA, 0, NA,...</code></pre>
+<pre class="r"><code>agouti &lt;- read_excel(&quot;/Volumes/cchizinski2/SNR_R_Group/2018-DataSeminar/OccupancyModels/data/largemammalrec.xlsx&quot;,
+                     col_names = samp.occ,
+                     sheet = &quot;Daza&quot;,
+                     na = &quot;NA&quot;) 
+
+glimpse(agouti)</code></pre>
+<pre><code>## Observations: 50
+## Variables: 10
+## $ Sites &lt;chr&gt; &quot;OCVP1&quot;, &quot;OCVP2&quot;, &quot;OCVP3&quot;, &quot;OCVP4&quot;, &quot;OCVP5&quot;, &quot;OCVP6&quot;, &quot;O...
+## $ S01   &lt;dbl&gt; 1, 0, NA, 0, 0, 0, 1, 1, NA, 0, 0, 0, 1, NA, 0, NA, 1, 0...
+## $ S02   &lt;dbl&gt; 1, 0, NA, 0, 0, 0, NA, 1, NA, 0, 0, 0, 1, NA, 0, NA, 0, ...
+## $ S03   &lt;dbl&gt; 1, 0, NA, NA, 0, 0, NA, 1, NA, 0, 0, 0, 1, NA, 0, NA, NA...
+## $ S04   &lt;dbl&gt; 0, 0, 0, NA, 0, 0, NA, 1, 0, 0, 1, NA, 0, 0, NA, 0, 1, 0...
+## $ S05   &lt;dbl&gt; NA, NA, 0, NA, NA, NA, NA, NA, 1, NA, NA, NA, NA, 1, NA,...
+## $ S06   &lt;dbl&gt; NA, NA, 0, NA, NA, NA, NA, NA, 0, NA, NA, NA, NA, 0, NA,...
+## $ S07   &lt;dbl&gt; NA, NA, 0, NA, NA, NA, NA, NA, 1, NA, NA, NA, NA, 0, NA,...
+## $ S08   &lt;dbl&gt; NA, NA, 0, NA, NA, NA, NA, NA, 0, NA, NA, NA, NA, 1, NA,...
+## $ S09   &lt;dbl&gt; NA, NA, 0, NA, NA, NA, NA, NA, 0, NA, NA, NA, NA, 0, NA,...</code></pre>
+<pre class="r"><code>ocelot.pa &lt;- ocelot[,2:10]
+
+occ.ocelot&lt;- unmarkedFrameOccu(y = ocelot.pa,
+                               siteCovs = covar_data)
+
+summary(occ.ocelot)</code></pre>
+<pre><code>## unmarkedFrame Object
+## 
+## 50 sites
+## Maximum number of observations per site: 9 
+## Mean number of observations per site: 4.58 
+## Sites with at least one detection: 5 
+## 
+## Tabulation of y observations:
+##    0    1 &lt;NA&gt; 
+##  222    7  221 
+## 
+## Site-level covariates:
+##       site                        stage    physiog  trail 
+##  Min.   : 1.00   old growth          :15   Cer:45   n:32  
+##  1st Qu.:13.25   secondary/eucalyptus:25   Ver: 5   y:18  
+##  Median :25.50   secondary/mixed-use :10                  
+##  Mean   :25.50                                            
+##  3rd Qu.:37.75                                            
+##  Max.   :50.00                                            
+##     waterpa            water        
+##  Min.   :-1.5500   Min.   :-1.4400  
+##  1st Qu.:-1.0250   1st Qu.:-0.9275  
+##  Median : 0.0050   Median : 0.1400  
+##  Mean   :-0.0002   Mean   :-0.0002  
+##  3rd Qu.: 0.8975   3rd Qu.: 0.9675  
+##  Max.   : 1.8700   Max.   : 1.5300</code></pre>
+<pre class="r"><code>#### Agouti 
+agouti.pa &lt;- agouti[,2:10]
+occ.agouti&lt;- unmarkedFrameOccu(y = agouti.pa,
+                               siteCovs = covar_data)
+summary(occ.agouti)</code></pre>
+<pre><code>## unmarkedFrame Object
+## 
+## 50 sites
+## Maximum number of observations per site: 9 
+## Mean number of observations per site: 4.58 
+## Sites with at least one detection: 30 
+## 
+## Tabulation of y observations:
+##    0    1 &lt;NA&gt; 
+##  166   63  221 
+## 
+## Site-level covariates:
+##       site                        stage    physiog  trail 
+##  Min.   : 1.00   old growth          :15   Cer:45   n:32  
+##  1st Qu.:13.25   secondary/eucalyptus:25   Ver: 5   y:18  
+##  Median :25.50   secondary/mixed-use :10                  
+##  Mean   :25.50                                            
+##  3rd Qu.:37.75                                            
+##  Max.   :50.00                                            
+##     waterpa            water        
+##  Min.   :-1.5500   Min.   :-1.4400  
+##  1st Qu.:-1.0250   1st Qu.:-0.9275  
+##  Median : 0.0050   Median : 0.1400  
+##  Mean   :-0.0002   Mean   :-0.0002  
+##  3rd Qu.: 0.8975   3rd Qu.: 0.9675  
+##  Max.   : 1.8700   Max.   : 1.5300</code></pre>
+<pre class="r"><code>m1.occelot &lt;- occu(~1 ~1, data = occ.ocelot)
+m1.occelot</code></pre>
+<pre><code>## 
+## Call:
+## occu(formula = ~1 ~ 1, data = occ.ocelot)
+## 
+## Occupancy:
+##  Estimate    SE     z P(&gt;|z|)
+##     -1.63 0.662 -2.46   0.014
+## 
+## Detection:
+##  Estimate    SE     z P(&gt;|z|)
+##     -1.43 0.704 -2.03  0.0428
+## 
+## AIC: 61.39458</code></pre>
+<pre class="r"><code>backTransform(m1.occelot, &quot;det&quot;)</code></pre>
+<pre><code>## Backtransformed linear combination(s) of Detection estimate(s)
+## 
+##  Estimate   SE LinComb (Intercept)
+##     0.194 0.11   -1.43           1
+## 
+## Transformation: logistic</code></pre>
+<pre class="r"><code>backTransform(m1.occelot, &quot;state&quot;)</code></pre>
+<pre><code>## Backtransformed linear combination(s) of Occupancy estimate(s)
+## 
+##  Estimate     SE LinComb (Intercept)
+##     0.164 0.0909   -1.63           1
+## 
+## Transformation: logistic</code></pre>
+<pre class="r"><code>###
+m1.agouti &lt;- occu(~1 ~1, data = occ.agouti)
+m1.agouti</code></pre>
+<pre><code>## 
+## Call:
+## occu(formula = ~1 ~ 1, data = occ.agouti)
+## 
+## Occupancy:
+##  Estimate    SE   z P(&gt;|z|)
+##     0.933 0.424 2.2  0.0277
+## 
+## Detection:
+##  Estimate    SE     z P(&gt;|z|)
+##    -0.505 0.192 -2.63  0.0086
+## 
+## AIC: 262.9786</code></pre>
+<pre class="r"><code>backTransform(m1.agouti, &quot;det&quot;)</code></pre>
+<pre><code>## Backtransformed linear combination(s) of Detection estimate(s)
+## 
+##  Estimate     SE LinComb (Intercept)
+##     0.376 0.0451  -0.505           1
+## 
+## Transformation: logistic</code></pre>
+<pre class="r"><code>backTransform(m1.agouti, &quot;state&quot;)</code></pre>
+<pre><code>## Backtransformed linear combination(s) of Occupancy estimate(s)
+## 
+##  Estimate     SE LinComb (Intercept)
+##     0.718 0.0859   0.933           1
+## 
+## Transformation: logistic</code></pre>
+<pre class="r"><code>m1.agouti &lt;- occu(~1 ~1, data = occ.agouti)
+m2.agouti &lt;- occu(~1 ~physiog, data = occ.agouti)
+m3.agouti &lt;- occu(~1 ~water, data = occ.agouti)
+m4.agouti &lt;- occu(~1 ~waterpa, data = occ.agouti)
+m5.agouti &lt;- occu(~1 ~stage, data = occ.agouti)
+m6.agouti &lt;- occu(~trail ~physiog, data = occ.agouti)
+m7.agouti &lt;- occu(~trail ~water, data = occ.agouti)
+m8.agouti &lt;- occu(~trail ~waterpa, data = occ.agouti)
+m9.agouti &lt;- occu(~trail ~stage, data = occ.agouti)
+
+list.agouti &lt;- fitList(&quot;p(1)_psi(1)&quot; = m1.agouti,
+                       &quot;p(1)_psi(physiog)&quot; = m2.agouti,
+                       &quot;p(1)_psi(water)&quot; = m3.agouti,
+                       &quot;p(1)_psi(waterpa)&quot; = m4.agouti,
+                       &quot;p(1)_psi(stage)&quot; = m5.agouti,
+                       &quot;p(trail)_psi(physiog)&quot; = m6.agouti,
+                       &quot;p(trail)_psi(water)&quot; = m7.agouti,
+                       &quot;p(trail)_psi(waterpa)&quot; = m8.agouti,
+                       &quot;p(trail)_psi(stage)&quot; = m9.agouti)
+  
+
+modSel(list.agouti)</code></pre>
+<pre><code>##                       nPars    AIC delta  AICwt cumltvWt
+## p(1)_psi(physiog)         3 255.53  0.00 0.5037     0.50
+## p(trail)_psi(physiog)     4 255.70  0.17 0.4627     0.97
+## p(1)_psi(1)               2 262.98  7.45 0.0122     0.98
+## p(1)_psi(water)           3 264.75  9.22 0.0050     0.98
+## p(1)_psi(waterpa)         3 264.97  9.44 0.0045     0.99
+## p(trail)_psi(water)       4 265.18  9.65 0.0040     0.99
+## p(trail)_psi(waterpa)     4 265.44  9.91 0.0035     1.00
+## p(1)_psi(stage)           4 266.16 10.63 0.0025     1.00
+## p(trail)_psi(stage)       5 266.73 11.20 0.0019     1.00</code></pre>
+<pre class="r"><code>backTransform(m2.agouti, &quot;det&quot;)</code></pre>
+<pre><code>## Backtransformed linear combination(s) of Detection estimate(s)
+## 
+##  Estimate     SE LinComb (Intercept)
+##      0.38 0.0449   -0.49           1
+## 
+## Transformation: logistic</code></pre>
+<pre class="r"><code># backTransform(m2.agouti, &quot;state&quot;)
+
+newdata &lt;- expand.grid(physiog = unique(covar_data$physiog))
+
+m2.agouti</code></pre>
+<pre><code>## 
+## Call:
+## occu(formula = ~1 ~ physiog, data = occ.agouti)
+## 
+## Occupancy:
+##             Estimate     SE      z P(&gt;|z|)
+## (Intercept)     1.29  0.499  2.583 0.00978
+## physiogVer     -9.59 31.560 -0.304 0.76134
+## 
+## Detection:
+##  Estimate    SE     z P(&gt;|z|)
+##     -0.49 0.191 -2.57  0.0103
+## 
+## AIC: 255.5304</code></pre>
+<pre class="r"><code>pred_data&lt;- cbind(newdata,predict(m2.agouti, newdata = newdata, type = &quot;state&quot;))
+
+ggplot(data = pred_data) + 
+  geom_col(aes(x = physiog, y = Predicted)) + 
+  geom_errorbar(aes(x = physiog, ymax = upper, ymin = lower), width = 0.5) + 
+  theme_classic()</code></pre>
+<p><img src="/post/2018-04-13-Occupancy_files/figure-html/basicmodel-1.png" width="672" /></p>
+<pre class="r"><code>agouti </code></pre>
+<pre><code>## # A tibble: 50 x 10
+##    Sites    S01   S02   S03   S04   S05   S06   S07   S08   S09
+##    &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 OCVP1      1     1     1     0    NA    NA    NA    NA    NA
+##  2 OCVP2      0     0     0     0    NA    NA    NA    NA    NA
+##  3 OCVP3     NA    NA    NA     0     0     0     0     0     0
+##  4 OCVP4      0     0    NA    NA    NA    NA    NA    NA    NA
+##  5 OCVP5      0     0     0     0    NA    NA    NA    NA    NA
+##  6 OCVP6      0     0     0     0    NA    NA    NA    NA    NA
+##  7 OCVP7      1    NA    NA    NA    NA    NA    NA    NA    NA
+##  8 OCVP8      1     1     1     1    NA    NA    NA    NA    NA
+##  9 OCVP9     NA    NA    NA     0     1     0     1     0     0
+## 10 OCVP10     0     0     0     0    NA    NA    NA    NA    NA
+## # ... with 40 more rows</code></pre>
+<pre class="r"><code>covar_data %&gt;% 
+  mutate(Sites = paste0(&quot;OCVP&quot;,site)) %&gt;% 
+  right_join(agouti, by = &quot;Sites&quot;) %&gt;% 
+  arrange(physiog) %&gt;% 
+  select(physiog, S01:S09) %&gt;% 
+  as.data.frame()</code></pre>
+<pre><code>##    physiog S01 S02 S03 S04 S05 S06 S07 S08 S09
+## 1      Cer   1   1   1   0  NA  NA  NA  NA  NA
+## 2      Cer   0   0   0   0  NA  NA  NA  NA  NA
+## 3      Cer   1  NA  NA  NA  NA  NA  NA  NA  NA
+## 4      Cer   1   1   1   1  NA  NA  NA  NA  NA
+## 5      Cer  NA  NA  NA   0   1   0   1   0   0
+## 6      Cer   0   0   0   0  NA  NA  NA  NA  NA
+## 7      Cer   0   0   0   1  NA  NA  NA  NA  NA
+## 8      Cer   0   0   0  NA  NA  NA  NA  NA  NA
+## 9      Cer   1   1   1   0  NA  NA  NA  NA  NA
+## 10     Cer  NA  NA  NA   0   1   0   0   1   0
+## 11     Cer  NA  NA  NA   0   0   1   0   0   0
+## 12     Cer   1   0  NA   1   1  NA  NA  NA  NA
+## 13     Cer   0   0   0   0  NA  NA  NA  NA  NA
+## 14     Cer  NA  NA  NA   1   0   0   1   0   0
+## 15     Cer   0   1   1   0  NA  NA  NA  NA  NA
+## 16     Cer  NA  NA  NA   0   0   1   0   1   0
+## 17     Cer  NA  NA  NA   0   0   1   1   1   1
+## 18     Cer  NA  NA  NA   0   0   0   1   0   0
+## 19     Cer  NA  NA  NA   0   1   0   1   1   1
+## 20     Cer  NA  NA  NA   0   1   0   0   0  NA
+## 21     Cer  NA  NA  NA   0   0   0   0   0   0
+## 22     Cer  NA  NA  NA  NA  NA  NA  NA   0   0
+## 23     Cer  NA  NA  NA   0   0  NA  NA  NA  NA
+## 24     Cer  NA  NA  NA   0   0   0   0   0   0
+## 25     Cer  NA  NA  NA   0   0   0   0   0   0
+## 26     Cer  NA  NA  NA   0   0   0  NA  NA  NA
+## 27     Cer  NA  NA  NA   0   0   0   0   1   1
+## 28     Cer  NA  NA  NA   0   1   1   1   0   0
+## 29     Cer  NA  NA  NA   0   0   1   0   0   0
+## 30     Cer  NA  NA  NA   0   0   1   1   0   0
+## 31     Cer  NA  NA  NA   0   0   0   0   0   0
+## 32     Cer  NA  NA  NA   0   0   0   0   0   0
+## 33     Cer  NA  NA  NA   0   0   1   0   0   0
+## 34     Cer  NA  NA  NA  NA   0   1   1   0   0
+## 35     Cer  NA  NA  NA  NA   1   1   0   1   0
+## 36     Cer  NA  NA  NA  NA   1   1   1   1   0
+## 37     Cer  NA  NA  NA  NA   0  NA   0   0   0
+## 38     Cer  NA  NA  NA  NA   0  NA  NA  NA  NA
+## 39     Cer  NA  NA  NA   0   1   0  NA  NA  NA
+## 40     Cer  NA  NA  NA  NA   0  NA   0   1   0
+## 41     Cer  NA  NA  NA  NA   1   1   0  NA  NA
+## 42     Cer  NA  NA  NA  NA   1   0   0   0   0
+## 43     Cer  NA  NA  NA  NA   0   0   0   0   0
+## 44     Cer  NA  NA  NA  NA   0   1   0   0   0
+## 45     Cer  NA  NA  NA  NA   0   1   1   1   0
+## 46     Ver  NA  NA  NA   0   0   0   0   0   0
+## 47     Ver   0   0  NA  NA  NA  NA  NA  NA  NA
+## 48     Ver   0   0   0   0  NA  NA  NA  NA  NA
+## 49     Ver   0   0   0   0  NA  NA  NA  NA  NA
+## 50     Ver   0   0   0  NA  NA  NA  NA  NA  NA</code></pre>
+</div>

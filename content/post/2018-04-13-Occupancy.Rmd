@@ -1,0 +1,135 @@
+---
+title: "Occupancy modelling"
+date: '2018-04-13'
+tags:
+- Occupancy models
+- Model selection
+- Data Seminar
+categories: R
+---
+
+## Load packages
+
+```{r setup, message = FALSE}
+# .libPaths("P:/RLibrary2")
+knitr::opts_chunk$set(echo = TRUE)
+# 
+# install.packages("unmarked")
+# install.packages("AICcmodavg")
+
+library(unmarked)
+library(tidyverse)
+library(readxl)
+library(AICcmodavg)
+
+```
+
+## Load data
+
+```{r loaddata}
+
+covar_data <- read_excel("/Volumes/cchizinski2/SNR_R_Group/2018-DataSeminar/OccupancyModels/data/covariatesrec.xlsx")
+glimpse(covar_data)
+covar_data %>% 
+  rename(site = `Sampling site (OCVP)`,
+         stage = `succesion stage`,
+         physiog = `vegetation physiognomy`,
+         waterpa = `Dist Peruaçu River`,
+         water = `Dist water source`) %>% 
+  mutate(stage = as.factor(stage),
+         trail = as.factor(trail),
+         physiog = as.factor(physiog)) -> covar_data
+
+samp.occ <- c("Sites", paste0("S0",1:9))
+
+ocelot <- read_excel("/Volumes/cchizinski2/SNR_R_Group/2018-DataSeminar/OccupancyModels/data/largemammalrec.xlsx",
+                     col_names = samp.occ,
+                     sheet = "Lpar",
+                     na = "NA") 
+
+glimpse(ocelot)
+
+agouti <- read_excel("/Volumes/cchizinski2/SNR_R_Group/2018-DataSeminar/OccupancyModels/data/largemammalrec.xlsx",
+                     col_names = samp.occ,
+                     sheet = "Daza",
+                     na = "NA") 
+
+glimpse(agouti)
+
+```
+
+```{r setdata}
+
+ocelot.pa <- ocelot[,2:10]
+
+occ.ocelot<- unmarkedFrameOccu(y = ocelot.pa,
+                               siteCovs = covar_data)
+
+summary(occ.ocelot)
+#### Agouti 
+agouti.pa <- agouti[,2:10]
+occ.agouti<- unmarkedFrameOccu(y = agouti.pa,
+                               siteCovs = covar_data)
+summary(occ.agouti)
+```
+
+```{r basicmodel}
+m1.occelot <- occu(~1 ~1, data = occ.ocelot)
+m1.occelot
+
+backTransform(m1.occelot, "det")
+backTransform(m1.occelot, "state")
+
+###
+m1.agouti <- occu(~1 ~1, data = occ.agouti)
+m1.agouti
+
+backTransform(m1.agouti, "det")
+backTransform(m1.agouti, "state")
+
+m1.agouti <- occu(~1 ~1, data = occ.agouti)
+m2.agouti <- occu(~1 ~physiog, data = occ.agouti)
+m3.agouti <- occu(~1 ~water, data = occ.agouti)
+m4.agouti <- occu(~1 ~waterpa, data = occ.agouti)
+m5.agouti <- occu(~1 ~stage, data = occ.agouti)
+m6.agouti <- occu(~trail ~physiog, data = occ.agouti)
+m7.agouti <- occu(~trail ~water, data = occ.agouti)
+m8.agouti <- occu(~trail ~waterpa, data = occ.agouti)
+m9.agouti <- occu(~trail ~stage, data = occ.agouti)
+
+list.agouti <- fitList("p(1)_psi(1)" = m1.agouti,
+                       "p(1)_psi(physiog)" = m2.agouti,
+                       "p(1)_psi(water)" = m3.agouti,
+                       "p(1)_psi(waterpa)" = m4.agouti,
+                       "p(1)_psi(stage)" = m5.agouti,
+                       "p(trail)_psi(physiog)" = m6.agouti,
+                       "p(trail)_psi(water)" = m7.agouti,
+                       "p(trail)_psi(waterpa)" = m8.agouti,
+                       "p(trail)_psi(stage)" = m9.agouti)
+  
+
+modSel(list.agouti)
+
+backTransform(m2.agouti, "det")
+# backTransform(m2.agouti, "state")
+
+newdata <- expand.grid(physiog = unique(covar_data$physiog))
+
+m2.agouti
+
+pred_data<- cbind(newdata,predict(m2.agouti, newdata = newdata, type = "state"))
+
+ggplot(data = pred_data) + 
+  geom_col(aes(x = physiog, y = Predicted)) + 
+  geom_errorbar(aes(x = physiog, ymax = upper, ymin = lower), width = 0.5) + 
+  theme_classic()
+
+agouti 
+covar_data %>% 
+  mutate(Sites = paste0("OCVP",site)) %>% 
+  right_join(agouti, by = "Sites") %>% 
+  arrange(physiog) %>% 
+  select(physiog, S01:S09) %>% 
+  as.data.frame()
+```
+

@@ -1,0 +1,84 @@
+---
+title: "Dose Response"
+date: '2018-04-27'
+tags:
+- Refelectance
+- Partial Least Squares Regression
+- Data Seminar
+categories: R
+---
+
+## Load packages
+
+```{r setup, include=FALSE}
+# .libPaths("P:/RLibrary2")
+knitr::opts_chunk$set(echo = TRUE)
+# install.packages("drc")
+
+library(drc)
+library(tidyverse)
+```
+
+## Load data
+
+```{r loaddata}
+
+id <- "16viAhr6QNj3XKe3WHXBypgaq7uKoTqQt"
+dose<- read_csv(sprintf("https://docs.google.com/uc?id=%s&export=download", id))
+head(dose)
+glimpse(dose)
+
+```
+
+
+```{r plotdata}
+
+ggplot(data = dose) +
+  geom_point(aes(x = Dose, y = control, shape = as.factor(RUN), color = as.factor(RUN))) + 
+  labs(x = expression(paste("Herbicide (g ha"^"-1",")")),
+       y = expression("Visual control (%)"),
+       color = "Run",
+       shape = "Run") + 
+  theme_classic() + 
+  theme(legend.position = c(0.9, 0.2),
+        legend.background = element_rect(color = "black"))
+
+```
+
+
+```{r modelFit}
+
+log_model <- drm(control ~ Dose, curveid = RUN, data = dose, fct = LL.3(names = c("Slope", "Upper Limit", "ED50")))
+
+summary(log_model)
+modelFit(log_model)
+
+## Comparison of model parameters
+compParm(log_model, "Slope", "-")
+compParm(log_model, "Upper Limit", "-")
+compParm(log_model, "ED50", "-")
+
+plot(log_model, type = "all")
+```
+
+```{r modelPred, warning = FALSE}
+
+vsmall <- .Machine$double.eps
+
+newdata <- expand.grid(dose = seq(vsmall, max(dose$Dose), by =  10),
+                       RUN = unique(dose$RUN))
+
+pred_data <- cbind(newdata, predict(log_model, newdata = newdata, interval = "confidence"))
+
+head(pred_data)
+
+ggplot(data = pred_data) +
+  geom_line(aes(x = dose, y = Prediction, colour = as.factor(RUN))) + 
+  geom_ribbon(aes(x = dose, ymax = Upper, ymin = Lower, fill = as.factor(RUN)), alpha = 0.2) + 
+  geom_point(data = dose, aes(x = Dose, y = control, colour = as.factor(RUN), shape = as.factor(RUN))) +
+  theme_classic() + 
+  scale_x_log10() +
+  theme(legend.position = "bottom")
+
+```
+

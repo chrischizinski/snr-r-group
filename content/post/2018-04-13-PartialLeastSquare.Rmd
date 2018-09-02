@@ -1,0 +1,173 @@
+---
+title: "Partial Least Squares Regression"
+date: '2018-03-30'
+tags:
+- Refelectance
+- Partial Least Squares Regression
+- Data Seminar
+categories: R
+---
+  
+```{r setup, include=FALSE}
+# .libPaths("P:\\RLibrary2")
+options(digits = 4)
+knitr::opts_chunk$set(echo = TRUE)
+# .libPaths("P:\\RLibrary2")
+# install.packages("pls")
+
+library(pls)
+library(lubridate)
+library(tidyverse)
+``` 
+
+# Load the data
+
+Bring data in from google drive 
+
+
+```{r ryandata}
+
+id <- "1_0rUKAVD7mf4D1ebGAyLNIKXIfekHdFG"
+ryanData<- read_csv(sprintf("https://docs.google.com/uc?id=%s&export=download", id),col_names = FALSE)
+head(ryanData)
+glimpse(ryanData)
+
+id <- "1w1qEORMN7wAGA9UsNndUP_2F05_zNRTy"
+ryanDataObs<- read_csv(sprintf("https://docs.google.com/uc?id=%s&export=download", id),col_names = FALSE)
+head(ryanDataObs)
+
+```
+
+# Reformatting to plot 
+
+```{r datatrans}
+ryanData.head <- t(ryanData[1:3,])  # separate out first three rows
+colnames(ryanData.head) <- ryanData.head[1,]   # name columns after first row
+ryanData.head <- ryanData.head[-1,] # remove first row from the data
+rownames(ryanData.head) <- NULL # 'reset' rownames
+
+ryanData.rest <- ryanData[-c(1:3),] # remove first three rows
+
+ryanData.head <- ryanData.head[rep(1:nrow(ryanData.head),each = nrow(ryanData.rest)),]
+
+ryanData.rest %>% 
+  gather(key, value, X2:X80) %>% 
+  cbind(ryanData.head) %>% 
+  select(-key) %>% 
+  rename(wl = X1,
+         refl = value) %>% 
+  mutate(wl = as.numeric(wl),
+         refl = as.numeric(refl),
+         ID = as.numeric(as.character(ID)),
+         Date = as.character(format(lubridate::mdy(Date), "%m/%d/%y"))) -> ryanData.long
+
+glimpse(ryanData.long)
+
+ggplot(data = ryanData.long) + 
+  geom_line(aes(x = wl, y = refl, color = Date)) + 
+  facet_wrap(~Plot) + 
+  theme_classic()
+
+```
+
+```{r transObs}
+ryanDataObs <- t(ryanDataObs) # transpose the data
+
+colnames(ryanDataObs) <- ryanDataObs[1,] # rename columns
+ryanDataObs<- ryanDataObs[-1,] # remove first row
+
+ryanDataObs %>% 
+  as.data.frame() %>% 
+  mutate_all(funs(trimws(., "both"))) %>% # trim white space
+  mutate(Date = as.numeric(Date),
+         Date = as.Date(Date, origin = "1899-12-30"),
+         Date = as.character(format(Date, "%m/%d/%y")),
+         ID = as.numeric(as.character(ID))) %>% 
+  right_join(ryanData.long, by=c("Date","ID","Plot")) -> ryanJoin.long
+```
+
+```{r dataforpls}
+ryanJoin.long %>% 
+  filter(Plot == "CSP01") %>% 
+  select(-Date, -Plot, -NDVI, -CI, - ID) %>% 
+  spread(wl, refl) ->vegFracwide.train
+
+
+vegFracwide.train1 <- data.frame(vegFraction = I(as.matrix(vegFracwide.train$vegFraction)),wl = I(as.matrix(vegFracwide.train[,-1])))
+
+# Testing data
+ryanJoin.long %>% 
+  filter(Plot == "CSP03") %>% 
+  select(-Date, -Plot, -NDVI, -CI, - ID) %>% 
+  spread(wl, refl) ->vegFracwide.test
+
+
+vegFracwide.test1 <- data.frame(vegFraction = I(as.matrix(vegFracwide.test$vegFraction)),wl = I(as.matrix(vegFracwide.test[,-1])))
+
+```
+
+```{r runPLS}
+corn_mod <- plsr(vegFraction ~ wl, ncomp = 10, data = vegFracwide.train1, validation = "LOO")
+
+summary(corn_mod)
+
+out1<- unclass(RMSEP(corn_mod)) 
+  
+
+out1$val %>% 
+  as.data.frame() %>% 
+  rownames_to_column("ID") %>% 
+  group_by(ID) %>% 
+  gather(key, value, contains("vegFraction")) %>% 
+  spread(ID, value) %>% 
+  mutate(key = gsub("vegFraction.", "", key),
+         key = factor(key, levels = c("(Intercept)", paste(1:10,"comps")))) %>% 
+  arrange(key) ->rmse_corn
+
+ggplot(data = rmse_corn) +
+  geom_line(aes(x = key, y = adjCV, group=2), color = "red")+
+  geom_point(aes(x = key, y = adjCV), color = "red") + 
+  theme_classic()
+
+```
+
+
+```{r loadings}
+loadings(corn_mod)[,1:2] %>% 
+  as.data.frame() %>% 
+  rownames_to_column("wl") %>% 
+  mutate_all(as.numeric) -> corn_load
+
+ggplot(data = corn_load) +
+  geom_hline(aes(yintercept = 0)) +
+  geom_line(aes(x = wl, y = `Comp 1`, group = 1), color = "red") + 
+  geom_line(aes(x = wl, y = `Comp 2`, group = 1), color = "blue") + 
+  theme_classic()
+```
+
+```{r predotherplot}
+obs <- as.data.frame(unclass(vegFracwide.test1$vegFraction))
+
+pred <- as.data.frame(predict(corn_mod, ncomp = 2, newdata = vegFracwide.test1))
+
+pred_obs <- data.frame(obs = obs,
+                       pred = pred)
+
+names(pred_obs) <- c("obs", "pred")
+
+pred_obs %>% 
+  mutate_all(as.character) %>% 
+  mutate_all(as.numeric)-> pred_obs
+
+ggplot(data = pred_obs) +
+  geom_point(aes(x = pred, y = obs), size =2) +
+  geom_smooth(aes(x = pred, y = obs), method = "lm") +
+  coord_equal(xlim = c(0,1), expand = FALSE) + 
+  theme_classic()
+
+mod<- lm(obs~pred, data = pred_obs)
+summary(mod)
+
+cor(pred_obs$pred, pred_obs$obs)
+```
+

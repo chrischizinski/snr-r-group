@@ -1,0 +1,239 @@
+---
+title: "Community composition - ordination"
+date: '2018-03-30'
+tags:
+- Community composition
+- PCA
+- NMDS
+- Data Seminar
+categories: R
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# .libPaths("P:\\RLibrary2")
+
+# install.packages("ggrepel")
+# install.packages("vegan")
+# install.packages("FactoMineR")
+# install.packages("factoextra")
+# install.packages("lubridate")
+
+library(ggrepel)
+library(vegan)
+library(FactoMineR)
+library(factoextra)
+library(lubridate)
+library(tidyverse)
+library(scales)
+```
+
+## Ordination
+
+Read the data in from google drive
+
+```{r loaddata}
+id1 <- "1f72ooJvTN9xiFbgMMxL1Kh2ISu9tsJt4"
+veg_diversity<- read_csv(sprintf("https://docs.google.com/uc?id=%s&export=download", id1))
+
+id2 <- "1dWDJ-gFKLZ-NXt_Bd0GhxT6Gre3A3GUU"
+precip_data<- read_csv(sprintf("https://docs.google.com/uc?id=%s&export=download", id2))
+
+```
+
+```{r datamanip}
+
+glimpse(veg_diversity)
+
+veg_diversity %>% 
+  filter(restSite == "Dahms 95") %>% 
+  dplyr::select(yearCollect, speciesName, siteYrpercent) %>% 
+  group_by(yearCollect) %>% 
+  spread(speciesName, siteYrpercent, fill = 0) %>% 
+  as.matrix() -> dahms95
+
+## Remove infrequent species 
+decostand(dahms95, method = "pa") %>% 
+  as.data.frame() %>% 
+  summarise_all(sum) %>% 
+  gather() %>% 
+  filter(value ==1) -> infreq_spp
+
+dahms95 %>% 
+  as.data.frame() %>% 
+  select(-one_of(c(infreq_spp$key))) %>% 
+  as.matrix() -> dahms95
+
+rownames(dahms95) <- dahms95[,1]
+dahms95 <- dahms95[,-1]
+
+```
+
+## Conduct the PCA
+
+We will use the `prcomp()` function in Base R
+
+PCA is sensitive to the scale of the data 
+
+If all the data is not measured on the same scale, using covariance means that the result
+will be determined by the variable with the greatest value, as it will have the greatest variance
+
+```{r runpca}
+dahms95.pca <- prcomp(dahms95, scale = FALSE)
+names(summary(dahms95.pca))
+summary(dahms95.pca)
+
+```
+
+```{r scree}
+data_scree <- data.frame(comp = 1:16, 
+                         var = summary(dahms95.pca)$sdev^2)
+
+ggplot(data = data_scree) +
+  geom_line(aes(x = comp, y = var)) +
+  geom_point(aes(x = comp, y = var), size = 2) +
+  theme_classic()
+
+screeplot(dahms95.pca)
+
+fviz_eig(dahms95.pca)
+
+```
+
+
+## Plotting the PCA
+
+The points on a biplot represent observations positioned  in ordination space by their principal components such that component 1 is represented on the x-axis and component 2 is on the y-axis
+
+interpretation of the ordinatin is dependent on wheter a distance biplot (intersample relationships; scaling = 1) or a correlation biplot (interspecies correlations; scaling = 2) is used, because observation scores are rescaled based on the scaling choice.  
+
+```{r biplots}
+fviz_contrib(dahms95.pca, choice = "var", axes = 1:2, top = 25)
+
+fviz_pca_var(dahms95.pca, col.var = "contrib")
+
+fviz_pca_ind(dahms95.pca, col.ind = "cos2", repel = 2)
+
+fviz_pca_biplot(dahms95.pca, axes = 1:2)
+
+# If you want greater control of your plots
+
+scale = 1 # covariance biplot = 1; form biplot = 0
+var.scale = scale # scale factor to apply to variables
+obs.scale <- 1 - scale # scale factor to apply to observations (rows)
+
+circle.prob = 0.69
+
+nobs.factor <-sqrt(nrow(dahms95.pca$x) -1)
+d <- dahms95.pca$sdev
+u <- sweep(dahms95.pca$x,2,1/(d*nobs.factor), FUN = "*")
+v <- dahms95.pca$rotation
+
+# scores
+df.u <- as.data.frame(sweep(u,2,d^obs.scale, FUN = "*"))
+
+# Directions
+v <- sweep(v,2,d^var.scale, FUN = "*")
+df.v <- as.data.frame(v)
+
+df.u <- df.u * nobs.factor
+
+# Scale the radius for the correlation circles so that it corresponds to the data ellipse for the standardized PC scores
+
+r <- sqrt(qchisq(circle.prob, df = 2)) * prod(colMeans(df.u^2))^(1/4)
+
+# Scale directions
+v.scale <- rowSums(v^2)
+df.v <- r * df.v/ sqrt(max(v.scale))
+df.v %>% rownames_to_column("species") -> df.v
+
+soi <- c("Poa pratensis", "Conyza canadensis", "Carex brevior", "Medicago lupulina", "Bromus japonicus")
+
+ggplot(data = df.u) + 
+  geom_point(aes(x = PC1, y = PC2)) + 
+  geom_text(aes(x = PC1, y = PC2, label = paste(rownames(df.u))), alpha = 0.5, hjust = 1) +
+  geom_segment(data = df.v %>% filter(species %in% soi), aes(x = 0, y = 0, xend = PC1, yend = PC2), arrow = arrow(length = unit(1/2, "picas")), color = muted("red")) +
+  geom_label_repel(data = df.v %>% filter(species %in% soi), aes(x = PC1, y = PC2, label = species)) +
+  theme_classic()
+
+get_pca_var(dahms95.pca)
+get_pca_ind(dahms95.pca)
+
+
+```
+
+## Nonmetric multidimensional scaling
+
+NMDS has the best performance characteristics of the unconstrained ordination methods in ecology 
+
+While most ordination methods attempt to maintain the distances between points in multivariate space, there are situations where the exact distance is immaterial and the rank order is sufficient. 
+
+NMDS is able to use a multitude of distance measures
+
+NMDS as opposed to other ordination methods does **NOT** rely on eigenanalysis and does not maximize the variation explained by each axis. 
+
+NMDS axes are arbritrary and can be flipped and rotated
+
+The number of NMDS axes are described *a priori*
+
+The points are put into random space at the initial step.
+
+The distances from the random locations are compared to the distances in the original data using isotonic regression with a stress function (stress ranges from 0 to 1)
+
+The points are then iteratively moved in the direction of reduced stress until the lowest stress value is found 
+
+```{r nmds}
+dahms95.nmds <- metaMDS(dahms95, k = 2, try = 50) 
+?metaMDS
+
+dahms95.nmds
+```
+
+```{r plotnmds}
+species_scores <- scores(dahms95.nmds, "species") %>% as.data.frame() %>% rownames_to_column("species")
+
+year_scores <- scores(dahms95.nmds, "site") %>% as.data.frame() %>% rownames_to_column("year")
+
+
+ggplot() + 
+  # geom_point(data = species_scores, aes(x = NMDS1, y = NMDS2), shape = 16, colour = "red") +
+  # geom_text(data = species_scores, aes(x = NMDS1, y = NMDS2, label = species), alpha = 0.25, hjust = 0) +
+   geom_point(data = year_scores, aes(x = NMDS1, y = NMDS2), shape = 24, colour = "blue") + 
+  theme_classic()
+```
+
+```{r fittingenviron}
+
+precip_data %>% 
+  filter(month(DATE) >= 4 & month(DATE) <=6,
+         year(DATE) %in% c(2002:2017)) %>% 
+  mutate(year = year(DATE)) %>% 
+  group_by(year) %>% 
+  summarise(ttl_precip = sum(PRCP, na.rm = TRUE)) -> total_precip
+
+
+edge.sf <- ordisurf(dahms95.nmds ~ total_precip$ttl_precip, plot = TRUE)
+
+extract.xyz <- function(obj){
+  xy <- expand.grid(x = obj$grid$x, y = obj$grid$y)
+  xyz <- cbind(xy, c(obj$grid$z))
+  names(xyz) <- c("x","y","z")
+  return(xyz)
+  }
+
+contour.vals<- extract.xyz(obj = edge.sf)
+
+head(contour.vals)
+
+ggplot(data = contour.vals) + 
+  geom_point(data = species_scores, aes(x = NMDS1, y = NMDS2), shape = 16, colour = "red", alpha =0.25) +
+   geom_point(data = year_scores, aes(x = NMDS1, y = NMDS2), shape = 24, colour = "blue", fill = "blue", size = 2, alpha = 0.5) + 
+  geom_text(data = year_scores, aes(x = NMDS1, y = NMDS2, label = year), alpha = 0.45, hjust = 0) +
+  geom_path(data = year_scores, aes(x = NMDS1, y = NMDS2), linetype = "dashed", arrow = arrow()) +
+  geom_contour(aes(x = x, y = y, z = z), colour = "grey", alpha = 1) +
+  coord_cartesian(xlim = c(-0.6,0.6), ylim = c(-0.4,0.4)) +
+  theme_classic()
+
+```
+

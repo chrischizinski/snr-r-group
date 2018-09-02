@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+         
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Community composition - ordination</title>
+        <style>
+
+    html body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #FEFDFA;
+    }
+
+    :root {
+        --accent: #D00000;
+        --border-width:  5px ;
+    }
+
+</style>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+
+
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/hybrid.min.css"> 
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+ 
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/swift.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/R.min.js"></script> 
+
+    <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script>
+ <meta name="generator" content="Hugo 0.30.2" />
+        
+        
+        
+        
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-48496439-3"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments)};
+          gtag('js', new Date());
+
+          gtag('config', 'UA-48496439-3');
+        </script>
+        
+    </head>
+
+    
+    
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    
+
+    <body>
+         
+        <nav class="navbar navbar-default navbar-fixed-top">
+
+            <div class="container">
+
+                <div class="navbar-header">
+
+                    <a class="navbar-brand visible-xs" href="#">Community composition - ordination</a>
+
+                    <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                </div>
+
+                <div class="collapse navbar-collapse">
+
+                    
+                        <ul class="nav navbar-nav">
+                            
+                                <li><a href="/">Home</a></li>
+                            
+                                <li><a href="/post/">Posts</a></li>
+                            
+                                <li><a href="/resources/">Resources</a></li>
+                            
+                        </ul>
+                    
+
+                    
+                        <ul class="nav navbar-nav navbar-right">
+                            
+                                <li class="navbar-icon"><a href="mailto:cchizinski2@unl.edu"><i class="fa fa-envelope-o"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://github.com/chrischizinski/"><i class="fa fa-github"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://twitter.com/chrischizinski/"><i class="fa fa-twitter"></i></a></li>
+                            
+                        </ul>
+                    
+
+                </div>
+
+            </div>
+
+        </nav>
+
+
+<main>
+
+    <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/post/2018-03-30-communitycomposition/">Community composition - ordination</a></h4>
+    <h5>March 30, 2018</h5>
+    
+    <a href="/tags/community-composition"><kbd class="item-tag">Community composition</kbd></a>
+    
+    <a href="/tags/pca"><kbd class="item-tag">PCA</kbd></a>
+    
+    <a href="/tags/nmds"><kbd class="item-tag">NMDS</kbd></a>
+    
+    <a href="/tags/data-seminar"><kbd class="item-tag">Data Seminar</kbd></a>
+    
+
+</div>
+
+
+    <br> <div class="text-justify"><div id="ordination" class="section level2">
+<h2>Ordination</h2>
+<p>Read the data in from google drive</p>
+<pre class="r"><code>id1 &lt;- &quot;1f72ooJvTN9xiFbgMMxL1Kh2ISu9tsJt4&quot;
+veg_diversity&lt;- read_csv(sprintf(&quot;https://docs.google.com/uc?id=%s&amp;export=download&quot;, id1))</code></pre>
+<pre><code>## Warning: Missing column names filled in: &#39;X121&#39; [121], &#39;X122&#39; [122],
+## &#39;X123&#39; [123], &#39;X124&#39; [124], &#39;X125&#39; [125], &#39;X126&#39; [126], &#39;X127&#39; [127],
+## &#39;X128&#39; [128], &#39;X129&#39; [129], &#39;X130&#39; [130], &#39;X131&#39; [131], &#39;X132&#39; [132],
+## &#39;X133&#39; [133], &#39;X134&#39; [134], &#39;X135&#39; [135], &#39;X136&#39; [136], &#39;X137&#39; [137],
+## &#39;X138&#39; [138], &#39;X139&#39; [139], &#39;X140&#39; [140], &#39;X141&#39; [141], &#39;X142&#39; [142],
+## &#39;X143&#39; [143], &#39;X144&#39; [144], &#39;X145&#39; [145], &#39;X146&#39; [146], &#39;X147&#39; [147],
+## &#39;X148&#39; [148]</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   .default = col_integer(),
+##   restSite = col_character(),
+##   speciesName = col_character(),
+##   C = col_character(),
+##   siteYrpercent = col_double(),
+##   `102` = col_character(),
+##   `103` = col_character(),
+##   `104` = col_character(),
+##   `105` = col_character(),
+##   `106` = col_character(),
+##   `107` = col_character(),
+##   `108` = col_character(),
+##   `109` = col_character(),
+##   `110` = col_character(),
+##   `111` = col_character(),
+##   `112` = col_character(),
+##   `113` = col_character(),
+##   `114` = col_character(),
+##   `115` = col_character(),
+##   X121 = col_character(),
+##   X122 = col_character()
+##   # ... with 26 more columns
+## )</code></pre>
+<pre><code>## See spec(...) for full column specifications.</code></pre>
+<pre class="r"><code>id2 &lt;- &quot;1dWDJ-gFKLZ-NXt_Bd0GhxT6Gre3A3GUU&quot;
+precip_data&lt;- read_csv(sprintf(&quot;https://docs.google.com/uc?id=%s&amp;export=download&quot;, id2))</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   STATION = col_character(),
+##   NAME = col_character(),
+##   DATE = col_date(format = &quot;&quot;),
+##   DAPR = col_character(),
+##   MDPR = col_character(),
+##   PRCP = col_double(),
+##   SNOW = col_double(),
+##   SNWD = col_integer(),
+##   TSUN = col_character()
+## )</code></pre>
+<pre class="r"><code>glimpse(veg_diversity)</code></pre>
+<pre><code>## Observations: 3,543
+## Variables: 148
+## $ restSite      &lt;chr&gt; &quot;Dahms 95&quot;, &quot;Dahms 95&quot;, &quot;Dahms 95&quot;, &quot;Dahms 95&quot;, ...
+## $ yearCollect   &lt;int&gt; 2002, 2002, 2002, 2002, 2002, 2002, 2002, 2002, ...
+## $ speciesName   &lt;chr&gt; &quot;Ambrosia artemisiifolia var. elatior&quot;, &quot;Ambrosi...
+## $ C             &lt;chr&gt; &quot;0&quot;, &quot;1&quot;, &quot;0&quot;, &quot;5&quot;, &quot;1&quot;, &quot;1&quot;, &quot;3&quot;, &quot;2&quot;, &quot;5&quot;, &quot;*&quot;...
+## $ siteYrpercent &lt;dbl&gt; 0.21428571, 0.11428571, 0.10000000, 0.80000000, ...
+## $ `1`           &lt;int&gt; NA, NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, N...
+## $ `2`           &lt;int&gt; NA, NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, N...
+## $ `3`           &lt;int&gt; NA, NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, N...
+## $ `4`           &lt;int&gt; NA, NA, NA, 5, NA, NA, NA, NA, NA, NA, 5, NA, NA...
+## $ `5`           &lt;int&gt; 0, NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, 3,...
+## $ `6`           &lt;int&gt; NA, 1, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, 3,...
+## $ `7`           &lt;int&gt; NA, NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, N...
+## $ `8`           &lt;int&gt; NA, NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, N...
+## $ `9`           &lt;int&gt; NA, NA, 0, 5, NA, NA, NA, NA, NA, NA, NA, NA, NA...
+## $ `10`          &lt;int&gt; NA, NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, N...
+## $ `11`          &lt;int&gt; NA, 1, NA, NA, NA, NA, 3, NA, NA, NA, NA, NA, NA...
+## $ `12`          &lt;int&gt; NA, NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, 3...
+## $ `13`          &lt;int&gt; NA, NA, NA, 5, NA, NA, 3, NA, NA, NA, NA, NA, NA...
+## $ `14`          &lt;int&gt; NA, 1, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, NA...
+## $ `15`          &lt;int&gt; NA, NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, 3...
+## $ `16`          &lt;int&gt; 0, NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, 3,...
+## $ `17`          &lt;int&gt; NA, NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, N...
+## $ `18`          &lt;int&gt; NA, NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, N...
+## $ `19`          &lt;int&gt; NA, NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, N...
+## $ `20`          &lt;int&gt; 0, NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, 3,...
+## $ `21`          &lt;int&gt; NA, NA, NA, 5, NA, NA, NA, 2, NA, NA, NA, NA, NA...
+## $ `22`          &lt;int&gt; NA, NA, NA, 5, 1, NA, NA, NA, NA, NA, NA, NA, NA...
+## $ `23`          &lt;int&gt; NA, NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, N...
+## $ `24`          &lt;int&gt; NA, NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, N...
+## $ `25`          &lt;int&gt; NA, NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, N...
+## $ `26`          &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `27`          &lt;int&gt; NA, 1, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, NA...
+## $ `28`          &lt;int&gt; NA, NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, N...
+## $ `29`          &lt;int&gt; NA, NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, N...
+## $ `30`          &lt;int&gt; NA, NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, N...
+## $ `31`          &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `32`          &lt;int&gt; NA, NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, N...
+## $ `33`          &lt;int&gt; 0, NA, NA, 5, NA, NA, NA, NA, 5, NA, NA, NA, NA,...
+## $ `34`          &lt;int&gt; 0, NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, 3,...
+## $ `35`          &lt;int&gt; NA, NA, NA, 5, NA, NA, 3, NA, NA, NA, NA, NA, NA...
+## $ `36`          &lt;int&gt; NA, NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, N...
+## $ `37`          &lt;int&gt; NA, NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, N...
+## $ `38`          &lt;int&gt; 0, NA, NA, 5, NA, 1, NA, NA, 5, NA, NA, NA, 3, N...
+## $ `39`          &lt;int&gt; NA, NA, NA, 5, NA, NA, 3, NA, 5, NA, NA, NA, NA,...
+## $ `40`          &lt;int&gt; 0, NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, NA...
+## $ `41`          &lt;int&gt; 0, NA, NA, NA, NA, NA, NA, NA, NA, NA, 5, NA, NA...
+## $ `42`          &lt;int&gt; NA, NA, NA, NA, NA, NA, 3, NA, NA, NA, NA, NA, 3...
+## $ `43`          &lt;int&gt; NA, NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, 2, 3,...
+## $ `44`          &lt;int&gt; NA, NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, N...
+## $ `45`          &lt;int&gt; NA, NA, NA, 5, NA, NA, NA, NA, 5, NA, NA, NA, NA...
+## $ `46`          &lt;int&gt; NA, 1, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 3...
+## $ `47`          &lt;int&gt; NA, 1, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, NA...
+## $ `48`          &lt;int&gt; NA, 1, NA, NA, NA, NA, 3, NA, NA, NA, NA, NA, NA...
+## $ `49`          &lt;int&gt; NA, 1, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N...
+## $ `50`          &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `51`          &lt;int&gt; NA, NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, N...
+## $ `52`          &lt;int&gt; 0, NA, NA, 5, NA, NA, 3, NA, NA, NA, NA, NA, NA,...
+## $ `53`          &lt;int&gt; 0, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N...
+## $ `54`          &lt;int&gt; 0, NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, NA...
+## $ `55`          &lt;int&gt; 0, NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, NA...
+## $ `56`          &lt;int&gt; NA, NA, 0, 5, NA, NA, NA, NA, NA, NA, NA, NA, NA...
+## $ `57`          &lt;int&gt; NA, NA, 0, 5, NA, NA, NA, NA, NA, NA, NA, NA, NA...
+## $ `58`          &lt;int&gt; NA, NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, N...
+## $ `59`          &lt;int&gt; NA, NA, 0, NA, NA, NA, 3, NA, NA, NA, NA, NA, NA...
+## $ `60`          &lt;int&gt; 0, NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, NA...
+## $ `61`          &lt;int&gt; NA, NA, 0, NA, NA, NA, NA, NA, NA, NA, NA, NA, N...
+## $ `62`          &lt;int&gt; NA, NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, 3...
+## $ `63`          &lt;int&gt; 0, NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, NA...
+## $ `64`          &lt;int&gt; NA, NA, NA, 5, NA, NA, NA, NA, 5, NA, NA, NA, NA...
+## $ `65`          &lt;int&gt; NA, NA, 0, 5, NA, NA, NA, NA, NA, 0, NA, NA, NA,...
+## $ `66`          &lt;int&gt; NA, NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, 3...
+## $ `67`          &lt;int&gt; NA, NA, 0, NA, 1, NA, NA, NA, NA, NA, NA, NA, NA...
+## $ `68`          &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, 5, NA, NA, NA, N...
+## $ `69`          &lt;int&gt; NA, NA, NA, 5, NA, NA, 3, NA, NA, NA, NA, NA, NA...
+## $ `70`          &lt;int&gt; 0, NA, NA, 5, NA, NA, 3, NA, NA, NA, NA, NA, NA,...
+## $ `71`          &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `72`          &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `73`          &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `74`          &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `75`          &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `76`          &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `77`          &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `78`          &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `79`          &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `80`          &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `81`          &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `82`          &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `83`          &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `84`          &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `85`          &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `86`          &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `87`          &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `88`          &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `89`          &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `90`          &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `91`          &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `92`          &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `93`          &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `94`          &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `95`          &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `96`          &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `97`          &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `98`          &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `99`          &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `100`         &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `101`         &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `102`         &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `103`         &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `104`         &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `105`         &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `106`         &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `107`         &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `108`         &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `109`         &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `110`         &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `111`         &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `112`         &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `113`         &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `114`         &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ `115`         &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ X121          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ X122          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ X123          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ X124          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ X125          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ X126          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ X127          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ X128          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ X129          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ X130          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ X131          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ X132          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ X133          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ X134          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ X135          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ X136          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ X137          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ X138          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ X139          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ X140          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ X141          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ X142          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ X143          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ X144          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ X145          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ X146          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ X147          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ X148          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...</code></pre>
+<pre class="r"><code>veg_diversity %&gt;% 
+  filter(restSite == &quot;Dahms 95&quot;) %&gt;% 
+  dplyr::select(yearCollect, speciesName, siteYrpercent) %&gt;% 
+  group_by(yearCollect) %&gt;% 
+  spread(speciesName, siteYrpercent, fill = 0) %&gt;% 
+  as.matrix() -&gt; dahms95
+
+## Remove infrequent species 
+decostand(dahms95, method = &quot;pa&quot;) %&gt;% 
+  as.data.frame() %&gt;% 
+  summarise_all(sum) %&gt;% 
+  gather() %&gt;% 
+  filter(value ==1) -&gt; infreq_spp
+
+dahms95 %&gt;% 
+  as.data.frame() %&gt;% 
+  select(-one_of(c(infreq_spp$key))) %&gt;% 
+  as.matrix() -&gt; dahms95
+
+rownames(dahms95) &lt;- dahms95[,1]
+dahms95 &lt;- dahms95[,-1]</code></pre>
+</div>
+<div id="conduct-the-pca" class="section level2">
+<h2>Conduct the PCA</h2>
+<p>We will use the <code>prcomp()</code> function in Base R</p>
+<p>PCA is sensitive to the scale of the data</p>
+<p>If all the data is not measured on the same scale, using covariance means that the result
+will be determined by the variable with the greatest value, as it will have the greatest variance</p>
+<pre class="r"><code>dahms95.pca &lt;- prcomp(dahms95, scale = FALSE)
+names(summary(dahms95.pca))</code></pre>
+<pre><code>## [1] &quot;sdev&quot;       &quot;rotation&quot;   &quot;center&quot;     &quot;scale&quot;      &quot;x&quot;         
+## [6] &quot;importance&quot;</code></pre>
+<pre class="r"><code>summary(dahms95.pca)</code></pre>
+<pre><code>## Importance of components:
+##                           PC1    PC2     PC3     PC4     PC5     PC6
+## Standard deviation     0.5045 0.2589 0.21492 0.15834 0.15281 0.13068
+## Proportion of Variance 0.5143 0.1354 0.09333 0.05066 0.04718 0.03451
+## Cumulative Proportion  0.5143 0.6498 0.74308 0.79374 0.84093 0.87543
+##                            PC7     PC8    PC9    PC10    PC11    PC12
+## Standard deviation     0.11253 0.10983 0.0949 0.08595 0.08119 0.07036
+## Proportion of Variance 0.02559 0.02437 0.0182 0.01493 0.01332 0.01000
+## Cumulative Proportion  0.90102 0.92539 0.9436 0.95852 0.97183 0.98184
+##                           PC13    PC14    PC15      PC16
+## Standard deviation     0.06343 0.05526 0.04372 7.039e-17
+## Proportion of Variance 0.00813 0.00617 0.00386 0.000e+00
+## Cumulative Proportion  0.98997 0.99614 1.00000 1.000e+00</code></pre>
+<pre class="r"><code>data_scree &lt;- data.frame(comp = 1:16, 
+                         var = summary(dahms95.pca)$sdev^2)
+
+ggplot(data = data_scree) +
+  geom_line(aes(x = comp, y = var)) +
+  geom_point(aes(x = comp, y = var), size = 2) +
+  theme_classic()</code></pre>
+<p><img src="/post/2018-03-30-CommunityComposition_files/figure-html/scree-1.png" width="672" /></p>
+<pre class="r"><code>screeplot(dahms95.pca)</code></pre>
+<p><img src="/post/2018-03-30-CommunityComposition_files/figure-html/scree-2.png" width="672" /></p>
+<pre class="r"><code>fviz_eig(dahms95.pca)</code></pre>
+<p><img src="/post/2018-03-30-CommunityComposition_files/figure-html/scree-3.png" width="672" /></p>
+</div>
+<div id="plotting-the-pca" class="section level2">
+<h2>Plotting the PCA</h2>
+<p>The points on a biplot represent observations positioned in ordination space by their principal components such that component 1 is represented on the x-axis and component 2 is on the y-axis</p>
+<p>interpretation of the ordinatin is dependent on wheter a distance biplot (intersample relationships; scaling = 1) or a correlation biplot (interspecies correlations; scaling = 2) is used, because observation scores are rescaled based on the scaling choice.</p>
+<pre class="r"><code>fviz_contrib(dahms95.pca, choice = &quot;var&quot;, axes = 1:2, top = 25)</code></pre>
+<p><img src="/post/2018-03-30-CommunityComposition_files/figure-html/biplots-1.png" width="672" /></p>
+<pre class="r"><code>fviz_pca_var(dahms95.pca, col.var = &quot;contrib&quot;)</code></pre>
+<p><img src="/post/2018-03-30-CommunityComposition_files/figure-html/biplots-2.png" width="672" /></p>
+<pre class="r"><code>fviz_pca_ind(dahms95.pca, col.ind = &quot;cos2&quot;, repel = 2)</code></pre>
+<p><img src="/post/2018-03-30-CommunityComposition_files/figure-html/biplots-3.png" width="672" /></p>
+<pre class="r"><code>fviz_pca_biplot(dahms95.pca, axes = 1:2)</code></pre>
+<p><img src="/post/2018-03-30-CommunityComposition_files/figure-html/biplots-4.png" width="672" /></p>
+<pre class="r"><code># If you want greater control of your plots
+
+scale = 1 # covariance biplot = 1; form biplot = 0
+var.scale = scale # scale factor to apply to variables
+obs.scale &lt;- 1 - scale # scale factor to apply to observations (rows)
+
+circle.prob = 0.69
+
+nobs.factor &lt;-sqrt(nrow(dahms95.pca$x) -1)
+d &lt;- dahms95.pca$sdev
+u &lt;- sweep(dahms95.pca$x,2,1/(d*nobs.factor), FUN = &quot;*&quot;)
+v &lt;- dahms95.pca$rotation
+
+# scores
+df.u &lt;- as.data.frame(sweep(u,2,d^obs.scale, FUN = &quot;*&quot;))
+
+# Directions
+v &lt;- sweep(v,2,d^var.scale, FUN = &quot;*&quot;)
+df.v &lt;- as.data.frame(v)
+
+df.u &lt;- df.u * nobs.factor
+
+# Scale the radius for the correlation circles so that it corresponds to the data ellipse for the standardized PC scores
+
+r &lt;- sqrt(qchisq(circle.prob, df = 2)) * prod(colMeans(df.u^2))^(1/4)
+
+# Scale directions
+v.scale &lt;- rowSums(v^2)
+df.v &lt;- r * df.v/ sqrt(max(v.scale))
+df.v %&gt;% rownames_to_column(&quot;species&quot;) -&gt; df.v
+
+soi &lt;- c(&quot;Poa pratensis&quot;, &quot;Conyza canadensis&quot;, &quot;Carex brevior&quot;, &quot;Medicago lupulina&quot;, &quot;Bromus japonicus&quot;)
+
+ggplot(data = df.u) + 
+  geom_point(aes(x = PC1, y = PC2)) + 
+  geom_text(aes(x = PC1, y = PC2, label = paste(rownames(df.u))), alpha = 0.5, hjust = 1) +
+  geom_segment(data = df.v %&gt;% filter(species %in% soi), aes(x = 0, y = 0, xend = PC1, yend = PC2), arrow = arrow(length = unit(1/2, &quot;picas&quot;)), color = muted(&quot;red&quot;)) +
+  geom_label_repel(data = df.v %&gt;% filter(species %in% soi), aes(x = PC1, y = PC2, label = species)) +
+  theme_classic()</code></pre>
+<p><img src="/post/2018-03-30-CommunityComposition_files/figure-html/biplots-5.png" width="672" /></p>
+<pre class="r"><code>get_pca_var(dahms95.pca)</code></pre>
+<pre><code>## Principal Component Analysis Results for variables
+##  ===================================================
+##   Name       Description                                    
+## 1 &quot;$coord&quot;   &quot;Coordinates for the variables&quot;                
+## 2 &quot;$cor&quot;     &quot;Correlations between variables and dimensions&quot;
+## 3 &quot;$cos2&quot;    &quot;Cos2 for the variables&quot;                       
+## 4 &quot;$contrib&quot; &quot;contributions of the variables&quot;</code></pre>
+<pre class="r"><code>get_pca_ind(dahms95.pca)</code></pre>
+<pre><code>## Principal Component Analysis Results for individuals
+##  ===================================================
+##   Name       Description                       
+## 1 &quot;$coord&quot;   &quot;Coordinates for the individuals&quot; 
+## 2 &quot;$cos2&quot;    &quot;Cos2 for the individuals&quot;        
+## 3 &quot;$contrib&quot; &quot;contributions of the individuals&quot;</code></pre>
+</div>
+<div id="nonmetric-multidimensional-scaling" class="section level2">
+<h2>Nonmetric multidimensional scaling</h2>
+<p>NMDS has the best performance characteristics of the unconstrained ordination methods in ecology</p>
+<p>While most ordination methods attempt to maintain the distances between points in multivariate space, there are situations where the exact distance is immaterial and the rank order is sufficient.</p>
+<p>NMDS is able to use a multitude of distance measures</p>
+<p>NMDS as opposed to other ordination methods does <strong>NOT</strong> rely on eigenanalysis and does not maximize the variation explained by each axis.</p>
+<p>NMDS axes are arbritrary and can be flipped and rotated</p>
+<p>The number of NMDS axes are described <em>a priori</em></p>
+<p>The points are put into random space at the initial step.</p>
+<p>The distances from the random locations are compared to the distances in the original data using isotonic regression with a stress function (stress ranges from 0 to 1)</p>
+<p>The points are then iteratively moved in the direction of reduced stress until the lowest stress value is found</p>
+<pre class="r"><code>dahms95.nmds &lt;- metaMDS(dahms95, k = 2, try = 50) </code></pre>
+<pre><code>## Run 0 stress 0.06880303 
+## Run 1 stress 0.06805515 
+## ... New best solution
+## ... Procrustes: rmse 0.01125101  max resid 0.03266888 
+## Run 2 stress 0.0721547 
+## Run 3 stress 0.09424124 
+## Run 4 stress 0.07734712 
+## Run 5 stress 0.06805508 
+## ... New best solution
+## ... Procrustes: rmse 0.00009409209  max resid 0.0001778303 
+## ... Similar to previous best
+## Run 6 stress 0.09958664 
+## Run 7 stress 0.07695897 
+## Run 8 stress 0.08938729 
+## Run 9 stress 0.06805496 
+## ... New best solution
+## ... Procrustes: rmse 0.0001527293  max resid 0.0002684687 
+## ... Similar to previous best
+## Run 10 stress 0.06880209 
+## Run 11 stress 0.09438911 
+## Run 12 stress 0.07296807 
+## Run 13 stress 0.08938977 
+## Run 14 stress 0.07297022 
+## Run 15 stress 0.06805504 
+## ... Procrustes: rmse 0.00004407279  max resid 0.00008345034 
+## ... Similar to previous best
+## Run 16 stress 0.09490897 
+## Run 17 stress 0.07296906 
+## Run 18 stress 0.06880375 
+## Run 19 stress 0.07727301 
+## Run 20 stress 0.07215487 
+## Run 21 stress 0.07296834 
+## Run 22 stress 0.06914355 
+## Run 23 stress 0.0942418 
+## Run 24 stress 0.08938823 
+## Run 25 stress 0.1053243 
+## Run 26 stress 0.06880315 
+## Run 27 stress 0.09514355 
+## Run 28 stress 0.08801616 
+## Run 29 stress 0.0698559 
+## Run 30 stress 0.06805508 
+## ... Procrustes: rmse 0.0002463155  max resid 0.0004854841 
+## ... Similar to previous best
+## Run 31 stress 0.07215487 
+## Run 32 stress 0.07695905 
+## Run 33 stress 0.1001176 
+## Run 34 stress 0.07215468 
+## Run 35 stress 0.06805481 
+## ... New best solution
+## ... Procrustes: rmse 0.0001800053  max resid 0.0003534115 
+## ... Similar to previous best
+## Run 36 stress 0.07215469 
+## Run 37 stress 0.09958562 
+## Run 38 stress 0.07695941 
+## Run 39 stress 0.0680548 
+## ... New best solution
+## ... Procrustes: rmse 0.00003793643  max resid 0.00007212794 
+## ... Similar to previous best
+## Run 40 stress 0.06805482 
+## ... Procrustes: rmse 0.00004869803  max resid 0.00009128596 
+## ... Similar to previous best
+## Run 41 stress 0.07215473 
+## Run 42 stress 0.06805495 
+## ... Procrustes: rmse 0.0001281635  max resid 0.0001987954 
+## ... Similar to previous best
+## Run 43 stress 0.06880294 
+## Run 44 stress 0.09438929 
+## Run 45 stress 0.07215575 
+## Run 46 stress 0.09958508 
+## Run 47 stress 0.0680548 
+## ... New best solution
+## ... Procrustes: rmse 0.00006131798  max resid 0.0001130643 
+## ... Similar to previous best
+## Run 48 stress 0.07695757 
+## Run 49 stress 0.07727185 
+## Run 50 stress 0.07215469 
+## *** Solution reached</code></pre>
+<pre class="r"><code>?metaMDS
+
+dahms95.nmds</code></pre>
+<pre><code>## 
+## Call:
+## metaMDS(comm = dahms95, k = 2, try = 50) 
+## 
+## global Multidimensional Scaling using monoMDS
+## 
+## Data:     dahms95 
+## Distance: bray 
+## 
+## Dimensions: 2 
+## Stress:     0.0680548 
+## Stress type 1, weak ties
+## Two convergent solutions found after 50 tries
+## Scaling: centring, PC rotation, halfchange scaling 
+## Species: expanded scores based on &#39;dahms95&#39;</code></pre>
+<pre class="r"><code>species_scores &lt;- scores(dahms95.nmds, &quot;species&quot;) %&gt;% as.data.frame() %&gt;% rownames_to_column(&quot;species&quot;)
+
+year_scores &lt;- scores(dahms95.nmds, &quot;site&quot;) %&gt;% as.data.frame() %&gt;% rownames_to_column(&quot;year&quot;)
+
+
+ggplot() + 
+  # geom_point(data = species_scores, aes(x = NMDS1, y = NMDS2), shape = 16, colour = &quot;red&quot;) +
+  # geom_text(data = species_scores, aes(x = NMDS1, y = NMDS2, label = species), alpha = 0.25, hjust = 0) +
+   geom_point(data = year_scores, aes(x = NMDS1, y = NMDS2), shape = 24, colour = &quot;blue&quot;) + 
+  theme_classic()</code></pre>
+<p><img src="/post/2018-03-30-CommunityComposition_files/figure-html/plotnmds-1.png" width="672" /></p>
+<pre class="r"><code>precip_data %&gt;% 
+  filter(month(DATE) &gt;= 4 &amp; month(DATE) &lt;=6,
+         year(DATE) %in% c(2002:2017)) %&gt;% 
+  mutate(year = year(DATE)) %&gt;% 
+  group_by(year) %&gt;% 
+  summarise(ttl_precip = sum(PRCP, na.rm = TRUE)) -&gt; total_precip
+
+
+edge.sf &lt;- ordisurf(dahms95.nmds ~ total_precip$ttl_precip, plot = TRUE)</code></pre>
+<p><img src="/post/2018-03-30-CommunityComposition_files/figure-html/fittingenviron-1.png" width="672" /></p>
+<pre class="r"><code>extract.xyz &lt;- function(obj){
+  xy &lt;- expand.grid(x = obj$grid$x, y = obj$grid$y)
+  xyz &lt;- cbind(xy, c(obj$grid$z))
+  names(xyz) &lt;- c(&quot;x&quot;,&quot;y&quot;,&quot;z&quot;)
+  return(xyz)
+  }
+
+contour.vals&lt;- extract.xyz(obj = edge.sf)
+
+head(contour.vals)</code></pre>
+<pre><code>##            x          y  z
+## 1 -0.4700942 -0.2359561 NA
+## 2 -0.4462504 -0.2359561 NA
+## 3 -0.4224066 -0.2359561 NA
+## 4 -0.3985629 -0.2359561 NA
+## 5 -0.3747191 -0.2359561 NA
+## 6 -0.3508753 -0.2359561 NA</code></pre>
+<pre class="r"><code>ggplot(data = contour.vals) + 
+  geom_point(data = species_scores, aes(x = NMDS1, y = NMDS2), shape = 16, colour = &quot;red&quot;, alpha =0.25) +
+   geom_point(data = year_scores, aes(x = NMDS1, y = NMDS2), shape = 24, colour = &quot;blue&quot;, fill = &quot;blue&quot;, size = 2, alpha = 0.5) + 
+  geom_text(data = year_scores, aes(x = NMDS1, y = NMDS2, label = year), alpha = 0.45, hjust = 0) +
+  geom_path(data = year_scores, aes(x = NMDS1, y = NMDS2), linetype = &quot;dashed&quot;, arrow = arrow()) +
+  geom_contour(aes(x = x, y = y, z = z), colour = &quot;grey&quot;, alpha = 1) +
+  coord_cartesian(xlim = c(-0.6,0.6), ylim = c(-0.4,0.4)) +
+  theme_classic()</code></pre>
+<pre><code>## Warning: Removed 326 rows containing non-finite values (stat_contour).</code></pre>
+<p><img src="/post/2018-03-30-CommunityComposition_files/figure-html/fittingenviron-2.png" width="672" /></p>
+</div>
+</div>
+
+    
+    
+
+    
+
+        <h4 class="page-header">Related</h4>
+
+         <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/post/2018-04-27-doseresponse/">Dose Response</a></h4>
+    <h5>April 27, 2018</h5>
+    
+    <a href="/tags/refelectance"><kbd class="item-tag">Refelectance</kbd></a>
+    
+    <a href="/tags/partial-least-squares-regression"><kbd class="item-tag">Partial Least Squares Regression</kbd></a>
+    
+    <a href="/tags/data-seminar"><kbd class="item-tag">Data Seminar</kbd></a>
+    
+
+</div>
+  <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/post/2018-04-18-spatialautocorrelation/">Spatial Autocorrelation</a></h4>
+    <h5>April 18, 2018</h5>
+    
+    <a href="/tags/spatial-autocorrelation"><kbd class="item-tag">Spatial autocorrelation</kbd></a>
+    
+    <a href="/tags/data-seminar"><kbd class="item-tag">Data Seminar</kbd></a>
+    
+
+</div>
+  <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/post/2018-04-13-occupancy/">Occupancy modelling</a></h4>
+    <h5>April 13, 2018</h5>
+    
+    <a href="/tags/occupancy-models"><kbd class="item-tag">Occupancy models</kbd></a>
+    
+    <a href="/tags/model-selection"><kbd class="item-tag">Model selection</kbd></a>
+    
+    <a href="/tags/data-seminar"><kbd class="item-tag">Data Seminar</kbd></a>
+    
+
+</div>
+ 
+
+    
+
+    
+
+        <h4 class="page-header">Comments</h4>
+
+        <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "snrrgroup" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    
+
+</main>
+
+        <footer>
+
+            <p class="copyright text-muted">&copy; All rights reserved. Powered by <a href="https://gohugo.io">Hugo</a> and <a href="https://github.com/calintat/minimal">Minimal</a></p>
+
+        </footer>
+       
+    </body>
+
+</html>
+

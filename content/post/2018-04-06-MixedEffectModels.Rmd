@@ -1,0 +1,159 @@
+---
+title: "Chickadee sounds and mixed effect models"
+date: '2018-03-02'
+tags:
+- Mixed effect models
+- glm
+- Data Seminar
+categories: R
+---
+
+```{r setup, include=FALSE}
+
+# .libPaths("P:\\RLibrary2")
+knitr::opts_chunk$set(echo = TRUE)
+# install.packages("lme4")
+# install.packages("lmerTest")
+
+library(lme4)
+# library(lmerTest)  #Dont initially load this library
+library(tidyverse)
+```
+
+```{r}
+# Download the data from google drive
+
+id <- "1NHnz1ncP-c0uGXrcE25pp_iGga0YVLuy"
+sarahFee<- read_csv(sprintf("https://docs.google.com/uc?id=%s&export=download", id))
+glimpse(sarahFee)
+
+names(sarahFee) <- gsub(" ", "",names(sarahFee))
+gsub("\\(", "",names(sarahFee))
+
+names(sarahFee) <-gsub("[()]", "",names(sarahFee))
+
+
+sarahFee$Song<-rep(1:8,times = 4)
+
+
+sarahFee %>% 
+  group_by(Location,Song) %>% 
+  dplyr::select(Location,Song,Type, DeltaFreqHz) %>% 
+  mutate(Type = ifelse(Type == "Fee-bee","Fee_bee", Type)) %>% 
+  spread(Type, DeltaFreqHz) %>% 
+  mutate(Ratio = Gap/Fee_bee) -> BaseOutput
+
+BaseOutput %>% 
+  group_by(Location) %>% 
+  summarise(MeanRatio = mean(Ratio),
+            VarRatio = var(Ratio),
+            SERatio = sd(Ratio)/sqrt(n())) %>% 
+  mutate(CV = VarRatio/MeanRatio)-> sarahOutput
+
+
+ggplot(data = sarahOutput) +
+  geom_col(aes(x = Location, y = CV), fill = "#D00000", color = "black") + 
+  coord_cartesian(ylim = c(0,0.05), xlim = c(0.5,2.5),expand = FALSE) +
+  theme_classic()
+
+ggplot(data = sarahOutput) +
+  geom_errorbar(aes(x = Location, ymax = MeanRatio + 1.96*SERatio, ymin = MeanRatio - 1.96*SERatio), color = "#D00000", width = 0.5) + 
+  geom_point(aes(x = Location, y = MeanRatio), color = "#D00000", size = 4) + 
+  # coord_cartesian(ylim = c(0,0.05), xlim = c(0.5,2.5),expand = FALSE) +
+  theme_classic()
+
+mod1<-lm(Ratio~Location, data =BaseOutput )
+summary(mod1)
+
+```
+
+```{r}
+
+pre_data<-read_csv("https://datadryad.org/bitstream/handle/10255/dryad.112231/dryad_data_pre.csv?sequence=1")
+
+names(pre_data) <- gsub(" ", "", names(pre_data)) # remove spaces from column headers
+pre_data %>% 
+  dplyr::rename(logMeanfreq=`Meanfreq(fromlog)`,
+         logMeanlowfreq=`Meanlowfreq(fromlog)`,
+         logMeanhighfreq=`Meanhighfreq(fromlog)`) -> pre_data
+names(pre_data) <- gsub("\\s*\\([^\\)]+\\)", "", names(pre_data)) # remove spaces from column headers
+names(pre_data) <- gsub("\\)", "", names(pre_data)) # remove 
+glimpse(pre_data)
+
+expose_data<-read_csv("https://datadryad.org/bitstream/handle/10255/dryad.115879/dryad_data_exp.csv?sequence=1")
+
+
+names(expose_data) <- gsub(" ", "", names(expose_data)) # remove spaces from column headers
+
+grepl("fromlog",names(expose_data))
+
+names(expose_data)[grepl("fromlog",names(expose_data))] <-paste("log",names(expose_data)[grepl("fromlog",names(expose_data))],sep="")
+names(expose_data)<-gsub("\\s*\\([^\\)]+\\)\\s*$","",names(expose_data))
+
+
+```
+
+Run some regressions
+
+```{r}
+# First linear models 
+head(pre_data)
+mod.lm <- lm(Meanfreq ~ SPL, data = pre_data)
+summary(mod.lm)
+
+pre_data %>% 
+  mutate(ID = as.factor(ID),
+         Region = as.factor(Region)) -> pre_data
+
+mod.lmm <- lmer(Meanfreq ~ SPL + (1|Region), data = pre_data)
+summary(mod.lmm)
+
+coef(mod.lm)
+coef(mod.lmm)
+
+AIC(mod.lm)
+AIC(mod.lmm)
+
+pre_data %>% 
+  select(ID, Region, SPL, Meanhighfreq, Meanlowfreq) %>% 
+  gather(FreqType, Value, Meanhighfreq:Meanlowfreq) -> data_mod2
+
+table(data_mod2$ID, data_mod2$Region)
+
+mod.lmm2 <- lmerTest::lmer(Value ~ FreqType*SPL + (1|Region/ID), data = data_mod2)
+summary(mod.lmm2)
+
+?predict.merMod
+
+min(data_mod2$SPL)
+max(data_mod2$SPL)
+
+newdata <- data.frame(SPL = min(data_mod2$SPL):max(data_mod2$SPL))
+
+mod1pred<-cbind(newdata,pred=predict(mod.lmm, newdata = newdata,re.form = NA))
+
+ggplot(data = pre_data) +
+  geom_point(aes(x = SPL, y = Meanfreq), size = 1) + 
+  geom_line(data = mod1pred, aes(x = SPL, y = pred), colour = "red") +
+  coord_cartesian(ylim = c(3000, 3600), xlim = c(48,80)) +
+  theme_classic()
+
+mm<- model.matrix(delete.response(terms(mod.lmm)), newdata)
+
+newdata$fit <- as.numeric(mm %*% fixef(mod.lmm))
+
+predvar <- diag(mm %*% vcov(mod.lmm) %*% t(mm))
+
+newdata$se.fit <- sqrt(predvar)
+
+newdata$ci_lo <- newdata$fit - 1.96*newdata$se.fit
+newdata$ci_hi <- newdata$fit + 1.96*newdata$se.fit
+
+ggplot(data = pre_data) +
+  geom_point(aes(x = SPL, y = Meanfreq), size = 1) +
+  geom_ribbon(data = newdata, aes(x = SPL, ymax = ci_hi, ymin = ci_lo), fill = "red", alpha = 0.35) +
+  geom_line(data = newdata, aes(x = SPL, y = fit), colour = "red") +
+  coord_cartesian(ylim = c(3000, 3600), xlim = c(48,80)) +
+  theme_classic()
+```
+

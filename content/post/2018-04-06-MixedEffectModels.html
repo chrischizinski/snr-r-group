@@ -1,0 +1,351 @@
+---
+title: "Chickadee sounds and mixed effect models"
+date: '2018-03-02'
+tags:
+- Mixed effect models
+- glm
+- Data Seminar
+categories: R
+---
+
+
+
+<pre class="r"><code># Download the data from google drive
+
+id &lt;- &quot;1NHnz1ncP-c0uGXrcE25pp_iGga0YVLuy&quot;
+sarahFee&lt;- read_csv(sprintf(&quot;https://docs.google.com/uc?id=%s&amp;export=download&quot;, id))</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   Location = col_character(),
+##   Type = col_character(),
+##   `Begin Time (s)` = col_double(),
+##   `End Time (s)` = col_double(),
+##   `Delta Time (s)` = col_double(),
+##   `Low Freq (Hz)` = col_double(),
+##   `High Freq (Hz)` = col_double(),
+##   `Delta Freq (Hz)` = col_double()
+## )</code></pre>
+<pre class="r"><code>glimpse(sarahFee)</code></pre>
+<pre><code>## Observations: 32
+## Variables: 8
+## $ Location          &lt;chr&gt; &quot;Riverside&quot;, &quot;Riverside&quot;, &quot;Riverside&quot;, &quot;Rive...
+## $ Type              &lt;chr&gt; &quot;Fee-bee&quot;, &quot;Fee-bee&quot;, &quot;Fee-bee&quot;, &quot;Fee-bee&quot;, ...
+## $ `Begin Time (s)`  &lt;dbl&gt; 0.09614932, 1.26842131, 2.32941845, 3.412622...
+## $ `End Time (s)`    &lt;dbl&gt; 0.9139841, 2.1654379, 3.2422714, 4.1886043, ...
+## $ `Delta Time (s)`  &lt;dbl&gt; 0.818, 0.897, 0.913, 0.776, 0.998, 1.053, 0....
+## $ `Low Freq (Hz)`   &lt;dbl&gt; 2940.8, 2904.3, 3482.7, 3529.9, 3411.9, 3376...
+## $ `High Freq (Hz)`  &lt;dbl&gt; 3473.9, 3648.0, 4368.0, 4344.4, 4332.6, 4261...
+## $ `Delta Freq (Hz)` &lt;dbl&gt; 533.1, 743.7, 885.3, 814.5, 920.7, 885.3, 88...</code></pre>
+<pre class="r"><code>names(sarahFee) &lt;- gsub(&quot; &quot;, &quot;&quot;,names(sarahFee))
+gsub(&quot;\\(&quot;, &quot;&quot;,names(sarahFee))</code></pre>
+<pre><code>## [1] &quot;Location&quot;     &quot;Type&quot;         &quot;BeginTimes)&quot;  &quot;EndTimes)&quot;   
+## [5] &quot;DeltaTimes)&quot;  &quot;LowFreqHz)&quot;   &quot;HighFreqHz)&quot;  &quot;DeltaFreqHz)&quot;</code></pre>
+<pre class="r"><code>names(sarahFee) &lt;-gsub(&quot;[()]&quot;, &quot;&quot;,names(sarahFee))
+
+
+sarahFee$Song&lt;-rep(1:8,times = 4)
+
+
+sarahFee %&gt;% 
+  group_by(Location,Song) %&gt;% 
+  dplyr::select(Location,Song,Type, DeltaFreqHz) %&gt;% 
+  mutate(Type = ifelse(Type == &quot;Fee-bee&quot;,&quot;Fee_bee&quot;, Type)) %&gt;% 
+  spread(Type, DeltaFreqHz) %&gt;% 
+  mutate(Ratio = Gap/Fee_bee) -&gt; BaseOutput
+
+BaseOutput %&gt;% 
+  group_by(Location) %&gt;% 
+  summarise(MeanRatio = mean(Ratio),
+            VarRatio = var(Ratio),
+            SERatio = sd(Ratio)/sqrt(n())) %&gt;% 
+  mutate(CV = VarRatio/MeanRatio)-&gt; sarahOutput
+
+
+ggplot(data = sarahOutput) +
+  geom_col(aes(x = Location, y = CV), fill = &quot;#D00000&quot;, color = &quot;black&quot;) + 
+  coord_cartesian(ylim = c(0,0.05), xlim = c(0.5,2.5),expand = FALSE) +
+  theme_classic()</code></pre>
+<p><img src="/post/2018-04-06-MixedEffectModels_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<pre class="r"><code>ggplot(data = sarahOutput) +
+  geom_errorbar(aes(x = Location, ymax = MeanRatio + 1.96*SERatio, ymin = MeanRatio - 1.96*SERatio), color = &quot;#D00000&quot;, width = 0.5) + 
+  geom_point(aes(x = Location, y = MeanRatio), color = &quot;#D00000&quot;, size = 4) + 
+  # coord_cartesian(ylim = c(0,0.05), xlim = c(0.5,2.5),expand = FALSE) +
+  theme_classic()</code></pre>
+<p><img src="/post/2018-04-06-MixedEffectModels_files/figure-html/unnamed-chunk-1-2.png" width="672" /></p>
+<pre class="r"><code>mod1&lt;-lm(Ratio~Location, data =BaseOutput )
+summary(mod1)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = Ratio ~ Location, data = BaseOutput)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.12243 -0.03790 -0.01929  0.01695  0.20982 
+## 
+## Coefficients:
+##                   Estimate Std. Error t value    Pr(&gt;|t|)    
+## (Intercept)        0.27632    0.03059   9.034 0.000000324 ***
+## LocationRiverside -0.01761    0.04325  -0.407        0.69    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.08651 on 14 degrees of freedom
+## Multiple R-squared:  0.01171,    Adjusted R-squared:  -0.05889 
+## F-statistic: 0.1658 on 1 and 14 DF,  p-value: 0.69</code></pre>
+<pre class="r"><code>pre_data&lt;-read_csv(&quot;https://datadryad.org/bitstream/handle/10255/dryad.112231/dryad_data_pre.csv?sequence=1&quot;)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   ID = col_character(),
+##   Region = col_character(),
+##   `Habitat index` = col_double(),
+##   `SPL (dB(Z))` = col_double(),
+##   `Mean freq (Hz)` = col_double(),
+##   `Mean high freq (Hz)` = col_double(),
+##   `Mean low freq (Hz)` = col_double(),
+##   `Mean freq (from log)` = col_double(),
+##   `Mean high freq (from log)` = col_double(),
+##   `Mean low freq (from log)` = col_double()
+## )</code></pre>
+<pre class="r"><code>names(pre_data) &lt;- gsub(&quot; &quot;, &quot;&quot;, names(pre_data)) # remove spaces from column headers
+pre_data %&gt;% 
+  dplyr::rename(logMeanfreq=`Meanfreq(fromlog)`,
+         logMeanlowfreq=`Meanlowfreq(fromlog)`,
+         logMeanhighfreq=`Meanhighfreq(fromlog)`) -&gt; pre_data
+names(pre_data) &lt;- gsub(&quot;\\s*\\([^\\)]+\\)&quot;, &quot;&quot;, names(pre_data)) # remove spaces from column headers
+names(pre_data) &lt;- gsub(&quot;\\)&quot;, &quot;&quot;, names(pre_data)) # remove 
+glimpse(pre_data)</code></pre>
+<pre><code>## Observations: 42
+## Variables: 10
+## $ ID              &lt;chr&gt; &quot;BCA03&quot;, &quot;BCA04&quot;, &quot;BCA06&quot;, &quot;BCA10&quot;, &quot;BCA11&quot;, &quot;...
+## $ Region          &lt;chr&gt; &quot;prg&quot;, &quot;prg&quot;, &quot;prg&quot;, &quot;prg&quot;, &quot;prg&quot;, &quot;prg&quot;, &quot;prg...
+## $ Habitatindex    &lt;dbl&gt; -1.6709871, -1.8478120, -1.8478120, -1.3258350...
+## $ SPL             &lt;dbl&gt; 59.92305, 61.16587, 51.70551, 56.31234, 53.209...
+## $ Meanfreq        &lt;dbl&gt; 3428.533, 3314.026, 3270.219, 3022.076, 3053.7...
+## $ Meanhighfreq    &lt;dbl&gt; 3498.822, 3509.110, 3392.038, 3268.343, 3242.7...
+## $ Meanlowfreq     &lt;dbl&gt; 3332.452, 3179.240, 3109.170, 2995.349, 2933.6...
+## $ logMeanfreq     &lt;dbl&gt; 3.535003, 3.520116, 3.514170, 3.480151, 3.4843...
+## $ logMeanhighfreq &lt;dbl&gt; 3.543778, 3.545196, 3.530456, 3.514325, 3.5109...
+## $ logMeanlowfreq  &lt;dbl&gt; 3.522615, 3.502318, 3.492639, 3.476442, 3.4672...</code></pre>
+<pre class="r"><code>expose_data&lt;-read_csv(&quot;https://datadryad.org/bitstream/handle/10255/dryad.115879/dryad_data_exp.csv?sequence=1&quot;)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   ID = col_character(),
+##   Region = col_character(),
+##   `Habitat index` = col_double(),
+##   `SPL (dB(Z))` = col_double(),
+##   `Change in mean freq (Hz)` = col_double(),
+##   `Change in mean high freq (Hz)` = col_double(),
+##   `Change in mean low freq (Hz)` = col_double(),
+##   `Change in proportion from upper bandwidth` = col_double(),
+##   `Change in proportion from lower bandwidth` = col_double(),
+##   `Change in mean freq (from log)` = col_double(),
+##   `Change in mean high freq (from log)` = col_double(),
+##   `Change in mean low freq (from log)` = col_double(),
+##   `Change in proportion from upper bandwidth (from log)` = col_double(),
+##   `Change in proportion from lower bandwidth (from log)` = col_double()
+## )</code></pre>
+<pre class="r"><code>names(expose_data) &lt;- gsub(&quot; &quot;, &quot;&quot;, names(expose_data)) # remove spaces from column headers
+
+grepl(&quot;fromlog&quot;,names(expose_data))</code></pre>
+<pre><code>##  [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE
+## [12]  TRUE  TRUE  TRUE</code></pre>
+<pre class="r"><code>names(expose_data)[grepl(&quot;fromlog&quot;,names(expose_data))] &lt;-paste(&quot;log&quot;,names(expose_data)[grepl(&quot;fromlog&quot;,names(expose_data))],sep=&quot;&quot;)
+names(expose_data)&lt;-gsub(&quot;\\s*\\([^\\)]+\\)\\s*$&quot;,&quot;&quot;,names(expose_data))</code></pre>
+<p>Run some regressions</p>
+<pre class="r"><code># First linear models 
+head(pre_data)</code></pre>
+<pre><code>## # A tibble: 6 x 10
+##   ID    Region Habitatindex   SPL Meanfreq Meanhighfreq Meanlowfreq
+##   &lt;chr&gt; &lt;chr&gt;         &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;
+## 1 BCA03 prg           -1.67  59.9    3429.        3499.       3332.
+## 2 BCA04 prg           -1.85  61.2    3314.        3509.       3179.
+## 3 BCA06 prg           -1.85  51.7    3270.        3392.       3109.
+## 4 BCA10 prg           -1.33  56.3    3022.        3268.       2995.
+## 5 BCA11 prg           -1.85  53.2    3054.        3243.       2934.
+## 6 BCA12 prg           -1.85  50.3    3157.        3210.       3128.
+## # ... with 3 more variables: logMeanfreq &lt;dbl&gt;, logMeanhighfreq &lt;dbl&gt;,
+## #   logMeanlowfreq &lt;dbl&gt;</code></pre>
+<pre class="r"><code>mod.lm &lt;- lm(Meanfreq ~ SPL, data = pre_data)
+summary(mod.lm)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = Meanfreq ~ SPL, data = pre_data)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -199.531  -81.475   -1.165   71.804  257.402 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 2933.442    134.035  21.886   &lt;2e-16 ***
+## SPL            5.117      2.152   2.377   0.0223 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 104.2 on 40 degrees of freedom
+## Multiple R-squared:  0.1238, Adjusted R-squared:  0.1019 
+## F-statistic: 5.652 on 1 and 40 DF,  p-value: 0.0223</code></pre>
+<pre class="r"><code>pre_data %&gt;% 
+  mutate(ID = as.factor(ID),
+         Region = as.factor(Region)) -&gt; pre_data
+
+mod.lmm &lt;- lmer(Meanfreq ~ SPL + (1|Region), data = pre_data)
+summary(mod.lmm)</code></pre>
+<pre><code>## Linear mixed model fit by REML [&#39;lmerMod&#39;]
+## Formula: Meanfreq ~ SPL + (1 | Region)
+##    Data: pre_data
+## 
+## REML criterion at convergence: 496.7
+## 
+## Scaled residuals: 
+##      Min       1Q   Median       3Q      Max 
+## -1.91474 -0.78185 -0.01118  0.68904  2.47008 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev.
+##  Region   (Intercept)     0      0.0   
+##  Residual             10859    104.2   
+## Number of obs: 42, groups:  Region, 4
+## 
+## Fixed effects:
+##             Estimate Std. Error t value
+## (Intercept) 2933.442    134.035  21.886
+## SPL            5.117      2.152   2.377
+## 
+## Correlation of Fixed Effects:
+##     (Intr)
+## SPL -0.993</code></pre>
+<pre class="r"><code>coef(mod.lm)</code></pre>
+<pre><code>## (Intercept)         SPL 
+## 2933.441686    5.117265</code></pre>
+<pre class="r"><code>coef(mod.lmm)</code></pre>
+<pre><code>## $Region
+##     (Intercept)      SPL
+## kel    2933.442 5.117265
+## prg    2933.442 5.117265
+## que    2933.442 5.117265
+## van    2933.442 5.117265
+## 
+## attr(,&quot;class&quot;)
+## [1] &quot;coef.mer&quot;</code></pre>
+<pre class="r"><code>AIC(mod.lm)</code></pre>
+<pre><code>## [1] 513.4383</code></pre>
+<pre class="r"><code>AIC(mod.lmm)</code></pre>
+<pre><code>## [1] 504.7234</code></pre>
+<pre class="r"><code>pre_data %&gt;% 
+  select(ID, Region, SPL, Meanhighfreq, Meanlowfreq) %&gt;% 
+  gather(FreqType, Value, Meanhighfreq:Meanlowfreq) -&gt; data_mod2
+
+table(data_mod2$ID, data_mod2$Region)</code></pre>
+<pre><code>##        
+##         kel prg que van
+##   BCA03   0   2   0   0
+##   BCA04   0   2   0   0
+##   BCA06   0   2   0   0
+##   BCA10   0   2   0   0
+##   BCA11   0   2   0   0
+##   BCA12   0   2   0   0
+##   BCA13   0   2   0   0
+##   BCA14   0   2   0   0
+##   BCA15   0   2   0   0
+##   BCA16   0   2   0   0
+##   BCA17   0   2   0   0
+##   BCA18   0   2   0   0
+##   BCA22   0   2   0   0
+##   BCB02   0   0   0   2
+##   BCB04   0   0   0   2
+##   BCB06   0   0   0   2
+##   BCB09   0   0   0   2
+##   BCB10   0   0   0   2
+##   BCB11   0   0   0   2
+##   BCB13   0   0   0   2
+##   BCB15   0   0   0   2
+##   BCB17   0   0   0   2
+##   BCB19   0   0   0   2
+##   BCB21   0   0   0   2
+##   BCB23   0   0   0   2
+##   BCB25   0   0   0   2
+##   BCB27   2   0   0   0
+##   BCB29   2   0   0   0
+##   BCB31   2   0   0   0
+##   BCB33   0   2   0   0
+##   BCB35   0   2   0   0
+##   BCB37   0   2   0   0
+##   BCB39   0   2   0   0
+##   BCB40   0   2   0   0
+##   BCC01   0   0   2   0
+##   BCC04   0   0   2   0
+##   BCC08   0   0   2   0
+##   BCC09   0   0   2   0
+##   BCC15   0   2   0   0
+##   BCC16   0   2   0   0
+##   BCC26   0   2   0   0
+##   BCC27   0   2   0   0</code></pre>
+<pre class="r"><code>mod.lmm2 &lt;- lmerTest::lmer(Value ~ FreqType*SPL + (1|Region/ID), data = data_mod2)
+summary(mod.lmm2)</code></pre>
+<pre><code>## Linear mixed model fit by REML. t-tests use Satterthwaite&#39;s method [
+## lmerModLmerTest]
+## Formula: Value ~ FreqType * SPL + (1 | Region/ID)
+##    Data: data_mod2
+## 
+## REML criterion at convergence: 995.1
+## 
+## Scaled residuals: 
+##      Min       1Q   Median       3Q      Max 
+## -2.00319 -0.58580  0.06537  0.48388  2.32395 
+## 
+## Random effects:
+##  Groups    Name        Variance Std.Dev.
+##  ID:Region (Intercept) 3955     62.89   
+##  Region    (Intercept)    0      0.00   
+##  Residual              7817     88.41   
+## Number of obs: 84, groups:  ID:Region, 42; Region, 4
+## 
+## Fixed effects:
+##                         Estimate Std. Error       df t value Pr(&gt;|t|)    
+## (Intercept)             3052.286    139.551   71.887  21.872   &lt;2e-16 ***
+## FreqTypeMeanlowfreq     -393.072    160.824   40.000  -2.444   0.0190 *  
+## SPL                        5.273      2.241   71.887   2.353   0.0214 *  
+## FreqTypeMeanlowfreq:SPL    2.280      2.583   40.000   0.883   0.3826    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr) FrqTyM SPL   
+## FrqTypMnlwf -0.576              
+## SPL         -0.993  0.572       
+## FrqTypM:SPL  0.572 -0.993 -0.576</code></pre>
+<pre class="r"><code>?predict.merMod
+
+min(data_mod2$SPL)</code></pre>
+<pre><code>## [1] 48.09781</code></pre>
+<pre class="r"><code>max(data_mod2$SPL)</code></pre>
+<pre><code>## [1] 78.03256</code></pre>
+<pre class="r"><code>newdata &lt;- data.frame(SPL = min(data_mod2$SPL):max(data_mod2$SPL))
+
+mod1pred&lt;-cbind(newdata,pred=predict(mod.lmm, newdata = newdata,re.form = NA))
+
+ggplot(data = pre_data) +
+  geom_point(aes(x = SPL, y = Meanfreq), size = 1) + 
+  geom_line(data = mod1pred, aes(x = SPL, y = pred), colour = &quot;red&quot;) +
+  coord_cartesian(ylim = c(3000, 3600), xlim = c(48,80)) +
+  theme_classic()</code></pre>
+<p><img src="/post/2018-04-06-MixedEffectModels_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<pre class="r"><code>mm&lt;- model.matrix(delete.response(terms(mod.lmm)), newdata)
+
+newdata$fit &lt;- as.numeric(mm %*% fixef(mod.lmm))
+
+predvar &lt;- diag(mm %*% vcov(mod.lmm) %*% t(mm))
+
+newdata$se.fit &lt;- sqrt(predvar)
+
+newdata$ci_lo &lt;- newdata$fit - 1.96*newdata$se.fit
+newdata$ci_hi &lt;- newdata$fit + 1.96*newdata$se.fit
+
+ggplot(data = pre_data) +
+  geom_point(aes(x = SPL, y = Meanfreq), size = 1) +
+  geom_ribbon(data = newdata, aes(x = SPL, ymax = ci_hi, ymin = ci_lo), fill = &quot;red&quot;, alpha = 0.35) +
+  geom_line(data = newdata, aes(x = SPL, y = fit), colour = &quot;red&quot;) +
+  coord_cartesian(ylim = c(3000, 3600), xlim = c(48,80)) +
+  theme_classic()</code></pre>
+<p><img src="/post/2018-04-06-MixedEffectModels_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>

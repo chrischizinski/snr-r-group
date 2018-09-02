@@ -1,0 +1,181 @@
+---
+title: "Spatial Autocorrelation"
+date: '2018-04-18'
+tags:
+- Spatial autocorrelation
+- Data Seminar
+categories: R
+---
+
+## Load packages
+
+```{r setup, include=FALSE}
+# .libPaths("P:/RLibrary2")
+knitr::opts_chunk$set(echo = TRUE)
+
+# install.packages(c("rgeos","rgdal"))
+# install.packages("lctools")
+# install.packages("spdep")
+
+library(tidyverse)
+library(raster)
+library(lctools)
+library(spdep)
+library(nlme)
+library(viridis)
+```
+
+
+## What is autocorrelation (spatial or temporal)?
+
+Autocorrelation is the measure of similarity (correlation) between nearby observations (in both time and space)  
+
+### Temporal 
+
+The most recent event is related to the event before and after it
+
+
+```{r scattercor}
+set.seed(1234)
+
+randDat <- data.frame(x = sample(1:1000, 20))
+
+randDat %>% 
+  mutate(x_1 = lead(x)) %>% 
+  filter(!is.na(x_1)) -> randDat
+
+
+ggplot(data = randDat) + 
+  geom_point(aes(x = x, y = x_1), size = 2) +
+  labs(y = "x + 1") +
+  theme_classic()
+
+cor(randDat$x, randDat$x_1)
+cor.test(randDat$x, randDat$x_1)
+```
+
+```{r tempcor}
+ randDat %>% 
+  arrange(x) %>% 
+  mutate(x_1a = lead(x)) %>% 
+  filter(!is.na(x_1a)) -> randDat
+
+ggplot(data = randDat) + 
+  geom_point(aes(x = x, y = x_1a), size = 2) +
+  labs(y = "x + 1") +
+  theme_classic()
+
+cor(randDat$x, randDat$x_1a)
+cor.test(randDat$x, randDat$x_1a)
+
+acf(randDat$x_1)
+```
+
+### Spatial
+Spatial autocorrelation is an extension of temporal autocorrelation. Proximal points in space are more similar than distant points.  
+
+Measures of spatial autocorrelation describe the degree that two observations (whether they are points, areas, or raster cells) are similar to each other.  
+
+Spatial autocorrelation in a variable can be exogenous ( caused by another spatially autocorrelated variable like rainfall) or endogenous (caused by the process at play, like spread of disease) 
+
+```{r spatialcor}
+p <- shapefile(system.file("external/lux.shp", package="raster"))
+
+p@data$id <- rownames(p@data)
+p.points <- ggplot2::fortify(p, region = "id")
+head(p.points)
+
+p.df <- full_join(p.points, p@data,by = "id")
+
+ggplot(data = p.df, aes(x = long, y = lat, group = group, fill = NAME_1)) +
+  geom_polygon() +
+  geom_path(color = "white") + 
+  coord_equal() +
+  scale_fill_brewer(palette = "Set1") + 
+  theme_minimal() + 
+  theme(legend.position = "bottom")
+
+
+Diekirch <- p[p$NAME_1 == "Diekirch",]
+Diekirch$value <- c(10,6,4,11,6)
+data.frame(Diekirch)
+
+Diekirch.points <- ggplot2::fortify(Diekirch, region = "id")
+Diekirch.df <- full_join(Diekirch.points, Diekirch@data,by = "id")
+
+
+ggplot(data = Diekirch.df, aes(x = long, y = lat, group = group, fill = value)) +
+  geom_polygon() +
+  geom_path(color = "white") + 
+  coord_equal() +
+  scale_fill_viridis() + 
+  theme_minimal() + 
+  theme(legend.position = "bottom")
+
+```
+
+## Adjacent polygons
+
+```{r adjpoly}
+
+w <- spdep::poly2nb(Diekirch)
+summary(w)
+```
+
+## Compute Morans I
+
+Index of spatial autocorrelation
+
+```{r moransI}
+ww <- spdep::nb2listw(w,style = "B")
+ww
+
+spdep::moran(Diekirch$value, ww, n= length(ww$neighbours), S0 = spdep::Szero(ww))
+
+moran.test(Diekirch$value, ww, randomisation = FALSE)
+
+moran.mc(Diekirch$value, ww, nsim =99)
+
+```
+
+```{r spdata}
+spdata <- read.table("https://stats.idre.ucla.edu/stat/r/faq/thick.csv", header = TRUE, sep = ",")
+
+ggplot(data = spdata) + 
+  geom_point(aes(x = east, y = north, color = thick), size = 2) + 
+  theme_classic()
+
+coords <- as.matrix(spdata[,c("east","north")])
+
+thicknb<-knn2nb(knearneigh(coords, k = 5), row.names = spdata$X)
+
+moran.test(spdata$thick, nb2listw(thicknb))
+
+
+cGram<-ncf::spline.correlog(x = spdata$east,
+                           y = spdata$north,
+                           z = spdata$thick,
+                           resamp = 100,
+                           quiet = TRUE)
+
+summary(cGram)
+plot(cGram)
+
+mod_1 <- lme(fixed = thick ~ soil,
+             random = ~ 1|dummy,
+             method = "ML",
+             data = spdata)
+summary(mod_1)
+
+mod_2 <- lme(fixed = thick ~ soil,
+             random = ~ 1|dummy,
+             correlation = corGaus(1, form = ~ east + north),
+             method = "ML",
+             data = spdata)
+summary(mod_2)
+bbmle::AICtab(mod_1, mod_2)
+
+```
+
+
+

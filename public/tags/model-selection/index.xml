@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Model Selection on SNR R User Group</title>
+    <link>/tags/model-selection/</link>
+    <description>Recent content in Model Selection on SNR R User Group</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 13 Apr 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/model-selection/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Occupancy modelling</title>
+      <link>/post/2018-04-13-occupancy/</link>
+      <pubDate>Fri, 13 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018-04-13-occupancy/</guid>
+      <description>Load packages # .libPaths(&amp;quot;P:/RLibrary2&amp;quot;) knitr::opts_chunk$set(echo = TRUE) # # install.packages(&amp;quot;unmarked&amp;quot;) # install.packages(&amp;quot;AICcmodavg&amp;quot;) library(unmarked) library(tidyverse) library(readxl) library(AICcmodavg)  Load data covar_data &amp;lt;- read_excel(&amp;quot;/Volumes/cchizinski2/SNR_R_Group/2018-DataSeminar/OccupancyModels/data/covariatesrec.xlsx&amp;quot;) glimpse(covar_data) ## Observations: 50 ## Variables: 6 ## $ `Sampling site (OCVP)` &amp;lt;dbl&amp;gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12... ## $ `succesion stage` &amp;lt;chr&amp;gt; &amp;quot;old growth&amp;quot;, &amp;quot;old growth&amp;quot;, &amp;quot;old grow... ## $ `vegetation physiognomy` &amp;lt;chr&amp;gt; &amp;quot;Cer&amp;quot;, &amp;quot;Cer&amp;quot;, &amp;quot;Ver&amp;quot;, &amp;quot;Ver&amp;quot;, &amp;quot;Ver&amp;quot;, &amp;quot;V... ## $ trail &amp;lt;chr&amp;gt; &amp;quot;n&amp;quot;, &amp;quot;n&amp;quot;, &amp;quot;n&amp;quot;, &amp;quot;n&amp;quot;, &amp;quot;y&amp;quot;, &amp;quot;n&amp;quot;, &amp;quot;n&amp;quot;, &amp;quot;n.</description>
+    </item>
+    
+  </channel>
+</rss>

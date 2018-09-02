@@ -12,13 +12,21 @@
     
     
     <item>
+      <title>Chickadee sounds and mixed effect models</title>
+      <link>/post/2018-04-06-mixedeffectmodels/</link>
+      <pubDate>Fri, 02 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018-04-06-mixedeffectmodels/</guid>
+      <description># Download the data from google drive id &amp;lt;- &amp;quot;1NHnz1ncP-c0uGXrcE25pp_iGga0YVLuy&amp;quot; sarahFee&amp;lt;- read_csv(sprintf(&amp;quot;https://docs.google.com/uc?id=%s&amp;amp;export=download&amp;quot;, id)) ## Parsed with column specification: ## cols( ## Location = col_character(), ## Type = col_character(), ## `Begin Time (s)` = col_double(), ## `End Time (s)` = col_double(), ## `Delta Time (s)` = col_double(), ## `Low Freq (Hz)` = col_double(), ## `High Freq (Hz)` = col_double(), ## `Delta Freq (Hz)` = col_double() ## ) glimpse(sarahFee) ## Observations: 32 ## Variables: 8 ## $ Location &amp;lt;chr&amp;gt; &amp;quot;Riverside&amp;quot;, &amp;quot;Riverside&amp;quot;, &amp;quot;Riverside&amp;quot;, &amp;quot;Rive.</description>
+    </item>
+    
+    <item>
       <title>Heat Tolerance</title>
       <link>/post/2018-03-02-heattolerance/</link>
       <pubDate>Fri, 02 Mar 2018 00:00:00 +0000</pubDate>
       
       <guid>/post/2018-03-02-heattolerance/</guid>
-      <description>Link to the Rmarkdown files can be found here
-Get the data heat_data &amp;lt;-read_csv(&amp;quot;https://raw.githubusercontent.com/chrischizinski/snr-r-group/master/data/HeatTolerance.csv&amp;quot;, na = &amp;quot;NA&amp;quot;) ## Parsed with column specification: ## cols( ## Species = col_character(), ## `Species common name` = col_character(), ## `Trial Nr` = col_integer(), ## `Larval Stage` = col_character(), ## `Age (days post-hatch)` = col_integer(), ## `Age (degree-days)` = col_integer(), ## `Acclimation temperature (°C)` = col_integer(), ## `Larval ID` = col_character(), ## `Warming rate (°C h-1)` = col_character(), ## `Body length (mm)` = col_double(), ## `CTMax (°C)` = col_double() ## ) glimpse(heat_data) ## Observations: 478 ## Variables: 11 ## $ Species &amp;lt;chr&amp;gt; &amp;quot;Clupea harengus&amp;quot;, &amp;quot;Clupea hare.</description>
+      <description>Get the data heat_data &amp;lt;-read_csv(&amp;quot;https://raw.githubusercontent.com/chrischizinski/snr-r-group/master/data/HeatTolerance.csv&amp;quot;, na = &amp;quot;NA&amp;quot;) ## Parsed with column specification: ## cols( ## Species = col_character(), ## `Species common name` = col_character(), ## `Trial Nr` = col_integer(), ## `Larval Stage` = col_character(), ## `Age (days post-hatch)` = col_integer(), ## `Age (degree-days)` = col_integer(), ## `Acclimation temperature (°C)` = col_integer(), ## `Larval ID` = col_character(), ## `Warming rate (°C h-1)` = col_character(), ## `Body length (mm)` = col_double(), ## `CTMax (°C)` = col_double() ## ) glimpse(heat_data) ## Observations: 478 ## Variables: 11 ## $ Species &amp;lt;chr&amp;gt; &amp;quot;Clupea harengus&amp;quot;, &amp;quot;Clupea hare.</description>
     </item>
     
   </channel>

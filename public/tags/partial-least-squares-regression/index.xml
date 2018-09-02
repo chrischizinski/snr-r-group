@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Partial Least Squares Regression on SNR R User Group</title>
+    <link>/tags/partial-least-squares-regression/</link>
+    <description>Recent content in Partial Least Squares Regression on SNR R User Group</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 27 Apr 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/partial-least-squares-regression/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Dose Response</title>
+      <link>/post/2018-04-27-doseresponse/</link>
+      <pubDate>Fri, 27 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018-04-27-doseresponse/</guid>
+      <description>Load packages  Load data id &amp;lt;- &amp;quot;16viAhr6QNj3XKe3WHXBypgaq7uKoTqQt&amp;quot; dose&amp;lt;- read_csv(sprintf(&amp;quot;https://docs.google.com/uc?id=%s&amp;amp;export=download&amp;quot;, id)) ## Parsed with column specification: ## cols( ## Trt = col_character(), ## Dose = col_integer(), ## Rep = col_integer(), ## control = col_integer(), ## RUN = col_integer() ## ) head(dose) ## # A tibble: 6 x 5 ## Trt Dose Rep control RUN ## &amp;lt;chr&amp;gt; &amp;lt;int&amp;gt; &amp;lt;int&amp;gt; &amp;lt;int&amp;gt; &amp;lt;int&amp;gt; ## 1 0 0 1 0 1 ## 2 0 0 2 0 1 ## 3 0 0 3 0 1 ## 4 0 0 4 0 1 ## 5 0.</description>
+    </item>
+    
+    <item>
+      <title>Partial Least Squares Regression</title>
+      <link>/post/2018-04-13-partialleastsquare/</link>
+      <pubDate>Fri, 30 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018-04-13-partialleastsquare/</guid>
+      <description>Load the data Bring data in from google drive
+id &amp;lt;- &amp;quot;1_0rUKAVD7mf4D1ebGAyLNIKXIfekHdFG&amp;quot; ryanData&amp;lt;- read_csv(sprintf(&amp;quot;https://docs.google.com/uc?id=%s&amp;amp;export=download&amp;quot;, id),col_names = FALSE) ## Parsed with column specification: ## cols( ## .default = col_character() ## ) ## See spec(...) for full column specifications. head(ryanData) ## # A tibble: 6 x 80 ## X1 X2 X3 X4 X5 X6 X7 X8 X9 X10 X11 X12 ## &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; ## 1 ID 1 5 9 13 17 21 25 29 33 37 41 ## 2 Plot CSP01 CSP01 CSP01 CSP01 CSP01 CSP01 CSP01 CSP01 CSP01 CSP01 CSP01 ## 3 Date 5/18/… 5/23… 5/31… 6/6/… 6/13… 6/17… 6/22… 6/30… 7/6/… 7/12… 7/15… ## 4 351 5.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,225 @@
+---
+title: "Step Selection Functions"
+output: html_document
+---
+
+---
+title: "Step Selection Functions"
+date: '2018-03-09'
+tags:
+- Step selction
+- Animal movement
+- Data Seminar
+categories: R
+---
+
+```{r setup, include=FALSE, message = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# .libPaths("P:/Rlibrary2")
+
+# install.packages("devtools")
+# devtools::install_github("jmsigner/amt")
+# install.packages("amt")
+# install.packages("raster")
+# install.packages("viridis")
+# install.packages("gridExtra")
+# install.packages("circular")
+# install.packages("broom")
+
+
+library(raster)
+library(lubridate)
+library(viridis)  
+library(gridExtra)
+library(tidyverse)
+library(circular)
+library(broom)
+library(survival)
+library(amt)
+
+```
+
+## Deer data 
+
+```{r deerdata}
+
+data("deer")
+glimpse(deer)
+
+ggplot() +
+  geom_path(data = deer,aes(x = x_, y = y_),linetype = "dashed") +
+  geom_point(data = deer,aes(x = x_, y = y_),size = 1, colour = "red", alpha = 0.5) + 
+  coord_equal() + 
+  theme_classic()
+```
+
+## Investigate some of the movements
+
+```{r samplingrate}
+ymd(c("2018-03-09"))
+
+mdy(c("March 09 2018"))
+
+mdy_hms(c("March 09 2018 12:30:02"))
+
+summarize_sampling_rate(deer)
+
+head(deer)
+
+# Calculate the time intervals between relocations
+time_interval<-interval(deer$t_[-length(deer$t_)], deer$t_[-1])
+
+head(as.period(time_interval, units = "hours"))
+
+step_time <- data.frame(time_hr = as.numeric(as.period(time_interval, units = "sec"))/3600)
+
+# Histogram
+ggplot(data = step_time) + 
+  geom_histogram(aes(x = time_hr), binwidth = 1, boundary = 0, closed = "left",
+                 fill = "dodgerblue", colour = "black") + 
+  scale_x_continuous(limits = c(0,15), breaks = 1:15) +
+  coord_cartesian(ylim = c(0,800), xlim = c(0,15), expand = FALSE) +
+  theme_classic()
+  
+```
+
+## Examing the raster data
+
+```{r}
+data("sh_forest")
+sh_forest
+
+plot(sh_forest)
+
+forest_spdf <- as(sh_forest, "SpatialPixelsDataFrame")
+forest_df <- as.data.frame(forest_spdf)
+colnames(forest_df) <-c("value", "x", "y")
+
+
+ggplot(data = forest_df) + 
+  geom_tile(aes(x, y, fill = factor(value)), alpha = 0.8) +
+   geom_path(data = deer,aes(x = x_, y = y_),linetype = "dashed") +
+  geom_point(data = deer,aes(x = x_, y = y_),size = 1, colour = "red", alpha = 0.5) +
+  scale_fill_manual(values = c("2" = "lightgrey", "1" = "forestgreen")) +
+  # scale_fill_viridis(option = "inferno") +
+  coord_equal(expand = FALSE) + 
+  theme_minimal() +
+  theme(legend.position = "bottom",
+        legend.key.width = unit(2, "cm"),
+        axis.title = element_blank())
+
+```
+
+## Examine the relocation data
+
+
+```{r relocations}
+ deer %>% 
+  group_by(burst_) %>% 
+  summarize(N = n())
+
+plota <- ggplot() +
+  geom_path(data = deer,aes(x = x_, y = y_),linetype = "dashed") +
+  geom_point(data = deer,aes(x = x_, y = y_),size = 1, colour = "red", alpha = 0.5) + 
+  coord_equal() + 
+  theme_classic()
+
+
+plotb<- ggplot(deer %>% distinct(burst_, .keep_all = TRUE)) +
+  geom_path(aes(x = x_, y = y_),linetype = "dashed") +
+  geom_point(aes(x = x_, y = y_),size = 1, colour = "blue", alpha = 0.5) + 
+  coord_equal() + 
+  theme_classic()
+
+grid.arrange(plota, plotb, ncol = 2)
+
+gA <- ggplotGrob(plota)
+gB <- ggplotGrob(plotb)
+
+grid::grid.newpage()
+grid::grid.draw(gtable_cbind(gA,gB))
+
+
+```
+
+```{r stepanalysis}
+
+# calculating steps by burst (distance between points, turn angle, time difference) 
+deer %>% 
+  steps_by_burst() -> ssf1
+
+# Calculate the random steps 
+ssf1 %>% 
+  random_steps(n = 15) -> ssf1
+
+
+# Random angles 
+direction_rel(deer) 
+mean(direction_rel(deer), na.rm = TRUE) 
+
+circ_data <- rvonmises(1000, mu = mean(direction_rel(deer), na.rm = TRUE) , kappa = 4)
+
+plot(circ_data)
+
+ggplot(circ_data %>% as.data.frame ) +
+  geom_histogram(aes(x = x), binwidth = 0.25, fill = "white", color = "black") +
+  coord_polar(start = 0, direction = 1) +
+  scale_x_continuous(breaks = seq(0,2*pi, by = pi/2), expand = c(0,0), limits = c(0,2*pi)) +
+  scale_size_area()
+
+# Extract environmental variables at the random steps 
+
+ssf1 %>% 
+  extract_covariates(sh_forest) -> ssf1
+
+## Chain
+deer %>% 
+  steps_by_burst() %>% 
+  random_steps(n = 15) %>% 
+  extract_covariates(sh_forest) %>% 
+  mutate(forest = case_when(sh.forest == 1 ~ "forest",
+                            sh.forest == 2 ~ "not forest"),
+         forest = as.factor(forest),
+         cos_ta = cos(ta_),
+         log_sl = log(sl_)) -> deer_ssf
+
+
+
+```
+
+```{r fitmodels}
+glimpse(deer_ssf)
+
+deer_ssf %>% 
+  fit_clogit(case_ ~ forest + strata(step_id_)) -> m0
+summary(m0)
+
+ 0.6489/(1+ 0.6489)
+
+
+
+
+m0 <- clogit(case_ ~ forest + strata(step_id_), data=deer_ssf)
+summary(m0)
+
+
+newdata = expand.grid(forest=unique(deer_ssf$forest),
+                      step_id_ = unique(deer_ssf$step_id_) )
+
+pred_data <- augment(m0, newdata=newdata, type.predict='risk') 
+ 
+ pred_data %>% 
+   mutate(prob = .fitted / (1+.fitted)) %>% 
+   group_by(forest) %>% 
+   summarise(prob = mean(prob)) -> pred_summ
+ 
+ pred_data %>%
+   filter(step_id_ == 100) %>% 
+   mutate(prob = .fitted / (1+.fitted),
+          sumP = sum(prob))
+ 
+
+
+```
+
