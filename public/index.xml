@@ -6,10 +6,20 @@
     <description>Recent content on SNR R User Group</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 24 Aug 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 31 Aug 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Getting to know R: more about data types</title>
+      <link>/post/2018-08-31-rclassday2/</link>
+      <pubDate>Fri, 31 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018-08-31-rclassday2/</guid>
+      <description>Data Structures Vectors  numbers, characters, logical mixed types of data 1 dimension  create this using c() or vector()
+vect &amp;lt;- c(letters[1:26]) # create a vector vect ## [1] &amp;quot;a&amp;quot; &amp;quot;b&amp;quot; &amp;quot;c&amp;quot; &amp;quot;d&amp;quot; &amp;quot;e&amp;quot; &amp;quot;f&amp;quot; &amp;quot;g&amp;quot; &amp;quot;h&amp;quot; &amp;quot;i&amp;quot; &amp;quot;j&amp;quot; &amp;quot;k&amp;quot; &amp;quot;l&amp;quot; &amp;quot;m&amp;quot; &amp;quot;n&amp;quot; &amp;quot;o&amp;quot; &amp;quot;p&amp;quot; &amp;quot;q&amp;quot; ## [18] &amp;quot;r&amp;quot; &amp;quot;s&amp;quot; &amp;quot;t&amp;quot; &amp;quot;u&amp;quot; &amp;quot;v&amp;quot; &amp;quot;w&amp;quot; &amp;quot;x&amp;quot; &amp;quot;y&amp;quot; &amp;quot;z&amp;quot; length(vect) # how many objects are in the vector ## [1] 26 There are a couple of different ways to look at the structure of objects</description>
+    </item>
     
     <item>
       <title>Getting to know R: a very brief introduction</title>

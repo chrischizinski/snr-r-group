@@ -1,0 +1,274 @@
+---
+title: "Getting to know R: more about data types"
+date: '2018-08-31'
+tags:
+- Data Structures
+- Sampling Data Management and Visualization 
+categories: R
+---
+
+
+
+<div id="data-structures" class="section level2">
+<h2>Data Structures</h2>
+<div id="vectors" class="section level3">
+<h3>Vectors</h3>
+<ul>
+<li>numbers, characters, logical</li>
+<li>mixed types of data</li>
+<li>1 dimension</li>
+</ul>
+<p>create this using <code>c()</code> or <code>vector()</code></p>
+<pre class="r"><code>vect &lt;- c(letters[1:26]) #  create a vector
+vect</code></pre>
+<pre><code>##  [1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot; &quot;f&quot; &quot;g&quot; &quot;h&quot; &quot;i&quot; &quot;j&quot; &quot;k&quot; &quot;l&quot; &quot;m&quot; &quot;n&quot; &quot;o&quot; &quot;p&quot; &quot;q&quot;
+## [18] &quot;r&quot; &quot;s&quot; &quot;t&quot; &quot;u&quot; &quot;v&quot; &quot;w&quot; &quot;x&quot; &quot;y&quot; &quot;z&quot;</code></pre>
+<pre class="r"><code>length(vect) # how many objects are in the vector</code></pre>
+<pre><code>## [1] 26</code></pre>
+<p>There are a couple of different ways to look at the structure of objects</p>
+<pre class="r"><code>typeof(vect) # type of data in the data structure</code></pre>
+<pre><code>## [1] &quot;character&quot;</code></pre>
+<pre class="r"><code>class(vect) # get the class of the data</code></pre>
+<pre><code>## [1] &quot;character&quot;</code></pre>
+<pre class="r"><code>dim(vect) # dimensions</code></pre>
+<pre><code>## NULL</code></pre>
+<pre class="r"><code>str(vect) # structure of the data</code></pre>
+<pre><code>##  chr [1:26] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot; &quot;f&quot; &quot;g&quot; &quot;h&quot; &quot;i&quot; &quot;j&quot; &quot;k&quot; &quot;l&quot; &quot;m&quot; &quot;n&quot; ...</code></pre>
+<div id="challenge" class="section level4">
+<h4>Challenge</h4>
+<ol style="list-style-type: decimal">
+<li>create a vector with values 1, 8, 7, 3, 4, 6, 10, 3</li>
+<li>find the mean, variance, standard deviation, standard error, and range</li>
+</ol>
+<pre class="r"><code>chall2 &lt;- c(1, 8, 7, 3, 4, 6, 10, 3)
+
+mean(chall2) # find the mean</code></pre>
+<pre><code>## [1] 5.25</code></pre>
+<pre class="r"><code>var(chall2) # find the variance</code></pre>
+<pre><code>## [1] 9.071429</code></pre>
+<pre class="r"><code>sd(chall2); sqrt(var(chall2)) # standard deviation</code></pre>
+<pre><code>## [1] 3.011881</code></pre>
+<pre><code>## [1] 3.011881</code></pre>
+<pre class="r"><code>sd(chall2)/sqrt(length(chall2))# standard error</code></pre>
+<pre><code>## [1] 1.064861</code></pre>
+<pre class="r"><code>range(chall2) # range</code></pre>
+<pre><code>## [1]  1 10</code></pre>
+<pre class="r"><code>min(chall2) ; range(chall2)[1] # min value</code></pre>
+<pre><code>## [1] 1</code></pre>
+<pre><code>## [1] 1</code></pre>
+<pre class="r"><code>max(chall2) ; range(chall2)[2] # max</code></pre>
+<pre><code>## [1] 10</code></pre>
+<pre><code>## [1] 10</code></pre>
+</div>
+</div>
+<div id="matrix" class="section level3">
+<h3>Matrix</h3>
+<ul>
+<li>matrices have two dimensions, rows by columns</li>
+<li>only have one type of data, either character or numeric</li>
+</ul>
+<pre class="r"><code>
+mat &lt;- matrix(NA, 5, 4) # create a matrix of NAs that is 5 rows by 4 columns
+mat
+dim(mat)
+
+2mat &lt;- matrix(0,2,3) # will not work
+!mat &lt;- matrix(0,2,3) # will not work
+mata-matb &lt;- matrix(0,2,3) # will not work
+
+matTwo &lt;- matrix(0,2,3) # will  work, camel case
+mat.Two &lt;- matrix(0,2,3) # will work, but not good coding
+
+c(1,3,7,4,
+  2,6,2,1,
+  NA,0,0,2)
+
+matChall &lt;- matrix(c(1,3,7,4,2,6,2,1,NA,0,0,2), nrow = 3, ncol = 4, byrow = TRUE)
+matChall
+
+dim(matChall)</code></pre>
+<pre><code>## Error: &lt;text&gt;:6:2: unexpected symbol
+## 5: 
+## 6: 2mat
+##     ^</code></pre>
+</div>
+<div id="data-frames" class="section level3">
+<h3>Data frames</h3>
+<ul>
+<li>mixed types of data across columns, must be the same within</li>
+<li>2 dimensional, rows by columns</li>
+</ul>
+<pre class="r"><code>datA &lt;- data.frame(&quot;first_col&quot; = 1:10,
+                   &quot;second_col&quot; =  as.character(letters[1:10]),
+                   &quot;third_col&quot; = factor(toupper(letters[1:10])),
+                   stringsAsFactors = FALSE)
+
+datA</code></pre>
+<pre><code>##    first_col second_col third_col
+## 1          1          a         A
+## 2          2          b         B
+## 3          3          c         C
+## 4          4          d         D
+## 5          5          e         E
+## 6          6          f         F
+## 7          7          g         G
+## 8          8          h         H
+## 9          9          i         I
+## 10        10          j         J</code></pre>
+<pre class="r"><code>str(datA)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    10 obs. of  3 variables:
+##  $ first_col : int  1 2 3 4 5 6 7 8 9 10
+##  $ second_col: chr  &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; ...
+##  $ third_col : Factor w/ 10 levels &quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;D&quot;,..: 1 2 3 4 5 6 7 8 9 10</code></pre>
+<pre class="r"><code>names(datA) # find the column names</code></pre>
+<pre><code>## [1] &quot;first_col&quot;  &quot;second_col&quot; &quot;third_col&quot;</code></pre>
+<pre class="r"><code>names(datA) &lt;- c(&quot;firstCol&quot;,&quot;secondCol,thirdCol&quot;)
+datA</code></pre>
+<pre><code>##    firstCol secondCol,thirdCol NA
+## 1         1                  a  A
+## 2         2                  b  B
+## 3         3                  c  C
+## 4         4                  d  D
+## 5         5                  e  E
+## 6         6                  f  F
+## 7         7                  g  G
+## 8         8                  h  H
+## 9         9                  i  I
+## 10       10                  j  J</code></pre>
+<pre class="r"><code>names(datA)[1] &lt;- c(&quot;#firstCol&quot;)
+datA[,1] # all rows first column</code></pre>
+<pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+<pre class="r"><code>datA[2,1]</code></pre>
+<pre><code>## [1] 2</code></pre>
+<pre class="r"><code>datA$`#firstCol` # notice the tick</code></pre>
+<pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+<pre class="r"><code>datA$second_col</code></pre>
+<pre><code>## NULL</code></pre>
+<pre class="r"><code>colnames(datA)</code></pre>
+<pre><code>## [1] &quot;#firstCol&quot;          &quot;secondCol,thirdCol&quot; NA</code></pre>
+<pre class="r"><code>rownames(datA)</code></pre>
+<pre><code>##  [1] &quot;1&quot;  &quot;2&quot;  &quot;3&quot;  &quot;4&quot;  &quot;5&quot;  &quot;6&quot;  &quot;7&quot;  &quot;8&quot;  &quot;9&quot;  &quot;10&quot;</code></pre>
+<pre class="r"><code>rownames(datA) &lt;- letters[10:19]
+rownames(datA) &lt;- NULL
+str(datA)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    10 obs. of  3 variables:
+##  $ #firstCol         : int  1 2 3 4 5 6 7 8 9 10
+##  $ secondCol,thirdCol: chr  &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; ...
+##  $ NA                : Factor w/ 10 levels &quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;D&quot;,..: 1 2 3 4 5 6 7 8 9 10</code></pre>
+<pre class="r"><code>head(datA)</code></pre>
+<pre><code>##   #firstCol secondCol,thirdCol NA
+## 1         1                  a  A
+## 2         2                  b  B
+## 3         3                  c  C
+## 4         4                  d  D
+## 5         5                  e  E
+## 6         6                  f  F</code></pre>
+<pre class="r"><code>tail(datA)</code></pre>
+<pre><code>##    #firstCol secondCol,thirdCol NA
+## 5          5                  e  E
+## 6          6                  f  F
+## 7          7                  g  G
+## 8          8                  h  H
+## 9          9                  i  I
+## 10        10                  j  J</code></pre>
+</div>
+</div>
+<div id="indexing" class="section level2">
+<h2>Indexing</h2>
+<pre class="r"><code>datA[,1] # first column all rows</code></pre>
+<pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+<pre class="r"><code>datA[2,] # second row all columns</code></pre>
+<pre><code>##   #firstCol secondCol,thirdCol NA
+## 2         2                  b  B</code></pre>
+<pre class="r"><code>datA$`#firstCol`[c(1,3,10)]</code></pre>
+<pre><code>## [1]  1  3 10</code></pre>
+<pre class="r"><code>datA[4, &quot;third_col&quot;]</code></pre>
+<pre><code>## NULL</code></pre>
+<pre class="r"><code>datA[,-2]</code></pre>
+<pre><code>##    #firstCol NA
+## 1          1  A
+## 2          2  B
+## 3          3  C
+## 4          4  D
+## 5          5  E
+## 6          6  F
+## 7          7  G
+## 8          8  H
+## 9          9  I
+## 10        10  J</code></pre>
+<pre class="r"><code>datA[,-c(2,3)]</code></pre>
+<pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+<pre class="r"><code>datA[c(1,1,2,2,3,3),]</code></pre>
+<pre><code>##     #firstCol secondCol,thirdCol NA
+## 1           1                  a  A
+## 1.1         1                  a  A
+## 2           2                  b  B
+## 2.1         2                  b  B
+## 3           3                  c  C
+## 3.1         3                  c  C</code></pre>
+<pre class="r"><code>datA[rep(1:3,2),]</code></pre>
+<pre><code>##     #firstCol secondCol,thirdCol NA
+## 1           1                  a  A
+## 2           2                  b  B
+## 3           3                  c  C
+## 1.1         1                  a  A
+## 2.1         2                  b  B
+## 3.1         3                  c  C</code></pre>
+<pre class="r"><code>datA[rep(1:3,each = 2),]</code></pre>
+<pre><code>##     #firstCol secondCol,thirdCol NA
+## 1           1                  a  A
+## 1.1         1                  a  A
+## 2           2                  b  B
+## 2.1         2                  b  B
+## 3           3                  c  C
+## 3.1         3                  c  C</code></pre>
+<pre class="r"><code>names(datA); colnames(datA)</code></pre>
+<pre><code>## [1] &quot;#firstCol&quot;          &quot;secondCol,thirdCol&quot; NA</code></pre>
+<pre><code>## [1] &quot;#firstCol&quot;          &quot;secondCol,thirdCol&quot; NA</code></pre>
+<pre class="r"><code>names(datA) == &quot;second_col&quot;</code></pre>
+<pre><code>## [1] FALSE FALSE    NA</code></pre>
+<pre class="r"><code>which(names(datA) == &quot;second_col&quot;)</code></pre>
+<pre><code>## integer(0)</code></pre>
+<pre class="r"><code>datA[which(names(datA) == &quot;second_col&quot;)]</code></pre>
+<pre><code>## data frame with 0 columns and 10 rows</code></pre>
+<pre class="r"><code>datA[-which(names(datA) == &quot;second_col&quot;)] # use minus to drop column</code></pre>
+<pre><code>## data frame with 0 columns and 10 rows</code></pre>
+<pre class="r"><code>datA[which(names(datA) != &quot;second_col&quot;)]</code></pre>
+<pre><code>##    #firstCol secondCol,thirdCol
+## 1          1                  a
+## 2          2                  b
+## 3          3                  c
+## 4          4                  d
+## 5          5                  e
+## 6          6                  f
+## 7          7                  g
+## 8          8                  h
+## 9          9                  i
+## 10        10                  j</code></pre>
+<pre class="r"><code>datA[,which(names(datA) == &quot;#firstCol&quot; | names(datA) == &quot;third_col&quot;)]</code></pre>
+<pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+<pre class="r"><code>datA[,which(names(datA) %in% c(&quot;#firstCol&quot;,&quot;third_col&quot;))]</code></pre>
+<pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+<pre class="r"><code>names(datA) == c(&quot;#firstCol&quot;,&quot;third_col&quot;)</code></pre>
+<pre><code>## Warning in names(datA) == c(&quot;#firstCol&quot;, &quot;third_col&quot;): longer object length
+## is not a multiple of shorter object length</code></pre>
+<pre><code>## [1]  TRUE FALSE    NA</code></pre>
+<div id="lists" class="section level3">
+<h3>Lists</h3>
+<ul>
+<li>flexible data structure</li>
+<li>often used to store data</li>
+<li>used with functional programming, <code>purrr</code></li>
+</ul>
+<pre class="r"><code>C &lt;- list()
+C</code></pre>
+<pre><code>## list()</code></pre>
+<pre class="r"><code>C[[1]]  &lt;- c(&quot;a&quot;,&quot;b&quot;,&quot;c&quot;)
+C</code></pre>
+<pre><code>## [[1]]
+## [1] &quot;a&quot; &quot;b&quot; &quot;c&quot;</code></pre>
+<pre class="r"><code>C[[2]] &lt;- datA
+
+C[[&quot;mod1&quot;]] &lt;- lm(mpg ~ hp, data = mtcars)</code></pre>
+</div>
+</div>

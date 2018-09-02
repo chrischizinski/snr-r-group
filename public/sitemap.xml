@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/post/2018-08-31-rclassday2/</loc>
+    <lastmod>2018-08-31T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/post/2018-08-24-introduction/</loc>
     <lastmod>2018-08-24T00:00:00+00:00</lastmod>
   </url>
@@ -307,7 +312,7 @@
   
   <url>
     <loc>/tags/data-structures/</loc>
-    <lastmod>2018-08-24T00:00:00+00:00</lastmod>
+    <lastmod>2018-08-31T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -413,18 +418,18 @@
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2018-08-24T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/r/</loc>
-    <lastmod>2018-08-24T00:00:00+00:00</lastmod>
+    <lastmod>2018-08-31T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/r/</loc>
+    <lastmod>2018-08-31T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/r/</loc>
     <lastmod>2018-08-24T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -461,13 +466,13 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2018-08-24T00:00:00+00:00</lastmod>
+    <lastmod>2018-08-31T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/tags/sampling-data-management-and-visualization/</loc>
-    <lastmod>2018-08-24T00:00:00+00:00</lastmod>
+    <lastmod>2018-08-31T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

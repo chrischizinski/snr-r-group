@@ -1,0 +1,188 @@
+---
+title: "Getting to know R: more about data types"
+date: '2018-08-31'
+tags:
+- Data Structures
+- Sampling Data Management and Visualization 
+categories: R
+---
+
+```{r setup, include=FALSE}
+# .libPaths("P:/RLibrary")
+options(stringsAsFactors = TRUE, warn = 0)
+
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Data Structures 
+
+### Vectors
+
+- numbers, characters, logical
+- mixed types of data
+- 1 dimension
+
+create this using `c()` or `vector()` 
+
+```{r vector}
+
+vect <- c(letters[1:26]) #  create a vector
+vect
+
+length(vect) # how many objects are in the vector
+
+```
+
+There are a couple of different ways to look at the structure of objects
+
+```{r str}
+typeof(vect) # type of data in the data structure
+
+class(vect) # get the class of the data
+
+dim(vect) # dimensions
+
+str(vect) # structure of the data
+
+```
+
+#### Challenge
+1. create a vector with values 1, 8, 7, 3, 4, 6, 10, 3
+2. find the mean, variance, standard deviation, standard error, and range
+
+```{r chall1}
+
+chall2 <- c(1, 8, 7, 3, 4, 6, 10, 3)
+
+mean(chall2) # find the mean
+var(chall2) # find the variance
+sd(chall2); sqrt(var(chall2)) # standard deviation
+sd(chall2)/sqrt(length(chall2))# standard error
+range(chall2) # range
+min(chall2) ; range(chall2)[1] # min value
+max(chall2) ; range(chall2)[2] # max
+```
+
+
+### Matrix
+
+- matrices have two dimensions, rows by columns
+- only have one type of data, either character or numeric
+
+```{r matrix, error = TRUE}
+
+mat <- matrix(NA, 5, 4) # create a matrix of NAs that is 5 rows by 4 columns
+mat
+dim(mat)
+
+2mat <- matrix(0,2,3) # will not work
+!mat <- matrix(0,2,3) # will not work
+mata-matb <- matrix(0,2,3) # will not work
+
+matTwo <- matrix(0,2,3) # will  work, camel case
+mat.Two <- matrix(0,2,3) # will work, but not good coding
+
+c(1,3,7,4,
+  2,6,2,1,
+  NA,0,0,2)
+
+matChall <- matrix(c(1,3,7,4,2,6,2,1,NA,0,0,2), nrow = 3, ncol = 4, byrow = TRUE)
+matChall
+
+dim(matChall)
+
+```
+
+### Data frames
+
+- mixed types of data across columns, must be the same within
+- 2 dimensional, rows by columns
+
+```{r dataF }
+datA <- data.frame("first_col" = 1:10,
+                   "second_col" =  as.character(letters[1:10]),
+                   "third_col" = factor(toupper(letters[1:10])),
+                   stringsAsFactors = FALSE)
+
+datA
+
+str(datA)
+
+names(datA) # find the column names
+names(datA) <- c("firstCol","secondCol,thirdCol")
+datA
+
+names(datA)[1] <- c("#firstCol")
+datA[,1] # all rows first column
+datA[2,1]
+
+datA$`#firstCol` # notice the tick
+datA$second_col
+
+colnames(datA)
+rownames(datA)
+rownames(datA) <- letters[10:19]
+rownames(datA) <- NULL
+str(datA)
+
+head(datA)
+tail(datA)
+``` 
+
+
+## Indexing
+
+
+```{r}
+
+datA[,1] # first column all rows
+datA[2,] # second row all columns
+
+datA$`#firstCol`[c(1,3,10)]
+
+datA[4, "third_col"]
+
+datA[,-2]
+
+datA[,-c(2,3)]
+
+datA[c(1,1,2,2,3,3),]
+datA[rep(1:3,2),]
+datA[rep(1:3,each = 2),]
+
+names(datA); colnames(datA)
+
+names(datA) == "second_col"
+
+which(names(datA) == "second_col")
+
+datA[which(names(datA) == "second_col")]
+datA[-which(names(datA) == "second_col")] # use minus to drop column
+datA[which(names(datA) != "second_col")]
+
+datA[,which(names(datA) == "#firstCol" | names(datA) == "third_col")]
+
+datA[,which(names(datA) %in% c("#firstCol","third_col"))]
+
+names(datA) == c("#firstCol","third_col")
+```
+
+### Lists
+
+- flexible data structure
+- often used to store data
+- used with functional programming, `purrr`
+
+```{r lists}
+C <- list()
+C
+
+C[[1]]  <- c("a","b","c")
+C
+
+C[[2]] <- datA
+
+C[["mod1"]] <- lm(mpg ~ hp, data = mtcars)
+
+```
+
