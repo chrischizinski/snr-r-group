@@ -2,15 +2,14 @@
 title: "Dose Response"
 date: '2018-04-27'
 tags:
-- Refelectance
-- Partial Least Squares Regression
+- Dose Response
 - Data Seminar
 categories: R
 ---
 
 ## Load packages
 
-```{r setup, include=FALSE}
+```{r setup, message = FALSE}
 # .libPaths("P:/RLibrary2")
 knitr::opts_chunk$set(echo = TRUE)
 # install.packages("drc")
@@ -23,7 +22,7 @@ library(tidyverse)
 
 ```{r loaddata}
 
-id <- "16viAhr6QNj3XKe3WHXBypgaq7uKoTqQt"
+id <- "1UUxeLSz0IAb9LsTmjIRYQ3kSbqb-JWpE"
 dose<- read_csv(sprintf("https://docs.google.com/uc?id=%s&export=download", id))
 head(dose)
 glimpse(dose)

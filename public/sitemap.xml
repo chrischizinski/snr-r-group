@@ -308,6 +308,12 @@
   </url>
   
   <url>
+    <loc>/tags/dose-response/</loc>
+    <lastmod>2018-04-27T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/tags/ecodetective/</loc>
     <lastmod>2017-04-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -373,7 +379,7 @@
   
   <url>
     <loc>/tags/partial-least-squares-regression/</loc>
-    <lastmod>2018-04-27T00:00:00+00:00</lastmod>
+    <lastmod>2018-03-30T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -409,7 +415,7 @@
   
   <url>
     <loc>/tags/refelectance/</loc>
-    <lastmod>2018-04-27T00:00:00+00:00</lastmod>
+    <lastmod>2018-03-30T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

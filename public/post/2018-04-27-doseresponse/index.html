@@ -146,9 +146,7 @@
     <h4><a href="/post/2018-04-27-doseresponse/">Dose Response</a></h4>
     <h5>April 27, 2018</h5>
     
-    <a href="/tags/refelectance"><kbd class="item-tag">Refelectance</kbd></a>
-    
-    <a href="/tags/partial-least-squares-regression"><kbd class="item-tag">Partial Least Squares Regression</kbd></a>
+    <a href="/tags/dose-response"><kbd class="item-tag">Dose Response</kbd></a>
     
     <a href="/tags/data-seminar"><kbd class="item-tag">Data Seminar</kbd></a>
     
@@ -158,10 +156,16 @@
 
     <br> <div class="text-justify"><div id="load-packages" class="section level2">
 <h2>Load packages</h2>
+<pre class="r"><code># .libPaths(&quot;P:/RLibrary2&quot;)
+knitr::opts_chunk$set(echo = TRUE)
+# install.packages(&quot;drc&quot;)
+
+library(drc)
+library(tidyverse)</code></pre>
 </div>
 <div id="load-data" class="section level2">
 <h2>Load data</h2>
-<pre class="r"><code>id &lt;- &quot;16viAhr6QNj3XKe3WHXBypgaq7uKoTqQt&quot;
+<pre class="r"><code>id &lt;- &quot;1UUxeLSz0IAb9LsTmjIRYQ3kSbqb-JWpE&quot;
 dose&lt;- read_csv(sprintf(&quot;https://docs.google.com/uc?id=%s&amp;export=download&quot;, id))</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(

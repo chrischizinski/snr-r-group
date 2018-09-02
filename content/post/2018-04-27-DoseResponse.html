@@ -2,8 +2,7 @@
 title: "Dose Response"
 date: '2018-04-27'
 tags:
-- Refelectance
-- Partial Least Squares Regression
+- Dose Response
 - Data Seminar
 categories: R
 ---
@@ -12,10 +11,16 @@ categories: R
 
 <div id="load-packages" class="section level2">
 <h2>Load packages</h2>
+<pre class="r"><code># .libPaths(&quot;P:/RLibrary2&quot;)
+knitr::opts_chunk$set(echo = TRUE)
+# install.packages(&quot;drc&quot;)
+
+library(drc)
+library(tidyverse)</code></pre>
 </div>
 <div id="load-data" class="section level2">
 <h2>Load data</h2>
-<pre class="r"><code>id &lt;- &quot;16viAhr6QNj3XKe3WHXBypgaq7uKoTqQt&quot;
+<pre class="r"><code>id &lt;- &quot;1UUxeLSz0IAb9LsTmjIRYQ3kSbqb-JWpE&quot;
 dose&lt;- read_csv(sprintf(&quot;https://docs.google.com/uc?id=%s&amp;export=download&quot;, id))</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(

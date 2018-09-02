@@ -17,7 +17,7 @@
       <pubDate>Fri, 27 Apr 2018 00:00:00 +0000</pubDate>
       
       <guid>/post/2018-04-27-doseresponse/</guid>
-      <description>Load packages  Load data id &amp;lt;- &amp;quot;16viAhr6QNj3XKe3WHXBypgaq7uKoTqQt&amp;quot; dose&amp;lt;- read_csv(sprintf(&amp;quot;https://docs.google.com/uc?id=%s&amp;amp;export=download&amp;quot;, id)) ## Parsed with column specification: ## cols( ## Trt = col_character(), ## Dose = col_integer(), ## Rep = col_integer(), ## control = col_integer(), ## RUN = col_integer() ## ) head(dose) ## # A tibble: 6 x 5 ## Trt Dose Rep control RUN ## &amp;lt;chr&amp;gt; &amp;lt;int&amp;gt; &amp;lt;int&amp;gt; &amp;lt;int&amp;gt; &amp;lt;int&amp;gt; ## 1 0 0 1 0 1 ## 2 0 0 2 0 1 ## 3 0 0 3 0 1 ## 4 0 0 4 0 1 ## 5 0.</description>
+      <description>Load packages # .libPaths(&amp;quot;P:/RLibrary2&amp;quot;) knitr::opts_chunk$set(echo = TRUE) # install.packages(&amp;quot;drc&amp;quot;) library(drc) library(tidyverse)  Load data id &amp;lt;- &amp;quot;1UUxeLSz0IAb9LsTmjIRYQ3kSbqb-JWpE&amp;quot; dose&amp;lt;- read_csv(sprintf(&amp;quot;https://docs.google.com/uc?id=%s&amp;amp;export=download&amp;quot;, id)) ## Parsed with column specification: ## cols( ## Trt = col_character(), ## Dose = col_integer(), ## Rep = col_integer(), ## control = col_integer(), ## RUN = col_integer() ## ) head(dose) ## # A tibble: 6 x 5 ## Trt Dose Rep control RUN ## &amp;lt;chr&amp;gt; &amp;lt;int&amp;gt; &amp;lt;int&amp;gt; &amp;lt;int&amp;gt; &amp;lt;int&amp;gt; ## 1 0 0 1 0 1 ## 2 0 0 2 0 1 ## 3 0 0 3 0 1 ## 4 0 0 4 0 1 ## 5 0.</description>
     </item>
     
     <item>
