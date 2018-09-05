@@ -17,7 +17,7 @@
       <pubDate>Fri, 31 Aug 2018 00:00:00 +0000</pubDate>
       
       <guid>/post/2018-08-31-rclassday2/</guid>
-      <description>Data Structures Vectors  numbers, characters, logical mixed types of data 1 dimension  create this using c() or vector()
+      <description># .libPaths(&amp;quot;P:/RLibrary&amp;quot;) options(stringsAsFactors = TRUE, warn = 0) knitr::opts_chunk$set(echo = TRUE) Data Structures Vectors  numbers, characters, logical mixed types of data 1 dimension  create this using c() or vector()
 vect &amp;lt;- c(letters[1:26]) # create a vector vect ## [1] &amp;quot;a&amp;quot; &amp;quot;b&amp;quot; &amp;quot;c&amp;quot; &amp;quot;d&amp;quot; &amp;quot;e&amp;quot; &amp;quot;f&amp;quot; &amp;quot;g&amp;quot; &amp;quot;h&amp;quot; &amp;quot;i&amp;quot; &amp;quot;j&amp;quot; &amp;quot;k&amp;quot; &amp;quot;l&amp;quot; &amp;quot;m&amp;quot; &amp;quot;n&amp;quot; &amp;quot;o&amp;quot; &amp;quot;p&amp;quot; &amp;quot;q&amp;quot; ## [18] &amp;quot;r&amp;quot; &amp;quot;s&amp;quot; &amp;quot;t&amp;quot; &amp;quot;u&amp;quot; &amp;quot;v&amp;quot; &amp;quot;w&amp;quot; &amp;quot;x&amp;quot; &amp;quot;y&amp;quot; &amp;quot;z&amp;quot; length(vect) # how many objects are in the vector ## [1] 26 There are a couple of different ways to look at the structure of objects</description>
     </item>
     
@@ -27,7 +27,7 @@ vect &amp;lt;- c(letters[1:26]) # create a vector vect ## [1] &amp;quot;a&amp;qu
       <pubDate>Fri, 24 Aug 2018 00:00:00 +0000</pubDate>
       
       <guid>/post/2018-08-24-introduction/</guid>
-      <description>Getting to know R: a very brief introduction What is R? R is an open-sourced computer language that allows you to conduct data analysis and programming It is extremly versatile with 13002 packages that allow you to do pretty do anything, from spatial statistics to data wrangling to publication graphics. In fact, this document was written with R and Rstudio.
+      <description>Getting to know R: a very brief introduction What is R? R is an open-sourced computer language that allows you to conduct data analysis and programming It is extremly versatile with 13022 packages that allow you to do pretty do anything, from spatial statistics to data wrangling to publication graphics. In fact, this document was written with R and Rstudio.
 A reason for its acceptance among researchers is its versatility.</description>
     </item>
     
@@ -70,32 +70,41 @@ set.seed(1234) randDat &amp;lt;- data.frame(x = sample(1:1000, 20)) randDat %&am
     </item>
     
     <item>
-      <title>Community composition - ordination</title>
-      <link>/post/2018-03-30-communitycomposition/</link>
-      <pubDate>Fri, 30 Mar 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2018-03-30-communitycomposition/</guid>
-      <description>Ordination Read the data in from google drive
-id1 &amp;lt;- &amp;quot;1f72ooJvTN9xiFbgMMxL1Kh2ISu9tsJt4&amp;quot; veg_diversity&amp;lt;- read_csv(sprintf(&amp;quot;https://docs.google.com/uc?id=%s&amp;amp;export=download&amp;quot;, id1)) ## Warning: Missing column names filled in: &amp;#39;X121&amp;#39; [121], &amp;#39;X122&amp;#39; [122], ## &amp;#39;X123&amp;#39; [123], &amp;#39;X124&amp;#39; [124], &amp;#39;X125&amp;#39; [125], &amp;#39;X126&amp;#39; [126], &amp;#39;X127&amp;#39; [127], ## &amp;#39;X128&amp;#39; [128], &amp;#39;X129&amp;#39; [129], &amp;#39;X130&amp;#39; [130], &amp;#39;X131&amp;#39; [131], &amp;#39;X132&amp;#39; [132], ## &amp;#39;X133&amp;#39; [133], &amp;#39;X134&amp;#39; [134], &amp;#39;X135&amp;#39; [135], &amp;#39;X136&amp;#39; [136], &amp;#39;X137&amp;#39; [137], ## &amp;#39;X138&amp;#39; [138], &amp;#39;X139&amp;#39; [139], &amp;#39;X140&amp;#39; [140], &amp;#39;X141&amp;#39; [141], &amp;#39;X142&amp;#39; [142], ## &amp;#39;X143&amp;#39; [143], &amp;#39;X144&amp;#39; [144], &amp;#39;X145&amp;#39; [145], &amp;#39;X146&amp;#39; [146], &amp;#39;X147&amp;#39; [147], ## &amp;#39;X148&amp;#39; [148] ## Parsed with column specification: ## cols( ## .</description>
-    </item>
-    
-    <item>
       <title>Partial Least Squares Regression</title>
       <link>/post/2018-04-13-partialleastsquare/</link>
-      <pubDate>Fri, 30 Mar 2018 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 13 Apr 2018 00:00:00 +0000</pubDate>
       
       <guid>/post/2018-04-13-partialleastsquare/</guid>
-      <description>Load the data Bring data in from google drive
+      <description>Load packages # .libPaths(&amp;quot;P:\\RLibrary2&amp;quot;) options(digits = 4) knitr::opts_chunk$set(echo = TRUE) # .libPaths(&amp;quot;P:\\RLibrary2&amp;quot;) # install.packages(&amp;quot;pls&amp;quot;) library(pls) library(lubridate) library(tidyverse)  Load the data Bring data in from google drive
 id &amp;lt;- &amp;quot;1_0rUKAVD7mf4D1ebGAyLNIKXIfekHdFG&amp;quot; ryanData&amp;lt;- read_csv(sprintf(&amp;quot;https://docs.google.com/uc?id=%s&amp;amp;export=download&amp;quot;, id),col_names = FALSE) ## Parsed with column specification: ## cols( ## .default = col_character() ## ) ## See spec(...) for full column specifications. head(ryanData) ## # A tibble: 6 x 80 ## X1 X2 X3 X4 X5 X6 X7 X8 X9 X10 X11 X12 ## &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; ## 1 ID 1 5 9 13 17 21 25 29 33 37 41 ## 2 Plot CSP01 CSP01 CSP01 CSP01 CSP01 CSP01 CSP01 CSP01 CSP01 CSP01 CSP01 ## 3 Date 5/18/… 5/23… 5/31… 6/6/… 6/13… 6/17… 6/22… 6/30… 7/6/… 7/12… 7/15… ## 4 351 5.</description>
     </item>
     
     <item>
       <title>Chickadee sounds and mixed effect models</title>
       <link>/post/2018-04-06-mixedeffectmodels/</link>
-      <pubDate>Fri, 02 Mar 2018 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 06 Apr 2018 00:00:00 +0000</pubDate>
       
       <guid>/post/2018-04-06-mixedeffectmodels/</guid>
-      <description># Download the data from google drive id &amp;lt;- &amp;quot;1NHnz1ncP-c0uGXrcE25pp_iGga0YVLuy&amp;quot; sarahFee&amp;lt;- read_csv(sprintf(&amp;quot;https://docs.google.com/uc?id=%s&amp;amp;export=download&amp;quot;, id)) ## Parsed with column specification: ## cols( ## Location = col_character(), ## Type = col_character(), ## `Begin Time (s)` = col_double(), ## `End Time (s)` = col_double(), ## `Delta Time (s)` = col_double(), ## `Low Freq (Hz)` = col_double(), ## `High Freq (Hz)` = col_double(), ## `Delta Freq (Hz)` = col_double() ## ) glimpse(sarahFee) ## Observations: 32 ## Variables: 8 ## $ Location &amp;lt;chr&amp;gt; &amp;quot;Riverside&amp;quot;, &amp;quot;Riverside&amp;quot;, &amp;quot;Riverside&amp;quot;, &amp;quot;Rive.</description>
+      <description>Load packages # .libPaths(&amp;quot;P:\\RLibrary2&amp;quot;) knitr::opts_chunk$set(echo = TRUE) # install.packages(&amp;quot;lme4&amp;quot;) # install.packages(&amp;quot;lmerTest&amp;quot;) library(lme4) # library(lmerTest) #Dont initially load this library library(tidyverse)  Load chickadee data # Download the data from google drive id &amp;lt;- &amp;quot;1NHnz1ncP-c0uGXrcE25pp_iGga0YVLuy&amp;quot; sarahFee&amp;lt;- read_csv(sprintf(&amp;quot;https://docs.google.com/uc?id=%s&amp;amp;export=download&amp;quot;, id)) ## Parsed with column specification: ## cols( ## Location = col_character(), ## Type = col_character(), ## `Begin Time (s)` = col_double(), ## `End Time (s)` = col_double(), ## `Delta Time (s)` = col_double(), ## `Low Freq (Hz)` = col_double(), ## `High Freq (Hz)` = col_double(), ## `Delta Freq (Hz)` = col_double() ## ) glimpse(sarahFee) ## Observations: 32 ## Variables: 8 ## $ Location &amp;lt;chr&amp;gt; &amp;quot;Riverside&amp;quot;, &amp;quot;Riverside&amp;quot;, &amp;quot;Riverside&amp;quot;, &amp;quot;Rive.</description>
+    </item>
+    
+    <item>
+      <title>Community composition - ordination</title>
+      <link>/post/2018-03-30-communitycomposition/</link>
+      <pubDate>Fri, 30 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018-03-30-communitycomposition/</guid>
+      <description>Load packages  Ordination Read the data in from google drive
+id1 &amp;lt;- &amp;quot;1f72ooJvTN9xiFbgMMxL1Kh2ISu9tsJt4&amp;quot; veg_diversity&amp;lt;- read_csv(sprintf(&amp;quot;https://docs.google.com/uc?id=%s&amp;amp;export=download&amp;quot;, id1)) ## Warning: Missing column names filled in: &amp;#39;X121&amp;#39; [121], &amp;#39;X122&amp;#39; [122], ## &amp;#39;X123&amp;#39; [123], &amp;#39;X124&amp;#39; [124], &amp;#39;X125&amp;#39; [125], &amp;#39;X126&amp;#39; [126], &amp;#39;X127&amp;#39; [127], ## &amp;#39;X128&amp;#39; [128], &amp;#39;X129&amp;#39; [129], &amp;#39;X130&amp;#39; [130], &amp;#39;X131&amp;#39; [131], &amp;#39;X132&amp;#39; [132], ## &amp;#39;X133&amp;#39; [133], &amp;#39;X134&amp;#39; [134], &amp;#39;X135&amp;#39; [135], &amp;#39;X136&amp;#39; [136], &amp;#39;X137&amp;#39; [137], ## &amp;#39;X138&amp;#39; [138], &amp;#39;X139&amp;#39; [139], &amp;#39;X140&amp;#39; [140], &amp;#39;X141&amp;#39; [141], &amp;#39;X142&amp;#39; [142], ## &amp;#39;X143&amp;#39; [143], &amp;#39;X144&amp;#39; [144], &amp;#39;X145&amp;#39; [145], &amp;#39;X146&amp;#39; [146], &amp;#39;X147&amp;#39; [147], ## &amp;#39;X148&amp;#39; [148] ## Parsed with column specification: ## cols( ## .</description>
+    </item>
+    
+    <item>
+      <title>Step Selection Functions</title>
+      <link>/post/2018-03-09-stepselectionfunctions/</link>
+      <pubDate>Fri, 09 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018-03-09-stepselectionfunctions/</guid>
+      <description>Deer data data(&amp;quot;deer&amp;quot;) glimpse(deer) ## Observations: 826 ## Variables: 4 ## $ x_ &amp;lt;dbl&amp;gt; 4314068, 4314053, 4314105, 4314044, 4313015, 4312860, 4... ## $ y_ &amp;lt;dbl&amp;gt; 3445807, 3445768, 3445859, 3445785, 3445858, 3445857, 3... ## $ t_ &amp;lt;dttm&amp;gt; 2008-03-30 00:01:47, 2008-03-30 06:00:54, 2008-03-30 1... ## $ burst_ &amp;lt;dbl&amp;gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2... ggplot() + geom_path(data = deer,aes(x = x_, y = y_),linetype = &amp;quot;dashed&amp;quot;) + geom_point(data = deer,aes(x = x_, y = y_),size = 1, colour = &amp;quot;red&amp;quot;, alpha = 0.</description>
     </item>
     
     <item>
@@ -113,7 +122,7 @@ id &amp;lt;- &amp;quot;1_0rUKAVD7mf4D1ebGAyLNIKXIfekHdFG&amp;quot; ryanData&amp;
       <pubDate>Fri, 23 Feb 2018 00:00:00 +0000</pubDate>
       
       <guid>/post/2018-02-23-agecohort/</guid>
-      <description>Working with Matt’s data # Download from google drive id &amp;lt;- &amp;quot;1wq8UNl921-NeCs0VCIhlGfbBK9ZxB3kL&amp;quot; huntData &amp;lt;- read_csv(sprintf(&amp;quot;https://docs.google.com/uc?id=%s&amp;amp;export=download&amp;quot;, id)) ## Parsed with column specification: ## cols( ## permitYear = col_integer(), ## permitType = col_character(), ## gender = col_character(), ## age = col_integer(), ## residency = col_character(), ## birthyear = col_integer() ## ) glimpse(huntData) ## Observations: 723,480 ## Variables: 6 ## $ permitYear &amp;lt;int&amp;gt; 2008, 2008, 2008, 2008, 2008, 2008, 2008, 2008, 200... ## $ permitType &amp;lt;chr&amp;gt; &amp;quot;Hunt Fish Combo&amp;quot;, &amp;quot;Hunt Fish Combo&amp;quot;, &amp;quot;Hunt Fish Co.</description>
+      <description>Load packages # .libPaths(&amp;quot;P:/RLibrary2&amp;quot;) # Set your library path if you need it knitr::opts_chunk$set(echo = TRUE) # install required packages, make sure these get commented out after your install # install.packages(&amp;quot;apc&amp;quot;) # load libraries library(apc) library(tidyverse)  Working with Matt’s data # Download from google drive id &amp;lt;- &amp;quot;1wq8UNl921-NeCs0VCIhlGfbBK9ZxB3kL&amp;quot; huntData &amp;lt;- read_csv(sprintf(&amp;quot;https://docs.google.com/uc?id=%s&amp;amp;export=download&amp;quot;, id)) ## Parsed with column specification: ## cols( ## permitYear = col_integer(), ## permitType = col_character(), ## gender = col_character(), ## age = col_integer(), ## residency = col_character(), ## birthyear = col_integer() ## ) glimpse(huntData) ## Observations: 723,480 ## Variables: 6 ## $ permitYear &amp;lt;int&amp;gt; 2008, 2008, 2008, 2008, 2008, 2008, 2008, 2008, 200.</description>
     </item>
     
     <item>
@@ -162,7 +171,7 @@ goal_scale &amp;lt;- read_csv(&amp;quot;https://raw.githubusercontent.com/chrisc
       <pubDate>Fri, 13 Oct 2017 00:00:00 +0000</pubDate>
       
       <guid>/post/2017-10-13-latentvariables_1/</guid>
-      <description>library(psych) Answers to the challenge library(tidyverse) ## ── Attaching packages ──── tidyverse 1.2.1 ── ## ✔ ggplot2 2.2.1 ✔ purrr 0.2.4 ## ✔ tibble 1.4.2 ✔ dplyr 0.7.4 ## ✔ tidyr 0.8.0 ✔ stringr 1.3.0 ## ✔ readr 1.1.1 ✔ forcats 0.3.0 ## ── Conflicts ─────── tidyverse_conflicts() ── ## ✖ ggplot2::%+%() masks psych::%+%() ## ✖ ggplot2::alpha() masks psych::alpha(), scales::alpha() ## ✖ readr::col_factor() masks scales::col_factor() ## ✖ purrr::discard() masks scales::discard() ## ✖ dplyr::filter() masks stats::filter() ## ✖ dplyr::lag() masks stats::lag() library(ggdendro) library(NbClust) data(&amp;quot;USArrests&amp;quot;) USArrests %&amp;gt;% scale() -&amp;gt; arrest.</description>
+      <description>library(psych) Answers to the challenge library(tidyverse) ## ── Attaching packages ────────────────────────────────────────── tidyverse 1.2.1 ── ## ✔ ggplot2 3.0.0 ✔ purrr 0.2.5 ## ✔ tibble 1.4.2 ✔ dplyr 0.7.6 ## ✔ tidyr 0.8.1 ✔ stringr 1.3.1 ## ✔ readr 1.1.1 ✔ forcats 0.3.0 ## ── Conflicts ───────────────────────────────────────────── tidyverse_conflicts() ── ## ✖ ggplot2::%+%() masks psych::%+%() ## ✖ ggplot2::alpha() masks psych::alpha() ## ✖ dplyr::filter() masks stats::filter() ## ✖ dplyr::lag() masks stats::lag() library(ggdendro) library(NbClust) data(&amp;quot;USArrests&amp;quot;) USArrests %&amp;gt;% scale() -&amp;gt; arrest.</description>
     </item>
     
     <item>
@@ -281,6 +290,16 @@ Motivation Squid trawl
     </item>
     
     <item>
+      <title>Ecological Detective - Probability and probability models. Part 2</title>
+      <link>/post/2017-03-17-ecologicaldetective6/</link>
+      <pubDate>Fri, 17 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2017-03-17-ecologicaldetective6/</guid>
+      <description>library(tidyverse) library(broom) Sources of the notes for this lecture are a combination of Aho(2013) (Chapters 2 and 3) and Ecological Detective (Chapters 3 and 4).
+Common distributions Discrete Negative binomial distribution  Negative binomial gives the probability that x independent Bernoulli failures will occur prior to obtaining the rth success - two parameters: r is the number of successes and \( \pi \) is the probability of an individual Bernoulli success  First form:</description>
+    </item>
+    
+    <item>
       <title>Ecological Detective -- Probability and probability models, Part 1</title>
       <link>/post/2017-03-10-ecologicaldetective5/</link>
       <pubDate>Fri, 10 Mar 2017 00:00:00 +0000</pubDate>
@@ -385,7 +404,7 @@ library(tidyverse) library(broom) library(lme4) library(multcomp) Comparing grou
       <description>The RMarkdown file for this lesson can be found here.
 This lesson will follow Chapter 6 in Quinn and Keough (2002).
 Load the packages we will be using in this lesson
-library(RCurl) library(tidyverse) library(broom) library(GGally) library(devtools) library(gridExtra) source_url(&amp;#39;https://raw.githubusercontent.com/chrischizinski/SNR_R_Group/master/R/snr_r_group_functions.R&amp;#39;) Multiple Linear regression analysis Our previous lesson was based on regression models with a single predictor and single response variable. We can expand on these by increasing the number of predictor variables, which are called are multiple linear regression models.</description>
+library(RCurl) library(tidyverse) library(broom) library(GGally) library(devtools) library(gridExtra) library(grid) source_url(&amp;#39;https://raw.githubusercontent.com/chrischizinski/SNR_R_Group/master/R/snr_r_group_functions.R&amp;#39;) Multiple Linear regression analysis Our previous lesson was based on regression models with a single predictor and single response variable. We can expand on these by increasing the number of predictor variables, which are called are multiple linear regression models.</description>
     </item>
     
     <item>
@@ -397,9 +416,8 @@ library(RCurl) library(tidyverse) library(broom) library(GGally) library(devtool
       <description>The RMarkdown file for this lesson can be found here.
 This lesson will follow Chapter 5 in Quinn and Keough (2002).
 Load the packages we will be using in this lesson
-library(MASS) library(car) library(RCurl) library(mgcv) library(tidyverse) library(broom) library(Rfit) library(mgcv) library(gtable) library(lmodel2) Linear regression analysis Statistical models that assume a linear relationship between a single, continuous (usually) predictor value are simple linear regression models.
-These models have three primary purposes:
- describe a linear relationship between \( Y \) and \( X \) determine the amount of variation (explained) in \( Y \) with \( X \) and the amount of variation unexplained predict values of \( Y \) from \( X \)  Simple bivariate linear regression Linear model for regression Consider you have a set of observations (\( i = 1 :n \) ), where the each observation was chosen based on its \( X \) value and its \( Y \) value for each observation is sampled from a population of possible \( Y \) values.</description>
+library(MASS) library(car) library(RCurl) library(mgcv) library(tidyverse) library(broom) library(Rfit) library(mgcv) library(gtable) library(lmodel2) library(grid) Linear regression analysis Statistical models that assume a linear relationship between a single, continuous (usually) predictor value are simple linear regression models.
+These models have three primary purposes:</description>
     </item>
     
     <item>
@@ -408,7 +426,7 @@ These models have three primary purposes:
       <pubDate>Thu, 20 Oct 2016 00:00:00 +0000</pubDate>
       
       <guid>/post/2016-10-20-correlation/</guid>
-      <description>library(tidyverse) ## ── Attaching packages ──── tidyverse 1.2.1 ── ## ✔ ggplot2 2.2.1 ✔ purrr 0.2.4 ## ✔ tibble 1.4.2 ✔ dplyr 0.7.4 ## ✔ tidyr 0.8.0 ✔ stringr 1.3.0 ## ✔ readr 1.1.1 ✔ forcats 0.3.0 ## ── Conflicts ─────── tidyverse_conflicts() ── ## ✖ readr::col_factor() masks scales::col_factor() ## ✖ purrr::discard() masks scales::discard() ## ✖ dplyr::filter() masks stats::filter() ## ✖ dplyr::lag() masks stats::lag() library(gridExtra) ## ## Attaching package: &amp;#39;gridExtra&amp;#39; ## The following object is masked from &amp;#39;package:dplyr&amp;#39;: ## ## combine library(RCurl) ## Loading required package: bitops ## ## Attaching package: &amp;#39;RCurl&amp;#39; ## The following object is masked from &amp;#39;package:tidyr&amp;#39;: ## ## complete library(MASS) ## ## Attaching package: &amp;#39;MASS&amp;#39; ## The following object is masked from &amp;#39;package:dplyr&amp;#39;: ## ## select The RMarkdown file for this lesson can be found here</description>
+      <description>library(tidyverse) ## ── Attaching packages ────────────────────────────────────────── tidyverse 1.2.1 ── ## ✔ ggplot2 3.0.0 ✔ purrr 0.2.5 ## ✔ tibble 1.4.2 ✔ dplyr 0.7.6 ## ✔ tidyr 0.8.1 ✔ stringr 1.3.1 ## ✔ readr 1.1.1 ✔ forcats 0.3.0 ## ── Conflicts ───────────────────────────────────────────── tidyverse_conflicts() ── ## ✖ dplyr::filter() masks stats::filter() ## ✖ dplyr::lag() masks stats::lag() library(gridExtra) ## ## Attaching package: &amp;#39;gridExtra&amp;#39; ## The following object is masked from &amp;#39;package:dplyr&amp;#39;: ## ## combine library(RCurl) ## Loading required package: bitops ## ## Attaching package: &amp;#39;RCurl&amp;#39; ## The following object is masked from &amp;#39;package:tidyr&amp;#39;: ## ## complete library(MASS) ## ## Attaching package: &amp;#39;MASS&amp;#39; ## The following object is masked from &amp;#39;package:dplyr&amp;#39;: ## ## select The RMarkdown file for this lesson can be found here</description>
     </item>
     
     <item>
@@ -448,7 +466,7 @@ I based these illustrations heavily on the material from the Ecological Detectiv
       
       <guid>/post/2016-10-05-themes_facets/</guid>
       <description>Themes One of my favorite aspects of ggplot2 is the use of themes. Not including a theme, the default ggplots theme is the theme_grey which has a dark grey background with white grid lines. See the example below
-library(tidyverse) ## ── Attaching packages ──── tidyverse 1.2.1 ── ## ✔ ggplot2 2.2.1 ✔ purrr 0.2.4 ## ✔ tibble 1.4.2 ✔ dplyr 0.7.4 ## ✔ tidyr 0.8.0 ✔ stringr 1.3.0 ## ✔ readr 1.</description>
+library(tidyverse) ## ── Attaching packages ────────────────────────────────────────── tidyverse 1.2.1 ── ## ✔ ggplot2 3.0.0 ✔ purrr 0.2.5 ## ✔ tibble 1.4.2 ✔ dplyr 0.7.6 ## ✔ tidyr 0.8.1 ✔ stringr 1.3.1 ## ✔ readr 1.</description>
     </item>
     
     <item>
@@ -547,7 +565,7 @@ summary(cars) ## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 2
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/post/answer1/</guid>
-      <description>library(RCurl) ## Loading required package: bitops library(tidyverse) ## ── Attaching packages ──── tidyverse 1.2.1 ── ## ✔ ggplot2 2.2.1 ✔ purrr 0.2.4 ## ✔ tibble 1.4.2 ✔ dplyr 0.7.4 ## ✔ tidyr 0.8.0 ✔ stringr 1.3.0 ## ✔ readr 1.1.1 ✔ forcats 0.3.0 ## ── Conflicts ─────── tidyverse_conflicts() ── ## ✖ readr::col_factor() masks scales::col_factor() ## ✖ tidyr::complete() masks RCurl::complete() ## ✖ purrr::discard() masks scales::discard() ## ✖ dplyr::filter() masks stats::filter() ## ✖ dplyr::lag() masks stats::lag() fao_data&amp;lt;-read_csv(getURL(&amp;quot;https://raw.</description>
+      <description>library(RCurl) ## Loading required package: bitops library(tidyverse) ## ── Attaching packages ────────────────────────────────────────── tidyverse 1.2.1 ── ## ✔ ggplot2 3.0.0 ✔ purrr 0.2.5 ## ✔ tibble 1.4.2 ✔ dplyr 0.7.6 ## ✔ tidyr 0.8.1 ✔ stringr 1.3.1 ## ✔ readr 1.1.1 ✔ forcats 0.3.0 ## ── Conflicts ───────────────────────────────────────────── tidyverse_conflicts() ── ## ✖ tidyr::complete() masks RCurl::complete() ## ✖ dplyr::filter() masks stats::filter() ## ✖ dplyr::lag() masks stats::lag() fao_data&amp;lt;-read_csv(getURL(&amp;quot;https://raw.githubusercontent.com/chrischizinski/SNR_R_Group/master/data/FAO_GlobalProduction.csv&amp;quot;)) names(fao_data) ## [1] &amp;quot;Country (Country)&amp;quot; ## [2] &amp;quot;Species (ASFIS species)&amp;quot; ## [3] &amp;quot;Production area (FAO major fishing area)&amp;quot; ## [4] &amp;quot;Production source (Detailed production source)&amp;quot; ## [5] &amp;quot;Measure (Measure)&amp;quot; ## [6] &amp;quot;1950&amp;quot; ## [7] &amp;quot;1951&amp;quot; ## [8] &amp;quot;1952&amp;quot; ## [9] &amp;quot;1953&amp;quot; ## [10] &amp;quot;1954&amp;quot; ## [11] &amp;quot;1955&amp;quot; ## [12] &amp;quot;1956&amp;quot; ## [13] &amp;quot;1957&amp;quot; ## [14] &amp;quot;1958&amp;quot; ## [15] &amp;quot;1959&amp;quot; ## [16] &amp;quot;1960&amp;quot; ## [17] &amp;quot;1961&amp;quot; ## [18] &amp;quot;1962&amp;quot; ## [19] &amp;quot;1963&amp;quot; ## [20] &amp;quot;1964&amp;quot; ## [21] &amp;quot;1965&amp;quot; ## [22] &amp;quot;1966&amp;quot; ## [23] &amp;quot;1967&amp;quot; ## [24] &amp;quot;1968&amp;quot; ## [25] &amp;quot;1969&amp;quot; ## [26] &amp;quot;1970&amp;quot; ## [27] &amp;quot;1971&amp;quot; ## [28] &amp;quot;1972&amp;quot; ## [29] &amp;quot;1973&amp;quot; ## [30] &amp;quot;1974&amp;quot; ## [31] &amp;quot;1975&amp;quot; ## [32] &amp;quot;1976&amp;quot; ## [33] &amp;quot;1977&amp;quot; ## [34] &amp;quot;1978&amp;quot; ## [35] &amp;quot;1979&amp;quot; ## [36] &amp;quot;1980&amp;quot; ## [37] &amp;quot;1981&amp;quot; ## [38] &amp;quot;1982&amp;quot; ## [39] &amp;quot;1983&amp;quot; ## [40] &amp;quot;1984&amp;quot; ## [41] &amp;quot;1985&amp;quot; ## [42] &amp;quot;1986&amp;quot; ## [43] &amp;quot;1987&amp;quot; ## [44] &amp;quot;1988&amp;quot; ## [45] &amp;quot;1989&amp;quot; ## [46] &amp;quot;1990&amp;quot; ## [47] &amp;quot;1991&amp;quot; ## [48] &amp;quot;1992&amp;quot; ## [49] &amp;quot;1993&amp;quot; ## [50] &amp;quot;1994&amp;quot; ## [51] &amp;quot;1995&amp;quot; ## [52] &amp;quot;1996&amp;quot; ## [53] &amp;quot;1997&amp;quot; ## [54] &amp;quot;1998&amp;quot; ## [55] &amp;quot;1999&amp;quot; ## [56] &amp;quot;2000&amp;quot; ## [57] &amp;quot;2001&amp;quot; ## [58] &amp;quot;2002&amp;quot; ## [59] &amp;quot;2003&amp;quot; ## [60] &amp;quot;2004&amp;quot; ## [61] &amp;quot;2005&amp;quot; ## [62] &amp;quot;2006&amp;quot; ## [63] &amp;quot;2007&amp;quot; ## [64] &amp;quot;2008&amp;quot; ## [65] &amp;quot;2009&amp;quot; ## [66] &amp;quot;2010&amp;quot; ## [67] &amp;quot;2011&amp;quot; ## [68] &amp;quot;2012&amp;quot; ## [69] &amp;quot;2013&amp;quot; ## [70] &amp;quot;2014&amp;quot; fao_summary&amp;lt;-fao_data %&amp;gt;% gather(year, prod, -(1:5)) %&amp;gt;% rename(country = `Country (Country)`, commonname = `Species (ASFIS species)`, prod_area = `Production area (FAO major fishing area)`, prod_source = `Production source (Detailed production source)`, measure = `Measure (Measure)`) %&amp;gt;% mutate(prod = ifelse(prod == &amp;#39;.</description>
     </item>
     
     <item>
@@ -556,7 +574,7 @@ summary(cars) ## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 2
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/post/answer2/</guid>
-      <description>library(tidyverse) ## ── Attaching packages ──── tidyverse 1.2.1 ── ## ✔ ggplot2 2.2.1 ✔ purrr 0.2.4 ## ✔ tibble 1.4.2 ✔ dplyr 0.7.4 ## ✔ tidyr 0.8.0 ✔ stringr 1.3.0 ## ✔ readr 1.1.1 ✔ forcats 0.3.0 ## ── Conflicts ─────── tidyverse_conflicts() ── ## ✖ readr::col_factor() masks scales::col_factor() ## ✖ purrr::discard() masks scales::discard() ## ✖ dplyr::filter() masks stats::filter() ## ✖ dplyr::lag() masks stats::lag() library(RCurl) ## Loading required package: bitops ## ## Attaching package: &amp;#39;RCurl&amp;#39; ## The following object is masked from &amp;#39;package:tidyr&amp;#39;: ## ## complete lovett &amp;lt;- read_csv(getURL(&amp;quot;https://raw.</description>
+      <description>library(tidyverse) ## ── Attaching packages ────────────────────────────────────────── tidyverse 1.2.1 ── ## ✔ ggplot2 3.0.0 ✔ purrr 0.2.5 ## ✔ tibble 1.4.2 ✔ dplyr 0.7.6 ## ✔ tidyr 0.8.1 ✔ stringr 1.3.1 ## ✔ readr 1.1.1 ✔ forcats 0.3.0 ## ── Conflicts ───────────────────────────────────────────── tidyverse_conflicts() ── ## ✖ dplyr::filter() masks stats::filter() ## ✖ dplyr::lag() masks stats::lag() library(RCurl) ## Loading required package: bitops ## ## Attaching package: &amp;#39;RCurl&amp;#39; ## The following object is masked from &amp;#39;package:tidyr&amp;#39;: ## ## complete lovett &amp;lt;- read_csv(getURL(&amp;quot;https://raw.</description>
     </item>
     
     <item>
@@ -565,26 +583,7 @@ summary(cars) ## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 2
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/post/answer4/</guid>
-      <description>library(tidyverse) ## ── Attaching packages ──── tidyverse 1.2.1 ── ## ✔ ggplot2 2.2.1 ✔ purrr 0.2.4 ## ✔ tibble 1.4.2 ✔ dplyr 0.7.4 ## ✔ tidyr 0.8.0 ✔ stringr 1.3.0 ## ✔ readr 1.1.1 ✔ forcats 0.3.0 ## ── Conflicts ─────── tidyverse_conflicts() ── ## ✖ readr::col_factor() masks scales::col_factor() ## ✖ purrr::discard() masks scales::discard() ## ✖ dplyr::filter() masks stats::filter() ## ✖ dplyr::lag() masks stats::lag() library(RCurl) ## Loading required package: bitops ## ## Attaching package: &amp;#39;RCurl&amp;#39; ## The following object is masked from &amp;#39;package:tidyr&amp;#39;: ## ## complete ward&amp;lt;-read_csv(getURL(&amp;quot;https://raw.</description>
-    </item>
-    
-    <item>
-      <title>Ecological Detective - Probability and probability models. Part 2</title>
-      <link>/post/2017-03-17-ecologicaldetective6/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2017-03-17-ecologicaldetective6/</guid>
-      <description>library(tidyverse) library(broom) Sources of the notes for this lecture are a combination of Aho(2013) (Chapters 2 and 3) and Ecological Detective (Chapters 3 and 4).
-Common distributions Discrete Negative binomial distribution  Negative binomial gives the probability that x independent Bernoulli failures will occur prior to obtaining the rth success  two parameters: r is the number of successes and \( \pi \) is the probability of an individual Bernoulli success   First form:</description>
-    </item>
-    
-    <item>
-      <title>Step Selection Functions</title>
-      <link>/post/2018-03-09-stepselectionfunctions/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2018-03-09-stepselectionfunctions/</guid>
-      <description>Deer data data(&amp;quot;deer&amp;quot;) glimpse(deer) ## Observations: 826 ## Variables: 4 ## $ x_ &amp;lt;dbl&amp;gt; 4314068, 4314053, 4314105, 4314044, 4313015, 4312860, 4... ## $ y_ &amp;lt;dbl&amp;gt; 3445807, 3445768, 3445859, 3445785, 3445858, 3445857, 3... ## $ t_ &amp;lt;dttm&amp;gt; 2008-03-30 00:01:47, 2008-03-30 06:00:54, 2008-03-30 1... ## $ burst_ &amp;lt;dbl&amp;gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2... ggplot() + geom_path(data = deer,aes(x = x_, y = y_),linetype = &amp;quot;dashed&amp;quot;) + geom_point(data = deer,aes(x = x_, y = y_),size = 1, colour = &amp;quot;red&amp;quot;, alpha = 0.</description>
+      <description>library(tidyverse) ## ── Attaching packages ────────────────────────────────────────── tidyverse 1.2.1 ── ## ✔ ggplot2 3.0.0 ✔ purrr 0.2.5 ## ✔ tibble 1.4.2 ✔ dplyr 0.7.6 ## ✔ tidyr 0.8.1 ✔ stringr 1.3.1 ## ✔ readr 1.1.1 ✔ forcats 0.3.0 ## ── Conflicts ───────────────────────────────────────────── tidyverse_conflicts() ── ## ✖ dplyr::filter() masks stats::filter() ## ✖ dplyr::lag() masks stats::lag() library(RCurl) ## Loading required package: bitops ## ## Attaching package: &amp;#39;RCurl&amp;#39; ## The following object is masked from &amp;#39;package:tidyr&amp;#39;: ## ## complete ward&amp;lt;-read_csv(getURL(&amp;quot;https://raw.</description>
     </item>
     
     <item>

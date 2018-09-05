@@ -8,16 +8,14 @@ tags: ["Regression"]
 
 
 <pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## ── Attaching packages ──── tidyverse 1.2.1 ──</code></pre>
-<pre><code>## ✔ ggplot2 2.2.1     ✔ purrr   0.2.4
-## ✔ tibble  1.4.2     ✔ dplyr   0.7.4
-## ✔ tidyr   0.8.0     ✔ stringr 1.3.0
+<pre><code>## ── Attaching packages ────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
+<pre><code>## ✔ ggplot2 3.0.0     ✔ purrr   0.2.5
+## ✔ tibble  1.4.2     ✔ dplyr   0.7.6
+## ✔ tidyr   0.8.1     ✔ stringr 1.3.1
 ## ✔ readr   1.1.1     ✔ forcats 0.3.0</code></pre>
-<pre><code>## ── Conflicts ─────── tidyverse_conflicts() ──
-## ✖ readr::col_factor() masks scales::col_factor()
-## ✖ purrr::discard()    masks scales::discard()
-## ✖ dplyr::filter()     masks stats::filter()
-## ✖ dplyr::lag()        masks stats::lag()</code></pre>
+<pre><code>## ── Conflicts ───────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 <pre class="r"><code>library(gridExtra)</code></pre>
 <pre><code>## 
 ## Attaching package: &#39;gridExtra&#39;</code></pre>
@@ -177,7 +175,8 @@ p</code></pre>
 </div>
 <div id="kernel-density" class="section level4">
 <h4>Kernel density</h4>
-<p>Sometimes we are not interested in the population mean of \( y_{i1} \) and \(y_{i2} \) but we just want a confidence interval based on the observed data. The kernel density for a value of <em>y </em> is the sum of hte estimates from a series of symmetrical distributuoins fitted to groups of local observations. Note that they are not constrained to an elliptical shape.</p>
+<p>Sometimes we are not interested in the population mean of \( y_{i1} \) and \(y_{i2} \) but we just want a confidence interval based on the observed data. The kernel density for a value of <em>y
+</em> is the sum of hte estimates from a series of symmetrical distributuoins fitted to groups of local observations. Note that they are not constrained to an elliptical shape.</p>
 <pre class="r"><code>## For site LS
 dens1 &lt;- kde2d(crabs$TOTMASS[crabs$SITE ==&quot;LS&quot;], crabs$BURROWS[crabs$SITE ==&quot;LS&quot;], n = 100, lims = c(0,8,0,120))
 

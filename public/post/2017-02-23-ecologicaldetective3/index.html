@@ -309,11 +309,11 @@ ggplot(data = FishAge) +
 <p>Lets look at the distribution of the residuals of each model to the actual data. What would you expect to see?</p>
 <pre class="r"><code>resid_lm&lt;-data.frame(model = &quot;linear&quot;,resid = augment(lm_mod)$.resid)
 resid_log&lt;-data.frame(model = &quot;log&quot;,resid = augment(log_mod)$.resid)
-resid_poly&lt;-data.frame(model = &quot;poly&quot;,resid = augment(poly_mod)$.resid)
+# resid_poly&lt;-data.frame(model = &quot;poly&quot;,resid = augment(poly_mod)$.resid)
 resid_nl&lt;-data.frame(model = &quot;nonlinear&quot;,resid = augment(nl_mod)$.resid)
 
 
-all_resid&lt;-rbind(resid_lm, resid_log, resid_poly, resid_nl)
+all_resid&lt;-rbind(resid_lm, resid_log, resid_nl)
 head(all_resid)</code></pre>
 <pre><code>##    model       resid
 ## 1 linear -44.3284415
@@ -323,7 +323,7 @@ head(all_resid)</code></pre>
 ## 5 linear -13.3178426
 ## 6 linear  -0.3072437</code></pre>
 <pre class="r"><code>glimpse(all_resid)</code></pre>
-<pre><code>## Observations: 328
+<pre><code>## Observations: 246
 ## Variables: 2
 ## $ model &lt;chr&gt; &quot;linear&quot;, &quot;linear&quot;, &quot;linear&quot;, &quot;linear&quot;, &quot;linear&quot;, &quot;linea...
 ## $ resid &lt;dbl&gt; -44.3284415, 7.7139542, -12.2754468, 22.7033553, -13.317...</code></pre>

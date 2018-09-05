@@ -144,7 +144,7 @@
     
 
     <h4><a href="/post/2018-04-06-mixedeffectmodels/">Chickadee sounds and mixed effect models</a></h4>
-    <h5>March 2, 2018</h5>
+    <h5>April 6, 2018</h5>
     
     <a href="/tags/mixed-effect-models"><kbd class="item-tag">Mixed effect models</kbd></a>
     
@@ -156,7 +156,20 @@
 </div>
 
 
-    <br> <div class="text-justify"><pre class="r"><code># Download the data from google drive
+    <br> <div class="text-justify"><div id="load-packages" class="section level2">
+<h2>Load packages</h2>
+<pre class="r"><code># .libPaths(&quot;P:\\RLibrary2&quot;)
+knitr::opts_chunk$set(echo = TRUE)
+# install.packages(&quot;lme4&quot;)
+# install.packages(&quot;lmerTest&quot;)
+
+library(lme4)
+# library(lmerTest)  #Dont initially load this library
+library(tidyverse)</code></pre>
+</div>
+<div id="load-chickadee-data" class="section level2">
+<h2>Load chickadee data</h2>
+<pre class="r"><code># Download the data from google drive
 
 id &lt;- &quot;1NHnz1ncP-c0uGXrcE25pp_iGga0YVLuy&quot;
 sarahFee&lt;- read_csv(sprintf(&quot;https://docs.google.com/uc?id=%s&amp;export=download&quot;, id))</code></pre>
@@ -495,6 +508,7 @@ ggplot(data = pre_data) +
   coord_cartesian(ylim = c(3000, 3600), xlim = c(48,80)) +
   theme_classic()</code></pre>
 <p><img src="/post/2018-04-06-MixedEffectModels_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
+</div>
 </div>
 
     

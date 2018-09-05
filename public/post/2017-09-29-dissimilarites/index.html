@@ -152,7 +152,8 @@
 </div>
 
 
-    <br> <div class="text-justify"><p>This class covers an introduction to dissimilarity and distance measures. Detailed notes from previous semesters can be found here - <a href="https://chrischizinski.github.io/SNR_R_Group/2016-08-12-SimilarityDistance">2016-08-12-SimilarityDistance</a>.</p>
+    <br> <div class="text-justify"><p>This class covers an introduction to dissimilarity and distance measures. Detailed notes from previous semesters can be found here
+- <a href="https://chrischizinski.github.io/SNR_R_Group/2016-08-12-SimilarityDistance">2016-08-12-SimilarityDistance</a>.</p>
 <ul>
 <li><a href="https://raw.githubusercontent.com/chrischizinski/SNR_R_Group/master/notebooks/2017-09-29-Distances.Rmd">R notebook Rmarkdown file</a></li>
 </ul>
@@ -217,7 +218,15 @@ ggplot(data = as.data.frame(hyp_data)) +
 <p>The choice of which distance you are going to use depends on the data type and the type of analysis you will do.</p>
 <div id="euclidean-distance" class="section level4">
 <h4>Euclidean distance</h4>
-<p><span class="math display">\[ ED_{ij} = \sum_{i = 1}^p \sqrt{(x_{ij} - x_{ik})^2} \]</span> - Most appealing measure because it has true “metric” properties - Column standardization to remove potential issues with scale - Applied to any data of any scale - Used in eigenvector ordinations (e.g., PCA) - Assume that variables are not correlated - Emphasizes outliers - Loose sensitivity with heterogeneous data - Distances are not proportional</p>
+<p><span class="math display">\[ ED_{ij} = \sum_{i = 1}^p \sqrt{(x_{ij} - x_{ik})^2} \]</span>
+- Most appealing measure because it has true “metric” properties
+- Column standardization to remove potential issues with scale
+- Applied to any data of any scale
+- Used in eigenvector ordinations (e.g., PCA)
+- Assume that variables are not correlated
+- Emphasizes outliers
+- Loose sensitivity with heterogeneous data
+- Distances are not proportional</p>
 <pre class="r"><code>vegdist(hyp_data, method = &quot;euclidean&quot;)</code></pre>
 <pre><code>##           1         2         3
 ## 2  1.000000                    

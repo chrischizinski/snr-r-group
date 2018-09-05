@@ -15,8 +15,10 @@ tags: ["Basics"]
 <p>The basic form of data structure in R is the vector.</p>
 <p>Vectors have the following structure:</p>
 <ul>
-<li>sequence of numbers, characters, factors, strings</li>
+<li>sequence of numbers, characters, factors, strings
+<ul>
 <li>all must be the same in the sequence</li>
+</ul></li>
 <li>vectors are 1 dimensional</li>
 </ul>
 <p>We create objects using the <code>=</code> or the <code>&lt;-</code> in R. In the example below, we create a sequence of numerical values as object <code>a</code>. The <code>c</code> below means combine.</p>
@@ -51,10 +53,14 @@ a  # display the results of a</code></pre>
 <p>There are many types of classes that we can use in R.</p>
 <ul>
 <li>Numeric: numbers</li>
-<li>Characters: character</li>
+<li>Characters: character
+<ul>
 <li>Strings: sequence of characters, whitespace is important</li>
-<li>Factors: characters with a order</li>
+</ul></li>
+<li>Factors: characters with a order
+<ul>
 <li>can be defined with <code>levels()</code></li>
+</ul></li>
 </ul>
 <pre class="r"><code>b&lt;- c(1,2,3,4,5,6)  #numeric
 class(b)</code></pre>
@@ -107,8 +113,10 @@ class(d.n)</code></pre>
 <h2>Matrices</h2>
 <p>Matrices have the following structure:</p>
 <ul>
-<li>rows and columns of numbers, characters, or strings</li>
+<li>rows and columns of numbers, characters, or strings
+<ul>
 <li>Liek vectors, all rows and columns must be the same class of data</li>
+</ul></li>
 <li>vectors are 2 dimensional (rows by columns)</li>
 </ul>
 <pre class="r"><code># Make a 5 x 4 matrix of 0&#39;s
@@ -196,8 +204,10 @@ apply(b,2, max) # column max</code></pre>
 <p>Data.frames are the most common types of data that you will likely work with in R. They are a lot like matrices but they offer another level of flexibility. This is the type of data that is most often read in from other types of files (.csv, .tab, .txt)</p>
 <p>Data.frames have the following structure:</p>
 <ul>
-<li>rows by columns of numbers, characters, factors, strings</li>
+<li>rows by columns of numbers, characters, factors, strings
+<ul>
 <li>all must be the same in the sequence WITHIN a column</li>
+</ul></li>
 <li>data.frames are 2 dimensional (row by column)</li>
 </ul>
 <pre class="r"><code>a &lt;- data.frame(&#39;first col&#39; = 1:10, 

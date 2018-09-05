@@ -11,16 +11,14 @@ tags: ["Graphics"]
 <h1>Themes</h1>
 <p>One of my favorite aspects of <strong>ggplot2</strong> is the use of <a href="http://docs.ggplot2.org/current/theme.html">themes</a>. Not including a theme, the default ggplots theme is the <code>theme_grey</code> which has a dark grey background with white grid lines. See the example below</p>
 <pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## ── Attaching packages ──── tidyverse 1.2.1 ──</code></pre>
-<pre><code>## ✔ ggplot2 2.2.1     ✔ purrr   0.2.4
-## ✔ tibble  1.4.2     ✔ dplyr   0.7.4
-## ✔ tidyr   0.8.0     ✔ stringr 1.3.0
+<pre><code>## ── Attaching packages ────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
+<pre><code>## ✔ ggplot2 3.0.0     ✔ purrr   0.2.5
+## ✔ tibble  1.4.2     ✔ dplyr   0.7.6
+## ✔ tidyr   0.8.1     ✔ stringr 1.3.1
 ## ✔ readr   1.1.1     ✔ forcats 0.3.0</code></pre>
-<pre><code>## ── Conflicts ─────── tidyverse_conflicts() ──
-## ✖ readr::col_factor() masks scales::col_factor()
-## ✖ purrr::discard()    masks scales::discard()
-## ✖ dplyr::filter()     masks stats::filter()
-## ✖ dplyr::lag()        masks stats::lag()</code></pre>
+<pre><code>## ── Conflicts ───────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 <pre class="r"><code> p&lt;- ggplot(diamonds, ) +
       geom_point(aes(x=carat, y = price,colour=cut)) 
 p</code></pre>
@@ -343,7 +341,9 @@ library(gridExtra)</code></pre>
 <pre><code>## The following object is masked from &#39;package:dplyr&#39;:
 ## 
 ##     combine</code></pre>
-<pre class="r"><code>fake_data &lt;- data.frame(x = 1:20)
+<pre class="r"><code>library(grid)
+
+fake_data &lt;- data.frame(x = 1:20)
 fake_data$y &lt;- fake_data$x * 0.3 + rnorm(20, sd = 2)
 
 fake_data2 &lt;- data.frame(x = 1:20)

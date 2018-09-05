@@ -163,8 +163,10 @@ library(broom)</code></pre>
 <li>likelihood methods allow us to calculate confidence bounds on parameters and to test hypotheses in the traditional manner</li>
 <li>forms the foundation for Bayesian analysis</li>
 </ul>
-<p>The probability of observing data \(Y_i\) given a parameter \(p\) is \( Pr\{Y_i|p\}\). - The subscript on <em>Y</em> indicates that there are multiple Y values given a value of <em>p</em></p>
-<p>For example, if <em>Y</em> follows a Poisson distribution with a rate parameter <em>r</em>, then we would have <span class="math display">\[ Pr \{Y_i = k | r\} \frac{e^{-r}r^k}{k!} \]</span></p>
+<p>The probability of observing data \(Y_i\) given a parameter \(p\) is \( Pr\{Y_i|p\}\).
+- The subscript on <em>Y</em> indicates that there are multiple Y values given a value of <em>p</em></p>
+<p>For example, if <em>Y</em> follows a Poisson distribution with a rate parameter <em>r</em>, then we would have
+<span class="math display">\[ Pr \{Y_i = k | r\} \frac{e^{-r}r^k}{k!} \]</span></p>
 <p>This tells us the probability of the “data” given the “hypothesis,” where the “data” are k events in one unit of time and the “hypothesis” is that the rate parameter is r</p>
 <ul>
 <li>When confronting models with data, we usually want to know how well the data support the alternative hypotheses</li>
@@ -175,7 +177,8 @@ library(broom)</code></pre>
 <p><span class="math display">\[ \mathcal{L} \{Y | p_m\} \]</span></p>
 <p>Notice the shift in the equation. We no longer have subscripts under <em>Y</em> but we do for <em>p</em>. This is because we have known Y from the data collected but there are several <em>p</em> possible that could explain our observed data.</p>
 <p>A key to the distinction between likelihood and proba bility is that with probability the hypothesis is known and the data are unknown, whereas with likelihood the data are known and the hypotheses unknown</p>
-<p>Example: Suppose that the data were k = 4 events in one unit of time. What is the likelihood of possible values of r.</p>
+<p>Example:
+Suppose that the data were k = 4 events in one unit of time. What is the likelihood of possible values of r.</p>
 <p><span class="math display">\[  \mathcal{L}\{4 | r\} \frac{e^{-r}r^4}{4!} \]</span></p>
 <p>How does the possible values of <em>r</em> change if <em>k</em> is 6.</p>
 <pre class="r"><code>test_data&lt;-data.frame(r = 1:16)
@@ -210,7 +213,8 @@ ggplot(data = test_data) +
 <p>This approach allows us to develop confidence bounds around our parameters that we could not do in the sum of squares approach.</p>
 <div id="likelihood-and-maximum-likelihood" class="section level3">
 <h3>Likelihood and Maximum Likelihood</h3>
-<p>The probability of observing the data \(Y_i\) given a particular parameter value \(p\) is: <span class="math display">\[ Pr(Y_i | p) \]</span></p>
+<p>The probability of observing the data \(Y_i\) given a particular parameter value \(p\) is:
+<span class="math display">\[ Pr(Y_i | p) \]</span></p>
 <p>The subscript on Y, indicates that there are many possible outcomes but only one parameter \(p\). Thus we can ask, “Given these data, how likely are the possible hypothesis?”</p>
 <p>\(L {data | hypothesis }\) or \(L{Y | p_m}\). Notice the difference from the previous equation. In the likelihood function we have one observation but numerous potential hypotheses or parameter values. The key difference between likelihood and probability is that with the probability the hypothesis is known and data are unknown, whereas the likelihood the data are known and the hypotheses are unknown.</p>
 <p>Thus there are parameter values that are more likely than others.</p>
@@ -305,8 +309,8 @@ for(i in 1:length(m)){
     
     
 
-    <h4><a href="/post/2017-03-10-ecologicaldetective5/">Ecological Detective -- Probability and probability models, Part 1</a></h4>
-    <h5>March 10, 2017</h5>
+    <h4><a href="/post/2017-03-17-ecologicaldetective6/">Ecological Detective - Probability and probability models. Part 2</a></h4>
+    <h5>March 17, 2017</h5>
     
     <a href="/tags/ecodetective"><kbd class="item-tag">EcoDetective</kbd></a>
     

@@ -92,11 +92,11 @@ Lets look at the distribution of the residuals of each model to the actual data.
 ```{r}
 resid_lm<-data.frame(model = "linear",resid = augment(lm_mod)$.resid)
 resid_log<-data.frame(model = "log",resid = augment(log_mod)$.resid)
-resid_poly<-data.frame(model = "poly",resid = augment(poly_mod)$.resid)
+# resid_poly<-data.frame(model = "poly",resid = augment(poly_mod)$.resid)
 resid_nl<-data.frame(model = "nonlinear",resid = augment(nl_mod)$.resid)
 
 
-all_resid<-rbind(resid_lm, resid_log, resid_poly, resid_nl)
+all_resid<-rbind(resid_lm, resid_log, resid_nl)
 head(all_resid)
 glimpse(all_resid)
 

@@ -34,7 +34,8 @@ library(tidyverse)</code></pre>
 </ul>
 <div id="load-the-data" class="section level3">
 <h3>Load the data</h3>
-<p>We will use the data set <code>election</code>. The data consisted of two sets of six questions with four responses each, asking respondents’ opinions of how well various traits describe presidential candidates Al Gore and George W. Bush. Also potential covariates vote choice, age, education, gender, and party ID.</p>
+<p>We will use the data set <code>election</code>. The data consisted of two sets of six questions with four responses each, asking respondents’ opinions of
+how well various traits describe presidential candidates Al Gore and George W. Bush. Also potential covariates vote choice, age, education, gender, and party ID.</p>
 <pre class="r"><code>data(election)
 head(election)</code></pre>
 <pre><code>##              MORALG            CARESG             KNOWG            LEADG
@@ -66,7 +67,9 @@ head(election)</code></pre>
 ## 5  40    5      2     7
 ## 6  77    2      1     1</code></pre>
 <p>Lets take a quick look at the data.</p>
-<p>Challenge 1. Create a data frame of the counts of people that rated each president among Extremely Well:Not Well at all and NAs for each characteristic 2. Create a histogram that displays those counts for each rating for each characteristic for each president</p>
+<p>Challenge
+1. Create a data frame of the counts of people that rated each president among Extremely Well:Not Well at all and NAs for each characteristic
+2. Create a histogram that displays those counts for each rating for each characteristic for each president</p>
 <pre class="r"><code>election %&gt;% 
   select(MORALG:INTELG) %&gt;% 
   gather(type, response, MORALG:INTELG) %&gt;% 
@@ -88,7 +91,9 @@ election %&gt;%
   theme(axis.text.x = element_text(angle = 90, hjust = 1),
         legend.position = &quot;none&quot;)</code></pre>
 <p><img src="/post/2017-11-09-LatentVariables_3_files/figure-html/unnamed-chunk-3-1.png" width="576" /></p>
-<p>If the number of groups fits the data well, the estimated conditional membership probabilities should be close to 1 or 0; individuals should be assigned to one of the groups with high probability</p>
+<p>If the number of groups fits the data well, the estimated conditional
+membership probabilities should be close to 1 or 0; individuals should be
+assigned to one of the groups with high probability</p>
 </div>
 <div id="specifying-and-using-the-model" class="section level3">
 <h3>Specifying and using the model</h3>
@@ -189,7 +194,7 @@ nes.basic</code></pre>
 ## AIC(3): 33649.32
 ## BIC(3): 34218.96
 ## G^2(3): 15016.7 (Likelihood ratio/deviance statistic) 
-## X^2(3): 16748916917 (Chi-square goodness of fit) 
+## X^2(3): 16748681178 (Chi-square goodness of fit) 
 ## </code></pre>
 <pre class="r"><code>names(nes.basic)</code></pre>
 <pre><code>##  [1] &quot;llik&quot;           &quot;attempts&quot;       &quot;probs.start&quot;    &quot;probs&quot;         
@@ -228,10 +233,10 @@ names(obs) &lt;- &quot;obs&quot;
 obs$pred &lt;- c(out_table)
 obs</code></pre>
 <pre><code>##                   obs      pred
-## 1 Extremely well   98  61.42813
-## 2 Quite well      112 110.47887
-## 3 Not too well     67  57.15855
-## 4 Not well at all  53  44.93445</code></pre>
+## 1 Extremely well   98  61.42808
+## 2 Quite well      112 110.47877
+## 3 Not too well     67  57.15864
+## 4 Not well at all  53  44.93451</code></pre>
 </div>
 <div id="observation-classification" class="section level3">
 <h3>Observation classification</h3>
@@ -262,6 +267,116 @@ poLCA.entropy(nes.basic)</code></pre>
 <p>repeated runs of <code>poLCA</code> will typically produce results containing the same parameter estimates (corresponding to the same maximum log-likelihood), but may have reordered latent class labels</p>
 <pre class="r"><code>nes.basic2 &lt;- poLCA(f.1, election, nclass = 3, verbose = TRUE)</code></pre>
 <pre><code>## Conditional item response (column) probabilities,
+##  by outcome variable, for each class (row) 
+##  
+## $MORALG
+##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
+## class 1:            0.1851       0.3668         0.2350            0.2131
+## class 2:            0.5224       0.4109         0.0390            0.0277
+## class 3:            0.1013       0.5990         0.2552            0.0446
+## 
+## $CARESG
+##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
+## class 1:            0.0879       0.2546         0.3524            0.3051
+## class 2:            0.3970       0.4605         0.0895            0.0529
+## class 3:            0.0227       0.5090         0.3819            0.0864
+## 
+## $KNOWG
+##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
+## class 1:            0.2542       0.4253         0.2382            0.0822
+## class 2:            0.5878       0.3543         0.0266            0.0312
+## class 3:            0.0429       0.8058         0.1408            0.0105
+## 
+## $LEADG
+##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
+## class 1:            0.0747       0.2582         0.3856            0.2816
+## class 2:            0.3747       0.4772         0.1085            0.0396
+## class 3:            0.0207       0.4886         0.4268            0.0639
+## 
+## $DISHONG
+##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
+## class 1:            0.2007       0.3060         0.2774            0.2158
+## class 2:            0.0426       0.0487         0.3371            0.5717
+## class 3:            0.0519       0.2182         0.4998            0.2301
+## 
+## $INTELG
+##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
+## class 1:            0.2936       0.4407         0.1852            0.0805
+## class 2:            0.5763       0.3698         0.0197            0.0341
+## class 3:            0.0600       0.7953         0.1317            0.0130
+## 
+## $MORALB
+##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
+## class 1:            0.5797       0.3787         0.0248            0.0168
+## class 2:            0.0966       0.3795         0.3638            0.1601
+## class 3:            0.0642       0.7137         0.2164            0.0057
+## 
+## $CARESB
+##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
+## class 1:            0.3483       0.5362         0.0836            0.0319
+## class 2:            0.0162       0.1125         0.4045            0.4668
+## class 3:            0.0093       0.4847         0.4380            0.0679
+## 
+## $KNOWB
+##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
+## class 1:            0.4970       0.4899         0.0132            0.0000
+## class 2:            0.0682       0.3115         0.3828            0.2374
+## class 3:            0.0191       0.7583         0.2182            0.0045
+## 
+## $LEADB
+##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
+## class 1:            0.5106       0.4648         0.0187            0.0058
+## class 2:            0.0236       0.2735         0.4524            0.2505
+## class 3:            0.0537       0.7119         0.2217            0.0127
+## 
+## $DISHONB
+##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
+## class 1:            0.0365       0.0740         0.1993            0.6902
+## class 2:            0.0862       0.3096         0.4111            0.1931
+## class 3:            0.0134       0.1471         0.5683            0.2711
+## 
+## $INTELB
+##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
+## class 1:            0.5284       0.4656         0.0060            0.0000
+## class 2:            0.1179       0.3391         0.3440            0.1990
+## class 3:            0.0435       0.7741         0.1796            0.0028
+## 
+## Estimated class population shares 
+##  0.2608 0.3198 0.4194 
+##  
+## Predicted class memberships (by modal posterior prob.) 
+##  0.2578 0.3166 0.4256 
+##  
+## ========================================================= 
+## Fit for 3 latent classes: 
+## ========================================================= 
+## number of observations: 1311 
+## number of estimated parameters: 110 
+## residual degrees of freedom: 1201 
+## maximum log-likelihood: -16714.66 
+##  
+## AIC(3): 33649.32
+## BIC(3): 34218.96
+## G^2(3): 15016.7 (Likelihood ratio/deviance statistic) 
+## X^2(3): 16748913714 (Chi-square goodness of fit) 
+## </code></pre>
+</div>
+<div id="avoiding-local-maxima" class="section level3">
+<h3>Avoiding local maxima</h3>
+<p>A well-known drawback of the EM algorithm is that depending upon the initial parameter values chosen in the first iteration, the algorithm may only find a local, rather than the global, maximum of the log-likelihood function</p>
+<p>If this does happen, you can reorder your class “names”</p>
+<pre class="r"><code>nes.basic2 &lt;- poLCA(f.1, election, nclass = 3, verbose = TRUE, nrep = 10)</code></pre>
+<pre><code>## Model 1: llik = -16714.66 ... best llik = -16714.66
+## Model 2: llik = -16714.66 ... best llik = -16714.66
+## Model 3: llik = -16714.66 ... best llik = -16714.66
+## Model 4: llik = -16714.66 ... best llik = -16714.66
+## Model 5: llik = -16714.66 ... best llik = -16714.66
+## Model 6: llik = -16714.66 ... best llik = -16714.66
+## Model 7: llik = -16714.66 ... best llik = -16714.66
+## Model 8: llik = -16714.66 ... best llik = -16714.66
+## Model 9: llik = -16714.66 ... best llik = -16714.66
+## Model 10: llik = -16714.66 ... best llik = -16714.66
+## Conditional item response (column) probabilities,
 ##  by outcome variable, for each class (row) 
 ##  
 ## $MORALG
@@ -353,117 +468,7 @@ poLCA.entropy(nes.basic)</code></pre>
 ## AIC(3): 33649.32
 ## BIC(3): 34218.96
 ## G^2(3): 15016.7 (Likelihood ratio/deviance statistic) 
-## X^2(3): 16748679005 (Chi-square goodness of fit) 
-## </code></pre>
-</div>
-<div id="avoiding-local-maxima" class="section level3">
-<h3>Avoiding local maxima</h3>
-<p>A well-known drawback of the EM algorithm is that depending upon the initial parameter values chosen in the first iteration, the algorithm may only find a local, rather than the global, maximum of the log-likelihood function</p>
-<p>If this does happen, you can reorder your class “names”</p>
-<pre class="r"><code>nes.basic2 &lt;- poLCA(f.1, election, nclass = 3, verbose = TRUE, nrep = 10)</code></pre>
-<pre><code>## Model 1: llik = -16714.66 ... best llik = -16714.66
-## Model 2: llik = -16714.66 ... best llik = -16714.66
-## Model 3: llik = -16714.66 ... best llik = -16714.66
-## Model 4: llik = -16714.66 ... best llik = -16714.66
-## Model 5: llik = -16714.66 ... best llik = -16714.66
-## Model 6: llik = -16714.66 ... best llik = -16714.66
-## Model 7: llik = -16714.66 ... best llik = -16714.66
-## Model 8: llik = -16714.66 ... best llik = -16714.66
-## Model 9: llik = -16714.66 ... best llik = -16714.66
-## Model 10: llik = -16714.66 ... best llik = -16714.66
-## Conditional item response (column) probabilities,
-##  by outcome variable, for each class (row) 
-##  
-## $MORALG
-##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
-## class 1:            0.5224       0.4109         0.0390            0.0277
-## class 2:            0.1013       0.5990         0.2552            0.0446
-## class 3:            0.1851       0.3668         0.2350            0.2131
-## 
-## $CARESG
-##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
-## class 1:            0.3970       0.4605         0.0895            0.0529
-## class 2:            0.0227       0.5090         0.3819            0.0864
-## class 3:            0.0879       0.2546         0.3524            0.3051
-## 
-## $KNOWG
-##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
-## class 1:            0.5878       0.3543         0.0266            0.0312
-## class 2:            0.0429       0.8058         0.1408            0.0105
-## class 3:            0.2542       0.4253         0.2382            0.0822
-## 
-## $LEADG
-##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
-## class 1:            0.3747       0.4772         0.1085            0.0396
-## class 2:            0.0207       0.4886         0.4268            0.0639
-## class 3:            0.0747       0.2582         0.3856            0.2816
-## 
-## $DISHONG
-##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
-## class 1:            0.0426       0.0487         0.3371            0.5717
-## class 2:            0.0519       0.2182         0.4998            0.2301
-## class 3:            0.2007       0.3060         0.2774            0.2158
-## 
-## $INTELG
-##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
-## class 1:            0.5763       0.3698         0.0197            0.0341
-## class 2:            0.0600       0.7953         0.1317            0.0130
-## class 3:            0.2936       0.4407         0.1852            0.0805
-## 
-## $MORALB
-##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
-## class 1:            0.0966       0.3795         0.3638            0.1601
-## class 2:            0.0642       0.7137         0.2164            0.0057
-## class 3:            0.5797       0.3787         0.0248            0.0168
-## 
-## $CARESB
-##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
-## class 1:            0.0162       0.1125         0.4045            0.4668
-## class 2:            0.0093       0.4847         0.4380            0.0679
-## class 3:            0.3483       0.5362         0.0836            0.0319
-## 
-## $KNOWB
-##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
-## class 1:            0.0682       0.3115         0.3828            0.2374
-## class 2:            0.0191       0.7583         0.2182            0.0045
-## class 3:            0.4970       0.4899         0.0132            0.0000
-## 
-## $LEADB
-##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
-## class 1:            0.0236       0.2735         0.4524            0.2505
-## class 2:            0.0537       0.7119         0.2217            0.0127
-## class 3:            0.5106       0.4648         0.0187            0.0058
-## 
-## $DISHONB
-##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
-## class 1:            0.0862       0.3096         0.4111            0.1931
-## class 2:            0.0134       0.1471         0.5683            0.2711
-## class 3:            0.0365       0.0740         0.1993            0.6902
-## 
-## $INTELB
-##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
-## class 1:            0.1179       0.3391         0.3440            0.1990
-## class 2:            0.0435       0.7741         0.1796            0.0028
-## class 3:            0.5284       0.4656         0.0060            0.0000
-## 
-## Estimated class population shares 
-##  0.3198 0.4194 0.2608 
-##  
-## Predicted class memberships (by modal posterior prob.) 
-##  0.3166 0.4256 0.2578 
-##  
-## ========================================================= 
-## Fit for 3 latent classes: 
-## ========================================================= 
-## number of observations: 1311 
-## number of estimated parameters: 110 
-## residual degrees of freedom: 1201 
-## maximum log-likelihood: -16714.66 
-##  
-## AIC(3): 33649.32
-## BIC(3): 34218.96
-## G^2(3): 15016.7 (Likelihood ratio/deviance statistic) 
-## X^2(3): 16748909450 (Chi-square goodness of fit) 
+## X^2(3): 16748910831 (Chi-square goodness of fit) 
 ## </code></pre>
 <pre class="r"><code>probs.start &lt;- nes.basic2$probs.start
 
@@ -476,80 +481,80 @@ nes.basic3 &lt;- poLCA(f.1, election, nclass = 3, probs.start = new.probs.start)
 ## $MORALG
 ##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
 ## class 1:            0.1013       0.5990         0.2552            0.0446
-## class 2:            0.1851       0.3668         0.2350            0.2131
-## class 3:            0.5224       0.4109         0.0390            0.0277
+## class 2:            0.5224       0.4109         0.0390            0.0277
+## class 3:            0.1851       0.3668         0.2350            0.2131
 ## 
 ## $CARESG
 ##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
 ## class 1:            0.0227       0.5090         0.3819            0.0864
-## class 2:            0.0879       0.2546         0.3524            0.3051
-## class 3:            0.3970       0.4605         0.0895            0.0529
+## class 2:            0.3970       0.4605         0.0895            0.0529
+## class 3:            0.0879       0.2546         0.3524            0.3051
 ## 
 ## $KNOWG
 ##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
 ## class 1:            0.0429       0.8058         0.1408            0.0105
-## class 2:            0.2542       0.4253         0.2382            0.0822
-## class 3:            0.5878       0.3543         0.0266            0.0312
+## class 2:            0.5878       0.3543         0.0266            0.0312
+## class 3:            0.2542       0.4253         0.2382            0.0822
 ## 
 ## $LEADG
 ##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
 ## class 1:            0.0207       0.4886         0.4268            0.0639
-## class 2:            0.0747       0.2582         0.3856            0.2816
-## class 3:            0.3747       0.4772         0.1085            0.0396
+## class 2:            0.3747       0.4772         0.1085            0.0396
+## class 3:            0.0747       0.2582         0.3856            0.2816
 ## 
 ## $DISHONG
 ##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
 ## class 1:            0.0519       0.2182         0.4998            0.2301
-## class 2:            0.2007       0.3060         0.2774            0.2158
-## class 3:            0.0426       0.0487         0.3371            0.5717
+## class 2:            0.0426       0.0487         0.3371            0.5717
+## class 3:            0.2007       0.3060         0.2774            0.2158
 ## 
 ## $INTELG
 ##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
 ## class 1:            0.0600       0.7953         0.1317            0.0130
-## class 2:            0.2936       0.4407         0.1852            0.0805
-## class 3:            0.5763       0.3698         0.0197            0.0341
+## class 2:            0.5763       0.3698         0.0197            0.0341
+## class 3:            0.2936       0.4407         0.1852            0.0805
 ## 
 ## $MORALB
 ##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
 ## class 1:            0.0642       0.7137         0.2164            0.0057
-## class 2:            0.5797       0.3787         0.0248            0.0168
-## class 3:            0.0966       0.3795         0.3638            0.1601
+## class 2:            0.0966       0.3795         0.3638            0.1601
+## class 3:            0.5797       0.3787         0.0248            0.0168
 ## 
 ## $CARESB
 ##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
 ## class 1:            0.0093       0.4847         0.4380            0.0679
-## class 2:            0.3483       0.5362         0.0836            0.0319
-## class 3:            0.0162       0.1125         0.4045            0.4668
+## class 2:            0.0162       0.1125         0.4045            0.4668
+## class 3:            0.3483       0.5362         0.0836            0.0319
 ## 
 ## $KNOWB
 ##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
 ## class 1:            0.0191       0.7583         0.2182            0.0045
-## class 2:            0.4970       0.4899         0.0132            0.0000
-## class 3:            0.0682       0.3115         0.3828            0.2374
+## class 2:            0.0682       0.3115         0.3828            0.2374
+## class 3:            0.4970       0.4899         0.0132            0.0000
 ## 
 ## $LEADB
 ##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
 ## class 1:            0.0537       0.7119         0.2217            0.0127
-## class 2:            0.5106       0.4648         0.0187            0.0058
-## class 3:            0.0236       0.2735         0.4524            0.2505
+## class 2:            0.0236       0.2735         0.4524            0.2505
+## class 3:            0.5106       0.4648         0.0187            0.0058
 ## 
 ## $DISHONB
 ##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
 ## class 1:            0.0134       0.1471         0.5683            0.2711
-## class 2:            0.0365       0.0740         0.1993            0.6902
-## class 3:            0.0862       0.3096         0.4111            0.1931
+## class 2:            0.0862       0.3096         0.4111            0.1931
+## class 3:            0.0365       0.0740         0.1993            0.6902
 ## 
 ## $INTELB
 ##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
 ## class 1:            0.0435       0.7741         0.1796            0.0028
-## class 2:            0.5284       0.4656         0.0060            0.0000
-## class 3:            0.1179       0.3391         0.3440            0.1990
+## class 2:            0.1179       0.3391         0.3440            0.1990
+## class 3:            0.5284       0.4656         0.0060            0.0000
 ## 
 ## Estimated class population shares 
-##  0.4194 0.2608 0.3198 
+##  0.4194 0.3198 0.2608 
 ##  
 ## Predicted class memberships (by modal posterior prob.) 
-##  0.4256 0.2578 0.3166 
+##  0.4256 0.3166 0.2578 
 ##  
 ## ========================================================= 
 ## Fit for 3 latent classes: 
@@ -562,7 +567,7 @@ nes.basic3 &lt;- poLCA(f.1, election, nclass = 3, probs.start = new.probs.start)
 ## AIC(3): 33649.32
 ## BIC(3): 34218.96
 ## G^2(3): 15016.7 (Likelihood ratio/deviance statistic) 
-## X^2(3): 16748909450 (Chi-square goodness of fit) 
+## X^2(3): 16748910831 (Chi-square goodness of fit) 
 ## </code></pre>
 </div>
 </div>
@@ -585,94 +590,94 @@ nes.party</code></pre>
 ##  
 ## $MORALG
 ##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
-## class 1:            0.1373       0.6682         0.1802            0.0143
-## class 2:            0.1081       0.3832         0.3038            0.2048
-## class 3:            0.6221       0.3350         0.0172            0.0258
+## class 1:            0.6221       0.3350         0.0172            0.0258
+## class 2:            0.1373       0.6682         0.1802            0.0143
+## class 3:            0.1081       0.3832         0.3038            0.2048
 ## 
 ## $CARESG
 ##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
-## class 1:            0.0388       0.6138         0.2886            0.0589
-## class 2:            0.0356       0.2281         0.4501            0.2861
-## class 3:            0.4858       0.4164         0.0534            0.0444
+## class 1:            0.4858       0.4164         0.0534            0.0444
+## class 2:            0.0388       0.6138         0.2886            0.0589
+## class 3:            0.0356       0.2281         0.4501            0.2861
 ## 
 ## $KNOWG
 ##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
-## class 1:            0.0712       0.8173         0.1025             0.009
-## class 2:            0.1436       0.5327         0.2556             0.068
-## class 3:            0.7189       0.2451         0.0040             0.032
+## class 1:            0.7189       0.2451         0.0040             0.032
+## class 2:            0.0712       0.8173         0.1025             0.009
+## class 3:            0.1436       0.5327         0.2556             0.068
 ## 
 ## $LEADG
 ##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
-## class 1:            0.0256       0.6280         0.3144            0.0320
-## class 2:            0.0278       0.1899         0.5137            0.2685
-## class 3:            0.4720       0.4326         0.0643            0.0311
+## class 1:            0.4720       0.4326         0.0643            0.0311
+## class 2:            0.0256       0.6280         0.3144            0.0320
+## class 3:            0.0278       0.1899         0.5137            0.2685
 ## 
 ## $DISHONG
 ##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
-## class 1:            0.0210       0.1412         0.5341            0.3037
-## class 2:            0.1876       0.3435         0.3078            0.1611
-## class 3:            0.0518       0.0538         0.2890            0.6054
+## class 1:            0.0518       0.0538         0.2890            0.6054
+## class 2:            0.0210       0.1412         0.5341            0.3037
+## class 3:            0.1876       0.3435         0.3078            0.1611
 ## 
 ## $INTELG
 ##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
-## class 1:            0.0698       0.8159         0.1003            0.0140
-## class 2:            0.1704       0.5597         0.2000            0.0698
-## class 3:            0.7381       0.2219         0.0089            0.0311
+## class 1:            0.7381       0.2219         0.0089            0.0311
+## class 2:            0.0698       0.8159         0.1003            0.0140
+## class 3:            0.1704       0.5597         0.2000            0.0698
 ## 
 ## $MORALB
 ##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
-## class 1:            0.0310       0.6326         0.3003            0.0361
-## class 2:            0.4477       0.5135         0.0313            0.0075
-## class 3:            0.1610       0.3749         0.3163            0.1478
+## class 1:            0.1610       0.3749         0.3163            0.1478
+## class 2:            0.0310       0.6326         0.3003            0.0361
+## class 3:            0.4477       0.5135         0.0313            0.0075
 ## 
 ## $CARESB
 ##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
-## class 1:            0.0047       0.3274         0.5083            0.1597
-## class 2:            0.2516       0.6185         0.1097            0.0202
-## class 3:            0.0458       0.1490         0.3780            0.4272
+## class 1:            0.0458       0.1490         0.3780            0.4272
+## class 2:            0.0047       0.3274         0.5083            0.1597
+## class 3:            0.2516       0.6185         0.1097            0.0202
 ## 
 ## $KNOWB
 ##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
-## class 1:            0.0121       0.6511         0.2920            0.0447
-## class 2:            0.3427       0.5913         0.0660            0.0000
-## class 3:            0.1300       0.3503         0.2989            0.2209
+## class 1:            0.1300       0.3503         0.2989            0.2209
+## class 2:            0.0121       0.6511         0.2920            0.0447
+## class 3:            0.3427       0.5913         0.0660            0.0000
 ## 
 ## $LEADB
 ##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
-## class 1:            0.0301       0.5884         0.3294            0.0521
-## class 2:            0.3850       0.5803         0.0287            0.0060
-## class 3:            0.0743       0.3035         0.3882            0.2340
+## class 1:            0.0743       0.3035         0.3882            0.2340
+## class 2:            0.0301       0.5884         0.3294            0.0521
+## class 3:            0.3850       0.5803         0.0287            0.0060
 ## 
 ## $DISHONB
 ##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
-## class 1:            0.0264       0.1855         0.5931            0.1950
-## class 2:            0.0163       0.0680         0.2923            0.6234
-## class 3:            0.0914       0.3117         0.3517            0.2451
+## class 1:            0.0914       0.3117         0.3517            0.2451
+## class 2:            0.0264       0.1855         0.5931            0.1950
+## class 3:            0.0163       0.0680         0.2923            0.6234
 ## 
 ## $INTELB
 ##           1 Extremely well 2 Quite well 3 Not too well 4 Not well at all
-## class 1:            0.0350       0.6646         0.2616            0.0388
-## class 2:            0.3765       0.5878         0.0357            0.0000
-## class 3:            0.1877       0.3637         0.2698            0.1787
+## class 1:            0.1877       0.3637         0.2698            0.1787
+## class 2:            0.0350       0.6646         0.2616            0.0388
+## class 3:            0.3765       0.5878         0.0357            0.0000
 ## 
 ## Estimated class population shares 
-##  0.3859 0.3405 0.2736 
+##  0.2736 0.3859 0.3405 
 ##  
 ## Predicted class memberships (by modal posterior prob.) 
-##  0.3815 0.3415 0.2769 
+##  0.2769 0.3815 0.3415 
 ##  
 ## ========================================================= 
 ## Fit for 3 latent classes: 
 ## ========================================================= 
 ## 2 / 1 
 ##             Coefficient  Std. error  t value  Pr(&gt;|t|)
-## (Intercept)    -3.81813     0.31109  -12.274         0
-## PARTY           0.79327     0.06232   12.728         0
+## (Intercept)    -1.16154     0.17989   -6.457         0
+## PARTY           0.57436     0.06401    8.973         0
 ## ========================================================= 
 ## 3 / 1 
 ##             Coefficient  Std. error  t value  Pr(&gt;|t|)
-## (Intercept)     1.16155     0.17989    6.457         0
-## PARTY          -0.57436     0.06401   -8.973         0
+## (Intercept)    -4.97967     0.32771  -15.195         0
+## PARTY           1.36762     0.08081   16.924         0
 ## ========================================================= 
 ## number of observations: 1300 
 ## number of estimated parameters: 112 
@@ -681,19 +686,21 @@ nes.party</code></pre>
 ##  
 ## AIC(3): 32668.65
 ## BIC(3): 33247.7
-## X^2(3): 34565229637 (Chi-square goodness of fit) 
+## X^2(3): 34565389215 (Chi-square goodness of fit) 
+##  
+## ALERT: estimation algorithm automatically restarted with new initial values 
 ## </code></pre>
 <pre class="r"><code># Size of each latent class
 nes.party$P</code></pre>
-<pre><code>## [1] 0.3858834 0.3405146 0.2736020</code></pre>
+<pre><code>## [1] 0.2736016 0.3858833 0.3405150</code></pre>
 <div id="model-coefficients-and-predictions" class="section level3">
 <h3>Model coefficients and predictions</h3>
 <p>The neutral group is the first latent class, the favor-Bush group is the second latent class, and the favor-Gore group is the third latent class.</p>
 <p>The log-ratio prior probability that a respondent will belong to the favor-Bush group with respect to the neutral group is ln(p2i/p1i) = −3.82 + 0.79 × PARTY</p>
 <pre class="r"><code>nes.party$coeff</code></pre>
-<pre><code>##                  [,1]      [,2]
-## (Intercept) -3.818127  1.161546
-## PARTY        0.793265 -0.574359</code></pre>
+<pre><code>##                   [,1]      [,2]
+## (Intercept) -1.1615421 -4.979670
+## PARTY        0.5743582  1.367624</code></pre>
 <pre class="r"><code>pidmat &lt;- cbind(1, c(1:7))
 exb &lt;- exp(pidmat %*% nes.party$coeff)
 party_pred.num&lt;-data.frame(party = 1:7, pred_prob = (cbind(1, exb)/(1 + rowSums(exb))))
@@ -1339,6 +1346,8 @@ alz</code></pre>
     facet_wrap(~symptom, scales = &quot;free&quot;, ncol = 2)  +
     theme_classic()</code></pre>
 <p><img src="/post/2017-11-09-LatentVariables_3_files/figure-html/unnamed-chunk-18-1.png" width="960" /></p>
-<p>Note the spikes in the plots for the Affective, Diurnal and Aggression symptoms. This indicates that the parameter estimates in question remained unchanged over all bootstrap samples.</p>
+<p>Note the spikes in the plots for the Affective, Diurnal and Aggression symptoms.
+This indicates that the parameter estimates in question remained unchanged over all bootstrap
+samples.</p>
 </div>
 </div>

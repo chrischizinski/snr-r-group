@@ -181,27 +181,25 @@
 <p>To begin and explore ggplot, we will use the <code>diamonds</code> data set.</p>
 <pre class="r"><code>#install.packages(&quot;tidyverse&quot;)
 library(tidyverse)</code></pre>
-<pre><code>## ── Attaching packages ──── tidyverse 1.2.1 ──</code></pre>
-<pre><code>## ✔ ggplot2 2.2.1     ✔ purrr   0.2.4
-## ✔ tibble  1.4.2     ✔ dplyr   0.7.4
-## ✔ tidyr   0.8.0     ✔ stringr 1.3.0
+<pre><code>## ── Attaching packages ────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
+<pre><code>## ✔ ggplot2 3.0.0     ✔ purrr   0.2.5
+## ✔ tibble  1.4.2     ✔ dplyr   0.7.6
+## ✔ tidyr   0.8.1     ✔ stringr 1.3.1
 ## ✔ readr   1.1.1     ✔ forcats 0.3.0</code></pre>
-<pre><code>## ── Conflicts ─────── tidyverse_conflicts() ──
-## ✖ readr::col_factor() masks scales::col_factor()
-## ✖ purrr::discard()    masks scales::discard()
-## ✖ dplyr::filter()     masks stats::filter()
-## ✖ dplyr::lag()        masks stats::lag()</code></pre>
+<pre><code>## ── Conflicts ───────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 <pre class="r"><code>data(diamonds)
 head(diamonds)</code></pre>
 <pre><code>## # A tibble: 6 x 10
 ##   carat cut       color clarity depth table price     x     y     z
 ##   &lt;dbl&gt; &lt;ord&gt;     &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1 0.230 Ideal     E     SI2      61.5   55.   326  3.95  3.98  2.43
-## 2 0.210 Premium   E     SI1      59.8   61.   326  3.89  3.84  2.31
-## 3 0.230 Good      E     VS1      56.9   65.   327  4.05  4.07  2.31
-## 4 0.290 Premium   I     VS2      62.4   58.   334  4.20  4.23  2.63
-## 5 0.310 Good      J     SI2      63.3   58.   335  4.34  4.35  2.75
-## 6 0.240 Very Good J     VVS2     62.8   57.   336  3.94  3.96  2.48</code></pre>
+## 1 0.23  Ideal     E     SI2      61.5    55   326  3.95  3.98  2.43
+## 2 0.21  Premium   E     SI1      59.8    61   326  3.89  3.84  2.31
+## 3 0.23  Good      E     VS1      56.9    65   327  4.05  4.07  2.31
+## 4 0.290 Premium   I     VS2      62.4    58   334  4.2   4.23  2.63
+## 5 0.31  Good      J     SI2      63.3    58   335  4.34  4.35  2.75
+## 6 0.24  Very Good J     VVS2     62.8    57   336  3.94  3.96  2.48</code></pre>
 <p>A couple of points to consider and keep in mind:</p>
 <ul>
 <li>Data needs to be in data.frame.<br />
@@ -260,6 +258,7 @@ ggplot() +
 <pre class="r"><code>#shape
 ggplot() +
   geom_point(data = diamonds,aes(x=carat, y=price, colour=carat, shape = cut))</code></pre>
+<pre><code>## Warning: Using shapes for an ordinal variable is not advised</code></pre>
 <p><img src="/post/2016-09-30-BasicPlots_files/figure-html/unnamed-chunk-4-3.png" width="672" /></p>
 <pre class="r"><code>#size
 ggplot() +

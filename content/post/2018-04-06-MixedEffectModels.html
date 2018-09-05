@@ -1,15 +1,25 @@
 ---
 title: "Chickadee sounds and mixed effect models"
-date: '2018-03-02'
-tags:
-- Mixed effect models
-- glm
-- Data Seminar
-categories: R
+date: '2018-04-06'
+tags: ["Mixed effect models", "glm", "Data Seminar"]
+categories: ["R"]
 ---
 
 
 
+<div id="load-packages" class="section level2">
+<h2>Load packages</h2>
+<pre class="r"><code># .libPaths(&quot;P:\\RLibrary2&quot;)
+knitr::opts_chunk$set(echo = TRUE)
+# install.packages(&quot;lme4&quot;)
+# install.packages(&quot;lmerTest&quot;)
+
+library(lme4)
+# library(lmerTest)  #Dont initially load this library
+library(tidyverse)</code></pre>
+</div>
+<div id="load-chickadee-data" class="section level2">
+<h2>Load chickadee data</h2>
 <pre class="r"><code># Download the data from google drive
 
 id &lt;- &quot;1NHnz1ncP-c0uGXrcE25pp_iGga0YVLuy&quot;
@@ -349,3 +359,4 @@ ggplot(data = pre_data) +
   coord_cartesian(ylim = c(3000, 3600), xlim = c(48,80)) +
   theme_classic()</code></pre>
 <p><img src="/post/2018-04-06-MixedEffectModels_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
+</div>

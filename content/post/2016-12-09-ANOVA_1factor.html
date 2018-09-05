@@ -56,7 +56,11 @@ library(multcomp)</code></pre>
 </ul></li>
 </ul>
 <p>Lets begin exploring this in R, using the <code>medley</code> data</p>
-<p>This data includes: * STREAM - name of streams in the Rocky Mountain region of Colorado, USA * ZINC - categorical zinc concentration level (HIGH=high, MED=medium, LOW=low, BACK=background) * DIVERSTY - Shannon-Wiener species diversity of diatoms * ZNGROUP - alternative categorical zinc concentration level (1=background, 2=low, 3=medium, 4=high)</p>
+<p>This data includes:
+* STREAM - name of streams in the Rocky Mountain region of Colorado, USA
+* ZINC - categorical zinc concentration level (HIGH=high, MED=medium, LOW=low, BACK=background)
+* DIVERSTY - Shannon-Wiener species diversity of diatoms
+* ZNGROUP - alternative categorical zinc concentration level (1=background, 2=low, 3=medium, 4=high)</p>
 <pre class="r"><code>medley &lt;- read_csv(&quot;https://raw.githubusercontent.com/chrischizinski/SNR_R_Group/master/data/ExperimentalDesignData/chpt08/medley.csv&quot;)</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
@@ -135,7 +139,9 @@ summary(med_aov)</code></pre>
 ## Residuals   30  6.516  0.2172                 
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<p>Remember we can partition the total sum of squares \( SS_{T} \) can be partitioned into two components - <code>ZINC</code> represents variation due to the difference between group means - calculated as \( {y_i} \) - \( {y} \); df is the number of groups minus 1</p>
+<p>Remember we can partition the total sum of squares \( SS_{T} \) can be partitioned into two components
+- <code>ZINC</code> represents variation due to the difference between group means
+- calculated as \( {y_i} \) - \( {y} \); df is the number of groups minus 1</p>
 <ul>
 <li><code>Residuals</code> difference between the observations within each group
 <ul>
@@ -144,7 +150,10 @@ summary(med_aov)</code></pre>
 <li>The mean squares from the ANOVA are sample variances
 <ul>
 <li>\( MS_{residuals} \) estimates \( _{}^2 \) , the pooled population variance of the error terms within groups. (Assumes homogeneity of error variances)</li>
-<li>\( MS_{groups} \) estimates the pooled variance of the error terms across groups plus: - a component representing the squared effects of the chosen groups if the factor is fixed - the variance between all possible groups if the factor is random</li>
+<li>\( MS_{groups} \) estimates the pooled variance of the error terms across groups plus:
+- a component representing the squared effects of the chosen
+groups if the factor is fixed
+- the variance between all possible groups if the factor is random</li>
 </ul></li>
 </ul>
 </div>
@@ -177,24 +186,24 @@ ggplot(data = f_prob) +
 <p><img src="/post/2016-12-09-ANOVA_1factor_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <ul>
 <li>Construction of the tests of null hypotheses is identical for fixed and random factors in the single factor ANOVA model but these null hypotheses have very different interpretations
-<ul>
-<li>The H0 for the fixed factor refers only to the groups used in the study whereas the H0 for the random factor refers to all the possible groups that could have been used</li>
-<li>The assumption of equal within group variances is so important. For example, if \( <em>{i1} \) does not equal \( </em>{i2} \), then \( MS_{residual} \) does not estimate a single population variance , and we cannot construct a reliable F-ratio for testing the H0 of no group effects</li>
-</ul></li>
+- The H0 for the fixed factor refers only to the groups used in the study whereas the H0 for the random factor refers to all the possible groups that could have been used
+- The assumption of equal within group variances is so important. For example, if \( <em>{i1} \) does not equal \( </em>{i2} \), then \( MS_{residual} \) does not estimate a single population variance , and we cannot construct a reliable F-ratio for testing the H0 of no group effects</li>
 </ul>
 </div>
 <div id="unbalanced-designs" class="section level4">
 <h4>Unbalanced designs</h4>
 <ul>
 <li>Unequal sample sizes among groups can cause some problems:
-<ol style="list-style-type: decimal">
-<li>Different group means will be estimated with different levels of precision, which can make interpretation difficult</li>
-<li>ANOVA F test is more sensitive to violations of assumptions (i.e., homogeneity of variances) if sample sizes differ</li>
-<li>Estimation of group effects is more difficult</li>
-<li>Power calculations for random effects models are difficult</li>
-</ol></li>
+1. Different group means will be estimated with different levels of precision, which can make interpretation difficult
+2. ANOVA F test is more sensitive to violations of assumptions (i.e., homogeneity of variances) if sample sizes differ
+3. Estimation of group effects is more difficult
+4. Power calculations for random effects models are difficult</li>
 </ul>
-<p>So what do you do if you have an unbalanced design? - Delete observations to make it balanced - Substitute group means to make balanced - If differences in sample size and homogeneity of variances does not seem violated, fit linear ANOVA - Prevent unbalanced designs in the experimental design</p>
+<p>So what do you do if you have an unbalanced design?
+- Delete observations to make it balanced
+- Substitute group means to make balanced
+- If differences in sample size and homogeneity of variances does not seem violated, fit linear ANOVA
+- Prevent unbalanced designs in the experimental design</p>
 </div>
 </div>
 <div id="factor-effects" class="section level3">
@@ -202,9 +211,7 @@ ggplot(data = f_prob) +
 <ul>
 <li>In regression, with a continuous predictor, the coefficient value in the models is an assessment of the effect size of X on Y</li>
 <li>When your predictor is categorical how do we measure effect size?
-<ul>
-<li>One measure of group effects is the variance associated with the groups over and above the residual variance (similar to \( R^2 \))</li>
-</ul></li>
+- One measure of group effects is the variance associated with the groups over and above the residual variance (similar to \( R^2 \))</li>
 </ul>
 <pre class="r"><code>tidy_aov$sumsq[1]/sum(tidy_aov$sumsq)</code></pre>
 <pre><code>## [1] 0.2825725</code></pre>
@@ -274,9 +281,7 @@ summary(lme_re)</code></pre>
 <h4>Fixed effects: variance components</h4>
 <ul>
 <li>More problematic than in the random effect models
-<ul>
-<li>Several have criticized measures of variance explained for fixed factors. They argued that the population “variance” of a set of fixed groups makes no sense and this measure cannot be compared to the average population variance between observations within groups, which is a true variance</li>
-</ul></li>
+- Several have criticized measures of variance explained for fixed factors. They argued that the population “variance” of a set of fixed groups makes no sense and this measure cannot be compared to the average population variance between observations within groups, which is a true variance</li>
 <li>Two approaches have been developed omega squared ( \( ^2 \); variance of the group means) and Cohen’s effect size (<em>f</em>; difference among means measured in units of the standard deviation between replicates within group)</li>
 <li>Cohen suggests that f values of 0.1, 0.25, and 0.4 represent small, medium, and large effect sizes respectively</li>
 </ul>

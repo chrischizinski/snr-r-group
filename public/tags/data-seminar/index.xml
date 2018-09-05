@@ -50,32 +50,41 @@ set.seed(1234) randDat &amp;lt;- data.frame(x = sample(1:1000, 20)) randDat %&am
     </item>
     
     <item>
-      <title>Community composition - ordination</title>
-      <link>/post/2018-03-30-communitycomposition/</link>
-      <pubDate>Fri, 30 Mar 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/2018-03-30-communitycomposition/</guid>
-      <description>Ordination Read the data in from google drive
-id1 &amp;lt;- &amp;quot;1f72ooJvTN9xiFbgMMxL1Kh2ISu9tsJt4&amp;quot; veg_diversity&amp;lt;- read_csv(sprintf(&amp;quot;https://docs.google.com/uc?id=%s&amp;amp;export=download&amp;quot;, id1)) ## Warning: Missing column names filled in: &amp;#39;X121&amp;#39; [121], &amp;#39;X122&amp;#39; [122], ## &amp;#39;X123&amp;#39; [123], &amp;#39;X124&amp;#39; [124], &amp;#39;X125&amp;#39; [125], &amp;#39;X126&amp;#39; [126], &amp;#39;X127&amp;#39; [127], ## &amp;#39;X128&amp;#39; [128], &amp;#39;X129&amp;#39; [129], &amp;#39;X130&amp;#39; [130], &amp;#39;X131&amp;#39; [131], &amp;#39;X132&amp;#39; [132], ## &amp;#39;X133&amp;#39; [133], &amp;#39;X134&amp;#39; [134], &amp;#39;X135&amp;#39; [135], &amp;#39;X136&amp;#39; [136], &amp;#39;X137&amp;#39; [137], ## &amp;#39;X138&amp;#39; [138], &amp;#39;X139&amp;#39; [139], &amp;#39;X140&amp;#39; [140], &amp;#39;X141&amp;#39; [141], &amp;#39;X142&amp;#39; [142], ## &amp;#39;X143&amp;#39; [143], &amp;#39;X144&amp;#39; [144], &amp;#39;X145&amp;#39; [145], &amp;#39;X146&amp;#39; [146], &amp;#39;X147&amp;#39; [147], ## &amp;#39;X148&amp;#39; [148] ## Parsed with column specification: ## cols( ## .</description>
-    </item>
-    
-    <item>
       <title>Partial Least Squares Regression</title>
       <link>/post/2018-04-13-partialleastsquare/</link>
-      <pubDate>Fri, 30 Mar 2018 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 13 Apr 2018 00:00:00 +0000</pubDate>
       
       <guid>/post/2018-04-13-partialleastsquare/</guid>
-      <description>Load the data Bring data in from google drive
+      <description>Load packages # .libPaths(&amp;quot;P:\\RLibrary2&amp;quot;) options(digits = 4) knitr::opts_chunk$set(echo = TRUE) # .libPaths(&amp;quot;P:\\RLibrary2&amp;quot;) # install.packages(&amp;quot;pls&amp;quot;) library(pls) library(lubridate) library(tidyverse)  Load the data Bring data in from google drive
 id &amp;lt;- &amp;quot;1_0rUKAVD7mf4D1ebGAyLNIKXIfekHdFG&amp;quot; ryanData&amp;lt;- read_csv(sprintf(&amp;quot;https://docs.google.com/uc?id=%s&amp;amp;export=download&amp;quot;, id),col_names = FALSE) ## Parsed with column specification: ## cols( ## .default = col_character() ## ) ## See spec(...) for full column specifications. head(ryanData) ## # A tibble: 6 x 80 ## X1 X2 X3 X4 X5 X6 X7 X8 X9 X10 X11 X12 ## &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; ## 1 ID 1 5 9 13 17 21 25 29 33 37 41 ## 2 Plot CSP01 CSP01 CSP01 CSP01 CSP01 CSP01 CSP01 CSP01 CSP01 CSP01 CSP01 ## 3 Date 5/18/… 5/23… 5/31… 6/6/… 6/13… 6/17… 6/22… 6/30… 7/6/… 7/12… 7/15… ## 4 351 5.</description>
     </item>
     
     <item>
       <title>Chickadee sounds and mixed effect models</title>
       <link>/post/2018-04-06-mixedeffectmodels/</link>
-      <pubDate>Fri, 02 Mar 2018 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 06 Apr 2018 00:00:00 +0000</pubDate>
       
       <guid>/post/2018-04-06-mixedeffectmodels/</guid>
-      <description># Download the data from google drive id &amp;lt;- &amp;quot;1NHnz1ncP-c0uGXrcE25pp_iGga0YVLuy&amp;quot; sarahFee&amp;lt;- read_csv(sprintf(&amp;quot;https://docs.google.com/uc?id=%s&amp;amp;export=download&amp;quot;, id)) ## Parsed with column specification: ## cols( ## Location = col_character(), ## Type = col_character(), ## `Begin Time (s)` = col_double(), ## `End Time (s)` = col_double(), ## `Delta Time (s)` = col_double(), ## `Low Freq (Hz)` = col_double(), ## `High Freq (Hz)` = col_double(), ## `Delta Freq (Hz)` = col_double() ## ) glimpse(sarahFee) ## Observations: 32 ## Variables: 8 ## $ Location &amp;lt;chr&amp;gt; &amp;quot;Riverside&amp;quot;, &amp;quot;Riverside&amp;quot;, &amp;quot;Riverside&amp;quot;, &amp;quot;Rive.</description>
+      <description>Load packages # .libPaths(&amp;quot;P:\\RLibrary2&amp;quot;) knitr::opts_chunk$set(echo = TRUE) # install.packages(&amp;quot;lme4&amp;quot;) # install.packages(&amp;quot;lmerTest&amp;quot;) library(lme4) # library(lmerTest) #Dont initially load this library library(tidyverse)  Load chickadee data # Download the data from google drive id &amp;lt;- &amp;quot;1NHnz1ncP-c0uGXrcE25pp_iGga0YVLuy&amp;quot; sarahFee&amp;lt;- read_csv(sprintf(&amp;quot;https://docs.google.com/uc?id=%s&amp;amp;export=download&amp;quot;, id)) ## Parsed with column specification: ## cols( ## Location = col_character(), ## Type = col_character(), ## `Begin Time (s)` = col_double(), ## `End Time (s)` = col_double(), ## `Delta Time (s)` = col_double(), ## `Low Freq (Hz)` = col_double(), ## `High Freq (Hz)` = col_double(), ## `Delta Freq (Hz)` = col_double() ## ) glimpse(sarahFee) ## Observations: 32 ## Variables: 8 ## $ Location &amp;lt;chr&amp;gt; &amp;quot;Riverside&amp;quot;, &amp;quot;Riverside&amp;quot;, &amp;quot;Riverside&amp;quot;, &amp;quot;Rive.</description>
+    </item>
+    
+    <item>
+      <title>Community composition - ordination</title>
+      <link>/post/2018-03-30-communitycomposition/</link>
+      <pubDate>Fri, 30 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018-03-30-communitycomposition/</guid>
+      <description>Load packages  Ordination Read the data in from google drive
+id1 &amp;lt;- &amp;quot;1f72ooJvTN9xiFbgMMxL1Kh2ISu9tsJt4&amp;quot; veg_diversity&amp;lt;- read_csv(sprintf(&amp;quot;https://docs.google.com/uc?id=%s&amp;amp;export=download&amp;quot;, id1)) ## Warning: Missing column names filled in: &amp;#39;X121&amp;#39; [121], &amp;#39;X122&amp;#39; [122], ## &amp;#39;X123&amp;#39; [123], &amp;#39;X124&amp;#39; [124], &amp;#39;X125&amp;#39; [125], &amp;#39;X126&amp;#39; [126], &amp;#39;X127&amp;#39; [127], ## &amp;#39;X128&amp;#39; [128], &amp;#39;X129&amp;#39; [129], &amp;#39;X130&amp;#39; [130], &amp;#39;X131&amp;#39; [131], &amp;#39;X132&amp;#39; [132], ## &amp;#39;X133&amp;#39; [133], &amp;#39;X134&amp;#39; [134], &amp;#39;X135&amp;#39; [135], &amp;#39;X136&amp;#39; [136], &amp;#39;X137&amp;#39; [137], ## &amp;#39;X138&amp;#39; [138], &amp;#39;X139&amp;#39; [139], &amp;#39;X140&amp;#39; [140], &amp;#39;X141&amp;#39; [141], &amp;#39;X142&amp;#39; [142], ## &amp;#39;X143&amp;#39; [143], &amp;#39;X144&amp;#39; [144], &amp;#39;X145&amp;#39; [145], &amp;#39;X146&amp;#39; [146], &amp;#39;X147&amp;#39; [147], ## &amp;#39;X148&amp;#39; [148] ## Parsed with column specification: ## cols( ## .</description>
+    </item>
+    
+    <item>
+      <title>Step Selection Functions</title>
+      <link>/post/2018-03-09-stepselectionfunctions/</link>
+      <pubDate>Fri, 09 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018-03-09-stepselectionfunctions/</guid>
+      <description>Deer data data(&amp;quot;deer&amp;quot;) glimpse(deer) ## Observations: 826 ## Variables: 4 ## $ x_ &amp;lt;dbl&amp;gt; 4314068, 4314053, 4314105, 4314044, 4313015, 4312860, 4... ## $ y_ &amp;lt;dbl&amp;gt; 3445807, 3445768, 3445859, 3445785, 3445858, 3445857, 3... ## $ t_ &amp;lt;dttm&amp;gt; 2008-03-30 00:01:47, 2008-03-30 06:00:54, 2008-03-30 1... ## $ burst_ &amp;lt;dbl&amp;gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2... ggplot() + geom_path(data = deer,aes(x = x_, y = y_),linetype = &amp;quot;dashed&amp;quot;) + geom_point(data = deer,aes(x = x_, y = y_),size = 1, colour = &amp;quot;red&amp;quot;, alpha = 0.</description>
     </item>
     
     <item>
@@ -93,7 +102,7 @@ id &amp;lt;- &amp;quot;1_0rUKAVD7mf4D1ebGAyLNIKXIfekHdFG&amp;quot; ryanData&amp;
       <pubDate>Fri, 23 Feb 2018 00:00:00 +0000</pubDate>
       
       <guid>/post/2018-02-23-agecohort/</guid>
-      <description>Working with Matt’s data # Download from google drive id &amp;lt;- &amp;quot;1wq8UNl921-NeCs0VCIhlGfbBK9ZxB3kL&amp;quot; huntData &amp;lt;- read_csv(sprintf(&amp;quot;https://docs.google.com/uc?id=%s&amp;amp;export=download&amp;quot;, id)) ## Parsed with column specification: ## cols( ## permitYear = col_integer(), ## permitType = col_character(), ## gender = col_character(), ## age = col_integer(), ## residency = col_character(), ## birthyear = col_integer() ## ) glimpse(huntData) ## Observations: 723,480 ## Variables: 6 ## $ permitYear &amp;lt;int&amp;gt; 2008, 2008, 2008, 2008, 2008, 2008, 2008, 2008, 200... ## $ permitType &amp;lt;chr&amp;gt; &amp;quot;Hunt Fish Combo&amp;quot;, &amp;quot;Hunt Fish Combo&amp;quot;, &amp;quot;Hunt Fish Co.</description>
+      <description>Load packages # .libPaths(&amp;quot;P:/RLibrary2&amp;quot;) # Set your library path if you need it knitr::opts_chunk$set(echo = TRUE) # install required packages, make sure these get commented out after your install # install.packages(&amp;quot;apc&amp;quot;) # load libraries library(apc) library(tidyverse)  Working with Matt’s data # Download from google drive id &amp;lt;- &amp;quot;1wq8UNl921-NeCs0VCIhlGfbBK9ZxB3kL&amp;quot; huntData &amp;lt;- read_csv(sprintf(&amp;quot;https://docs.google.com/uc?id=%s&amp;amp;export=download&amp;quot;, id)) ## Parsed with column specification: ## cols( ## permitYear = col_integer(), ## permitType = col_character(), ## gender = col_character(), ## age = col_integer(), ## residency = col_character(), ## birthyear = col_integer() ## ) glimpse(huntData) ## Observations: 723,480 ## Variables: 6 ## $ permitYear &amp;lt;int&amp;gt; 2008, 2008, 2008, 2008, 2008, 2008, 2008, 2008, 200.</description>
     </item>
     
   </channel>

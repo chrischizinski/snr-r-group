@@ -258,11 +258,12 @@ hell_data</code></pre>
 ## 4 1.16942057 1.15470054 1.11537933                      
 ## 5 0.80501743 0.78842820 0.74431545 0.41744238           
 ## 6 1.16942057 1.15470054 1.11537933 0.00000000 0.41744238</code></pre>
-<p>Phew!! After going through all of these standardizations, transformations, and you have got to be thinking there has to be an easier way. And of course there is. The <code>vegan</code> package that I mentioned in the previous class has functions that will allow us to do all of these standardizations and distance measures. For example to run the chi.sq transformation and the euclidean distance, we combine the use of the functions <code>decostand</code> (completes many of the common standardizations) and <code>vegdist</code> (completes many of the common distance measures).</p>
+<p>Phew!! After going through all of these standardizations, transformations, and you have got to be thinking there has to be an easier way. And of course there is. The <code>vegan</code> package that I mentioned in the previous class has functions that will allow us to do all of these standardizations and distance measures. For example to run the
+chi.sq transformation and the euclidean distance, we combine the use of the functions <code>decostand</code> (completes many of the common standardizations) and <code>vegdist</code> (completes many of the common distance measures).</p>
 <pre class="r"><code>library(vegan)</code></pre>
 <pre><code>## Loading required package: permute</code></pre>
 <pre><code>## Loading required package: lattice</code></pre>
-<pre><code>## This is vegan 2.4-6</code></pre>
+<pre><code>## This is vegan 2.5-2</code></pre>
 <pre class="r"><code>vegdist(decostand(hyp_data3, &quot;chi.sq&quot;), &quot;euclidean&quot;)</code></pre>
 <pre><code>##            1          2          3          4          5
 ## 2 0.02243668                                            

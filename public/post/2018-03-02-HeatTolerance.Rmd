@@ -1,11 +1,8 @@
 ---
 title: "Heat Tolerance"
 date: '2018-03-02'
-tags:
-- Heat Tolerance
-- glm
-- Data Seminar
-categories: R
+categories: ["R"]
+tags: ["Heat Tolerance", "glm", "Data Seminar"]
 ---
 
 ```{r setup, include=FALSE}
@@ -23,7 +20,7 @@ library(tidyverse)
 library(pander)
 ```
 
-Link to the Rmarkdown files can be found [here](https://github.com/chrischizinski/snr-r-group/tree/master/content/post)
+
 
 ## Get the data
 

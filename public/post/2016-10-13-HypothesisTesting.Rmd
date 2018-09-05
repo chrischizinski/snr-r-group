@@ -105,6 +105,7 @@ Most cases in biology, $H_0$ is that there is no difference in means) and the  $
 ```{r echo = FALSE}
 library(ggplot2)
 library(gridExtra)
+library(grid)
 
 dat <- data.frame(x=seq(-4, 4, length = 100))
 dat$pt1<-dt(dat$x, df = 100)

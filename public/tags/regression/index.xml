@@ -44,7 +44,7 @@ library(tidyverse) library(broom) library(lme4) library(multcomp) Comparing grou
       <description>The RMarkdown file for this lesson can be found here.
 This lesson will follow Chapter 6 in Quinn and Keough (2002).
 Load the packages we will be using in this lesson
-library(RCurl) library(tidyverse) library(broom) library(GGally) library(devtools) library(gridExtra) source_url(&amp;#39;https://raw.githubusercontent.com/chrischizinski/SNR_R_Group/master/R/snr_r_group_functions.R&amp;#39;) Multiple Linear regression analysis Our previous lesson was based on regression models with a single predictor and single response variable. We can expand on these by increasing the number of predictor variables, which are called are multiple linear regression models.</description>
+library(RCurl) library(tidyverse) library(broom) library(GGally) library(devtools) library(gridExtra) library(grid) source_url(&amp;#39;https://raw.githubusercontent.com/chrischizinski/SNR_R_Group/master/R/snr_r_group_functions.R&amp;#39;) Multiple Linear regression analysis Our previous lesson was based on regression models with a single predictor and single response variable. We can expand on these by increasing the number of predictor variables, which are called are multiple linear regression models.</description>
     </item>
     
     <item>
@@ -56,9 +56,8 @@ library(RCurl) library(tidyverse) library(broom) library(GGally) library(devtool
       <description>The RMarkdown file for this lesson can be found here.
 This lesson will follow Chapter 5 in Quinn and Keough (2002).
 Load the packages we will be using in this lesson
-library(MASS) library(car) library(RCurl) library(mgcv) library(tidyverse) library(broom) library(Rfit) library(mgcv) library(gtable) library(lmodel2) Linear regression analysis Statistical models that assume a linear relationship between a single, continuous (usually) predictor value are simple linear regression models.
-These models have three primary purposes:
- describe a linear relationship between \( Y \) and \( X \) determine the amount of variation (explained) in \( Y \) with \( X \) and the amount of variation unexplained predict values of \( Y \) from \( X \)  Simple bivariate linear regression Linear model for regression Consider you have a set of observations (\( i = 1 :n \) ), where the each observation was chosen based on its \( X \) value and its \( Y \) value for each observation is sampled from a population of possible \( Y \) values.</description>
+library(MASS) library(car) library(RCurl) library(mgcv) library(tidyverse) library(broom) library(Rfit) library(mgcv) library(gtable) library(lmodel2) library(grid) Linear regression analysis Statistical models that assume a linear relationship between a single, continuous (usually) predictor value are simple linear regression models.
+These models have three primary purposes:</description>
     </item>
     
     <item>
@@ -67,7 +66,7 @@ These models have three primary purposes:
       <pubDate>Thu, 20 Oct 2016 00:00:00 +0000</pubDate>
       
       <guid>/post/2016-10-20-correlation/</guid>
-      <description>library(tidyverse) ## ── Attaching packages ──── tidyverse 1.2.1 ── ## ✔ ggplot2 2.2.1 ✔ purrr 0.2.4 ## ✔ tibble 1.4.2 ✔ dplyr 0.7.4 ## ✔ tidyr 0.8.0 ✔ stringr 1.3.0 ## ✔ readr 1.1.1 ✔ forcats 0.3.0 ## ── Conflicts ─────── tidyverse_conflicts() ── ## ✖ readr::col_factor() masks scales::col_factor() ## ✖ purrr::discard() masks scales::discard() ## ✖ dplyr::filter() masks stats::filter() ## ✖ dplyr::lag() masks stats::lag() library(gridExtra) ## ## Attaching package: &amp;#39;gridExtra&amp;#39; ## The following object is masked from &amp;#39;package:dplyr&amp;#39;: ## ## combine library(RCurl) ## Loading required package: bitops ## ## Attaching package: &amp;#39;RCurl&amp;#39; ## The following object is masked from &amp;#39;package:tidyr&amp;#39;: ## ## complete library(MASS) ## ## Attaching package: &amp;#39;MASS&amp;#39; ## The following object is masked from &amp;#39;package:dplyr&amp;#39;: ## ## select The RMarkdown file for this lesson can be found here</description>
+      <description>library(tidyverse) ## ── Attaching packages ────────────────────────────────────────── tidyverse 1.2.1 ── ## ✔ ggplot2 3.0.0 ✔ purrr 0.2.5 ## ✔ tibble 1.4.2 ✔ dplyr 0.7.6 ## ✔ tidyr 0.8.1 ✔ stringr 1.3.1 ## ✔ readr 1.1.1 ✔ forcats 0.3.0 ## ── Conflicts ───────────────────────────────────────────── tidyverse_conflicts() ── ## ✖ dplyr::filter() masks stats::filter() ## ✖ dplyr::lag() masks stats::lag() library(gridExtra) ## ## Attaching package: &amp;#39;gridExtra&amp;#39; ## The following object is masked from &amp;#39;package:dplyr&amp;#39;: ## ## combine library(RCurl) ## Loading required package: bitops ## ## Attaching package: &amp;#39;RCurl&amp;#39; ## The following object is masked from &amp;#39;package:tidyr&amp;#39;: ## ## complete library(MASS) ## ## Attaching package: &amp;#39;MASS&amp;#39; ## The following object is masked from &amp;#39;package:dplyr&amp;#39;: ## ## select The RMarkdown file for this lesson can be found here</description>
     </item>
     
     <item>

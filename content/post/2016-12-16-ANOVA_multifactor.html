@@ -1,10 +1,8 @@
 ---
 title: "Multiple factor ANOVA"
 date: '2016-12-16'
-tags:
-- Regression
-- ANOVA
-categories: R
+categories: ["R"]
+tags: ["Regression", "ANOVA"]
 ---
 
 
@@ -19,9 +17,12 @@ library(multcomp)
 # library(afex)</code></pre>
 <div id="nested-designs" class="section level2">
 <h2>Nested designs</h2>
-<p>Common extension of the <a href="https://chrischizinski.github.io/SNR_R_Group/2016-12-09-ANOVA_1factor">single factor design</a> is the nested design - additional factors are included that are nested within the main factor of interest - characteristic feature that distinguishes from other multifactor designs is that the categories of the nested factor(s) within each level of the main factor are different. Main factor can be fixed or random whereas the nested factor(s) is(are) usually random in biology (levels of subsampling or replication in a spatial or temporal hierarchy)</p>
+<p>Common extension of the <a href="https://chrischizinski.github.io/SNR_R_Group/2016-12-09-ANOVA_1factor">single factor design</a> is the nested design
+- additional factors are included that are nested within the main factor of interest
+- characteristic feature that distinguishes from other multifactor designs is that the categories of the nested factor(s) within each level of the main factor are different. Main factor can be fixed or random whereas the nested factor(s) is(are) usually random in biology (levels of subsampling or replication in a spatial or temporal hierarchy)</p>
 <p>Examples:<br />
-- <a href="https://www.researchgate.net/profile/Mick_Keough/publication/250215193_Potential_effect_of_enclosure_size_on_field_experiments_with_herbivorous_intertidal_gastropods/links/53e0d37c0cf24f90ff60ba97.pdf">Quinn &amp; Keough (1993)</a> examined the effect of different sized enclosures on growth of the rocky intertidal limpet <em>Cellana tramoserica</em>. There were two enclosure sizes, with five replicate enclosures nested within each size and four or five replicate limpets from each enclosure. - <a href="http://onlinelibrary.wiley.com/doi/10.2307/2265748/full">Caselle &amp; Warner (1996)</a> examined recruitment densities of a coral reef fish at five sites on the north shore of the US Virgin Islands, with six random transects within each site and replicate observations of density of recruits along each transect.</p>
+- <a href="https://www.researchgate.net/profile/Mick_Keough/publication/250215193_Potential_effect_of_enclosure_size_on_field_experiments_with_herbivorous_intertidal_gastropods/links/53e0d37c0cf24f90ff60ba97.pdf">Quinn &amp; Keough (1993)</a> examined the effect of different sized enclosures on growth of the rocky intertidal limpet <em>Cellana tramoserica</em>. There were two enclosure sizes, with five replicate enclosures nested within each size and four or five replicate limpets from each enclosure.
+- <a href="http://onlinelibrary.wiley.com/doi/10.2307/2265748/full">Caselle &amp; Warner (1996)</a> examined recruitment densities of a coral reef fish at five sites on the north shore of the US Virgin Islands, with six random transects within each site and replicate observations of density of recruits along each transect.</p>
 <p>Lets explore nested ANOVA using the <code>andrew</code> dataset in <code>chpt09</code></p>
 <blockquote>
 <p>Andrew &amp; Underwood (1993) manipulated the density of sea urchins in the shallow subtidal region of a site near Sydney to test the effects on the percentage cover of filamentous algae. There were four urchin treatments (no urchins, 33% of original density, 66% of original density and 100% of orginal density). The treatments were replicated in four distinct patches (3–4 m2) per treatment and percentage cover of filamentous algae (response variable) was measured in five random quadrats per patch. This is a nested design with treatment (fixed factor), patch nested within treatment (random factor) and quadrats as the residual.</p>

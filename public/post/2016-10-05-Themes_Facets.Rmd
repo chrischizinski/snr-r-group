@@ -16,6 +16,7 @@ One of my favorite aspects of **ggplot2** is the use of [themes](http://docs.ggp
 ```{r}
 library(tidyverse)
 
+
  p<- ggplot(diamonds, ) +
       geom_point(aes(x=carat, y = price,colour=cut)) 
 p
@@ -360,6 +361,7 @@ ggplot(data = mpg) +
 ```{r}
 #install.packages(gridExtra)
 library(gridExtra)
+library(grid)
 
 fake_data <- data.frame(x = 1:20)
 fake_data$y <- fake_data$x * 0.3 + rnorm(20, sd = 2)

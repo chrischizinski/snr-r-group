@@ -6,7 +6,7 @@
     <description>Recent content in Glm on SNR R User Group</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 02 Mar 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 06 Apr 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/glm/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,10 +14,10 @@
     <item>
       <title>Chickadee sounds and mixed effect models</title>
       <link>/post/2018-04-06-mixedeffectmodels/</link>
-      <pubDate>Fri, 02 Mar 2018 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 06 Apr 2018 00:00:00 +0000</pubDate>
       
       <guid>/post/2018-04-06-mixedeffectmodels/</guid>
-      <description># Download the data from google drive id &amp;lt;- &amp;quot;1NHnz1ncP-c0uGXrcE25pp_iGga0YVLuy&amp;quot; sarahFee&amp;lt;- read_csv(sprintf(&amp;quot;https://docs.google.com/uc?id=%s&amp;amp;export=download&amp;quot;, id)) ## Parsed with column specification: ## cols( ## Location = col_character(), ## Type = col_character(), ## `Begin Time (s)` = col_double(), ## `End Time (s)` = col_double(), ## `Delta Time (s)` = col_double(), ## `Low Freq (Hz)` = col_double(), ## `High Freq (Hz)` = col_double(), ## `Delta Freq (Hz)` = col_double() ## ) glimpse(sarahFee) ## Observations: 32 ## Variables: 8 ## $ Location &amp;lt;chr&amp;gt; &amp;quot;Riverside&amp;quot;, &amp;quot;Riverside&amp;quot;, &amp;quot;Riverside&amp;quot;, &amp;quot;Rive.</description>
+      <description>Load packages # .libPaths(&amp;quot;P:\\RLibrary2&amp;quot;) knitr::opts_chunk$set(echo = TRUE) # install.packages(&amp;quot;lme4&amp;quot;) # install.packages(&amp;quot;lmerTest&amp;quot;) library(lme4) # library(lmerTest) #Dont initially load this library library(tidyverse)  Load chickadee data # Download the data from google drive id &amp;lt;- &amp;quot;1NHnz1ncP-c0uGXrcE25pp_iGga0YVLuy&amp;quot; sarahFee&amp;lt;- read_csv(sprintf(&amp;quot;https://docs.google.com/uc?id=%s&amp;amp;export=download&amp;quot;, id)) ## Parsed with column specification: ## cols( ## Location = col_character(), ## Type = col_character(), ## `Begin Time (s)` = col_double(), ## `End Time (s)` = col_double(), ## `Delta Time (s)` = col_double(), ## `Low Freq (Hz)` = col_double(), ## `High Freq (Hz)` = col_double(), ## `Delta Freq (Hz)` = col_double() ## ) glimpse(sarahFee) ## Observations: 32 ## Variables: 8 ## $ Location &amp;lt;chr&amp;gt; &amp;quot;Riverside&amp;quot;, &amp;quot;Riverside&amp;quot;, &amp;quot;Riverside&amp;quot;, &amp;quot;Rive.</description>
     </item>
     
     <item>

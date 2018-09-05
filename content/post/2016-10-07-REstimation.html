@@ -148,9 +148,6 @@ length(conc_ordered) *0.10  # need to remove the smallest and largest 50 values<
 <pre><code>## The following objects are masked from &#39;package:ggplot2&#39;:
 ## 
 ##     %+%, alpha</code></pre>
-<pre><code>## The following objects are masked from &#39;package:scales&#39;:
-## 
-##     alpha, rescale</code></pre>
 <pre class="r"><code>winsor.mean(concentration, trim = 0.1)  </code></pre>
 <pre><code>## [1] 43.54</code></pre>
 <p>Notice that these numbers are slightly different. That is because instead of replacing the trimmed values with the nearest number, <code>winsor.mean</code> replaces them with the 20% and 80% quantile.</p>
@@ -318,6 +315,9 @@ ggplot(data = x) +
   geom_point(aes(x = mean_conc,  y = 13), size = 1,colour=&quot;red&quot;) +
   annotate(&quot;text&quot;, x = c(0.75,2.7), y = c(15,13), label = c(&quot;se&quot;, &quot;sd&quot;)) +
   theme_bw()</code></pre>
+<pre><code>## Warning: Ignoring unknown aesthetics: x
+
+## Warning: Ignoring unknown aesthetics: x</code></pre>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="/post/2016-10-07-REstimation_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 <p>You can see the difference in the above plot. Standard deviations describe the spread in the data, whereas the standard error describes where the mean (or predicted value) falls.</p>

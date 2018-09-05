@@ -177,9 +177,7 @@ head(iris)  # take a look at it</code></pre>
 # First lets remove newiris from the environment
 rm(newiris, iris)
 ls()</code></pre>
-<pre><code>## [1] &quot;theme_map&quot;              &quot;theme_map_presentation&quot;
-## [3] &quot;theme_mine&quot;             &quot;theme_presentation&quot;    
-## [5] &quot;theme_transparent&quot;</code></pre>
+<pre><code>## character(0)</code></pre>
 <pre class="r"><code># To load an .Rdata file you
 # load(file = &quot;/Users/cchizinski2/Documents/SNR_R_Group/master/data/newiris.RData&quot;)</code></pre>
 </div>
@@ -199,19 +197,19 @@ library(tidyverse)</code></pre>
 <p>To look at the requirements and default options pull up the help menu</p>
 <pre class="r"><code>#library(readr) # if you have not loaded tidyverse
 ?read_csv  # note this is different from read.csv in base R</code></pre>
-<p>There is a couple of things that are nice with this package over the base: - comment: a string to identify comments - strip white space: removes leading and trailing white space (THE BANE OF MANY STRINGS)</p>
+<p>There is a couple of things that are nice with this package over the base:
+- comment: a string to identify comments
+- strip white space: removes leading and trailing white space (THE BANE OF MANY STRINGS)</p>
 <p>To open a csv file, indicate the path to the file. Again NOTE that this will be loaded as a <code>tibble</code> and not a traditional <code>data.frame.</code></p>
 <pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## ── Attaching packages ──── tidyverse 1.2.1 ──</code></pre>
-<pre><code>## ✔ ggplot2 2.2.1     ✔ purrr   0.2.4
-## ✔ tibble  1.4.2     ✔ dplyr   0.7.4
-## ✔ tidyr   0.8.0     ✔ stringr 1.3.0
+<pre><code>## ── Attaching packages ────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
+<pre><code>## ✔ ggplot2 3.0.0     ✔ purrr   0.2.5
+## ✔ tibble  1.4.2     ✔ dplyr   0.7.6
+## ✔ tidyr   0.8.1     ✔ stringr 1.3.1
 ## ✔ readr   1.1.1     ✔ forcats 0.3.0</code></pre>
-<pre><code>## ── Conflicts ─────── tidyverse_conflicts() ──
-## ✖ readr::col_factor() masks scales::col_factor()
-## ✖ purrr::discard()    masks scales::discard()
-## ✖ dplyr::filter()     masks stats::filter()
-## ✖ dplyr::lag()        masks stats::lag()</code></pre>
+<pre><code>## ── Conflicts ───────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 <pre class="r"><code>#Land crabs on Christmas Island, relationship to burrow density
 land_crabs&lt;-read_csv(&quot;https://raw.githubusercontent.com/chrischizinski/SNR_R_Group/master/data/ExperimentalDesignData/chpt05/green.csv&quot;)</code></pre>
 <pre><code>## Parsed with column specification:
@@ -337,7 +335,8 @@ head(iris_stata)</code></pre>
 <div id="text-files-csv-tab" class="section level4">
 <h4>Text files (csv, tab)</h4>
 <p>To load text files from a git repository you will need the <a href="https://cran.r-project.org/web/packages/RCurl/RCurl.pdf"><code>RCurl</code> package</a>. Note this is not part of the <code>tidyverse</code>)</p>
-<p>On the github repository that you would like to download data from , find the button marked “Raw” and click on it. This is the raw text file and you will need to copy the URL to past this following the code below.</p>
+<p>On the github repository that you would like to download data from
+, find the button marked “Raw” and click on it. This is the raw text file and you will need to copy the URL to past this following the code below.</p>
 <pre class="r"><code>library(RCurl)</code></pre>
 <pre><code>## Loading required package: bitops</code></pre>
 <pre><code>## 

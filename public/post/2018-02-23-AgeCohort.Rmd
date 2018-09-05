@@ -4,8 +4,9 @@ date: 2018-02-23
 categories: ["R"]
 tags: ["Age Period Cohort", "Data Seminar"]
 ---
+## Load packages
 
-```{r setup, include=FALSE}
+```{r setup, message=FALSE}
 # .libPaths("P:/RLibrary2")  #  Set your library path if you need it
 knitr::opts_chunk$set(echo = TRUE)
 

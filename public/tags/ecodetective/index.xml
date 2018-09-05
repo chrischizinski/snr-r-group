@@ -44,6 +44,16 @@ Motivation Squid trawl
     </item>
     
     <item>
+      <title>Ecological Detective - Probability and probability models. Part 2</title>
+      <link>/post/2017-03-17-ecologicaldetective6/</link>
+      <pubDate>Fri, 17 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2017-03-17-ecologicaldetective6/</guid>
+      <description>library(tidyverse) library(broom) Sources of the notes for this lecture are a combination of Aho(2013) (Chapters 2 and 3) and Ecological Detective (Chapters 3 and 4).
+Common distributions Discrete Negative binomial distribution  Negative binomial gives the probability that x independent Bernoulli failures will occur prior to obtaining the rth success - two parameters: r is the number of successes and \( \pi \) is the probability of an individual Bernoulli success  First form:</description>
+    </item>
+    
+    <item>
       <title>Ecological Detective -- Probability and probability models, Part 1</title>
       <link>/post/2017-03-10-ecologicaldetective5/</link>
       <pubDate>Fri, 10 Mar 2017 00:00:00 +0000</pubDate>

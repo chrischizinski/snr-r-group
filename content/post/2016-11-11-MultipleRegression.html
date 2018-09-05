@@ -16,6 +16,7 @@ library(broom)
 library(GGally)
 library(devtools)
 library(gridExtra)
+library(grid)
 
 source_url(&#39;https://raw.githubusercontent.com/chrischizinski/SNR_R_Group/master/R/snr_r_group_functions.R&#39;)</code></pre>
 <div id="multiple-linear-regression-analysis" class="section level2">
@@ -25,7 +26,8 @@ source_url(&#39;https://raw.githubusercontent.com/chrischizinski/SNR_R_Group/mas
 <li>Similar assumptions of the model to the simple models</li>
 <li>Fixed Xs, random Y</li>
 </ul>
-<p>Model represented as: <span class="math display">\[ y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \dots + \beta_j x_{ij} + \dots \beta_p x_{ip} +    \epsilon_i  \]</span></p>
+<p>Model represented as:
+<span class="math display">\[ y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \dots + \beta_j x_{ij} + \dots \beta_p x_{ip} +    \epsilon_i  \]</span></p>
 <p>Lets illustrate these models using the <code>lyon</code> data found in <code>chapt06</code> folder found in the github repository.</p>
 <blockquote>
 <p>Loyn (1987) selected 56 forest patches in southeastern Victoria, Australia, and related the abundance of forest birds in each patch to six predictor variables: patch area (ha), distance to nearest patch (km), distance to nearest larger patch (km), grazing stock (1 to 5 indicating light to heavy), altitude (m) and years since isolation (years).</p>

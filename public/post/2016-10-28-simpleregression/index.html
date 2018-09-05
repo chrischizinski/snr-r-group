@@ -164,7 +164,8 @@ library(broom)
 library(Rfit)
 library(mgcv)
 library(gtable)
-library(lmodel2)</code></pre>
+library(lmodel2)
+library(grid)</code></pre>
 <div id="linear-regression-analysis" class="section level2">
 <h2>Linear regression analysis</h2>
 <p>Statistical models that assume a linear relationship between a single, continuous (usually) predictor value are <em>simple linear regression</em> models.</p>
@@ -306,32 +307,30 @@ resid(mod_cwd)[1:10]</code></pre>
 <p>The <code>broom</code> package makes inspection of the models a bit easier (although they are not too difficult) in base R. The biggest plus for broom, is that the outputs of the models are returned in a tidy format.</p>
 <pre class="r"><code># tidy will give you a data.frame representation
 tidy(mod_cwd)</code></pre>
-<pre><code>##          term     estimate    std.error statistic        p.value
-## 1 (Intercept) -482.0245271 126.57242447 -3.808290 0.001919139303
-## 2    RIP.DENS    0.6524071   0.09689906  6.732852 0.000009581278</code></pre>
+<pre><code>## # A tibble: 2 x 5
+##   term        estimate std.error statistic    p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;
+## 1 (Intercept) -482.     127.         -3.81 0.00192   
+## 2 RIP.DENS       0.652    0.0969      6.73 0.00000958</code></pre>
 <pre class="r"><code># augment will give fitted values and residuals for each of the original points in the regression
 
 head(augment(mod_cwd))</code></pre>
-<pre><code>##   CWD.DENS RIP.DENS  .fitted  .se.fit     .resid       .hat   .sigma
-## 1      442     1270 346.5324 37.60939   95.46757 0.06271192 153.4340
-## 2      338     1210 307.3880 37.72064   30.61199 0.06308346 155.6054
-## 3      965     1800 692.3082 65.39508  272.69183 0.18960407 131.2693
-## 4      833     1875 741.2387 71.46726   91.76130 0.22644969 153.1426
-## 5      613     1300 366.1046 37.88968  246.89535 0.06365013 138.8604
-## 6      637     2150 920.6506 95.17612 -283.65064 0.40161828 118.0974
-##       .cooksd .std.resid
-## 1 0.014422585  0.6565957
-## 2 0.001492878  0.2105813
-## 3 0.475910054  2.0169830
-## 4 0.070638454  0.6946947
-## 5 0.098101659  1.6989187
-## 6 2.000561396 -2.4415935</code></pre>
+<pre><code>## # A tibble: 6 x 9
+##   CWD.DENS RIP.DENS .fitted .se.fit .resid   .hat .sigma .cooksd .std.resid
+##      &lt;int&gt;    &lt;int&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;      &lt;dbl&gt;
+## 1      442     1270    347.    37.6   95.5 0.0627   153. 0.0144       0.657
+## 2      338     1210    307.    37.7   30.6 0.0631   156. 0.00149      0.211
+## 3      965     1800    692.    65.4  273.  0.190    131. 0.476        2.02 
+## 4      833     1875    741.    71.5   91.8 0.226    153. 0.0706       0.695
+## 5      613     1300    366.    37.9  247.  0.0637   139. 0.0981       1.70 
+## 6      637     2150    921.    95.2 -284.  0.402    118. 2.00        -2.44</code></pre>
 <pre class="r"><code>#glance will let you see the statistics associated with the model
 glance(mod_cwd)</code></pre>
-<pre><code>##   r.squared adj.r.squared    sigma statistic        p.value df    logLik
-## 1 0.7640368     0.7471823 150.1832   45.3313 0.000009581278  2 -101.8245
-##        AIC      BIC deviance df.residual
-## 1 209.6489 211.9667 315769.8          14</code></pre>
+<pre><code>## # A tibble: 1 x 11
+##   r.squared adj.r.squared sigma statistic p.value    df logLik   AIC   BIC
+## *     &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1     0.764         0.747  150.      45.3 9.58e-6     2  -102.  210.  212.
+## # ... with 2 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;</code></pre>
 </div>
 <div id="confidence-intervals" class="section level5">
 <h5>Confidence intervals</h5>
@@ -453,9 +452,11 @@ ggplot(data = fitted_vals) +
 </ul>
 <p>We can calculate the ANOVA table from our linear model in R by using the <code>anova()</code> statment.</p>
 <pre class="r"><code>tidy(anova(mod_cwd))</code></pre>
-<pre><code>##        term df     sumsq     meansq statistic        p.value
-## 1  RIP.DENS  1 1022446.7 1022446.67   45.3313 0.000009581278
-## 2 Residuals 14  315769.8   22554.98        NA             NA</code></pre>
+<pre><code>## # A tibble: 2 x 6
+##   term         df    sumsq   meansq statistic     p.value
+##   &lt;chr&gt;     &lt;int&gt;    &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;
+## 1 RIP.DENS      1 1022447. 1022447.      45.3  0.00000958
+## 2 Residuals    14  315770.   22555.      NA   NA</code></pre>
 </div>
 <div id="variance-explaned-r2-or-r2" class="section level4">
 <h4>Variance explaned ( \(r^2\) or \( R^2 \))</h4>
@@ -599,8 +600,7 @@ ggplot(data = fitted_vals2)  +
 <p><img src="/post/2016-10-28-SimpleRegression_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 <pre class="r"><code>#outlier.test in car package
 outlierTest(mod_cwd)</code></pre>
-<pre><code>## 
-## No Studentized residuals with Bonferonni p &lt; 0.05
+<pre><code>## No Studentized residuals with Bonferonni p &lt; 0.05
 ## Largest |rstudent|:
 ##    rstudent unadjusted p-value Bonferonni p
 ## 6 -3.104947          0.0083667      0.13387</code></pre>
@@ -627,10 +627,14 @@ ggplot(data = fitted_vals3)  +
 <h4>Weighted least squares</h4>
 <ul>
 <li>Responses are averages with known sample sizes</li>
-<li>Responses are estimates and SEs are available</li>
+<li>Responses are estimates and SEs are available
+<ul>
 <li>\( w_i =  \)</li>
-<li>Variance is proportional to X</li>
+</ul></li>
+<li>Variance is proportional to X
+<ul>
 <li>\( w_i =  \) or \( w_i =  \)</li>
+</ul></li>
 </ul>
 <pre class="r"><code>set.seed(12345)
 
@@ -720,10 +724,14 @@ ggplot(data = fake_pred) +
 <li>Both \(X \) and \(Y \) chosen haphazardly or at random</li>
 <li>Model II Regression and the approach is controversial</li>
 <li>If the purpose of regression is <strong>prediction</strong>, then OLS</li>
-<li>If the purpose of regression is <strong>mechanisms</strong>, then <strong>not</strong> OLS (?)</li>
+<li>If the purpose of regression is <strong>mechanisms</strong>, then <strong>not</strong> OLS (?)
+<ul>
 <li>error variability associated with both Y \( <em>{}^2 \) and X \( </em>{}^2 \) and the OLS estimate of \( _1 \) is biased towards zero</li>
-<li>Major axis (MA) regression fits line minimizing the sum of squared perpendicular distances from each observation to the fitted line</li>
+</ul></li>
+<li>Major axis (MA) regression fits line minimizing the sum of squared perpendicular distances from each observation to the fitted line
+<ul>
 <li>\( <em>{}^2 \) = \( </em>{}^2 \)</li>
+</ul></li>
 <li>Reduced major axis (RMA) regression or standard major axis (SMA) regression is fitted by minimizing the sum of areas of the triangles formed by vertical and horizontal lines from each observation to the fitted line</li>
 <li>\( _{}^2 <em>x^2 \) and \( </em>{}^2 _y^2\)</li>
 </ul>
@@ -797,12 +805,12 @@ head(crime_data)</code></pre>
 <pre><code>## # A tibble: 6 x 9
 ##     sid state crime murder pctmetro pctwhite pcths poverty single
 ##   &lt;dbl&gt; &lt;chr&gt; &lt;int&gt;  &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
-## 1    1. ak      761   9.00     41.8     75.2  86.6    9.10   14.3
-## 2    2. al      780  11.6      67.4     73.5  66.9   17.4    11.5
-## 3    3. ar      593  10.2      44.7     82.9  66.3   20.0    10.7
-## 4    4. az      715   8.60     84.7     88.6  78.7   15.4    12.1
-## 5    5. ca     1078  13.1      96.7     79.3  76.2   18.2    12.5
-## 6    6. co      567   5.80     81.8     92.5  84.4    9.90   12.1</code></pre>
+## 1     1 ak      761   9        41.8     75.2  86.6    9.10   14.3
+## 2     2 al      780  11.6      67.4     73.5  66.9   17.4    11.5
+## 3     3 ar      593  10.2      44.7     82.9  66.3   20      10.7
+## 4     4 az      715   8.60     84.7     88.6  78.7   15.4    12.1
+## 5     5 ca     1078  13.1      96.7     79.3  76.2   18.2    12.5
+## 6     6 co      567   5.80     81.8     92.5  84.4    9.90   12.1</code></pre>
 <pre class="r"><code>crime_mod &lt;- lm(crime ~ single, data = crime_data)
 summary(crime_mod)</code></pre>
 <pre><code>## 

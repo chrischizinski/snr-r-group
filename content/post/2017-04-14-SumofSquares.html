@@ -20,7 +20,9 @@ library(broom)</code></pre>
 </ul>
 <div id="basic-method" class="section level2">
 <h2>Basic method</h2>
-<p>Consider a simple model: <span class="math display">\[ Y_i = A + BX_i = CX_i^2 + W_i\]</span> where \(W_i\) is process uncertainty, and <em>A</em>, <em>B</em>, and <em>C</em> are parameters.</p>
+<p>Consider a simple model:
+<span class="math display">\[ Y_i = A + BX_i = CX_i^2 + W_i\]</span>
+where \(W_i\) is process uncertainty, and <em>A</em>, <em>B</em>, and <em>C</em> are parameters.</p>
 <ul>
 <li>For variables \(X_1, X_2, …., X_n\) we can generate predictions for <em>Y</em> with potential values for the parameters <em>A</em>, <em>B</em>, and <em>C</em></li>
 <li>We can measure the deviation between the \(i^{th}\) predicted value and the \(i^{th}\) observed value: \( (Y_{pred,i} - Y_{obs,i})^2 \)</li>
@@ -43,7 +45,8 @@ library(broom)</code></pre>
 <div id="psuedocode-5.2" class="section level3">
 <h3>Psuedocode 5.2</h3>
 <ol style="list-style-type: decimal">
-<li>Specify values of the parameters A, E, and C, the number of data points to be generated, and the distribution of the process uncertainty. Set <em>i</em> = 1</li>
+<li>Specify values of the parameters A, E, and C, the number of data points to be generated, and the distribution of
+the process uncertainty. Set <em>i</em> = 1</li>
 <li>Choose Xi (e.g., by systematic choice of the independent variable X).</li>
 <li>Choose a particular value Wi of the process uncertainty W;.</li>
 <li>Determine Yi according to Yi= A + EXi + ex? + Wi</li>

@@ -6,7 +6,7 @@
     <description>Recent content in Refelectance on SNR R User Group</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 30 Mar 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 13 Apr 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/refelectance/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,10 +14,10 @@
     <item>
       <title>Partial Least Squares Regression</title>
       <link>/post/2018-04-13-partialleastsquare/</link>
-      <pubDate>Fri, 30 Mar 2018 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 13 Apr 2018 00:00:00 +0000</pubDate>
       
       <guid>/post/2018-04-13-partialleastsquare/</guid>
-      <description>Load the data Bring data in from google drive
+      <description>Load packages # .libPaths(&amp;quot;P:\\RLibrary2&amp;quot;) options(digits = 4) knitr::opts_chunk$set(echo = TRUE) # .libPaths(&amp;quot;P:\\RLibrary2&amp;quot;) # install.packages(&amp;quot;pls&amp;quot;) library(pls) library(lubridate) library(tidyverse)  Load the data Bring data in from google drive
 id &amp;lt;- &amp;quot;1_0rUKAVD7mf4D1ebGAyLNIKXIfekHdFG&amp;quot; ryanData&amp;lt;- read_csv(sprintf(&amp;quot;https://docs.google.com/uc?id=%s&amp;amp;export=download&amp;quot;, id),col_names = FALSE) ## Parsed with column specification: ## cols( ## .default = col_character() ## ) ## See spec(...) for full column specifications. head(ryanData) ## # A tibble: 6 x 80 ## X1 X2 X3 X4 X5 X6 X7 X8 X9 X10 X11 X12 ## &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; ## 1 ID 1 5 9 13 17 21 25 29 33 37 41 ## 2 Plot CSP01 CSP01 CSP01 CSP01 CSP01 CSP01 CSP01 CSP01 CSP01 CSP01 CSP01 ## 3 Date 5/18/… 5/23… 5/31… 6/6/… 6/13… 6/17… 6/22… 6/30… 7/6/… 7/12… 7/15… ## 4 351 5.</description>
     </item>
     

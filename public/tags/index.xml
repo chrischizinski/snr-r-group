@@ -21,6 +21,15 @@
     </item>
     
     <item>
+      <title>Animal Movement</title>
+      <link>/tags/animal-movement/</link>
+      <pubDate>Fri, 09 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/animal-movement/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Anova</title>
       <link>/tags/anova/</link>
       <pubDate>Fri, 16 Dec 2016 00:00:00 +0000</pubDate>
@@ -44,6 +53,15 @@
       <pubDate>Fri, 08 Sep 2017 00:00:00 +0000</pubDate>
       
       <guid>/tags/basics/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Beginning R</title>
+      <link>/tags/beginning-r/</link>
+      <pubDate>Fri, 31 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/beginning-r/</guid>
       <description></description>
     </item>
     
@@ -113,7 +131,7 @@
     <item>
       <title>Glm</title>
       <link>/tags/glm/</link>
-      <pubDate>Fri, 02 Mar 2018 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 06 Apr 2018 00:00:00 +0000</pubDate>
       
       <guid>/tags/glm/</guid>
       <description></description>
@@ -149,7 +167,7 @@
     <item>
       <title>Mixed Effect Models</title>
       <link>/tags/mixed-effect-models/</link>
-      <pubDate>Fri, 02 Mar 2018 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 06 Apr 2018 00:00:00 +0000</pubDate>
       
       <guid>/tags/mixed-effect-models/</guid>
       <description></description>
@@ -194,7 +212,7 @@
     <item>
       <title>Partial Least Squares Regression</title>
       <link>/tags/partial-least-squares-regression/</link>
-      <pubDate>Fri, 30 Mar 2018 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 13 Apr 2018 00:00:00 +0000</pubDate>
       
       <guid>/tags/partial-least-squares-regression/</guid>
       <description></description>
@@ -219,15 +237,6 @@
     </item>
     
     <item>
-      <title>R</title>
-      <link>/tags/r/</link>
-      <pubDate>Fri, 24 Aug 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/r/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>R Markdown</title>
       <link>/tags/r-markdown/</link>
       <pubDate>Thu, 23 Jul 2015 00:00:00 +0000</pubDate>
@@ -248,7 +257,7 @@
     <item>
       <title>Refelectance</title>
       <link>/tags/refelectance/</link>
-      <pubDate>Fri, 30 Mar 2018 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 13 Apr 2018 00:00:00 +0000</pubDate>
       
       <guid>/tags/refelectance/</guid>
       <description></description>
@@ -278,6 +287,15 @@
       <pubDate>Wed, 18 Apr 2018 00:00:00 +0000</pubDate>
       
       <guid>/tags/spatial-autocorrelation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Step Selction</title>
+      <link>/tags/step-selction/</link>
+      <pubDate>Fri, 09 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/step-selction/</guid>
       <description></description>
     </item>
     

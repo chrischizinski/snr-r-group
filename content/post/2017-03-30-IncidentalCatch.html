@@ -30,7 +30,8 @@ incidental&lt;-data.frame(albatross, hauls)</code></pre>
   coord_cartesian(xlim = c(-1,18), ylim = c(0,850), expand = FALSE) + 
   theme_bw()</code></pre>
 <p><img src="/post/2017-03-30-IncidentalCatch_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<p>Pseudocode 4.1 1. Specify the level of observer coverage, \(N_{tow}\) per simulation, and the total number of simulations \(N_{sim}\), and the negative binomial parameters <em>m</em> and <em>k</em>. These are estimated from last year’s data. Also specifY the criterion “success,” <em>d</em>, and the value of \(t_q\)</p>
+<p>Pseudocode 4.1
+1. Specify the level of observer coverage, \(N_{tow}\) per simulation, and the total number of simulations \(N_{sim}\), and the negative binomial parameters <em>m</em> and <em>k</em>. These are estimated from last year’s data. Also specifY the criterion “success,” <em>d</em>, and the value of \(t_q\)</p>
 <pre class="r"><code>albatross_all &lt;- rep(incidental$albatross, times = incidental$hauls)
 length(albatross_all)</code></pre>
 <pre><code>## [1] 897</code></pre>
@@ -72,7 +73,8 @@ ggplot(data = p_c) +
 <p><span class="math display">\[ S_j^2 = \frac{1}{N_{tow}-1} \sum_{i=1}^{N_{tow}}(C_{ij} - M_j)^2  \]</span></p>
 <p>on the \(j^{th}\) iteration of the simulation.</p>
 <ol start="4" style="list-style-type: decimal">
-<li><p>Compute the range, in analogy to Equation 4.4: <span class="math display">\[ (Range)_j = 2\frac{S_j}{\sqrt{N_{tow}}}t_q \]</span></p></li>
+<li><p>Compute the range, in analogy to Equation 4.4:
+<span class="math display">\[ (Range)_j = 2\frac{S_j}{\sqrt{N_{tow}}}t_q \]</span></p></li>
 <li>If (Range) is less than the specified range criterion for success, increase the number of successes by 1.</li>
 <li><p>Repeat steps 2-5 for j = 1 to \(N_{sim}\). Estimate the probability of success when Nr.ow tows are observed by dividing the total number of successes by N_{tow}.</p></li>
 </ol>

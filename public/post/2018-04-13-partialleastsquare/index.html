@@ -144,9 +144,9 @@
     
 
     <h4><a href="/post/2018-04-13-partialleastsquare/">Partial Least Squares Regression</a></h4>
-    <h5>March 30, 2018</h5>
+    <h5>April 13, 2018</h5>
     
-    <a href="/tags/refelectance"><kbd class="item-tag">Refelectance</kbd></a>
+    <a href="/tags/refelectance"><kbd class="item-tag"> Refelectance</kbd></a>
     
     <a href="/tags/partial-least-squares-regression"><kbd class="item-tag">Partial Least Squares Regression</kbd></a>
     
@@ -156,7 +156,19 @@
 </div>
 
 
-    <br> <div class="text-justify"><div id="load-the-data" class="section level1">
+    <br> <div class="text-justify"><div id="load-packages" class="section level2">
+<h2>Load packages</h2>
+<pre class="r"><code># .libPaths(&quot;P:\\RLibrary2&quot;)
+options(digits = 4)
+knitr::opts_chunk$set(echo = TRUE)
+# .libPaths(&quot;P:\\RLibrary2&quot;)
+# install.packages(&quot;pls&quot;)
+
+library(pls)
+library(lubridate)
+library(tidyverse)</code></pre>
+</div>
+<div id="load-the-data" class="section level1">
 <h1>Load the data</h1>
 <p>Bring data in from google drive</p>
 <pre class="r"><code>id &lt;- &quot;1_0rUKAVD7mf4D1ebGAyLNIKXIfekHdFG&quot;

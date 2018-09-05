@@ -1,10 +1,10 @@
 ---
 title: "Latent variable analysis. Part 1"
-csl: the-journal-of-wildlife-management.csl
-bibliography: bibliography.bib
-date: 2017-10-13
 categories: ["R"]
+date: '2017-10-13'
+csl: the-journal-of-wildlife-management.csl
 tags: ["Applied Multivariate"]
+bibliography: bibliography.bib
 ---
 
 

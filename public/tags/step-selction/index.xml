@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Step Selction on SNR R User Group</title>
+    <link>/tags/step-selction/</link>
+    <description>Recent content in Step Selction on SNR R User Group</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 09 Mar 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/step-selction/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Step Selection Functions</title>
+      <link>/post/2018-03-09-stepselectionfunctions/</link>
+      <pubDate>Fri, 09 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018-03-09-stepselectionfunctions/</guid>
+      <description>Deer data data(&amp;quot;deer&amp;quot;) glimpse(deer) ## Observations: 826 ## Variables: 4 ## $ x_ &amp;lt;dbl&amp;gt; 4314068, 4314053, 4314105, 4314044, 4313015, 4312860, 4... ## $ y_ &amp;lt;dbl&amp;gt; 3445807, 3445768, 3445859, 3445785, 3445858, 3445857, 3... ## $ t_ &amp;lt;dttm&amp;gt; 2008-03-30 00:01:47, 2008-03-30 06:00:54, 2008-03-30 1... ## $ burst_ &amp;lt;dbl&amp;gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2... ggplot() + geom_path(data = deer,aes(x = x_, y = y_),linetype = &amp;quot;dashed&amp;quot;) + geom_point(data = deer,aes(x = x_, y = y_),size = 1, colour = &amp;quot;red&amp;quot;, alpha = 0.</description>
+    </item>
+    
+  </channel>
+</rss>

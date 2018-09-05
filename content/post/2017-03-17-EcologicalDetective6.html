@@ -1,6 +1,8 @@
 ---
 title: "Ecological Detective - Probability and probability models. Part 2"
-output: html_document
+date: 2017-03-17
+categories: ["R"]
+tags: ["EcoDetective"]
 ---
 
 
@@ -16,9 +18,7 @@ library(broom)</code></pre>
 <h4>Negative binomial distribution</h4>
 <ul>
 <li><em>Negative binomial</em> gives the probability that x independent Bernoulli failures will occur prior to obtaining the rth success
-<ul>
-<li>two parameters: <em>r</em> is the number of successes and \( \pi \) is the probability of an individual Bernoulli success</li>
-</ul></li>
+- two parameters: <em>r</em> is the number of successes and \( \pi \) is the probability of an individual Bernoulli success</li>
 </ul>
 <p>First form:</p>
 <p><span class="math display">\[
@@ -28,7 +28,8 @@ u + s -1 \\
 u 
 \end{array}\right)p^s(1-p)^u
 \]</span></p>
-<p>where: <em>p</em> is the probability of successes, <em>s</em> number of trials for success, and <em>u</em> is the number of not succeeding and possible values for <em>u</em> &gt; 0 and 0 &lt; <em>p</em> &gt; 1.</p>
+<p>where: <em>p</em> is the probability of successes, <em>s</em> number of trials for success, and <em>u</em> is the number of not succeeding
+and possible values for <em>u</em> &gt; 0 and 0 &lt; <em>p</em> &gt; 1.</p>
 <p>Second form:<br />
 Assumes that the rate parameter has its own probability distribution.</p>
 <p><span class="math display">\[
@@ -43,7 +44,8 @@ s
 <p><span class="math display">\[ 
 E(Z(t)) = \frac{n(1-p)}{p} = \frac{n}{a}t = m(t) 
 \]</span></p>
-<p>The variance of the <em>negative binomial</em> is <span class="math display">\[
+<p>The variance of the <em>negative binomial</em> is
+<span class="math display">\[
 VAR(Z(t)) =  m(t) + \frac{m(t)^2}{n}
 \]</span></p>
 <p>Suppose, species <em>A</em> has a 0.10 probability of occurring in any given plot. What is the probability of systematically exploring 0 to 150 plots to find 5 organisms, if we know the organism distribution follows a negative binomial distribution?</p>
@@ -188,7 +190,8 @@ ggplot(data = ln_data) +
 <li>The \( \chi^2 \) is defined by the <em>degrees of freedom</em> (the number of independent pieces of information that exist concerning an estimable parameter)</li>
 <li>The \( \chi^2 \) distribution is frequently used for testing the null hypothesis that observed and expected frequencies are equal</li>
 <li>The \( \chi^2 \) distribution results from the summing of independent, squared, standard normal distributions</li>
-<li><p>Has the following form: <span class="math display">\[ f(x) = \frac{1}{2^{v/2}\Gamma(v/2)}x^{(v/2)-1}e^{-x/2} \]</span></p>
+<li><p>Has the following form:
+<span class="math display">\[ f(x) = \frac{1}{2^{v/2}\Gamma(v/2)}x^{(v/2)-1}e^{-x/2} \]</span></p>
 <ul>
 <li>where outcomes are continuous and independent, \(x \geq 0 \), \(v \geq 0 \), and \( \Gamma(.) \) is the gamma function.</li>
 <li>\( \Gamma(x)= (x-1)!\)</li>
@@ -291,7 +294,8 @@ ggplot(data = all_gamm_data) +
 <h3>Ecological scenarios: Simple population model with process and observation uncertainty</h3>
 <p>** What are the differences between process and observation uncertainty? **</p>
 <p>We can use Monte Carlo simulations to explore process and observation uncertainty in a simple population model</p>
-<p><span class="math display">\[ N_{t +1} = sN_t + b_t + W_t \]</span> <span class="math display">\[ N_{obs,t} = N_t + V_t \]</span></p>
+<p><span class="math display">\[ N_{t +1} = sN_t + b_t + W_t \]</span>
+<span class="math display">\[ N_{obs,t} = N_t + V_t \]</span></p>
 <pre class="r"><code>#Psuedocode 3.4
 set.seed(54321)
 

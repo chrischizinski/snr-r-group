@@ -33,18 +33,23 @@
   </url>
   
   <url>
+    <loc>/post/2018-04-13-partialleastsquare/</loc>
+    <lastmod>2018-04-13T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/2018-04-06-mixedeffectmodels/</loc>
+    <lastmod>2018-04-06T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/post/2018-03-30-communitycomposition/</loc>
     <lastmod>2018-03-30T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/post/2018-04-13-partialleastsquare/</loc>
-    <lastmod>2018-03-30T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/post/2018-04-06-mixedeffectmodels/</loc>
-    <lastmod>2018-03-02T00:00:00+00:00</lastmod>
+    <loc>/post/2018-03-09-stepselectionfunctions/</loc>
+    <lastmod>2018-03-09T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -130,6 +135,11 @@
   <url>
     <loc>/post/2017-03-30-incidentalcatch/</loc>
     <lastmod>2017-03-30T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/2017-03-17-ecologicaldetective6/</loc>
+    <lastmod>2017-03-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -276,6 +286,12 @@
   </url>
   
   <url>
+    <loc>/tags/animal-movement/</loc>
+    <lastmod>2018-03-09T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/tags/anova/</loc>
     <lastmod>2016-12-16T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -290,6 +306,12 @@
   <url>
     <loc>/tags/basics/</loc>
     <lastmod>2017-09-08T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/beginning-r/</loc>
+    <lastmod>2018-08-31T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -341,12 +363,8 @@
   </url>
   
   <url>
-    <loc>/post/2017-03-17-ecologicaldetective6/</loc>
-  </url>
-  
-  <url>
     <loc>/tags/glm/</loc>
-    <lastmod>2018-03-02T00:00:00+00:00</lastmod>
+    <lastmod>2018-04-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -370,7 +388,7 @@
   
   <url>
     <loc>/tags/mixed-effect-models/</loc>
-    <lastmod>2018-03-02T00:00:00+00:00</lastmod>
+    <lastmod>2018-04-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -400,7 +418,7 @@
   
   <url>
     <loc>/tags/partial-least-squares-regression/</loc>
-    <lastmod>2018-03-30T00:00:00+00:00</lastmod>
+    <lastmod>2018-04-13T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -429,12 +447,6 @@
   </url>
   
   <url>
-    <loc>/tags/r/</loc>
-    <lastmod>2018-08-24T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/tags/r-markdown/</loc>
     <lastmod>2015-07-23T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -448,7 +460,7 @@
   
   <url>
     <loc>/tags/refelectance/</loc>
-    <lastmod>2018-03-30T00:00:00+00:00</lastmod>
+    <lastmod>2018-04-13T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -483,7 +495,9 @@
   </url>
   
   <url>
-    <loc>/post/2018-03-09-stepselectionfunctions/</loc>
+    <loc>/tags/step-selction/</loc>
+    <lastmod>2018-03-09T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>

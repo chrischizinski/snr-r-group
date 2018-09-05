@@ -219,7 +219,8 @@ fake_data2$y = fake_data2$x1 *2 + rnorm(30, sd = 2) + fake_data2$x2 *-4 + rnorm(
 <p>This approach allows us to develop confidence bounds around our parameters that we could not do in the sum of squares approach.</p>
 <div id="likelihood-and-maximum-likelihood" class="section level3">
 <h3>Likelihood and Maximum Likelihood</h3>
-<p>The probability of observing the data <span class="math inline">\(Y_i\)</span> given a particular parameter value <span class="math inline">\(p\)</span> is: <span class="math display">\[ Pr(Y_i | p) \]</span></p>
+<p>The probability of observing the data <span class="math inline">\(Y_i\)</span> given a particular parameter value <span class="math inline">\(p\)</span> is:
+<span class="math display">\[ Pr(Y_i | p) \]</span></p>
 <p>The subscript on Y, indicates that there are many possible outcomes but only one parameter <span class="math inline">\(p\)</span>. Thus we can ask, “Given these data, how likely are the possible hypothesis?”</p>
 <p><span class="math inline">\(L \{data | hypothesis \}\)</span> or <span class="math inline">\(L\{Y | p_m\}\)</span>. Notice the difference from the previous equation. In the likelihood function we have one observation but numerous potential hypotheses or parameter values. The key difference between likelihood and probability is that with the probability the hypothesis is known and data are unknown, whereas the likelihood the data are known and the hypotheses are unknown.</p>
 <p>Thus there are parameter values that are more likely than others.</p>

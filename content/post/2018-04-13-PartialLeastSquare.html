@@ -1,15 +1,24 @@
 ---
 title: "Partial Least Squares Regression"
-date: '2018-03-30'
-tags:
-- Refelectance
-- Partial Least Squares Regression
-- Data Seminar
-categories: R
+date: '2018-04-13'
+tags: [" Refelectance", "Partial Least Squares Regression", "Data Seminar"]
+categories: ["R"]
 ---
 
 
 
+<div id="load-packages" class="section level2">
+<h2>Load packages</h2>
+<pre class="r"><code># .libPaths(&quot;P:\\RLibrary2&quot;)
+options(digits = 4)
+knitr::opts_chunk$set(echo = TRUE)
+# .libPaths(&quot;P:\\RLibrary2&quot;)
+# install.packages(&quot;pls&quot;)
+
+library(pls)
+library(lubridate)
+library(tidyverse)</code></pre>
+</div>
 <div id="load-the-data" class="section level1">
 <h1>Load the data</h1>
 <p>Bring data in from google drive</p>

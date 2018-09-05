@@ -5,16 +5,14 @@ output: html_document
 
 
 <pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## ── Attaching packages ──── tidyverse 1.2.1 ──</code></pre>
-<pre><code>## ✔ ggplot2 2.2.1     ✔ purrr   0.2.4
-## ✔ tibble  1.4.2     ✔ dplyr   0.7.4
-## ✔ tidyr   0.8.0     ✔ stringr 1.3.0
+<pre><code>## ── Attaching packages ────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
+<pre><code>## ✔ ggplot2 3.0.0     ✔ purrr   0.2.5
+## ✔ tibble  1.4.2     ✔ dplyr   0.7.6
+## ✔ tidyr   0.8.1     ✔ stringr 1.3.1
 ## ✔ readr   1.1.1     ✔ forcats 0.3.0</code></pre>
-<pre><code>## ── Conflicts ─────── tidyverse_conflicts() ──
-## ✖ readr::col_factor() masks scales::col_factor()
-## ✖ purrr::discard()    masks scales::discard()
-## ✖ dplyr::filter()     masks stats::filter()
-## ✖ dplyr::lag()        masks stats::lag()</code></pre>
+<pre><code>## ── Conflicts ───────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 <pre class="r"><code>library(RCurl)</code></pre>
 <pre><code>## Loading required package: bitops</code></pre>
 <pre><code>## 
@@ -33,7 +31,7 @@ head(lovett)</code></pre>
 ## 3 Halsey         625  56.5   56.5  17.1
 ## 4 Batavia_Hi     663  57.5   57.5  16.8
 ## 5 Windham_Ri     616  58.3   58.3  18.3
-## 6 Silver_Spr     451  63.0   63.0  15.7</code></pre>
+## 6 Silver_Spr     451  63     63    15.7</code></pre>
 <pre class="r"><code>lovett_sum&lt;-lovett %&gt;% 
       summarise(Mean_SO4 = mean(SO4),
                 Mean_SO4mod = mean(SO4MOD),
@@ -88,7 +86,7 @@ lovett_sum</code></pre>
 ##  * &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
 ##  1 CIHI     26.7  63.6    72.3 
 ##  2 CILO     19.0  60.3    58.1 
-##  3 IQR       6.70  8.00    8.00
+##  3 IQR       6.70  8.      8.  
 ##  4 MAD       5.78  6.38    6.38
 ##  5 Mean     22.8  61.9    65.2 
 ##  6 Median   20.5  62.1    62.1 
