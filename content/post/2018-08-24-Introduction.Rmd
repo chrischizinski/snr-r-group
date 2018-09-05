@@ -8,7 +8,7 @@ categories: ["R"]
 # Getting to know R: a very brief introduction
 
 
-<img style="float: right;" src="post/2018-08-24-TimeSeries_files/R.jpeg">
+<img style="float: right;" src="post/2018-08-24-introduction_files/R.jpeg">
 
 ```{r message = FALSE, echo = F}
 library(tidyverse)

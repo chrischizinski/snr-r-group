@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+         
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Getting to know R: a very brief introduction</title>
+        <style>
+
+    html body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #FEFDFA;
+    }
+
+    :root {
+        --accent: #D00000;
+        --border-width:  5px ;
+    }
+
+</style>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+
+
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/hybrid.min.css"> 
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+ 
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/swift.min.js"></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/R.min.js"></script> 
+
+    <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script>
+ <meta name="generator" content="Hugo 0.30.2" />
+        
+        
+        
+        
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-48496439-3"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments)};
+          gtag('js', new Date());
+
+          gtag('config', 'UA-48496439-3');
+        </script>
+        
+    </head>
+
+    
+    
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    
+
+    <body>
+         
+        <nav class="navbar navbar-default navbar-fixed-top">
+
+            <div class="container">
+
+                <div class="navbar-header">
+
+                    <a class="navbar-brand visible-xs" href="#">Getting to know R: a very brief introduction</a>
+
+                    <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                </div>
+
+                <div class="collapse navbar-collapse">
+
+                    
+                        <ul class="nav navbar-nav">
+                            
+                                <li><a href="/">Home</a></li>
+                            
+                                <li><a href="/post/">Posts</a></li>
+                            
+                                <li><a href="/resources/">Resources</a></li>
+                            
+                        </ul>
+                    
+
+                    
+                        <ul class="nav navbar-nav navbar-right">
+                            
+                                <li class="navbar-icon"><a href="mailto:cchizinski2@unl.edu"><i class="fa fa-envelope-o"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://github.com/chrischizinski/"><i class="fa fa-github"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://twitter.com/chrischizinski/"><i class="fa fa-twitter"></i></a></li>
+                            
+                        </ul>
+                    
+
+                </div>
+
+            </div>
+
+        </nav>
+
+
+<main>
+
+    <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/post/2018-08-24-introduction/">Getting to know R: a very brief introduction</a></h4>
+    <h5>August 24, 2018</h5>
+    
+    <a href="/tags/beginning-r"><kbd class="item-tag">Beginning R</kbd></a>
+    
+    <a href="/tags/r-studio"><kbd class="item-tag">R Studio</kbd></a>
+    
+    <a href="/tags/sampling-data-management-and-visualization"><kbd class="item-tag">Sampling Data Management and Visualization</kbd></a>
+    
+
+</div>
+
+
+    <br> <div class="text-justify"><div id="getting-to-know-r-a-very-brief-introduction" class="section level1">
+<h1>Getting to know R: a very brief introduction</h1>
+<p><img style="float: right;" src="post/2018-08-24-TimeSeries_files/R.jpeg"></p>
+<div id="what-is-r" class="section level2">
+<h2>What is R?</h2>
+<p>R is an open-sourced computer language that allows you to conduct data analysis and programming It is extremly versatile with 13022 packages that allow you to do pretty do anything, from spatial statistics to data wrangling to publication graphics. In fact, this document was written with <code>R</code> and <code>Rstudio</code>.</p>
+<p>A reason for its acceptance among researchers is its versatility.</p>
+<p><img src="/Users/cchizinski2/Desktop/NRES800-Introduction/figs/ieee.jpeg"  style="width: 75%; height: 75%"/></p>
+<p>R can be used as an <a href="http://adv-r.had.co.nz/OO-essentials.html"><em>object-oriented programming language</em></a>, or as a statistical environment where functions can be run line-by-line to analyze data.</p>
+<div id="why-r" class="section level3">
+<h3>Why R?</h3>
+<ul>
+<li>R runs on Windows, Mac-OS, and Unix operating systems</li>
+<li>R provides a vast number of useful statistical tools (and you can write your own)</li>
+<li>R produces publication-quality graphics in a variety of formats</li>
+<li>R allows you to generate documents and html</li>
+<li>R can be intergrated with many other programming languages.</li>
+<li>R scales, making it useful for small and large projects.</li>
+<li>There is a huge user base with lots of blogs and answers for your guarenteed many, many questions</li>
+</ul>
+</div>
+<div id="why-not-r" class="section level3">
+<h3>Why not R?</h3>
+<ul>
+<li>R can do a lot but it cannot do everything.</li>
+<li>There is a decent learning curve</li>
+<li>There have been many improvements over the years but some of the documentation can be opaque.</li>
+<li>R will make you want to throw your computer through the wall at some point.</li>
+<li>Contributed packages go through a lot of testing but some are better and more reliable than others</li>
+<li>R steers clear of point-and-click analysis</li>
+</ul>
+</div>
+</div>
+<div id="where-can-i-get-r" class="section level2">
+<h2>Where can I get R?</h2>
+<p>It is best to download R from CRAN (<a href="https://cran.r-project.org/">Comprehensive R Archive Network</a>). It can be installed on Linux, Windows, or Mac operating systems. The current stable version will be available following the link to your operating system. If you are installing on a Windows machine, you will want to select from the <strong>base</strong> link.</p>
+<p><img src="/Users/cchizinski2/Desktop/NRES800-Introduction/figs/cran.png"  style="width: 75%; height: 75%"/></p>
+</div>
+<div id="how-do-i-run-r" class="section level2">
+<h2>How do I run R?</h2>
+<p>There are many ways that you can run R (terminal to GUIs to IDEs). You can run R from its basic GUI, while OK it does not have some of the bells and whistles other systems might have.</p>
+<p><img src="/Users/cchizinski2/Desktop/NRES800-Introduction/figs/rgui.png"  style="width: 75%; height: 75%"/></p>
+<p>My favorite IDE is <a href="https://www.rstudio.com/home/">RStudio</a> RStudio truly makes R easier to use. It includes a code editor with syntax highlighting, debugging, and visualization tools.</p>
+<p><img src="/Users/cchizinski2/Desktop/NRES800-Introduction/figs/rstudio.png"  style="width: 90%; height: 90%"/></p>
+<p>Using R, you have the options of running code from the console or by saving and reusing scripts. I tend to only use the console for one off things, like pulling up a help page. I keep all of my code in scripts which allows me to reuse code and run things again at a later time. When writing a report or a publication for peer review, you are almost always asked to report something different or revise previous analysis so it is best to work from the script.</p>
+</div>
+<div id="how-do-i-learn-r" class="section level2">
+<h2>How do I learn R?</h2>
+<p>I will come right out and say it. R is not easy. You will not be able to half ass it and be able to understand R. I came from a background of working with SAS and Matlab and there are still things I do not fully understand. I started learning R in 2007 as a postdoc at the University of Minnesota and it took me a while. I believe the best strategy is <strong>immersion</strong>. Do not give yourself an out (i.e., use point-and-click propiertory software) and struggle. Over time you will begin to recognize the nuances of the language and how to use it to its fullest ability (even if this requires hacks and work-arounds). I tell students frequently that learning R is like learning a foreign language. How do you best learn that language? Immersion. You go to that country and live there, forcing you to learn how it is. R is no different.</p>
+<p>There are three areas that I know I struggled with in R and know lots of students (used in the loose sense referring to anyone trying to learn R) that have found these things problems similarly.</p>
+<ol style="list-style-type: decimal">
+<li>Getting data into R</li>
+<li>Understanding the structure of your data (e.g., selecting columns and rows)</li>
+<li>Understanding the error messages</li>
+</ol>
+<p>I think if you can develop an understanding of these three things, you will be able to get around most of what occurs in R. We will spend more time developing a greater understanding of these areas in subsequent lessons.</p>
+</div>
+<div id="how-do-i-get-help-in-r" class="section level2">
+<h2>How do I get help in R?</h2>
+<p>The beauty of R and its large and diverse user base is that there is a lot of help out there for you. There are sources that tend to be more prickley (e.g., <a href="https://www.r-project.org/mail.html">R mailing lists</a>), to moderatly so (e.g., <a href="http://stackoverflow.com/questions/tagged/r">stackoverflow</a>), and most forgiving (e.g., <a href="https://groups.google.com/forum/#!forum/unmarked">google groups</a>).</p>
+<p>There tend to be three areas that I think students learning R get tripped up on when trying to find help.</p>
+<ul>
+<li>The first is a general “How do I do so and so in R?” and my solution to that is simple. Call up your favorite search engine and do a search for your question (and add “in R”). For example, to search how to do a linear regression in R, I would pull up google and search “linear regression and R.” Generally, your search results will include tutorials, packages, or questions posted on the online help sites.<br />
+</li>
+<li>The second is “how do I use this function in R?” Like the first bullet you can always do a search and come up with an answer. There are several ways to find help within R for a particular function. <code>help(function_name)</code> or <code>?function_name</code> will bring up the documentation on the particular function you are interested in. This is where I almost always start when I am having issues with a particular function because the pages called will have the input parameters and various options.<br />
+</li>
+<li>The third is “What does this warning or error mean?” Part of this will come as you spend more and more time learning the R language but everyonce in a while you will get an error that you have no clue. Very often I will copy that error from the console and past it into google.</li>
+</ul>
+<blockquote class="twitter-tweet" data-lang="en">
+<p lang="en" dir="ltr">
+I 😡 people who don't include reproducible examples in their bug reports: <a href="https://t.co/p4OsbFwpsk">https://t.co/p4OsbFwpsk</a>
+</p>
+— Hadley Wickham (<span class="citation">@hadleywickham</span>) <a href="https://twitter.com/hadleywickham/status/770300852825235456?ref_src=twsrc%5Etfw">August 29, 2016</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>Generally when you are trying to help, whether you are using an online source or the R guru down the hall, it important to do your homework ahead of time. The key to getting good feedback no matter from what source is to 1) Google search the issue. It is more than likely that someone else has already had the issue, 2) do not make it seem like you are asking questions about a homework assignment, and 3) provide a <a href="http://adv-r.had.co.nz/Reproducibility.html">reproducible example</a>.</p>
+<p>I think going through the process of trying to make a reproducible example ends up helping you solve your issue before you even post to one of the help sites.</p>
+</div>
+<div id="some-basics-of-r" class="section level2">
+<h2>Some basics of R</h2>
+<div id="laying-out-your-r-scripts" class="section level3">
+<h3>Laying out your R scripts</h3>
+<p>Whenever I start a new R file I always have several things at the very top of your script. This will help you understand what was done in the file and improves the reproducibility of your analysis.</p>
+<ol style="list-style-type: decimal">
+<li>Title of your R script or a basic comment of what is done
+<ul>
+<li>This will help you later on when you are trying to go back to the analysis.</li>
+</ul></li>
+<li>The date that your script was most recently edited.</li>
+<li>Your name.</li>
+</ol>
+</div>
+<div id="comments" class="section level3">
+<h3>Comments</h3>
+<p>These all can be created using comments in R. Comments are designated as <code>#</code> and anything to the right of them will not be run through R. These are a great way to annotate your code and help you understand what your are doing in your analysis.</p>
+<pre class="r"><code># This is a comment symbol.  
+ 2 + 2 # Anything to the right of the symbol will not be run in the analysis</code></pre>
+<pre><code>## [1] 4</code></pre>
+<p><strong>TIP</strong> If you are using RStudio you can comment on and off blocks of code using <code>control-shift-c</code>.</p>
+<p>So using comments at the top of my script, I would write:</p>
+<pre class="r"><code>## Getting to know R
+## 8-26-16
+## Chris Chizinski</code></pre>
+</div>
+<div id="options" class="section level3">
+<h3>Options</h3>
+<p>The next thing that I like to lay out on the top are my options. Option allow the user to set global options that affect how R computes and displays the results. While there are many of them, the one that I conistently have is <code>stringsAsFactors</code> set to <code>FALSE</code>. We will go over factors in a bit, but I like to retain control when factors are set (helps in data manipulation and analysis).</p>
+<pre class="r"><code>## Getting to know R
+## 8-26-16
+## Chris Chizinski
+
+options(stringsAsFactors = FALSE)</code></pre>
+</div>
+<div id="file-paths" class="section level3">
+<h3>File paths</h3>
+<p>Now there are a couple of different ways you can represent directory structures in R. If you have a PC you can represent directory seperators as <code>\\</code> or as <code>/</code>. In Mac you can only use the <code>/</code>. I like to use the <code>/</code> to be consistent. The entire path needs to be enclosed within quotation marks.</p>
+<pre class="r"><code>## Getting to know R
+## 8-26-16
+## Chris Chizinski
+
+options(stringsAsFactors = FALSE)
+#file.list(&quot;/Users/cchizinski2/Documents/DataDepot/RClass&quot;)  # PC
+#file.list(&quot;\\Users\\cchizinski2\\Documents\\DataDepot\\RClass&quot;)  # PC
+file.list(&quot;/Users/cchizinski2/Documents/DataDepot/RClass&quot;)  # Mac</code></pre>
+</div>
+<div id="packages" class="section level3">
+<h3>Packages</h3>
+<p>Packages in the most simpliest of descriptions are a collection of functions that can be called upon to run your analysis. Most packages can be downloaded straight from CRAN within Rstudio by running <code>install.packages(&lt;PACKAGENAME&gt;)</code>. Many packages can be held in repositories and will need the <a href="https://cran.r-project.org/web/packages/devtools/index.html"><code>devtools</code></a> package.</p>
+<p>Setting a standard library path is important when working with R. I find that after updating your R version or working from multiple computers (keeping your pacakges on a flash drive or network drive) saves a lot of time from having to reinstall R packages. R packages are collections of R functions, data, and compiled code in a well-defined format. You can define the directory where these are stored using <code>.libPaths()</code>. I like to use the personal network drive so that whenever I log in to a computer at UNL that drive is available.</p>
+<pre class="r"><code>## Getting to know R
+## 8-26-16
+## Chris Chizinski
+
+options(stringsAsFactors = FALSE)
+.libPaths(&quot;P:/RLibrary&quot;)</code></pre>
+<p>Once I have set my library path, I like to list all the R packages that I will be using in the subsequent code. There are a few reasons that I like doing this:</p>
+<ul>
+<li>all the packages are loaded at the top so if I need to jump down the script and run a specific function, I do not need to search around and find where I loaded the appropriate library</li>
+<li>I can make sure that if there are conflicts with packages, that they are run in the appropriate order (i.e., making sure things are reproducible)</li>
+</ul>
+<p>For example, if you were to try to run the <code>dplyr</code> and the <code>plyr</code> packages to do data manipulation, then the order that these are loaded can affect the functionality of the functions.</p>
+<pre class="r"><code>library(dplyr)
+library(plyr)</code></pre>
+<pre><code>## -------------------------------------------------------------------------</code></pre>
+<pre><code>## You have loaded plyr after dplyr - this is likely to cause problems.
+## If you need functions from both plyr and dplyr, please load plyr first, then dplyr:
+## library(plyr); library(dplyr)</code></pre>
+<pre><code>## -------------------------------------------------------------------------</code></pre>
+<pre><code>## 
+## Attaching package: &#39;plyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
+## 
+##     arrange, count, desc, failwith, id, mutate, rename, summarise,
+##     summarize</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     compact</code></pre>
+</div>
+</div>
+<div id="types-of-data" class="section level2">
+<h2>Types of data</h2>
+<div id="numerical-data" class="section level3">
+<h3>Numerical data</h3>
+<pre class="r"><code># Write a value to an object
+
+a = 1  # You can use the equal or the arrow
+a &lt;- 1  # In RStudio, key board short cut is &#39;Alt&#39; and &#39;-&#39; for PC or &#39;Option&#39; and &#39;-&#39;
+a # Display the object by typing it, will display the values</code></pre>
+<pre><code>## [1] 1</code></pre>
+<pre class="r"><code>class(a) # display the class of data; base R</code></pre>
+<pre><code>## [1] &quot;numeric&quot;</code></pre>
+<pre class="r"><code>glimpse(a) # display using tidyverse</code></pre>
+<pre><code>##  num 1</code></pre>
+<pre class="r"><code>str(a) # base R</code></pre>
+<pre><code>##  num 1</code></pre>
+<pre class="r"><code>a &lt;- as.integer(a) # convert to integer
+glimpse(a) </code></pre>
+<pre><code>##  int 1</code></pre>
+<pre class="r"><code>b &lt;- 1.223  #
+
+glimpse(b)</code></pre>
+<pre><code>##  num 1.22</code></pre>
+<pre class="r"><code>A &lt;- 1 # Case sensitive
+a &lt;- 2
+A == a</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<pre class="r"><code>a &lt;- 4 # Careful when naming objects, R will use the last assignment your provide</code></pre>
+</div>
+<div id="you-can-use-objects" class="section level3">
+<h3>You can use objects</h3>
+<pre class="r"><code>a + b # Always remember to assign values to an object, otherwise it is just displayed</code></pre>
+<pre><code>## [1] 5.223</code></pre>
+<pre class="r"><code>c &lt;- a + b # writign a + b to object c</code></pre>
+</div>
+<div id="working-with-characters" class="section level3">
+<h3>Working with characters</h3>
+<pre class="r"><code>d &lt;- &quot;dog&quot;
+e &lt;- &quot;cat&quot;
+
+e &lt;- elephant # quotations are really important</code></pre>
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;elephant&#39; not found</code></pre>
+<pre class="r"><code>f &lt;- &quot;see spot run&quot;  # strings
+f</code></pre>
+<pre><code>## [1] &quot;see spot run&quot;</code></pre>
+<pre class="r"><code>class(f)</code></pre>
+<pre><code>## [1] &quot;character&quot;</code></pre>
+</div>
+<div id="factors" class="section level3">
+<h3>Factors</h3>
+<pre class="r"><code>g &lt;- c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;defe&quot;) # create a vector
+g</code></pre>
+<pre><code>## [1] &quot;a&quot;    &quot;b&quot;    &quot;c&quot;    &quot;defe&quot;</code></pre>
+<pre class="r"><code>g &lt;- as.factor(g)
+as.numeric(g)</code></pre>
+<pre><code>## [1] 1 2 3 4</code></pre>
+<pre class="r"><code>as.numeric(c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;defe&quot;))</code></pre>
+<pre><code>## Warning: NAs introduced by coercion</code></pre>
+<pre><code>## [1] NA NA NA NA</code></pre>
+<pre class="r"><code># Setting levels of a factor
+
+g &lt;- c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;defe&quot;) # create a vector
+g</code></pre>
+<pre><code>## [1] &quot;a&quot;    &quot;b&quot;    &quot;c&quot;    &quot;defe&quot;</code></pre>
+<pre class="r"><code>g &lt;- factor(g, levels = c(&quot;defe&quot;, &quot;c&quot;, &quot;b&quot;, &quot;a&quot;))
+g     </code></pre>
+<pre><code>## [1] a    b    c    defe
+## Levels: defe c b a</code></pre>
+<pre class="r"><code>levels(g)</code></pre>
+<pre><code>## [1] &quot;defe&quot; &quot;c&quot;    &quot;b&quot;    &quot;a&quot;</code></pre>
+<pre class="r"><code># ordered data 
+
+g &lt;- c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;defe&quot;) # create a vector
+g</code></pre>
+<pre><code>## [1] &quot;a&quot;    &quot;b&quot;    &quot;c&quot;    &quot;defe&quot;</code></pre>
+<pre class="r"><code>g &lt;- ordered (g, levels = c(&quot;defe&quot;,&quot;b&quot;, &quot;c&quot;, &quot;a&quot;))
+g</code></pre>
+<pre><code>## [1] a    b    c    defe
+## Levels: defe &lt; b &lt; c &lt; a</code></pre>
+</div>
+</div>
+<div id="data-structures" class="section level2">
+<h2>Data structures</h2>
+<pre class="r"><code># Vectors
+# Vectors have one dimensions
+g &lt;- c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;defe&quot;)
+length(g) # number of items in a vector</code></pre>
+<pre><code>## [1] 4</code></pre>
+<pre class="r"><code>#  Matrices 
+# Matrices have two dimensions and are one type of data (numeric or character)
+h &lt;- matrix(c(1,2,3,4,5,6,7,8), ncol = 2, byrow=TRUE) 
+h</code></pre>
+<pre><code>##      [,1] [,2]
+## [1,]    1    2
+## [2,]    3    4
+## [3,]    5    6
+## [4,]    7    8</code></pre>
+<pre class="r"><code>dim(h) # dimensions</code></pre>
+<pre><code>## [1] 4 2</code></pre>
+<pre class="r"><code>nrow(h) # number of rows</code></pre>
+<pre><code>## [1] 4</code></pre>
+<pre class="r"><code>ncol(h) # number of column</code></pre>
+<pre><code>## [1] 2</code></pre>
+<pre class="r"><code>length(h) # number of items in a matrix</code></pre>
+<pre><code>## [1] 8</code></pre>
+<pre class="r"><code># Subsetting data
+
+h[2,2] # display the item on the second row and second column</code></pre>
+<pre><code>## [1] 4</code></pre>
+<pre class="r"><code>h[3,2] &lt;- &quot;7&quot;  # changes the matrix to character
+
+## data frames
+## Dataframes are the typical tabular form of data that you will work with in R.  It can have multiple types
+# of data represented but must be identical within a column
+
+i &lt;- data.frame(Col1 = c(1,2,3,4), Col2 = c(&quot;A&quot;, &quot;B&quot;, &quot;E&quot;, &quot;F&quot;))
+glimpse(i)</code></pre>
+<pre><code>## Observations: 4
+## Variables: 2
+## $ Col1 &lt;dbl&gt; 1, 2, 3, 4
+## $ Col2 &lt;chr&gt; &quot;A&quot;, &quot;B&quot;, &quot;E&quot;, &quot;F&quot;</code></pre>
+<pre class="r"><code>as.data.frame(as.matrix(i))</code></pre>
+<pre><code>##   Col1 Col2
+## 1    1    A
+## 2    2    B
+## 3    3    E
+## 4    4    F</code></pre>
+</div>
+</div>
+</div>
+
+    
+    
+
+    
+
+        <h4 class="page-header">Related</h4>
+
+         <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/post/2018-08-31-rclassday2/">Getting to know R: more about data types</a></h4>
+    <h5>August 31, 2018</h5>
+    
+    <a href="/tags/beginning-r"><kbd class="item-tag">Beginning R</kbd></a>
+    
+    <a href="/tags/data-structures"><kbd class="item-tag">Data Structures</kbd></a>
+    
+    <a href="/tags/sampling-data-management-and-visualization"><kbd class="item-tag">Sampling Data Management and Visualization</kbd></a>
+    
+
+</div>
+ 
+
+    
+
+    
+
+        <h4 class="page-header">Comments</h4>
+
+        <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "snrrgroup" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    
+
+</main>
+
+        <footer>
+
+            <p class="copyright text-muted">&copy; All rights reserved. Powered by <a href="https://gohugo.io">Hugo</a> and <a href="https://github.com/calintat/minimal">Minimal</a></p>
+
+        </footer>
+       
+    </body>
+
+</html>
+

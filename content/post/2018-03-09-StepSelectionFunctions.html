@@ -359,17 +359,17 @@ deer %&gt;%
 ## $ case_     &lt;lgl&gt; TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALS...
 ## $ x1_       &lt;dbl&gt; 4314053, 4314053, 4314053, 4314053, 4314053, 4314053...
 ## $ y1_       &lt;dbl&gt; 3445768, 3445768, 3445768, 3445768, 3445768, 3445768...
-## $ x2_       &lt;dbl&gt; 4314105, 4314597, 4314395, 4314124, 4314053, 4313853...
-## $ y2_       &lt;dbl&gt; 3445859, 3445925, 3444874, 3446085, 3445859, 3445976...
+## $ x2_       &lt;dbl&gt; 4314105, 4314392, 4314354, 4314188, 4314075, 4313702...
+## $ y2_       &lt;dbl&gt; 3445859, 3446058, 3445761, 3445932, 3445755, 3445851...
 ## $ t1_       &lt;dttm&gt; 2008-03-30 06:00:54, 2008-03-30 06:00:54, 2008-03-3...
 ## $ t2_       &lt;dttm&gt; 2008-03-30 12:01:47, 2008-03-30 12:01:47, 2008-03-3...
 ## $ dt_       &lt;time&gt; 6.014722 hours, 6.014722 hours, 6.014722 hours, 6.0...
-## $ sl_       &lt;dbl&gt; 104.3029779, 548.2122623, 1042.2320750, 237.6622856,...
-## $ ta_       &lt;dbl&gt; 171.76752, -62.71085, 130.71033, -99.26650, -49.2651...
-## $ sh.forest &lt;dbl&gt; 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2...
+## $ sl_       &lt;dbl&gt; 104.30332, 393.68595, 316.96143, 153.83291, 105.7987...
+## $ ta_       &lt;dbl&gt; 171.767519, 25.664423, -50.578868, -81.182565, 17.49...
+## $ sh.forest &lt;dbl&gt; 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2...
 ## $ forest    &lt;fct&gt; not forest, not forest, not forest, not forest, not ...
-## $ cos_ta    &lt;dbl&gt; -0.5233004, 0.9926885, 0.3280437, 0.3015675, 0.54000...
-## $ log_sl    &lt;dbl&gt; 4.6472999, 6.3066626, 6.9491199, 5.4708507, -0.15184...</code></pre>
+## $ cos_ta    &lt;dbl&gt; -0.52330042, 0.86195568, 0.95129538, 0.87813634, 0.2...
+## $ log_sl    &lt;dbl&gt; 4.647303, 5.975554, 5.758780, 5.035867, 4.661539, 5....</code></pre>
 <pre class="r"><code>deer_ssf %&gt;% 
   fit_clogit(case_ ~ forest + strata(step_id_)) -&gt; m0
 summary(m0)</code></pre>
@@ -380,17 +380,17 @@ summary(m0)</code></pre>
 ##   n= 12144, number of events= 759 
 ## 
 ##                     coef exp(coef) se(coef)      z Pr(&gt;|z|)    
-## forestnot forest -0.6062    0.5454   0.1084 -5.591 2.25e-08 ***
+## forestnot forest -0.7119    0.4907   0.1104 -6.447 1.14e-10 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ##                  exp(coef) exp(-coef) lower .95 upper .95
-## forestnot forest    0.5454      1.833     0.441    0.6746
+## forestnot forest    0.4907      2.038    0.3952    0.6093
 ## 
-## Rsquare= 0.002   (max possible= 0.293 )
-## Likelihood ratio test= 30.06  on 1 df,   p=4e-08
-## Wald test            = 31.26  on 1 df,   p=2e-08
-## Score (logrank) test = 31.48  on 1 df,   p=2e-08</code></pre>
+## Rsquare= 0.003   (max possible= 0.293 )
+## Likelihood ratio test= 39.9  on 1 df,   p=3e-10
+## Wald test            = 41.57  on 1 df,   p=1e-10
+## Score (logrank) test = 41.93  on 1 df,   p=9e-11</code></pre>
 <pre class="r"><code> 0.6489/(1+ 0.6489)</code></pre>
 <pre><code>## [1] 0.3935351</code></pre>
 <pre class="r"><code>m0 &lt;- clogit(case_ ~ forest + strata(step_id_), data=deer_ssf)
@@ -402,17 +402,17 @@ summary(m0)</code></pre>
 ##   n= 12144, number of events= 759 
 ## 
 ##                     coef exp(coef) se(coef)      z Pr(&gt;|z|)    
-## forestnot forest -0.6062    0.5454   0.1084 -5.591 2.25e-08 ***
+## forestnot forest -0.7119    0.4907   0.1104 -6.447 1.14e-10 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ##                  exp(coef) exp(-coef) lower .95 upper .95
-## forestnot forest    0.5454      1.833     0.441    0.6746
+## forestnot forest    0.4907      2.038    0.3952    0.6093
 ## 
-## Rsquare= 0.002   (max possible= 0.293 )
-## Likelihood ratio test= 30.06  on 1 df,   p=4e-08
-## Wald test            = 31.26  on 1 df,   p=2e-08
-## Score (logrank) test = 31.48  on 1 df,   p=2e-08</code></pre>
+## Rsquare= 0.003   (max possible= 0.293 )
+## Likelihood ratio test= 39.9  on 1 df,   p=3e-10
+## Wald test            = 41.57  on 1 df,   p=1e-10
+## Score (logrank) test = 41.93  on 1 df,   p=9e-11</code></pre>
 <pre class="r"><code>newdata = expand.grid(forest=unique(deer_ssf$forest),
                       step_id_ = unique(deer_ssf$step_id_) )
 
@@ -430,6 +430,6 @@ pred_data &lt;- augment(m0, newdata=newdata, type.predict=&#39;risk&#39;)
 <pre><code>## # A tibble: 2 x 6
 ##   forest     step_id_ .fitted .se.fit  prob  sumP
 ##   &lt;fct&gt;         &lt;int&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1 not forest      100   0.635  0.0648 0.388 0.926
-## 2 forest          100   1.16   0.0292 0.538 0.926</code></pre>
+## 1 not forest      100   0.561  0.0672 0.359 0.893
+## 2 forest          100   1.14   0.0221 0.533 0.893</code></pre>
 </div>
